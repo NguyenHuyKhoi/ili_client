@@ -1,8 +1,7 @@
+import { makeStyles } from '@mui/styles'
 import React from 'react'
-import {makeStyles } from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
     container: {
-        backgroundColor: '#032585'
     }
 }))
 
