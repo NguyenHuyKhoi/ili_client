@@ -11,6 +11,8 @@ import GameSearch from "./pages/game_search";
 import GameCollector from "./pages/game_collector";
 import Profile from "./pages/profile";
 import UserLibrary from "./pages/user_library";
+import PlayerEnterGame from "./pages/player/enter_game";
+import PlayerInGame from "./pages/player/in_game";
 
 const App = () => {
   const {sample} = useContext(SampleContext)
@@ -18,7 +20,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
-          <Route exact path="/" element={<UserLibrary/>}/>
+          <Route exact path="/" element={<PlayerInGame/>}/>
         </Routes>
       </Router>
     </ThemeProvider>
