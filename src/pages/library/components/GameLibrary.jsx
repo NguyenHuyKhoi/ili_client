@@ -57,7 +57,7 @@ const TabItem = (props) => {
         </div>
     )
 }
-const Tabs = () => {
+export const Tabs = () => {
     const classes = useStyles()
     const [selectedIndex, setSelectedIndex] = useState(0)
     const tabs = ['Recent','Drafts','Favorite']
