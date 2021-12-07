@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { makeStyles } from '@mui/styles';
+import QuestionDetailModal from './QuestionDetailModal';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -29,7 +30,12 @@ const rows = [
   createData('How many apple on the table?', 'Quiz', 0, 3)
 ];
 
-const QuestionTable = () => {
+const QuestionsTable = (props) => {
+  const handleClickRow = (e) => {
+    if (props.onClickRow) {
+      props.onClickRow()
+    }
+}
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -43,6 +49,7 @@ const QuestionTable = () => {
         <TableBody>
           {rows.map((row) => (
             <TableRow
+              onClick = {handleClickRow}
               key={row.nickname}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
@@ -59,4 +66,21 @@ const QuestionTable = () => {
   );
 }
 
-export default QuestionTable
+
+const QuestionsTab = () => {
+    const classes = useStyles()
+    const [openDetailModal, setOpenDetailModal] = useState(false)
+    const handleCloseModal = () => {
+      setOpenDetailModal(false)
+    }
+    const handleClickRow = () => {
+      setOpenDetailModal(true)
+    }
+    return (
+      <div className = {classes.container}>
+        <QuestionsTable onClickRow = {handleClickRow}/>
+        <QuestionDetailModal open = {openDetailModal} onClose = {handleCloseModal}/>
+      </div>
+    )
+}
+export default QuestionsTab

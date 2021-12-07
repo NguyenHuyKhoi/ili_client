@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { makeStyles } from '@mui/styles';
-
+import PlayerDetailModal from './PlayerDetailModal';
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1
@@ -29,7 +29,12 @@ const rows = [
   createData('Nick name 1', 1, '40%', 3, 1200),
 ];
 
-const PlayerTable = () => {
+const PlayersTable = (props) => {
+  const handleClickRow = (e) => {
+      if (props.onClickRow) {
+        props.onClickRow()
+      }
+  }
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -45,6 +50,7 @@ const PlayerTable = () => {
         <TableBody>
           {rows.map((row) => (
             <TableRow
+              onClick = {handleClickRow}
               key={row.nickname}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
@@ -63,4 +69,20 @@ const PlayerTable = () => {
   );
 }
 
-export default PlayerTable
+const PlayersTab = () => {
+  const classes = useStyles()
+  const [openDetailModal, setOpenDetailModal] = useState(false)
+  const handleCloseModal = () => {
+    setOpenDetailModal(false)
+  }
+  const handleClickRow = () => {
+    setOpenDetailModal(true)
+  }
+  return (
+    <div className = {classes.container}>
+      <PlayersTable onClickRow = {handleClickRow}/>
+      <PlayerDetailModal open = {openDetailModal} onClose = {handleCloseModal}/>
+    </div>
+  )
+}
+export default PlayersTab

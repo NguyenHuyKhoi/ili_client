@@ -17,6 +17,9 @@ import GameRank from "./pages/player/game_rank";
 import GameHostSetting from "./pages/game_host_setting";
 import DashboardReports from "./pages/reports/dashboard";
 import GameReport from "./pages/reports/game_report";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import Settings from "./pages/settings";
 
 const App = () => {
   const {sample} = useContext(SampleContext)
@@ -24,7 +27,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
-          <Route exact path="/" element={<GameReport/>}/>
+          <Route exact path="/" element={<Settings/>}/>
         </Routes>
       </Router>
     </ThemeProvider>

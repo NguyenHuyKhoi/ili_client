@@ -57,17 +57,20 @@ const TabItem = (props) => {
         </div>
     )
 }
-export const Tabs = () => {
+export const Tabs = (props) => {
     const classes = useStyles()
     const [selectedIndex, setSelectedIndex] = useState(0)
-    const tabs = ['Recent','Drafts','Favorite']
     const handleItemClick = (index) => {
         setSelectedIndex(index)
+        if (props.onClickTab) {
+            props.onClickTab(index)
+        }
     }
+    if (props.tabs == undefined) props.tabs = []
     return (
         <div className = {classes.tabs}>
             {
-                tabs.map((item, index) => (
+                props.tabs.map((item, index) => (
                     <div className = {classes.tabContainer}>
                         <TabItem title ={item} handleItemClick = {() => handleItemClick(index)}
                             isSelected = {selectedIndex == index}/>
