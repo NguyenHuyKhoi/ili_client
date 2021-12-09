@@ -36,12 +36,10 @@ const PlayerEnterGame = () => {
         setShowAlert(false)
     }
     const handleChangeInput = (value) => {
-        console.log("On change:", value)
         setInput(value)
         setShowAlert(false)
     }
     const handleSubmit = () => {
-        console.log("On Submit : ",input)
         switch (stage) {
             case INPUT_STAGE.ENTER_PIN: 
                 if (input != '123456') {
@@ -52,7 +50,6 @@ const PlayerEnterGame = () => {
                     setInput('')
                 }
             case INPUT_STAGE.ENTER_NAME: 
-                console.log("Enter game")
         }
     }
     return (

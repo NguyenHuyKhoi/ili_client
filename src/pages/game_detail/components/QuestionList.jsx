@@ -103,7 +103,6 @@ const QuestionCard = (props) => {
     const classes = useStyles()
     const [isShow, setIsShow] = useState(false)
     const handleShowChange = () => {
-        console.log("Handler show change")
         setIsShow(!isShow)
     }
 

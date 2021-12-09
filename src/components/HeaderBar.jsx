@@ -1,8 +1,8 @@
 import { Add, Home, HomeOutlined, Logout, NotificationsOutlined } from '@mui/icons-material'
-import { AppBar, Avatar, Button, FormControl, InputLabel, MenuItem, Popover, Select, Typography } from '@mui/material'
+import { AppBar, Avatar, Button, FormControl, InputLabel, Link, MenuItem, Popover, Select, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { theme } from '../theme'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -15,6 +15,8 @@ import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
+import { AuthContext } from '../contexts/auth/context'
+import { logout } from '../contexts/auth/apiCalls'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -62,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center'
     }
 }))
-const DropDownMenu = (props) => {
+export const DropDownMenu = (props) => {
     // props.menu.title, items: [title]
     const classes = useStyles()
     const [open, setOpen] = React.useState(false);
@@ -102,7 +104,7 @@ const DropDownMenu = (props) => {
     )
 }
 
-const TabItem = (props) => {
+export const TabItem = (props) => {
     const classes = useStyles()
     const {isSelected} = props
     const handleClick = () => {
@@ -131,6 +133,11 @@ const TabItem = (props) => {
 
 const AvatarPopover = () => {
     const classes = useStyles()
+    const {dispatch} = useContext(AuthContext)
+    const handleLogout = (e) => {
+        e.preventDefault()
+        logout(dispatch)
+    }
     return (
         <div className = {classes.avatarPopover}>
             <div className = {classes.avatarPopoverHeader}>
@@ -167,7 +174,7 @@ const AvatarPopover = () => {
                     'Shop'
                 ]
             }}/>
-            <div className = {classes.avatarPopoverFooter}>
+            <div className = {classes.avatarPopoverFooter} onClick = {handleLogout}>
                 <Logout sx = {{color: 'red', fontSize: 20}}/>
                 <Typography variant = 'subtitle2' sx = {{mx: theme.spacing(1),color: 'red'}}>
                     Sign out
@@ -208,7 +215,9 @@ const HeaderBar = () => {
                 }
             </div>
             <Button variant = 'contained'>
-                Create
+                <Link href = '/creator' underline = 'none' sx = {{color: 'white'}}>
+                    Create
+                </Link>
             </Button>
             <Avatar sx = {{mx: theme.spacing(2)}} 
                 src = 'https://thuthuatnhanh.com/wp-content/uploads/2019/05/gai-xinh-toc-ngan-facebook.jpg'

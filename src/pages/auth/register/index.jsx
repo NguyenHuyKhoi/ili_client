@@ -2,7 +2,7 @@ import { Add } from '@mui/icons-material'
 import { Button, Checkbox, Divider, Link, TextField, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
-import {theme} from '../../theme'
+import {theme} from '../../../theme'
 import { LoginWithButton } from '../login'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
     const classes = useStyles()
+
     return (
         <div className = {classes.container}>
             <div className = {classes.login}>
@@ -76,7 +77,9 @@ const Register = () => {
                 <TextField id="outlined-basic" label="Password" variant="outlined" 
                     sx = {{my: theme.spacing(2)}}/>
                 <Button variant = 'contained' color = 'success' sx = {{my: theme.spacing(3)}}>
-                    Sign up
+                    <Link href = '/auth/login' underline = 'none' sx = {{color: 'white'}}>
+                        Sign up
+                    </Link>
                 </Button>
                 
                 <div className = {classes.checkboxRegisterInfor}>
@@ -113,7 +116,7 @@ const Register = () => {
                     <Typography variant = 'caption' >
                         Already have an account?
                     </Typography>
-                    <Link href = '#' >
+                    <Link href = '/auth/login' >
                         Log in
                     </Link>
                 </div>

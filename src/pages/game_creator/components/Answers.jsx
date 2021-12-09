@@ -1,4 +1,4 @@
-import { AppBar, Grid } from '@mui/material'
+import { AppBar, Grid, Tooltip } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useState } from 'react'
 import { theme } from '../../../theme'
@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     },
     shapeContainer: {
         height: '100%',
-        backgroundColor: 'red',
         display:'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -40,29 +39,37 @@ const useStyles = makeStyles((theme) => ({
 
     }
 }))
-const Answer = () => {
+
+const Answer = (props) => {
     const classes = useStyles()
-    const [answer, setAnswer] = useState("")
-    const [selected, setSelected] = useState(false)
+    const {answer, isCorrect, color} = props
     const handleAnswerChange = (e) => {
-        console.log("Change answer :",e.target.value)
         var value = e.target.value
-        setAnswer(value)
-        if (answer =="" ) setSelected(false)
+        if (props.onChange) {
+            props.onChange(value)
+        }
+        if (answer == "" || answer == null ) handleCorrectChange()
     }
 
-    const handleSelectedChange = () => {
-        setSelected(!selected)
+    const handleCorrectChange = () => {
+        if (answer == "" || answer == null) return
+        if (props.onChangeCorrect) {
+            props.onChangeCorrect(!isCorrect)
+        }
     }
     return (
-        <div className = {classes.answer} style={{backgroundColor: answer == "" ?'white':'red'}}>
-            <div className = {classes.shapeContainer}>
+        <div className = {classes.answer} style={{backgroundColor: answer == null || answer == '' ?'white':color}}>
+            <div className = {classes.shapeContainer}
+                style={{backgroundColor: color}} >
                 <CropDinSharpIcon sx = {{backgroundColor: 'white', color: 'white'}} />
             </div>
-            <input type = 'text' placeholder = '' className = {classes.titleInput} onChange = {handleAnswerChange}/>
-            <div onClick = {handleSelectedChange}>
+            <input type = 'text' placeholder = '' 
+                className = {classes.titleInput} 
+                value = {answer}
+                onChange = {handleAnswerChange}/>
+            <div onClick = {handleCorrectChange}>
             {
-                !selected?
+                !isCorrect?
                 <CircleOutlined sx = {{color: 'white', fontSize: 60}}/>
                 :
                 <CheckCircleOutlineOutlined sx = {{color: 'white', fontSize: 60}}/>
@@ -72,14 +79,34 @@ const Answer = () => {
         </div>
     )
 }
-const Answers = () => {
+const Answers = (props) => {
     const classes = useStyles()
+    let {answers, correct_answers} = props
+    const handleAnswerChange = (index, value) => {
+        answers[index] = value
+        if (props.onAnswerChange) {
+            props.onAnswerChange(answers)
+        }
+    }
+    const handleAnswerCorrectChange = (index, isCorrect) => {
+        // ONLY correct answers
+        correct_answers = isCorrect ? [index] : []
+        if (props.onAnswerCorrectChange) {
+            props.onAnswerCorrectChange(correct_answers)
+        }
+    }
     return (
         <div className = {classes.container}>
             <Grid container rowSpacing={1.5} columnSpacing={{ xs: 1.5 }} sx = {{width:'100%',height:'100%'}}>
-                {Array.from(Array(4)).map((_, index) => (
+                {answers.map((item, index) => (
                     <Grid item xs={6}>
-                        <Answer/>
+                        <Tooltip open={true} title="Add">
+                            <Answer answer = {item} 
+                                color = {['red','blue','yellow','green'][index]}
+                                isCorrect = {(correct_answers.indexOf(index) != -1)}
+                                onChange = {(value) => handleAnswerChange(index, value)}
+                                onChangeCorrect = {(isCorrect)=> handleAnswerCorrectChange(index,isCorrect)}/>
+                        </Tooltip>
                     </Grid>
                 ))}
             </Grid>

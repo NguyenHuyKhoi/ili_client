@@ -1,19 +1,20 @@
 import { Container, Grid, TextField, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { Box } from '@mui/system'
-import React from 'react'
+import React, {useContext, useState} from 'react'
 import { grey } from '@mui/material/colors';
 import MediaUploadCard from './MediaUploadCard';
 import Answers from './Answers';
+import { GameCreatorContext } from '../../../contexts/game_creator/context';
+import { deleteQuestion, updateQuestion } from '../../../contexts/game_creator/actions'
 const useStyles = makeStyles((theme) => ({
     container: {
         padding: theme.spacing(3),
-        paddingTop: theme.spacing(10),
         display: 'flex',
         flex:1,
-        height: '100%',
+        height: '85vh',
         flexDirection: 'column',
-        justifyContent:'space-evenly',
+        justifyContent: 'space-evenly',
         backgroundColor: grey[300],
         alignItems:'center',
     },
@@ -38,18 +39,42 @@ const useStyles = makeStyles((theme) => ({
             outline: 'none'
         }
 
+    },
+    uploadImg: {
+        width: 400,
+        height: 250
     }
 }))
 
 const QuestionBuilder = () => {
     const classes = useStyles()
-    return (
+    const {game, dispatch} = useContext(GameCreatorContext)
+    const {questions, question_index} = game
+    let question = questions[question_index]
+
+    
+    const {title, image, answers, correct_answers} = question
+    const handleChange = (key, value) => {
+        question[key] = value
+        dispatch(updateQuestion(question, question_index))
+    }
+    return ( 
         <div className = {classes.container}>
             <div className = {classes.titleBox} >
-                <input type = 'text' placeholder = 'Enter question here' className = {classes.titleInput}/>
+                <input type = 'text' placeholder = 'Enter question here' className = {classes.titleInput}
+                    value={title}
+                    onChange={e => handleChange('title',e.target.value)}/>
             </div>
-            <MediaUploadCard/>
-            <Answers/>
+            <div className = {classes.uploadImg}>
+                <MediaUploadCard 
+                    onSelectImage = {(image) => handleChange('image', image)}
+                    onRemoveImage = {() => handleChange('image', null)}
+                    src = {image != null ?URL.createObjectURL(image) : undefined}/>
+            </div>
+            <Answers answers = {answers}
+                correct_answers = {correct_answers}
+                onAnswerCorrectChange = {(correct_answers) => handleChange('correct_answers', correct_answers)}
+                onAnswerChange = {(answers) => handleChange('answers',answers)}/>
         </div>
     )
 }

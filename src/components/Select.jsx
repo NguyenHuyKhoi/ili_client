@@ -5,24 +5,38 @@ import React from 'react'
 const useStyles = makeStyles((theme) => ({
 }))
 
-const LabeledSelect = () => {
+const LabeledSelect = (props) => {
     const classes = useStyles()
-    const handleChange = (i) => {
-
+    const {title, list, value} = props
+    const handleChange = (e) => {
+        let value = e.target.value
+        if (props.onChange) {
+            console.log("OnChange :",value)
+            props.onChange(value)
+        }
     }
     return (
         <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Label</InputLabel>
+            <InputLabel id="demo-simple-select-label">
+                {
+                    title
+                }
+            </InputLabel>
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={10}
+                value={value}
                 label="Age"
                 onChange={handleChange}
             >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {
+                    list != undefined &&
+                    list.map((item, index) => (
+                        <MenuItem value={item.value}>
+                            {item.label }
+                        </MenuItem>
+                    ))
+                }
             </Select>
         </FormControl>
     )

@@ -34,19 +34,36 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Topbar = () => {
+const Topbar = (props) => {
     const classes = useStyles()
+    const handleSetting = () => {
+        if (props.onClickSetting != undefined) {
+            props.onClickSetting()
+        }
+    }
+    const handleExit = () => {
+        if (props.onClickExit != undefined) {
+            props.onClickExit()
+        }
+    }
+    const handleSave = () => {
+        if (props.onClickSave != undefined) {
+            props.onClickSave()
+        }
+    }
     return (
         <AppBar position = 'fixed' sx = {{height: 60}}>
             <Toolbar className = {classes.toolbar}>
-                <img src={logoImg} className = {classes.logoSm}/>
-                <div className = {classes.settingBox}>
+                <img src={'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Kahoot_Logo.svg/1280px-Kahoot_Logo.svg.png'} className = {classes.logoSm}/>
+                <div className = {classes.settingBox} onClick = {handleSetting}>
                     <Typography variant='subtitle1' className = {classes.title}> Enter name ... </Typography>
                     <Button variant="contained" size = "small" color = "neutral" sx = {{ marginLeft: theme.spacing(3)}}>Setting</Button>
                 </div>
                 <div style = {{flex:1}}/> 
-                <Button variant="contained" color = "neutral"  sx = {{ marginLeft: theme.spacing(3)}}>Exit</Button>
-                <Button variant="contained" color = "primary"  sx = {{ marginLeft: theme.spacing(3)}}>Save</Button>
+                <Button variant="contained" color = "neutral"  sx = {{ marginLeft: theme.spacing(3)}}
+                    onClick = {handleExit}>Exit</Button>
+                <Button variant="contained" color = "primary"  sx = {{ marginLeft: theme.spacing(3)}}
+                    onClick = {handleSave}>Save</Button>
             </Toolbar>
         </AppBar>
     )

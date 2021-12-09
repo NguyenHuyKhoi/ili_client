@@ -1,6 +1,7 @@
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
+import GuestHeaderBar from '../../components/GuestHeaderBar'
 import HeaderBar from '../../components/HeaderBar'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -10,13 +11,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Home = () => {
+const GuestHome = () => {
     const classes = useStyles()
     return (
         <div className = {classes.container}>
-            <HeaderBar/>
+            <GuestHeaderBar/>
         </div>
     )
 }
 
-export default Home
+export default GuestHome

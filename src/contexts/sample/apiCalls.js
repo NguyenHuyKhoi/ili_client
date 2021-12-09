@@ -23,10 +23,8 @@ export const createMovie = async (movie, dispatch) =>  {
                 token: 'Bearer ' + JSON.parse(localStorage.getItem('user')).accessToken
             }
         })
-        console.log("Upload success :", res.data)
         dispatch(createMovieSuccess(res.data))
     }catch (err) {
-        console.log("Upload failed :", err)
         dispatch(createMovieFailure())
     }
 }

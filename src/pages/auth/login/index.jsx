@@ -1,8 +1,10 @@
-import { Add } from '@mui/icons-material'
+
 import { Button, Divider, Link, TextField, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
-import {theme} from '../../theme'
+import React, { useContext } from 'react'
+import { login } from '../../../contexts/auth/apiCalls'
+import { AuthContext } from '../../../contexts/auth/context'
+import {theme} from '../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh',
@@ -72,6 +74,15 @@ export const LoginWithButton = () => {
 
 const Login = () => {
     const classes = useStyles()
+    const {dispatch} = useContext(AuthContext)
+    
+    const handleLogin = (e) => {
+        e.preventDefault() 
+        login({
+            email: "huykhoiqc@gmail.com", 
+            password: "password"
+        }, dispatch)
+    }
     return (
         <div className = {classes.container}>
             <div className = {classes.login}>
@@ -86,11 +97,15 @@ const Login = () => {
                     <Typography variant = 'caption' >
                         Forgot password?
                     </Typography>
-                    <Link href = '#' >
+                    <Link href = '/auth/reset-password' >
                         Reset your password
                     </Link>
                 </div>
-                <Button variant = 'contained' color = 'success' sx = {{my: theme.spacing(3)}}>
+                <Button variant = 'contained' color = 'success' sx = {{my: theme.spacing(3)}}
+                    onClick = {handleLogin}>
+                    {/* <Link href = '/' underline = 'none' sx = {{color: 'white'}} >
+                       Log in
+                    </Link> */}
                     Login
                 </Button>
                 <div className = {classes.divider}>
@@ -120,7 +135,7 @@ const Login = () => {
                     <Typography variant = 'caption' >
                         Don't have an account?
                     </Typography>
-                    <Link href = '#' >
+                    <Link href = '/auth/register' >
                         Sign up
                     </Link>
                 </div>

@@ -60,17 +60,18 @@ const TabItem = (props) => {
 export const Tabs = (props) => {
     const classes = useStyles()
     const [selectedIndex, setSelectedIndex] = useState(0)
+    let {tabs} = props
     const handleItemClick = (index) => {
         setSelectedIndex(index)
         if (props.onClickTab) {
             props.onClickTab(index)
         }
     }
-    if (props.tabs == undefined) props.tabs = []
+    if (tabs == undefined) tabs = []
     return (
         <div className = {classes.tabs}>
             {
-                props.tabs.map((item, index) => (
+                tabs.map((item, index) => (
                     <div className = {classes.tabContainer}>
                         <TabItem title ={item} handleItemClick = {() => handleItemClick(index)}
                             isSelected = {selectedIndex == index}/>
@@ -92,7 +93,7 @@ const GameLibrary = () => {
     return (
         <div className = {classes.container}>
             <div className = {classes.tabsContainer}>
-                <Tabs/>
+                <Tabs tabs = {['Recent', 'Draft', 'Favorites']}/>
             </div>
             <div className = {classes.games} >
             {
