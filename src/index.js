@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { AuthContextProvider } from './contexts/auth/context';
-import { GameCreatorContextProvider } from './contexts/game_creator/context';
+import { AuthContextProvider } from './context/auth/context';
+import { GameCreatorContextProvider } from './context/game/create/context';
 
 ReactDOM.render(
   <React.StrictMode>
