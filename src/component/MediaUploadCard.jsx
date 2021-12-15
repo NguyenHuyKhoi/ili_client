@@ -4,7 +4,7 @@ import React from 'react'
 import { theme } from '../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
-        flex:1,
+        width: '100%',
         height: '100%',
         backgroundColor: 'white',
         borderRadius: theme.spacing(1),
@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
     img: {
         width: '100%',
+        maxHeight: 200
     }
 }))
 

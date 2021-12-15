@@ -4,7 +4,7 @@ import reducer from "./reducer"
 const INITIAL_STATE = {
     user: JSON.parse(localStorage.getItem('user') || null) ,
     isFetching: false,
-    error: false 
+    errMsg: "" 
 }
 
 export const AuthContext = createContext(reducer)
@@ -22,7 +22,7 @@ export const AuthContextProvider = ({children}) => {
         value = {{
             user: state.user,
             isFetching: state.isFetching,
-            error: state.error,
+            errMsg: state.errMsg,
             dispatch
         }}>
         {

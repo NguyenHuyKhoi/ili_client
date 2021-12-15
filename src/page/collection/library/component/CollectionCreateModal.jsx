@@ -123,7 +123,8 @@ const CollectionCreateModal = (props) => {
 								Cover image
 							</Typography>
 							<div className = {classes.uploadImg}>
-								<MediaUploadCard onSelectImage = {file => handleChange('image', file)}
+								<MediaUploadCard 
+									onSelectImage = {file => handleChange('image', file)}
 									onRemoveImage = {() => handleChange('image', null)}
 									src = {image != null || image != undefined ? URL.createObjectURL(image) : null}/>
 							</div>

@@ -1,10 +1,11 @@
 
-import { Button, Divider, Link, TextField, Typography } from '@mui/material'
+import { Alert, Button, Divider, Link, Snackbar, TextField, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { login } from '../../../context/auth/apiCalls'
 import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
+import { validateEmail, validatePassword } from '../../../util/validator'
 import { LinkedLoginButton } from '../component/LinkedLoginButton'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -57,24 +58,54 @@ export const LoginWithButton = () => {
 
 const LoginPage = () => {
     const classes = useStyles()
-    const {dispatch} = useContext(AuthContext)
-    
+    const {dispatch, errMsg} = useContext(AuthContext)
+    const [inputs, setInputs] = useState({email: "", password: ""})
+    const [error, setError] = useState("")
     const handleLogin = (e) => {
         e.preventDefault() 
+
+        if (!validateEmail(inputs.email)) {
+            setError("Email is empty or invalid")
+            return
+        }
+        // if (!validatePassword(inputs.password)) {
+        //     setError("Password is empty or invalid")
+        //     return
+        // }
+
         login({
-            email: "huykhoiqc@gmail.com", 
-            password: "password"
+            email: inputs.email, 
+            password: inputs.password
         }, dispatch)
     }
+
+    const handleChange = (key, value) => {
+        setError("")
+        setInputs({
+            ...inputs,
+            [key]: value
+        })
+    }
+    const {email, password} = inputs
     return (
         <div className = {classes.container}>
+            <Snackbar open={error != "" || errMsg != ""} autoHideDuration={5000} onClose={() => setError("")}
+                anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
+                <Alert onClose={() => setError("")} severity="error" sx={{ width: '100%' }}>
+                    {error == "" ? errMsg : error}
+                </Alert>
+            </Snackbar>
             <div className = {classes.form}>
                 <Typography variant = 'h5' sx = {{alignSelf: 'center', fontWeight: 'bold'}}>
                     Login
                 </Typography>
                 <TextField id="outlined-basic" label="Username or email" variant="outlined" 
+                    value = {email}
+                    onChange = {(e) => handleChange('email', e.target.value)}
                     sx = {{mt: theme.spacing(2)}}/>
                 <TextField id="outlined-basic" label="Password" variant="outlined" 
+                      value = {password}
+                      onChange = {(e) => handleChange('password', e.target.value)}
                     sx = {{my: theme.spacing(2)}}/>
                 <div className = {classes.forgotPassword}>
                     <Typography variant = 'caption' >
