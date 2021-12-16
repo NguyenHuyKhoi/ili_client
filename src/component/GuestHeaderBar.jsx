@@ -93,7 +93,7 @@ const GuestHeaderBar = () => {
                 Play
             </Button>
             <Button variant = 'contained' sx = {{mx: theme.spacing(2)}} onClick = {handleClickSignUp}>
-                <Link href = '/auth/register' sx = {{color: 'white'}} underline = 'none'>
+                <Link href = '/auth/signup' sx = {{color: 'white'}} underline = 'none'>
                     Sign up
                 </Link>
             </Button>

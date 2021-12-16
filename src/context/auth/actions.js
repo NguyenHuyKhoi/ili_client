@@ -1,20 +1,16 @@
-export const signupStart = () => ({
-    type: 'SIGNUP_START'
+export const generateError = (error) => ({
+    type: 'GENERATE_ERROR',
+    payload: {
+        error
+    }
+})
+
+export const loading = () => ({
+    type: 'LOADING'
 })
 
 export const signupSuccess = () => ({
     type: 'SIGNUP_SUCCESS'
-})
-
-export const signupFailure = (message) => ({
-    type: 'SIGNUP_FAILURE',
-    payload: {
-        message
-    }
-})
-
-export const loginStart = () => ({
-    type: 'LOGIN_START'
 })
 
 export const loginSuccess = (user) => ({
@@ -24,12 +20,17 @@ export const loginSuccess = (user) => ({
     }
 })
 
-export const loginFailure = (message) => ({
-    type: 'LOGIN_FAILURE',
+export const requestResetPasswordSuccess = (email) => ({
+    type: 'REQUEST_RESET_PASSWORD_SUCCESS',
     payload: {
-        message
+        email
     }
 })
+
+export const resetPasswordSuccess = () => ({
+    type: 'RESET_PASSWORD_SUCCESS'
+})
+
 
 export const logoutSuccess = () => ({
     type: 'LOGOUT'

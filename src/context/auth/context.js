@@ -3,8 +3,9 @@ import reducer from "./reducer"
 
 const INITIAL_STATE = {
     user: JSON.parse(localStorage.getItem('user') || null) ,
-    isFetching: false,
-    errMsg: "" 
+    isLoading: false,
+    message: "",
+    isSuccess: false
 }
 
 export const AuthContext = createContext(reducer)
@@ -21,9 +22,10 @@ export const AuthContextProvider = ({children}) => {
     return <AuthContext.Provider
         value = {{
             user: state.user,
-            isFetching: state.isFetching,
-            errMsg: state.errMsg,
-            dispatch
+            message: state.message,
+            isLoading: state.isLoading,
+            isSuccess: state.isSuccess,
+            dispatch,
         }}>
         {
             children

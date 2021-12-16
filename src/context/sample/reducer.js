@@ -4,19 +4,19 @@ const sampleReducer = (state, action) => {
         case 'GET_SAMPLE_START':
             return {
                 sample: null,
-                isFetching: true,
+                isLoading: true,
                 error: false
             }
         case 'GET_SAMPLE_SUCCESS':
             return {
                 sample: {},
-                isFetching: false,
+                isLoading: false,
                 error: false
             }
         case 'GET_SAMPLE_FAILURE':
             return {
                 sample: [],
-                isFetching: false,
+                isLoading: false,
                 error: true
             }
 

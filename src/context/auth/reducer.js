@@ -1,50 +1,53 @@
 const reducer = (state, action) => {
     switch (action.type) {
-        case 'LOGIN_START':
+        case 'LOADING':
             return {
-                user: null,
-                isFetching: true,
-                errMsg: ""
+                ...state,
+                isLoading: true,
+                message: '',
+                isSuccess: false
+            }
+        case 'GENERATE_ERROR':
+            return {
+                ...state,
+                isLoading: false,
+                message: action.payload.error,
+                isSuccess: false
             }
         case 'LOGIN_SUCCESS':
             return {
+                ...state,
                 user: action.payload.user,
-                isFetching: false,
-                errMsg: ""
+                isLoading: false,
+                message: "Login Sucessfully",
+                isSuccess: true
             }
-        case 'LOGIN_FAILURE':
-            return {
-                user: null,
-                isFetching: false,
-                errMsg: action.payload.message
-            }
-        case 'SIGNUP_START': {
-            return {
-                user: null,
-                isFetching: true,
-                errMsg: ""
-            }
-        }
+
         case 'SIGNUP_SUCCESS': {
             return {
-                user: null,
-                isFetching: false,
-                errMsg: ""
+                ...state,
+                isLoading: false,
+                message: "Signup Successfully",
+                isSuccess: true
             }
         }
-        case 'SIGNUP_FAILURE': {
+        case 'REQUEST_RESET_PASSWORD_SUCCESS': {
             return {
-                user: null,
-                isFetching: false,
-                errMsg: action.payload.message
+                ...state,
+                isLoading: false,
+                isSuccess: true
+            }
+        }
+        case 'RESET_PASSWORD_SUCCESS': {
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: true
             }
         }
         case 'LOGOUT':
-            console.log("Logout reducer")
             return {
-                user: null,
-                isFetching: false,
-                error: false
+                ...state
             }
         default: 
             return state

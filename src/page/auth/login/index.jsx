@@ -1,7 +1,7 @@
 
 import { Alert, Button, Divider, Link, Snackbar, TextField, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { login } from '../../../context/auth/apiCalls'
 import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
@@ -58,18 +58,31 @@ export const LoginWithButton = () => {
 
 const LoginPage = () => {
     const classes = useStyles()
-    const {dispatch, errMsg} = useContext(AuthContext)
+    const {dispatch, message, isSuccess, isLoading} = useContext(AuthContext)
     const [inputs, setInputs] = useState({email: "", password: ""})
-    const [error, setError] = useState("")
+    const [msg, setMsg] = useState("")
+    const [showAlert, setShowAlert] = useState(false)
+    
+    useEffect(() => {
+        handleMsg(message)
+        return () => {
+            
+        }
+    }, [message])
+    const handleMsg = (msg) => {
+        setMsg(msg)
+        setShowAlert(msg != '')
+    }
+
     const handleLogin = (e) => {
         e.preventDefault() 
 
         if (!validateEmail(inputs.email)) {
-            setError("Email is empty or invalid")
+            handleMsg("Email is empty or invalid")
             return
         }
         // if (!validatePassword(inputs.password)) {
-        //     setError("Password is empty or invalid")
+        //     handleMsg("Password is empty or invalid")
         //     return
         // }
 
@@ -80,7 +93,7 @@ const LoginPage = () => {
     }
 
     const handleChange = (key, value) => {
-        setError("")
+        handleMsg("")
         setInputs({
             ...inputs,
             [key]: value
@@ -89,10 +102,10 @@ const LoginPage = () => {
     const {email, password} = inputs
     return (
         <div className = {classes.container}>
-            <Snackbar open={error != "" || errMsg != ""} autoHideDuration={5000} onClose={() => setError("")}
+            <Snackbar open={showAlert} autoHideDuration={5000} onClose={() => setShowAlert(false)}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
-                <Alert onClose={() => setError("")} severity="error" sx={{ width: '100%' }}>
-                    {error == "" ? errMsg : error}
+                <Alert onClose={() => setShowAlert(false)} severity={isSuccess ? 'success': 'error'} sx={{ width: '100%' }}>
+                    {msg}
                 </Alert>
             </Snackbar>
             <div className = {classes.form}>
@@ -116,6 +129,7 @@ const LoginPage = () => {
                     </Link>
                 </div>
                 <Button variant = 'contained' color = 'success' sx = {{my: theme.spacing(3)}}
+                    disabled = {isLoading}
                     onClick = {handleLogin}>
                     {/* <Link href = '/' underline = 'none' sx = {{color: 'white'}} >
                        Log in
@@ -149,7 +163,7 @@ const LoginPage = () => {
                     <Typography variant = 'caption' >
                         Don't have an account?
                     </Typography>
-                    <Link href = '/auth/register' >
+                    <Link href = '/auth/signup' >
                         Sign up
                     </Link>
                 </div>

@@ -11,7 +11,7 @@ import HomePage from "./page/home/auth";
 
 // Auth
 import LoginPage from "./page/auth/login";
-import RegisterPage from "./page/auth/register";
+import SignupPage from "./page/auth/signup";
 import ForgotPasswordPage from "./page/auth/forgot_password";
 import ResetPasswordPage from "./page/auth/reset_password";
 
@@ -60,7 +60,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={user ? <HomePage/> : <HomeGuestPage/>}/>
           <Route exact path = '/auth/login' element = {!user ? <LoginPage/> : <Navigate to = '/'/>}/>
-          <Route exact path = '/auth/register' element = {!user ? <RegisterPage/> : <Navigate to = '/'/>}/>
+          <Route exact path = '/auth/signup' element = {!user ? <SignupPage/> : <Navigate to = '/'/>}/>
           <Route exact path = '/auth/forgot-password' element = {!user ? <ForgotPasswordPage/> : <Navigate to = '/'/>}/>
           <Route exact path = '/auth/reset-password' element = {!user ? <ResetPasswordPage/> : <Navigate to = '/'/>}/>
 
