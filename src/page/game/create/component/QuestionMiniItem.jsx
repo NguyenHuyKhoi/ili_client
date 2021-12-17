@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const QuestionMiniItem = (props) => {
     const classes = useStyles()
     const {question} = props
+    console.log("Question :", question)
     const {title, image, correct_answers} = question
     const limitTitle = title != null? title.substring(0, 20) + '...' : ''
     return (
@@ -46,7 +47,7 @@ const QuestionMiniItem = (props) => {
                 <Grid container sx = {{flex: 1}}>
                 {
                     Array.from(Array(4)).map((_, index) => (
-                        <Grid item xs = {6} sx = {{p: theme.spacing(0.2)}}>
+                        <Grid item xs = {6} sx = {{p: theme.spacing(0.2)}}   key = {''+index}>
                             <div className = {classes.answer} 
                                 style = {{backgroundColor: (correct_answers.indexOf(index) != -1) ? 'green' : 'white'}}/>
                         </Grid>

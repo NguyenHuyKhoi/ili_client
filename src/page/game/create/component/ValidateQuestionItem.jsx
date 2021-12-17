@@ -93,7 +93,7 @@ const ValidateQuestionItem = (props) => {
 			<div className = {classes.notes}>
 				{
 					defectives.map((item, index) => (
-						<div className= {classes.noteContainer}>
+						<div className= {classes.noteContainer}   key = {''+index}>
 							<ErrorNote defective = {item}/>
 						</div>
 					))

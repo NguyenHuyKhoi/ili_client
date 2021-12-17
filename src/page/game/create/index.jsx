@@ -3,7 +3,9 @@ import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, validateGame } from '../../../context/game/create/actions'
+import { createGameAPI } from '../../../context/game/create/apiCalls'
 import { GameCreatorContext } from '../../../context/game/create/context'
+import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
 import DeleteQuestionModal from './component/DeleteQuestionModal'
 import GameSettingModal from './component/GameSettingModal'
@@ -24,25 +26,31 @@ const useStyles = makeStyles((theme) => ({
 const GameCreatePage = (props) => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {game, dispatch} = useContext(GameCreatorContext)
+    const {user} = useContext(AuthContext)
+    const {game, dispatch, isSuccess, isLoading} = useContext(GameCreatorContext)
     const {questions, question_index, isValidated} = game
 
     const [canDeleteQuestion, setCanDeleteQuestion] = useState(false)
     const [defectiveQuestions, setDefectiveQuestions] = useState([])
     const [modal, setModal] = useState({})
 
+    console.log("Game data: ", game)
     useEffect(() => {
         setCanDeleteQuestion((questions.length > 1))
+        if (isSuccess) {
+            navigate('/library/game', {replace: true})
+        }
         return () => {
             
         }
-    }, [questions.length])
+    }, [questions.length, isSuccess])
 
     const handleExit= () => {
         navigate('/game/library')
     }
 
     const handleSave = async () => {
+        if (isLoading) return
         await dispatch(validateGame())
 
         let qs = questions.filter((item, index) => item.defectives!= undefined && item.defectives.length > 0)
@@ -54,14 +62,20 @@ const GameCreatePage = (props) => {
             setModal({state: 'setting'})
         }
         else {
-            navigate('/game/library', {replace: false})
+            createGameAPI(
+                game,
+                user.accessToken,
+                dispatch
+            )
         }
     }
     const handleSaveDraft = () => {
+        if (isLoading) return
         setModal({})
         navigate('/game/library')
     }
     const handleSelectFixQuestion = (index) => {
+        if (isLoading) return
         setModal({})
         dispatch(selectQuestion(index))
     }

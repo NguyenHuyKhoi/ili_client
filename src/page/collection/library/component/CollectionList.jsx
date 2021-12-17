@@ -64,7 +64,7 @@ const CollectionList = (props) => {
                 </div>
                 :
                 collections.map((_, index) => (
-                    <div className = {classes.item}>
+                    <div className = {classes.item}   key = {''+index}>
                         <CollectionRowItem/>
                     </div>
                 ))

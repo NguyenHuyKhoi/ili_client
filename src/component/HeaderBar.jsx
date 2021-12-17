@@ -104,7 +104,8 @@ export const DropDownMenu = (props) => {
                     {
                         items != undefined &&
                         items.map((item, index) => (
-                            <ListItemButton sx={{ pl: 4 }}
+                            <ListItemButton sx={{ pl: 4 }}  
+                                key = {''+index}
                                 onClick = {handleClickItem}>
                                 <ListItemText primary={item} />
                             </ListItemButton>
@@ -247,6 +248,7 @@ const HeaderBar = (props) => {
                 {
                     tabs.map((item, index) => (
                         <TabItem isSelected = {selectedIndex == index}
+                            key = {''+index}
                             label = {item.label}
                             onClick = {()=>handleTabChange(tabs[index])}/>
                     ))

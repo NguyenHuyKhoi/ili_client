@@ -75,7 +75,7 @@ const GameOptions = () => {
             {
                 showOptions && 
                 Array.from(Array(4)).map((_, index) => (
-                    <div className = {classes.itemContainer}>
+                    <div className = {classes.itemContainer}   key = {''+index}>
                         <OptionItem/>
                     </div>
                 ))

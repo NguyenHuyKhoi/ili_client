@@ -109,7 +109,7 @@ const QuestionRowItem = (props) => {
                 <div className = {classes.answers}>
                     {
                         Array.from(Array(4)).map((_, index) => (
-                            <Answer/>
+                            <Answer   key = {''+index}/>
                         ))
                     }
                 </div>

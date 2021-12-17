@@ -85,7 +85,7 @@ const Header = () => {
 					<Grid container >
 						{
 							Array.from(Array(5)).map((_, index) => (
-								<Grid item xs = {6}>
+								<Grid item xs = {6}   key = {''+index}>
 									<InforRowItem />
 									<Divider/>
 								</Grid>

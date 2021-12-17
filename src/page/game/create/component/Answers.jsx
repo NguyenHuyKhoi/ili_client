@@ -95,7 +95,7 @@ const Answers = (props) => {
         <div className = {classes.container}>
             <Grid container rowSpacing={1.5} columnSpacing={{ xs: 1.5 }} sx = {{width:'100%',height:'100%'}}>
                 {answers.map((item, index) => (
-                    <Grid item xs={6}>
+                    <Grid item xs={6}   key = {''+index}>
                         <Tooltip open={true} title="Add">
                             <Answer answer = {item} 
                                 color = {['red','blue','yellow','green'][index]}

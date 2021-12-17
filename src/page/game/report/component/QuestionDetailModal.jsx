@@ -64,7 +64,7 @@ const QuestionDetailModal = (props) => {
 						<Grid container rowSpacing = {3}>
 							{
 								Array.from(Array(3)).map((_, index) => (
-									<Grid item xs = {4}>
+									<Grid item xs = {4}   key = {''+index}>
 										<InforRowItem/>
 									</Grid>
 								))

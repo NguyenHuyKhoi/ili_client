@@ -35,6 +35,20 @@ const validateGameSetting = (game) => {
 const reducer = (state, action) => {
     const {question, index, setting} = action.payload != undefined ? action.payload : {}
     switch (action.type) {
+        case 'LOADING':
+            return {
+                ...state,
+                isLoading: true,
+                message: '',
+                isSuccess: false
+            }
+        case 'GENERATE_ERROR':
+            return {
+                ...state,
+                isLoading: false,
+                message: action.payload.error,
+                isSuccess: false
+            }
         case 'UPDATE_GAME_SETTING':
             console.log("Update setting reducer ", setting)
             return {
@@ -79,6 +93,11 @@ const reducer = (state, action) => {
             return {
                 ...state
             }
+        case 'CREATE_GAME_SUCCESS': {
+            return {
+                ...state
+            }
+        }
         default: 
             return state
     }

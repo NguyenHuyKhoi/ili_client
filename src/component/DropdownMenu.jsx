@@ -31,7 +31,7 @@ const DropdownMenu = (props) => {
                 {
                     list != undefined &&
                     list.map((item, index) => (
-                        <MenuItem value={item.value}>
+                        <MenuItem value={item.value}   key = {''+index}>
                             {item.label }
                         </MenuItem>
                     ))

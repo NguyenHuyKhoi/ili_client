@@ -50,7 +50,7 @@ const GameFinishPage = () => {
                 <div className = {classes.list}>
                     {
                         Array.from(Array(3)).map((_, index) => (
-                            <div className = {classes.item}>
+                            <div className = {classes.item}   key = {''+index}>
                                 <PlayerRank widthPercent = { index < 5? 100 - index *10 : 50  }/>
                             </div>
                         ))

@@ -94,7 +94,7 @@ const Question = (props) => {
                 <Grid container columnSpacing = {1} rowSpacing = {1}>
                     {
                         Array.from(Array(4)).map((_, index) => (
-                            <Grid item xs = {6} >
+                            <Grid item xs = {6}   key = {''+index}>
                                 <Answer/>
                             </Grid>
                         ))

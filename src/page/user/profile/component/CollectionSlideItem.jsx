@@ -34,7 +34,7 @@ const CollectionSlideItem = (props) => {
                     {
 
                         Array.from(Array(4)).map((_, index) => (
-                            <Grid item xs = {3}>
+                            <Grid item xs = {3}   key = {''+index}>
                                 <GameCellItem disableProfileLink = {true}/>
                             </Grid>
                         ))

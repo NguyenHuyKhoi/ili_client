@@ -29,7 +29,7 @@ const GameList = () => {
                 {
 
                     Array.from(Array(40)).map((_, index) => (
-                        <Grid item xs = {3}>
+                        <Grid item xs = {3}   key = {''+index}>
                             <GameCellItem/>
                         </Grid>
                     ))

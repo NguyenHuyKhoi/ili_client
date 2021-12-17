@@ -47,7 +47,8 @@ const QuestionList = (props) => {
             <div className = {classes.list} >
             {
                 questions.map((item, index) => (
-                    <div className = {classes.item} onClick = {()=>handleSelected(index)}
+                    <div className = {classes.item} onClick = {()=>handleSelected(index)} 
+                        key = {''+index}
                         style={{
                             backgroundColor: question_index == index ? blue[100]:'white'
                         }}>

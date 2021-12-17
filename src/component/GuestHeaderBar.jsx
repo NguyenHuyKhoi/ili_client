@@ -85,7 +85,8 @@ const GuestHeaderBar = () => {
                 {
                     Array.from(Array(3)).map((_, index) => (
                         <TabItem isSelected = {selectedIndex == index}
-                            onClick = {()=>handleTabChange(index)}/>
+                            onClick = {()=>handleTabChange(index)}
+                            key = {''+index}/>
                     ))
                 }
             </div>

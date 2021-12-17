@@ -1,3 +1,13 @@
+export const generateError = (error) => ({
+    type: 'GENERATE_ERROR',
+    payload: {
+        error
+    }
+})
+
+export const loading = () => ({
+    type: 'LOADING'
+})
 
 export const updateGameSetting = (setting) => ({
     type: 'UPDATE_GAME_SETTING',
@@ -42,4 +52,8 @@ export const deleteQuestion = (index) => ({
     payload: {
         index
     }
+})
+
+export const createGameSuccess = () => ({
+    type: 'CREATE_GAME_SUCCESS'
 })

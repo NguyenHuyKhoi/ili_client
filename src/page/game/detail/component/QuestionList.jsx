@@ -71,7 +71,7 @@ const QuestionList = () => {
             <div className = {classes.list} >
             {
                 Array.from(Array(20)).map((_, index) => (
-                    <div className = {classes.item}>
+                    <div className = {classes.item}   key = {''+index}>
                         <QuestionRowItem isShowAll = {isShowAll}/>
                     </div>
                 ))

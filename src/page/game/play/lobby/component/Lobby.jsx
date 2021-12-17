@@ -97,7 +97,7 @@ const Lobby = (props) => {
                 <div className = {classes.players}>
                     {
                         Array.from(Array(15)).map((_, index) => (
-                            <PlayerCard/>
+                            <PlayerCard   key = {''+index}/>
                         ))
                     }
                 </div>

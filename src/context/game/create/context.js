@@ -24,20 +24,27 @@ const sample_game = {
     questions: [{...sample_question}]
 }
 
-const INITIAL_STATE = sample_game
-//JSON.parse(localStorage.getItem('game_creator') || JSON.stringify(sample_game))
+const INITIAL_STATE = () => {
+    const saved = localStorage.getItem('game_creator')
+    if (saved) {
+        return JSON.parse(saved)
+    }
+    else {
+        return {...sample_game}
+    }
+}
 
 
 export const GameCreatorContext = createContext(reducer)
 
 export const GameCreatorContextProvider = ({children}) => {
-    const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
-    // useEffect(() => {
-    //     localStorage.setItem('game_creator', JSON.stringify(state))
-    //     return () => {
+    const [state, dispatch] = useReducer(reducer, INITIAL_STATE())
+    useEffect(() => {
+        localStorage.setItem('game_creator', JSON.stringify(state))
+        return () => {
             
-    //     }
-    // }, [state])
+        }
+    }, [state])
     return <GameCreatorContext.Provider
         value = {{
             game: state,

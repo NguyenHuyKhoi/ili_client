@@ -30,7 +30,9 @@ const Checkboxes = (props) => {
             >
                 {
                     list.map((item, index) => (
-                        <FormControlLabel value={item.label} control={<Radio />} label={item.value} />
+                        <FormControlLabel value={item.label} control={<Radio />} label={item.value} 
+                            key = {''+index}
+                            />
                     ))
                 }
             </RadioGroup>

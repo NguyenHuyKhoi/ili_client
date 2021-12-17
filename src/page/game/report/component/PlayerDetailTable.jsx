@@ -41,6 +41,7 @@ const PlayerDetailTable = () => {
         <TableBody>
           {rows.map((row) => (
             <TableRow
+            
               key={row.nickname}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >

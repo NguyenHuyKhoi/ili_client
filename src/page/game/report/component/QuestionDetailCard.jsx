@@ -104,7 +104,7 @@ const QuestionDetailCard = () => {
 					<div className = {classes.answers}>
 						{
 							Array.from(Array(5)).map((_, index) => (
-								<Answer />
+								<Answer   key = {''+index} />
 							))
 						}
 					</div>
@@ -113,7 +113,7 @@ const QuestionDetailCard = () => {
 			<div className = {classes.infors}>
 				{
 					Array.from(Array(3)).map((_, index) => (
-						<InforItem/>
+						<InforItem   key = {''+index}/>
 					))
 				}
 			</div>

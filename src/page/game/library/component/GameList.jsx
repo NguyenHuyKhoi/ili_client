@@ -69,7 +69,7 @@ export const Tabs = (props) => {
         <div className = {classes.tabs}>
             {
                 tabs.map((item, index) => (
-                    <div className = {classes.tabContainer}>
+                    <div className = {classes.tabContainer}   key = {''+index}>
                         <TabItem title ={item} handleItemClick = {() => handleItemClick(index)}
                             isSelected = {selectedIndex == index}/>
                     </div>
@@ -95,7 +95,7 @@ const GameList = () => {
             <div className = {classes.games} >
             {
                 Array.from(Array(3)).map((_, index) => (
-                    <div className = {classes.gameContainer}>
+                    <div className = {classes.gameContainer}   key = {''+index}>
                         <GameRowItem/>
                     </div>
                 ))

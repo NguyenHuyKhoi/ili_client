@@ -75,7 +75,8 @@ const ValidateGameModal = (props) => {
 				<div className= {classes.body}>
 					{
 						questions.map((item, index) => (
-							<div className= {classes.question}>
+							<div className= {classes.question}
+							key = {''+index}>
 								<ValidateQuestionItem onClick = {() => {
 									if (props.onClickQuestion) {
 										props.onClickQuestion(index)

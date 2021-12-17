@@ -29,7 +29,7 @@ const GameList = () => {
             <div className = {classes.list} >
             {
                 Array.from(Array(3)).map((_, index) => (
-                    <div className = {classes.item}>
+                    <div className = {classes.item}   key = {''+index}>
                         <GameRowItem/>
                     </div>
                 ))

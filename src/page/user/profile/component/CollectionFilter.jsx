@@ -31,7 +31,7 @@ const CollectionFilter = () => {
                 {
 
                     Array.from(Array(10)).map((_, index) => (
-                        <div className = {classes.value}>
+                        <div className = {classes.value}   key = {''+index}>
                             <Chip label="Chip Filled" />
                         </div>
                     ))

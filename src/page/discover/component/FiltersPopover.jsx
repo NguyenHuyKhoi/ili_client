@@ -101,9 +101,9 @@ const Menu = (props) => {
                 subitems.map((item, index) => 
                 (
                     item.subitems != undefined ?
-                    <ExpanableMenuItem item = {item} onHover = {() => handleSelect(item)}/>
+                    <ExpanableMenuItem item = {item} onHover = {() => handleSelect(item)} key = {''+index}/>
                     :
-                    <SelectableMenuItem item = {item}/>
+                    <SelectableMenuItem item = {item}   key = {''+index}/>
                 )
                 )
             }
@@ -145,7 +145,7 @@ const FiltersPopover = (props) => {
             <div className= {classes.menus}>
                 {
                     menus.map((item, index) => (
-                        <div className= {classes.menuContainer}>
+                        <div className= {classes.menuContainer}   key = {''+index}>
                             <Menu menu = {item}
                                 onSelect = {(subitem) => handleSelectItem (subitem, index)}/>
                         </div>
