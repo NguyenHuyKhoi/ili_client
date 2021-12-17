@@ -53,6 +53,15 @@ const reducer = (state, action) => {
                 isSuccess: true
             }
         }
+        case 'UPDATE_USER_INFOR': {
+            return {
+                ...state,
+                user: {
+                    accessToken: state.user.accessToken,
+                    ...action.payload.user
+                }
+            }
+        }
         case 'LOGOUT_SUCCESS':
             return {
                 ...state,

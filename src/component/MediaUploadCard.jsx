@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const MediaUploadCard = (props) => {
     const classes = useStyles()
     const {src} = props
+    console.log('src :', src)
     const handleSelectImage = (e) => {
         if (e.target.files.length > 0) {
             let file = e.target.files[0]

@@ -10,3 +10,7 @@ export const validatePassword = (data) => {
     return String(data)
         .match (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
 }
+
+export const validateUrl = (data) => {
+    return true
+}

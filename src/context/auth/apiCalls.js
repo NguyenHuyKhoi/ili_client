@@ -82,4 +82,3 @@ export const changePassword = async (data, token, dispatch) => {
         dispatch(generateError(error))
     }
 } 
-
