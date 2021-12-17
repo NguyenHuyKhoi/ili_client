@@ -29,10 +29,12 @@ const useStyles = makeStyles((theme) => ({
 
 const SettingPage = () => {
     const classes = useStyles()
+
     const [tabIndex, setTabIndex] = useState(0)
     const handleTabChange = (index) => {
         setTabIndex(index)
     }
+
     return (
         <div className = {classes.container}>
             <HeaderBar/>

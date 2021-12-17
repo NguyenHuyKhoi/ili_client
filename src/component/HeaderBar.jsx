@@ -67,9 +67,22 @@ export const DropDownMenu = (props) => {
     const [open, setOpen] = React.useState(false);
     const {menu} = props
     if (menu == undefined) menu = {}
+
+    const {title, items} = menu
     const handleClick = () => {
-      setOpen(!open);
+        if (items == undefined || items.length == 0) {
+            if (props.onClick)  props.onClick()
+            
+        }
+        else {
+            setOpen(!open);
+        }
     };
+
+    const handleClickItem = () => {
+        if (props.onClickItem)   props.onClickItem()
+        
+    }
     return (
         <List
             sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
@@ -81,16 +94,18 @@ export const DropDownMenu = (props) => {
                 <ListItemIcon>
                     <InboxIcon />
                 </ListItemIcon>
-                <ListItemText primary={menu.title} />
-                {menu.items == undefined? null:
-                 open ? <ExpandLess /> : <ExpandMore />}
+                <ListItemText primary={title} />
+                {
+                    items == undefined? null:
+                         open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {
-                        menu.items != undefined &&
-                        menu.items.map((item, index) => (
-                            <ListItemButton sx={{ pl: 4 }}>
+                        items != undefined &&
+                        items.map((item, index) => (
+                            <ListItemButton sx={{ pl: 4 }}
+                                onClick = {handleClickItem}>
                                 <ListItemText primary={item} />
                             </ListItemButton>
                         ))
@@ -130,10 +145,15 @@ export const TabItem = (props) => {
 
 const AvatarPopover = () => {
     const classes = useStyles()
-    const {dispatch} = useContext(AuthContext)
+    const navigate = useNavigate()
+    const {dispatch, user} = useContext(AuthContext)
     const handleLogout = (e) => {
         e.preventDefault()
-        logout(dispatch)
+        logout(user, dispatch)
+    }
+
+    const handleClickSettings = () => {
+        navigate('/user/setting', {replace: false})
     }
     return (
         <div className = {classes.avatarPopover}>
@@ -147,7 +167,8 @@ const AvatarPopover = () => {
             </div>
             <DropDownMenu menu = {{
                 title: 'Change Language'
-            }}/>
+            }}
+            />
               <DropDownMenu menu = {{
                 title: 'Subscriptions',
                 items: [
@@ -155,12 +176,9 @@ const AvatarPopover = () => {
                 ]
             }}/>
             <DropDownMenu menu = {{
-                title: 'Settings',
-                items: [
-                    'Profile Settings',
-                    'Upgrade'
-                ]
-            }}/>
+                title: 'Profile Settings'
+            }}
+                onClick = {handleClickSettings}/>
             <DropDownMenu menu = {{
                 title: 'Resources',
                 items: [

@@ -20,6 +20,11 @@ export const loginSuccess = (user) => ({
     }
 })
 
+
+export const logoutSuccess = (user) => ({
+    type: 'LOGOUT_SUCCESS'
+})
+
 export const requestResetPasswordSuccess = (email) => ({
     type: 'REQUEST_RESET_PASSWORD_SUCCESS',
     payload: {
@@ -31,8 +36,6 @@ export const resetPasswordSuccess = () => ({
     type: 'RESET_PASSWORD_SUCCESS'
 })
 
-
-export const logoutSuccess = () => ({
-    type: 'LOGOUT'
+export const changePasswordSuccess = () => ({
+    type: 'CHANGE_PASSWORD_SUCCESS'
 })
-

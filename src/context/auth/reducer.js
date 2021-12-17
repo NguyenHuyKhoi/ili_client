@@ -45,10 +45,21 @@ const reducer = (state, action) => {
                 isSuccess: true
             }
         }
-        case 'LOGOUT':
+        case 'CHANGE_PASSWORD_SUCCESS': {
             return {
-                ...state
+                ...state,
+                message: 'Change password success',
+                isLoading: false,
+                isSuccess: true
             }
+        }
+        case 'LOGOUT_SUCCESS':
+            return {
+                ...state,
+                user: null,
+                isLoading: false,
+                isSuccess: true
+        }
         default: 
             return state
     }
