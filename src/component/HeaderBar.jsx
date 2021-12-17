@@ -255,7 +255,7 @@ const HeaderBar = (props) => {
                 }
             </div>
             <Button variant = 'contained'>
-                <Link href = '/game/create' underline = 'none' sx = {{color: 'white'}}>
+                <Link href = '/game/creator' underline = 'none' sx = {{color: 'white'}}>
                     Create
                 </Link>
             </Button>

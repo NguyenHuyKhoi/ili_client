@@ -85,7 +85,7 @@ const ResetPasswordPage = (props) => {
             return
         }
         const token = new URLSearchParams(location.search).get('token');
-        console.log("Token")
+        //console.log("Token")
         resetPassword({
             password: inputs.password
         },token ,dispatch)

@@ -2,8 +2,8 @@ import { grey } from '@mui/material/colors';
 import { makeStyles } from '@mui/styles';
 import React, { useContext } from 'react';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
-import { updateQuestion } from '../../../../context/game/create/actions';
-import { GameCreatorContext } from '../../../../context/game/create/context';
+import { updateQuestion } from '../../../../context/game/creator/actions';
+import { GameCreatorContext } from '../../../../context/game/creator/context';
 import Answers from './Answers';
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -60,7 +60,7 @@ const QuestionBuilder = () => {
         <div className = {classes.container}>
             <div className = {classes.titleBox} >
                 <input type = 'text' placeholder = 'Enter question here' className = {classes.titleInput}
-                    value={title}
+                    value={title == null ? '':title}
                     onChange={e => handleChange('title',e.target.value)}/>
             </div>
             <div className = {classes.uploadImg}>

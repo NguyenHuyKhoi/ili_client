@@ -1,4 +1,4 @@
-import { sample_question } from "./context"
+import { sample_game, sample_question } from "./context"
 
 const validateQuestion = (question) => {
     let defs = []
@@ -17,7 +17,7 @@ const validateQuestion = (question) => {
     if (correct_answers.length == 0) {
         defs.push('Correct answers not selected')
     }
-    console.log("Validate :", defs)
+    //console.log("Validate :", defs)
     return defs
 }
 
@@ -50,13 +50,13 @@ const reducer = (state, action) => {
                 isSuccess: false
             }
         case 'UPDATE_GAME_SETTING':
-            console.log("Update setting reducer ", setting)
+            //console.log("Update setting reducer ", setting)
             return {
                 ...state,
                 ...setting
             }
         case 'VALIDATE_GAME':
-            console.log("Validate game")
+            //console.log("Validate game")
             state.isValidated = validateGameSetting(state)
             state.questions.forEach((item, index) => item.defectives = validateQuestion(item)) 
             return {
@@ -75,7 +75,7 @@ const reducer = (state, action) => {
             }
         case 'DUPLICATE_QUESTION':
             let q = {...state.questions[index]}
-            console.log("Inset question at:", index)
+            //console.log("Inset question at:", index)
             state.questions.splice(index, 0, q)
             return {
                 ...state
@@ -94,8 +94,28 @@ const reducer = (state, action) => {
                 ...state
             }
         case 'CREATE_GAME_SUCCESS': {
+            console.log("Create game success")
             return {
-                ...state
+                ...state,
+                isLoading: false,
+                message: 'Create game successfully',
+                isSuccess: true
+            }
+        }
+
+        case 'START_CREATE_GAME': {
+            return {
+                ...state,
+                ...sample_game,
+                mode: 'start'
+            }
+        }
+
+        case 'START_EDIT_GAME': {
+            return {
+                ...state,
+                ...action.payload.game,
+                mode: 'edit'
             }
         }
         default: 

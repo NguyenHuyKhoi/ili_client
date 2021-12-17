@@ -60,7 +60,7 @@ const ForgotPasswordPage = () => {
 
     useEffect(() => {
         handleMsg(message)
-        console.log("Update message", message)
+        //console.log("Update message", message)
         return () => {
             
         }

@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const QuestionMiniItem = (props) => {
     const classes = useStyles()
     const {question} = props
-    console.log("Question :", question)
+    //console.log("Question :", question)
     const {title, image, correct_answers} = question
     const limitTitle = title != null? title.substring(0, 20) + '...' : ''
     return (

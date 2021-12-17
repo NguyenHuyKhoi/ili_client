@@ -5,13 +5,12 @@ import { theme } from '../theme'
 const useStyles = makeStyles((theme) => ({
 }))
 
-const Checkboxes = (props) => {
+const WrappedRadioGroup = (props) => {
     const classes = useStyles()
     const {title, list, value} = props
-    const handleChange = (e) => {
-        let value = e.target.value
+    const handleChange = (value) => {
+        console.log("change value :", value)
         if (props.onChange) {
-            console.log("OnChange :",value)
             props.onChange(value)
         }
     }
@@ -26,13 +25,15 @@ const Checkboxes = (props) => {
                 value = {value}
                 name="radio-buttons-group"
                 sx = {{display: 'flex',flexDirection: 'row'}}
-                onChange={(e) => handleChange('visibility', e.target.value)}
+                onChange={(e) => handleChange(e.target.value)}
             >
                 {
                     list.map((item, index) => (
-                        <FormControlLabel value={item.label} control={<Radio />} label={item.value} 
+                        <FormControlLabel value={item.value} control={<Radio />} label={item.label} 
+                            checked = {value == item.value}
                             key = {''+index}
-                            />
+                            
+                        />
                     ))
                 }
             </RadioGroup>
@@ -40,4 +41,4 @@ const Checkboxes = (props) => {
     )
 }
 
-export default Checkboxes
+export default WrappedRadioGroup

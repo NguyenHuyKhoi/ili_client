@@ -58,7 +58,7 @@ const ExpanableMenuItem = (props) => {
     const {item} = props
     const {label, value} = item
     const handleHoverItem = () => {
-        console.log("Listen hover item")
+        //console.log("Listen hover item")
         if (props.onHover) {
             props.onHover()
         }

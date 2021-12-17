@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { AuthContextProvider } from './context/auth/context';
 import { UserContextProvider} from './context/user/context'
-import { GameCreatorContextProvider } from './context/game/create/context';
+import { GameCreatorContextProvider } from './context/game/creator/context';
 import axios from 'axios'
 
 axios.defaults.baseURL = 'http://localhost:8800/api/';

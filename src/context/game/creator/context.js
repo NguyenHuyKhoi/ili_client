@@ -14,12 +14,12 @@ export const sample_question = {
     time_limit: null
 }
 
-const sample_game = {
+export const sample_game = {
     title: null,
     description: null,
     cover: null,
-    language: null,
-    visibility: null,
+    language: 'en',
+    visibility: 'private',
     question_index: 0,
     questions: [{...sample_question}]
 }

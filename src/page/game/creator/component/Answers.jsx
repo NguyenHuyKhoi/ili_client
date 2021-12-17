@@ -61,7 +61,7 @@ const Answer = (props) => {
             </div>
             <input type = 'text' placeholder = '' 
                 className = {classes.titleInput} 
-                value = {answer}
+                value = {answer == null ? '' : answer}
                 onChange = {handleAnswerChange}/>
             <div onClick = {handleCorrectChange}>
             {
@@ -96,13 +96,11 @@ const Answers = (props) => {
             <Grid container rowSpacing={1.5} columnSpacing={{ xs: 1.5 }} sx = {{width:'100%',height:'100%'}}>
                 {answers.map((item, index) => (
                     <Grid item xs={6}   key = {''+index}>
-                        <Tooltip open={true} title="Add">
-                            <Answer answer = {item} 
-                                color = {['red','blue','yellow','green'][index]}
-                                isCorrect = {(correct_answers.indexOf(index) != -1)}
-                                onChange = {(value) => handleAnswerChange(index, value)}
-                                onChangeCorrect = {(isCorrect)=> handleAnswerCorrectChange(index,isCorrect)}/>
-                        </Tooltip>
+                        <Answer answer = {item} 
+                            color = {['red','blue','yellow','green'][index]}
+                            isCorrect = {(correct_answers.indexOf(index) != -1)}
+                            onChange = {(value) => handleAnswerChange(index, value)}
+                            onChangeCorrect = {(isCorrect)=> handleAnswerCorrectChange(index,isCorrect)}/>
                     </Grid>
                 ))}
             </Grid>

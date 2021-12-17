@@ -10,7 +10,7 @@ const DropdownMenu = (props) => {
     const handleChange = (e) => {
         let value = e.target.value
         if (props.onChange) {
-            console.log("OnChange :",value)
+            //console.log("OnChange :",value)
             props.onChange(value)
         }
     }
@@ -24,7 +24,8 @@ const DropdownMenu = (props) => {
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={value}
+                value={value == null ?'':value}
+                defaultValue={''}
                 label="Age"
                 onChange={handleChange}
             >

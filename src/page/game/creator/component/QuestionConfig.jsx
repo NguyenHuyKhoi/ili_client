@@ -2,8 +2,8 @@ import { Button, Divider } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import DropdownMenu from '../../../../component/DropdownMenu'
-import { updateQuestion } from '../../../../context/game/create/actions'
-import { GameCreatorContext } from '../../../../context/game/create/context'
+import { updateQuestion } from '../../../../context/game/creator/actions'
+import { GameCreatorContext } from '../../../../context/game/creator/context'
 const useStyles = makeStyles((theme) => ({
     container: {
         padding: theme.spacing(2),

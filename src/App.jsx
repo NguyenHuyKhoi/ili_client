@@ -1,50 +1,50 @@
+import { ThemeProvider } from '@mui/material/styles';
 import { useContext } from "react";
-import { BrowserRouter as Router,Routes, Route, Navigate} from "react-router-dom"
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { theme } from "./theme";
+import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import { AuthContext } from "./context/auth/context";
-
-
-// Home
-import HomeGuestPage from "./page/home/guest";
-import HomePage from "./page/home/auth";
-
+import ForgotPasswordPage from "./page/auth/forgot_password";
 // Auth
 import LoginPage from "./page/auth/login";
-import SignupPage from "./page/auth/signup";
-import ForgotPasswordPage from "./page/auth/forgot_password";
 import ResetPasswordPage from "./page/auth/reset_password";
-
+import SignupPage from "./page/auth/signup";
+import CollectionDetailPage from "./page/collection/detail";
 // Collection
 import CollectionEditPage from "./page/collection/edit";
 import CollectionLibraryPage from "./page/collection/library";
-import CollectionDetailPage from "./page/collection/detail";
-
 // Discover
 import SearchPage from "./page/discover/search";
 import DiscoverPage from "./page/discover/suggestion";
-
 // Game
-import GameCreatePage from "./page/game/create";
+import GameCreatorPage from "./page/game/creator";
 import GameDetailPage from "./page/game/detail";
 import GameLibraryPage from "./page/game/library";
-import GameReportPage from "./page/game/report";
-
-import GameLobbyPage from "./page/game/play/lobby";
-import GameHostSettingPage from "./page/game/play/host_setting";
 import GameEntrancePage from "./page/game/play/entrance";
-import GameStadiumPage from "./page/game/play/stadium";
 import GameFinishPage from "./page/game/play/finish";
-
+import GameHostSettingPage from "./page/game/play/host_setting";
+import GameLobbyPage from "./page/game/play/lobby";
+import GameStadiumPage from "./page/game/play/stadium";
+import GameReportPage from "./page/game/report";
 // Group
 import GroupListPage from "./page/group/list";
-
+import HomePage from "./page/home/auth";
+// Home
+import HomeGuestPage from "./page/home/guest";
 // Report
 import DashboardReportPage from "./page/report/dashboard";
-
 // User
 import ProfilePage from "./page/user/profile";
 import SettingPage from "./page/user/setting";
+import { theme } from "./theme";
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -71,7 +71,7 @@ const App = () => {
           <Route exact path = '/discover/suggestion' element = {user ? <DiscoverPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/discover/search' element = {user ? <SearchPage/> : <Navigate to = '/auth/login'/>}/>
           
-          <Route exact path = '/game/create' element = {user ? <GameCreatePage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/game/create' element = {user ? <GameCreatorPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/game/detail' element = {user ? <GameDetailPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/game/library' element = {user ? <GameLibraryPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/game/report' element = {user ? <GameReportPage/> : <Navigate to = '/auth/login'/>}/>

@@ -69,7 +69,7 @@ const SignupPage = () => {
     }
     const handleSignup = (e) => {
         e.preventDefault() 
-        console.log("Is success", isSuccess)
+        //console.log("Is success", isSuccess)
         if (!validateEmail(inputs.email)) {
             handleMsg("Email is empty or invalid")
             return

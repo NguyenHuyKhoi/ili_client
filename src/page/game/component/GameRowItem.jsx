@@ -74,7 +74,7 @@ export const GameRowItem = (props) => {
 
     const handleEdit = (e) => {
         e.stopPropagation()
-        navigate('/game/create', {replace: false})
+        navigate('/game/creator', {replace: false})
     }
 
     const handlePlay = (e) => {

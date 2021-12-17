@@ -4,7 +4,7 @@ import axios from 'axios'
 export const login = async (user, dispatch) =>  {
     dispatch(loading())
     try {
-        console.log("User ", user)
+        //console.log("User ", user)
         const res = await axios.post('auth/login', user)    
         dispatch(loginSuccess(res.data))
     }catch (err) {
@@ -45,7 +45,7 @@ export const requestResetPassword = async (data, dispatch) => {
     dispatch(loading())
     try {
         const res = await axios.post('auth/forgot-password', data)
-        console.log("reset link", res.data)
+        //console.log("reset link", res.data)
         dispatch(requestResetPasswordSuccess())
     }
     catch (err) {
@@ -59,7 +59,7 @@ export const resetPassword = async (data, token, dispatch) => {
     try {
         const url = 'auth/reset-password' + 
             (token == undefined || token =='' ? '':`?token=${token}`)
-        console.log("Url :", url)
+        //console.log("Url :", url)
         const res = await axios.post(url, data)
         dispatch(resetPasswordSuccess())
     }

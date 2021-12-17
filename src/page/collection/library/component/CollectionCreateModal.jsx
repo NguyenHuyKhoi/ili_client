@@ -2,7 +2,7 @@ import { TextareaAutosize } from '@mui/base';
 import { Button, Grid, Modal, TextField, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
-import Checkboxes from '../../../../component/Checkboxes';
+import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
 import { theme } from "../../../../theme";
 const useStyles = makeStyles((theme) => ({
@@ -100,14 +100,14 @@ const CollectionCreateModal = (props) => {
 								placeholder="Describe your game..."
 								style={{ width: '100%', height: 120,m: theme.spacing(0.5) }}
 							/>
-							<Checkboxes title = 'Owner' 
+							<WrappedRadioGroup title = 'Owner' 
 								list = {[
 									{label: 'Personal', value: 'personal'}
 								]}
 								value = {'personal'}
 								/>
 
-							<Checkboxes title = 'Visibility' 
+							<WrappedRadioGroup title = 'Visibility' 
 								list = {[
 									{label: 'Public', value: 'public'},
 									{label: 'Private', value: 'private'}

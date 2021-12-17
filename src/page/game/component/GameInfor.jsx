@@ -63,7 +63,7 @@ const GameInfor = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const handleEdit = () => {
-        navigate('/game/create', {replace: false})
+        navigate('/game/creator', {replace: false})
     }
 
     const handlePlay = () => {

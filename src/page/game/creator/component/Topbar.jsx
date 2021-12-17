@@ -1,6 +1,7 @@
 import { AppBar, Button, Toolbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, { useContext } from 'react'
+import { GameCreatorContext } from '../../../../context/game/creator/context'
 import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -33,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Topbar = (props) => {
     const classes = useStyles()
+    const {game} = useContext(GameCreatorContext)
+    const {title} = game
     return (
         <AppBar position = 'fixed' sx = {{height: 60}}>
             <Toolbar className = {classes.toolbar}>
@@ -45,7 +48,15 @@ const Topbar = (props) => {
                     }}
                 
                 >
-                    <Typography variant='subtitle1' className = {classes.title}> Enter name ... </Typography>
+                    <Typography variant='subtitle1' className = {classes.title}> 
+                        {
+                            title == '' || title == null ?
+                            'Enter name ...'
+                            :
+                            title
+                        }
+                     
+                    </Typography>
                     <Button variant="contained" size = "small" color = "neutral" sx = {{ marginLeft: theme.spacing(3)}}>Setting</Button>
                 </div>
                 <div style = {{flex:1}}/> 

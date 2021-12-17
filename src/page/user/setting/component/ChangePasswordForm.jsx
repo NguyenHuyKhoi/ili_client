@@ -74,7 +74,7 @@ const ChangePasswordForm = (props) => {
 				[key]: value
 			})
 	}
-	console.log("Is success: ", isSuccess)
+	//console.log("Is success: ", isSuccess)
   	return (
     	<div className = {classes.container}>
 			<Snackbar open={showAlert} autoHideDuration={5000} onClose={() => setShowAlert(false)}

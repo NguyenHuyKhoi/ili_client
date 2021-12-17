@@ -1,8 +1,10 @@
 import { TextareaAutosize } from '@mui/base';
 import { Button, FormControlLabel, Grid, MenuItem, Modal, Radio, RadioGroup, Select, TextField, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
+import DropdownMenu from '../../../../component/DropdownMenu';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
+import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
 import { theme } from "../../../../theme";
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -51,9 +53,15 @@ const GameSettingModal = (props) => {
 
 	var {open} = props
 	if (open == undefined) open = false
+
 	const handleClose = () => {
 		if (props.onClose) {
 			props.onClose()
+		}
+	}
+	const handleDone = () => {
+		if (props.onDone) {
+			props.onDone(draftSetting)
 		}
 	}
 
@@ -63,6 +71,7 @@ const GameSettingModal = (props) => {
 	}
 
 	const handleChange = (key, value) => {
+		console.log("Handle change:", key, value)
 		setDraftSetting({
 			...draftSetting,
 			[key]: value
@@ -115,34 +124,22 @@ const GameSettingModal = (props) => {
 									onRemoveImage = {() => handleChange('image', null)}
 									src = {image != null || image != undefined ? URL.createObjectURL(image) : null}/>
 							</div>
-							<Typography variant = 'subtitle1' 
-								sx= {{fontWeight: 'bold', mt: theme.spacing(2)}} >
-								Language
-							</Typography>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
+						    <DropdownMenu title = 'Language'
+								list = {[
+									{label: 'English', value: 'en'},
+									{label: 'Vietnamese', value: 'vn'}
+								]}
 								value = {language}
-								label="Age"
-								onChange={(e) => handleChange('language', e.target.value)}
-							>
-								<MenuItem value={'EN'}>English</MenuItem>
-								<MenuItem value={'VI'}>Vietnamese</MenuItem>
-							</Select>
+								onChange = {(value)=>handleChange('language',value)}/>
 
-							<Typography variant = 'subtitle1' 
-								sx= {{fontWeight: 'bold', mt: theme.spacing(2)}} >
-								Visibility
-							</Typography>
-							<RadioGroup
-								aria-label="gender"
+							<WrappedRadioGroup title = 'Visibility' 
+								list = {[
+									{label: 'Public', value: 'public'},
+									{label: 'Private', value: 'private'}
+								]}
 								value = {visibility}
-								name="radio-buttons-group"
-								onChange={(e) => handleChange('visibility', e.target.value)}
-							>
-								<FormControlLabel value="private" control={<Radio />} label="Private" />
-								<FormControlLabel value="public" control={<Radio />} label="Public" />
-							</RadioGroup>
+								onChange = {(value)=>handleChange('visibility',value)}
+								/>
 						</div>
 					</Grid>
 				</Grid>
@@ -152,11 +149,7 @@ const GameSettingModal = (props) => {
 						Cancel
 					</Button>
 					<Button variant="contained" color="success" sx = {{ml: theme.spacing(2)}}
-						onClick = {
-							() => {
-								if (props.onDone) props.onDone(setting)
-							}
-						}>
+						onClick = {handleDone}>
 						Done
 					</Button>
 				</div>

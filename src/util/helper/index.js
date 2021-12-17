@@ -1,7 +1,7 @@
 import { validateUrl } from "../validator"
 
 export const createUrl = (data) => {
-    console.log("Create url with :",data)
+    //console.log("Create url with :",data)
     if (data == undefined || data == null) {
         return null
     }

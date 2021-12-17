@@ -49,7 +49,7 @@ const UserInforForm = (props) => {
 			username: user.username,
 			name: user.name
 		})
-		console.log("Update inputs from user ",user)
+		//console.log("Update inputs from user ",user)
 		return () => {
 			
 		}

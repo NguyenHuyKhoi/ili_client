@@ -2,9 +2,9 @@ import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, validateGame } from '../../../context/game/create/actions'
-import { createGameAPI } from '../../../context/game/create/apiCalls'
-import { GameCreatorContext } from '../../../context/game/create/context'
+import { deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, validateGame } from '../../../context/game/creator/actions'
+import { createGameAPI } from '../../../context/game/creator/apiCalls'
+import { GameCreatorContext } from '../../../context/game/creator/context'
 import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
 import DeleteQuestionModal from './component/DeleteQuestionModal'
@@ -14,6 +14,7 @@ import QuestionConfig from './component/QuestionConfig'
 import QuestionList from './component/QuestionList'
 import Topbar from './component/Topbar'
 import ValidateGameModal from './component/ValidateGameModal'
+import SuccessModal from './component/SuccessModal'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const GameCreatePage = (props) => {
+const GameCreatorPage = (props) => {
     const classes = useStyles()
     const navigate = useNavigate()
     const {user} = useContext(AuthContext)
@@ -34,7 +35,7 @@ const GameCreatePage = (props) => {
     const [defectiveQuestions, setDefectiveQuestions] = useState([])
     const [modal, setModal] = useState({})
 
-    console.log("Game data: ", game)
+    //console.log("Game data: ", game)
     useEffect(() => {
         setCanDeleteQuestion((questions.length > 1))
         if (isSuccess) {
@@ -80,6 +81,10 @@ const GameCreatePage = (props) => {
         dispatch(selectQuestion(index))
     }
 
+    const handleDoneCreate = () => {
+        navigate('/game/library', {replace: true})
+    }
+
     return (
         <div className = {classes.container}>
             <Topbar 
@@ -87,6 +92,11 @@ const GameCreatePage = (props) => {
                 onSave = {handleSave}
                 onExit = {handleExit}
                 />
+            <SuccessModal 
+                open = {isSuccess}     
+                onClose = {() => {}}
+                onDone = {handleDoneCreate}/>
+
             <GameSettingModal 
                 setting = {game}
                 open = {modal.state == 'setting'}     
@@ -131,4 +141,4 @@ const GameCreatePage = (props) => {
     )
 }
 
-export default GameCreatePage
+export default GameCreatorPage
