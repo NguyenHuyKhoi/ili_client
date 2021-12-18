@@ -4,7 +4,9 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from '../../../../asset/image/logo.jpg'
 import OwnerInfor from '../../../../component/OwnerInfor'
+import { startEditGame } from '../../../../context/game/creator/actions'
 import { theme } from '../../../../theme'
+import { createUrl } from '../../../../util/helper'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -31,18 +33,27 @@ const useStyles = makeStyles((theme) => ({
 const GameInfor = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
+    const {game} = props
+    console.log("Game infor :", game)
+    const {title, description, cover} = game
     const handleEdit = () => {
-        navigate('/game/creator', {replace: false})
+        if (props.onEdit) {
+            props.onEdit()
+        }
     }
 
     const handlePlay = () => {
-        navigate('/game/host_setting', {replace: false})
+        if (props.onPlay) {
+            props.onPlay()
+        }
     }
     return (
         <div className = {classes.container}>
-            <img className = {classes.gameImg} src = {logo}/>
+            <img className = {classes.gameImg} src = {createUrl(cover)}/>
             <div className = {classes.body} >
-                <Typography variant = 'h6'>Game Title</Typography>
+                <Typography variant = 'h6'>
+                    {title}
+                </Typography>
                 <div className = {classes.btnBar} >
                     <Button variant="contained" color="success"
                         onClick={handlePlay}>
@@ -53,7 +64,9 @@ const GameInfor = (props) => {
                         Edit
                     </Button>
                 </div>
-                <Typography variant = 'subtitle2' sx = {{my: theme.spacing(2)}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias iure quibusdam repellendus totam velit inventore, blanditiis officiis enim facilis ipsa nulla ut recusandae ex molestias nihil consectetur voluptatibus corporis doloremque.</Typography>
+                <Typography variant = 'subtitle2' sx = {{my: theme.spacing(2)}}>
+                    {description}
+                </Typography>
             </div>
             <OwnerInfor/>
            

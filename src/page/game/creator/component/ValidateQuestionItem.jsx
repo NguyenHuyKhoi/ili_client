@@ -4,6 +4,7 @@ import { grey } from '@mui/material/colors';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { theme } from "../../../../theme";
+import { createUrl } from '../../../../util/helper';
 const useStyles = makeStyles((theme) => ({
 	container: {
 		display: 'flex',
@@ -68,7 +69,7 @@ const ValidateQuestionItem = (props) => {
 	return (
 		<div className = {classes.container} >
 			<div className= {classes.header}>
-				<img src = {image != null && image != undefined ? URL.createObjectURL(image) : null}
+				<img src = {createUrl(image)}
 					className= {classes.img}/>
 				<div className = {classes.infor}>
 					<Typography variant = 'subtitle1'>

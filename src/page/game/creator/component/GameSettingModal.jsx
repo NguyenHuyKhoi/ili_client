@@ -6,6 +6,7 @@ import DropdownMenu from '../../../../component/DropdownMenu';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
 import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
 import { theme } from "../../../../theme";
+import { createUrl } from '../../../../util/helper';
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -122,7 +123,7 @@ const GameSettingModal = (props) => {
 							<div className = {classes.uploadImg}>
 								<MediaUploadCard onSelectImage = {file => handleChange('image', file)}
 									onRemoveImage = {() => handleChange('image', null)}
-									src = {image != null || image != undefined ? URL.createObjectURL(image) : null}/>
+									src = {createUrl(image)}/>
 							</div>
 						    <DropdownMenu title = 'Language'
 								list = {[

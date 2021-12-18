@@ -13,6 +13,8 @@ import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../context/auth/apiCalls'
 import { AuthContext } from '../context/auth/context'
+import { startCreateGame } from '../context/game/creator/actions'
+import { GameCreatorContext } from '../context/game/creator/context'
 import { theme } from '../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -225,6 +227,7 @@ const tabs = [
 const HeaderBar = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
+    const {dispatch} = useContext(GameCreatorContext)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const {selectedIndex} = props
     const handleClickAvatar = (event) => {
@@ -240,6 +243,11 @@ const HeaderBar = (props) => {
     const handleTabChange = (tab) => {
         navigate(tab.link, {replace: false})
     }
+
+    const handleCreate = () => {
+        dispatch(startCreateGame())
+        navigate('/game/creator',{replace: true})
+    }
     return (
         <div className = {classes.container}>
             <img src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Kahoot_Logo.svg/1280px-Kahoot_Logo.svg.png'
@@ -254,10 +262,8 @@ const HeaderBar = (props) => {
                     ))
                 }
             </div>
-            <Button variant = 'contained'>
-                <Link href = '/game/creator' underline = 'none' sx = {{color: 'white'}}>
-                    Create
-                </Link>
+            <Button variant = 'contained' onClick = {handleCreate}>
+                Create
             </Button>
             <Avatar sx = {{mx: theme.spacing(2)}} 
                 src = 'https://thuthuatnhanh.com/wp-content/uploads/2019/05/gai-xinh-toc-ngan-facebook.jpg'

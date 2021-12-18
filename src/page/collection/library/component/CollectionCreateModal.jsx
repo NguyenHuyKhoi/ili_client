@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
 import { theme } from "../../../../theme";
+import { createUrl } from '../../../../util/helper';
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -126,7 +127,7 @@ const CollectionCreateModal = (props) => {
 								<MediaUploadCard 
 									onSelectImage = {file => handleChange('image', file)}
 									onRemoveImage = {() => handleChange('image', null)}
-									src = {image != null || image != undefined ? URL.createObjectURL(image) : null}/>
+									src = {createUrl(image)}/>
 							</div>
 						</div>
 					</Grid>

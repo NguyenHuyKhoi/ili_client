@@ -3,6 +3,7 @@ import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { theme } from '../../../../theme'
+import { createUrl } from '../../../../util/helper'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -41,7 +42,7 @@ const QuestionMiniItem = (props) => {
             <Typography variant='caption' sx = {{alignSelf:'center'}}>
                 {limitTitle}
             </Typography>
-            <img src = {image != null ? URL.createObjectURL(image) : null} 
+            <img src = {createUrl(image)} 
                 className = {classes.img}/>
             <div className = {classes.answers}>
                 <Grid container sx = {{flex: 1}}>

@@ -36,22 +36,6 @@ import ProfilePage from "./page/user/profile";
 import SettingPage from "./page/user/setting";
 import { theme } from "./theme";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const App = () => {
   const {user} = useContext(AuthContext)
   return (
@@ -71,8 +55,8 @@ const App = () => {
           <Route exact path = '/discover/suggestion' element = {user ? <DiscoverPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/discover/search' element = {user ? <SearchPage/> : <Navigate to = '/auth/login'/>}/>
           
-          <Route exact path = '/game/create' element = {user ? <GameCreatorPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/game/detail' element = {user ? <GameDetailPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/game/creator' element = {user ? <GameCreatorPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/game/detail/:id' element = {user ? <GameDetailPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/game/library' element = {user ? <GameLibraryPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/game/report' element = {user ? <GameReportPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/game/entrance' element = {user ? <GameEntrancePage/> : <Navigate to = '/auth/login'/>}/>

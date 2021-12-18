@@ -2,8 +2,8 @@ import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, validateGame } from '../../../context/game/creator/actions'
-import { createGameAPI } from '../../../context/game/creator/apiCalls'
+import { deleteQuestion, duplicateQuestion, resetState, selectQuestion, updateGameSetting, validateGame } from '../../../context/game/creator/actions'
+import { createGameAPI, editGameAPI } from '../../../context/game/creator/apiCalls'
 import { GameCreatorContext } from '../../../context/game/creator/context'
 import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
@@ -28,25 +28,22 @@ const GameCreatorPage = (props) => {
     const classes = useStyles()
     const navigate = useNavigate()
     const {user} = useContext(AuthContext)
-    const {game, dispatch, isSuccess, isLoading} = useContext(GameCreatorContext)
+    const {game, dispatch, isSuccess, isLoading, mode} = useContext(GameCreatorContext)
     const {questions, question_index, isValidated} = game
 
     const [canDeleteQuestion, setCanDeleteQuestion] = useState(false)
     const [defectiveQuestions, setDefectiveQuestions] = useState([])
     const [modal, setModal] = useState({})
 
-    //console.log("Game data: ", game)
     useEffect(() => {
         setCanDeleteQuestion((questions.length > 1))
-        if (isSuccess) {
-            navigate('/library/game', {replace: true})
-        }
         return () => {
             
         }
-    }, [questions.length, isSuccess])
+    }, [questions.length])
 
     const handleExit= () => {
+        dispatch(resetState())
         navigate('/game/library')
     }
 
@@ -62,8 +59,15 @@ const GameCreatorPage = (props) => {
         else if (!isValidated) {
             setModal({state: 'setting'})
         }
-        else {
+        else if (mode == 'create') {
             createGameAPI(
+                game,
+                user.accessToken,
+                dispatch
+            )
+        }
+        else if (mode == 'edit') {
+            editGameAPI(
                 game,
                 user.accessToken,
                 dispatch
@@ -73,6 +77,7 @@ const GameCreatorPage = (props) => {
     const handleSaveDraft = () => {
         if (isLoading) return
         setModal({})
+        dispatch(resetState())
         navigate('/game/library')
     }
     const handleSelectFixQuestion = (index) => {
@@ -82,6 +87,7 @@ const GameCreatorPage = (props) => {
     }
 
     const handleDoneCreate = () => {
+        dispatch(resetState())
         navigate('/game/library', {replace: true})
     }
 
@@ -93,7 +99,7 @@ const GameCreatorPage = (props) => {
                 onExit = {handleExit}
                 />
             <SuccessModal 
-                open = {isSuccess}     
+                open = { isSuccess }     
                 onClose = {() => {}}
                 onDone = {handleDoneCreate}/>
 

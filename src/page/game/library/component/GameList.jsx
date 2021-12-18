@@ -1,7 +1,10 @@
 import { Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { AuthContext } from '../../../../context/auth/context'
+import { getCompleteGameAPI } from '../../../../context/game/other/apiCalls'
+import { GameContext } from '../../../../context/game/other/context'
 import { GameRowItem } from '../../component/GameRowItem'
 
 const useStyles = makeStyles((theme) => ({
@@ -81,12 +84,22 @@ export const Tabs = (props) => {
 
 const GameList = () => {
     const classes = useStyles()
+    const {user} = useContext(AuthContext)
+    const {games, isLoading, isSuccess, dispatch} = useContext(GameContext)
+    useEffect(() => {
+        getCompleteGameAPI(
+            user.accessToken,
+            dispatch
+        )
+        return () => {
+            
+        }
+    }, [])
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [isShowAll, setIsShowAll] = useState(false)
     const handleShowAllChange = () => {
         setIsShowAll(!isShowAll)
     }
-
     return (
         <div className = {classes.container}>
             <div className = {classes.tabsContainer}>
@@ -94,9 +107,9 @@ const GameList = () => {
             </div>
             <div className = {classes.games} >
             {
-                Array.from(Array(3)).map((_, index) => (
+                games.map((item, index) => (
                     <div className = {classes.gameContainer}   key = {''+index}>
-                        <GameRowItem/>
+                        <GameRowItem game = {item} owner = {user}/>
                     </div>
                 ))
             }

@@ -49,6 +49,15 @@ const reducer = (state, action) => {
                 message: action.payload.error,
                 isSuccess: false
             }
+        case 'RESET_STATE': {
+            console.log("Call reset state")
+            return {
+                ...state,
+                isLoading: false,
+                message: false,
+                isSuccess: false
+            }
+        }
         case 'UPDATE_GAME_SETTING':
             //console.log("Update setting reducer ", setting)
             return {
@@ -94,7 +103,7 @@ const reducer = (state, action) => {
                 ...state
             }
         case 'CREATE_GAME_SUCCESS': {
-            console.log("Create game success")
+            console.log('Create succcess')
             return {
                 ...state,
                 isLoading: false,
@@ -103,11 +112,21 @@ const reducer = (state, action) => {
             }
         }
 
+        case 'EDIT_GAME_SUCCESS': {
+            console.log("Edit success")
+            return {
+                ...state,
+                isLoading: false,
+                message: 'Edit game successfully',
+                isSuccess: true
+            }
+        }
+
         case 'START_CREATE_GAME': {
             return {
                 ...state,
                 ...sample_game,
-                mode: 'start'
+                mode: 'create'
             }
         }
 

@@ -11,7 +11,7 @@ export const sample_question = {
         null
     ],
     correct_answers: [],
-    time_limit: null
+    time_limit: 20
 }
 
 export const sample_game = {
@@ -25,12 +25,24 @@ export const sample_game = {
 }
 
 const INITIAL_STATE = () => {
+    let state = {
+        mode: 'create',
+        isLoading: false,
+        isSuccess: false,
+        message: ''
+    }
     const saved = localStorage.getItem('game_creator')
     if (saved) {
-        return JSON.parse(saved)
+        return{
+            ...state,
+            ...JSON.parse(saved)
+        }
     }
     else {
-        return {...sample_game}
+        return {
+            ...state,
+            ...sample_game
+        }
     }
 }
 
@@ -48,6 +60,10 @@ export const GameCreatorContextProvider = ({children}) => {
     return <GameCreatorContext.Provider
         value = {{
             game: state,
+            mode: state.mode,
+            isLoading: state.isLoading,
+            message: state.message,
+            isSuccess: state.isSuccess,
             dispatch
         }}>
         {

@@ -2,8 +2,10 @@ import { MoreVert, Star } from '@mui/icons-material'
 import { Avatar, Button, Link, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, {useContext} from 'react'
 import { useNavigate } from 'react-router-dom'
+import { selectGame } from '../../../context/game/other/actions'
+import { GameContext } from '../../../context/game/other/context'
 import { theme } from '../../../theme'
 
 const useStyles = makeStyles((theme) => ({
@@ -68,39 +70,53 @@ const useStyles = makeStyles((theme) => ({
 export const GameRowItem = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
+    const {dispatch} = useContext(GameContext)
+    const {game, owner} = props
+    const {title, questions} = game
     const handleSelect = () => {
-        navigate('/game/detail', {replace: false})
+        dispatch(selectGame(game))
+    }
+
+    const handleViewDetail = () => {
+        handleSelect()
+        navigate('/game/detail/'+game._id, {replace: false})
     }
 
     const handleEdit = (e) => {
         e.stopPropagation()
+        handleSelect()
         navigate('/game/creator', {replace: false})
     }
 
     const handlePlay = (e) => {
         e.stopPropagation()
+        handleSelect()
         navigate('/game/host_setting', {replace: false})
     }
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}
-            onClick={handleSelect}>
+            onClick={handleViewDetail}>
             <div className = {classes.left}>
                 <img className = {classes.img} src = 'https://vnn-imgs-a1.vgcloud.vn/image-english.vov.vn/h500/uploaded/vn1pm7jlycly8uzveukg/2019_11_28/1_LDJZ.jpg'/>
                 <div className = {classes.questionNums}>
-                    <Typography variant = 'caption' sx = {{color: 'white'}}> 12 questions </Typography>
+                    <Typography variant = 'caption' sx = {{color: 'white'}}> {questions.length} questions </Typography>
                 </div>
                 <div className = {classes.draftTag}>
-                    <Typography variant = 'caption' sx = {{color: 'white'}}> Drag </Typography>
+                    <Typography variant = 'caption' sx = {{color: 'white'}}> Draf </Typography>
                 </div>
             </div>
             <div className = {classes.right}>
                 <div className = {classes.rightTop}>
-                    <Typography variant = 'subtitle1' sx = {{color: 'black', fontWeight: 'bold', flex: 1}}> Game title</Typography>
+                    <Typography variant = 'subtitle1' sx = {{color: 'black', fontWeight: 'bold', flex: 1}}> 
+                        {title}
+                    </Typography>
                     <Star sx = {{color: 'yellow'}} />
                     <MoreVert/>
                 </div>
                 <div className = {classes.rightBottom}>
-                    <Typography variant = 'subtitle1' sx = {{color: 'black', flex: 1}}> Game Owner</Typography>
+                    <Typography variant = 'subtitle1' sx = {{color: 'black', flex: 1}}>
+                        {owner.username}
+                    </Typography>
                     <Button variant = 'contained' size = 'small' color = 'primary' sx = {{ml: theme.spacing(2)}}
                         onClick = {handleEdit}>Edit </Button>
                     <Button variant = 'contained' size = 'small' color = 'success' sx = {{ml: theme.spacing(2)}}

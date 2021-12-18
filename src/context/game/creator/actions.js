@@ -10,6 +10,10 @@ export const loading = () => ({
     type: 'LOADING'
 })
 
+export const resetState = () => ({
+    type: 'RESET_STATE'
+})
+
 export const startCreateGame = () => ({
     type: 'START_CREATE_GAME'
 })
@@ -67,4 +71,8 @@ export const deleteQuestion = (index) => ({
 
 export const createGameSuccess = () => ({
     type: 'CREATE_GAME_SUCCESS'
+})
+
+export const editGameSuccess = () => ({
+    type: 'EDIT_GAME_SUCCESS'
 })

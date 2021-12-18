@@ -30,22 +30,11 @@ const useStyles = makeStyles((theme) => ({
         justifyContent:'space-between'
     }
 }))
-const Answer = (props) => {
-    const classes = useStyles()
-    return (
-        <div className = {classes.answer} >
-            <Square sx = {{backgroundColor: 'red',fontSize: 15, color: 'white', p: theme.spacing(0.8), borderRadius: theme.spacing(0.5)}}/>
-            <Typography sx = {{flex: 1, mx: theme.spacing(3)}} variant = 'subtitle2'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci commodi impedit, nihil quo,
-            </Typography>
-            <Check  sx = {{ color: 'green'}}/>
-        </div>
-    )
-}
 
-const QuestionList = () => {
+const QuestionList = (props) => {
     const classes = useStyles()
-    const [selectedIndex, setSelectedIndex] = useState(0)
+    const {game} = props
+    const {questions} = game
     const [isShowAll, setIsShowAll] = useState(false)
     const handleShowAllChange = () => {
         setIsShowAll(!isShowAll)
@@ -54,7 +43,9 @@ const QuestionList = () => {
     return (
         <div className = {classes.container}>
             <div className = {classes.header}>
-                <Typography variant = 'h6'>Question(15)</Typography>
+                <Typography variant = 'h6'>
+                    {`Question(${questions ? questions.length : 0})`}
+                </Typography>
                 <div onClick = {handleShowAllChange}>
                     <Typography variant = 'h6' sx = {{textDecorationLine: 'underline'}}>
                         {
@@ -70,9 +61,9 @@ const QuestionList = () => {
             </div>
             <div className = {classes.list} >
             {
-                Array.from(Array(20)).map((_, index) => (
+                questions.map((item, index) => (
                     <div className = {classes.item}   key = {''+index}>
-                        <QuestionRowItem isShowAll = {isShowAll}/>
+                        <QuestionRowItem isShowAll = {isShowAll} question = {item} index = {index}/>
                     </div>
                 ))
             }

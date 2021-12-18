@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
 import { updateQuestion } from '../../../../context/game/creator/actions';
 import { GameCreatorContext } from '../../../../context/game/creator/context';
+import { createUrl } from '../../../../util/helper';
 import Answers from './Answers';
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -67,7 +68,7 @@ const QuestionBuilder = () => {
                 <MediaUploadCard 
                     onSelectImage = {(image) => handleChange('image', image)}
                     onRemoveImage = {() => handleChange('image', null)}
-                    src = {image != null ?URL.createObjectURL(image) : undefined}/>
+                    src = {createUrl(image)}/>
             </div>
             <Answers answers = {answers}
                 correct_answers = {correct_answers}

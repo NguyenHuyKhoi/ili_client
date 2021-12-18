@@ -1,7 +1,12 @@
 import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, {useContext} from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
 import HeaderBar from '../../../component/HeaderBar'
+import { startEditGame } from '../../../context/game/creator/actions'
+import { GameCreatorContext } from '../../../context/game/creator/context'
+import { selectGame } from '../../../context/game/other/actions'
+import { GameContext } from '../../../context/game/other/context'
 import GameInfor from './component/GameInfor'
 import QuestionList from './component/QuestionList'
 const useStyles = makeStyles((theme) => ({
@@ -12,15 +17,27 @@ const useStyles = makeStyles((theme) => ({
 
 const GameDetailPage = () => {
     const classes = useStyles()
+    const navigate = useNavigate()
+    const {game} = useContext(GameContext)
+    const {dispatch} = useContext(GameCreatorContext)
+    console.log("Game : ", game)
+    const handleEdit = () => {
+        dispatch(startEditGame(game))
+        navigate('/game/creator', {replace: false})
+    }
+
+    const handlePlay = () => {
+        navigate('/game/host-setting', {replace: false})
+    }
     return (
         <div className = {classes.container}>
             <HeaderBar/>
             <Grid container>
                 <Grid item sm={3} >
-                    <GameInfor/>
+                    <GameInfor game = {game} onEdit = {handleEdit}/>
                 </Grid>
                 <Grid item sm={9} sx = {{overflow: 'auto', maxHeight: '90vh'}}>
-                    <QuestionList/>
+                    <QuestionList game = {game} onPlay = {handlePlay}/>
                 </Grid>
             </Grid>
         </div>

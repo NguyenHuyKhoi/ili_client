@@ -1,9 +1,10 @@
-import { Check, Square } from '@mui/icons-material'
+import { Check, Square, TitleOutlined } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React, { useEffect, useState } from 'react'
 import { theme } from '../../../../theme'
+import { createUrl } from '../../../../util/helper'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1),
         backgroundColor: 'white',
     },  
-    time: {
+    time_limit: {
         position: 'absolute',
         bottom: theme.spacing(0.5),
         right: theme.spacing(0.5),
@@ -46,16 +47,10 @@ const useStyles = makeStyles((theme) => ({
         height:7
     },
     img: {
-        height:25,
-        width:45,
+        height: 100,
+        aspectRatio: 1.4,
         alignSelf:'center',
         marginTop: theme.spacing(1)
-    },
-    header: {
-        display: 'flex',
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'space-between'
     },
     answer: {
         display: 'flex',
@@ -68,11 +63,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 const Answer = (props) => {
     const classes = useStyles()
+    const {answer, correct} = props
+    console.log("ANswer ", answer, correct)
     return (
         <div className = {classes.answer} >
             <Square sx = {{backgroundColor: 'red',fontSize: 15, color: 'white', p: theme.spacing(0.8), borderRadius: theme.spacing(0.5)}}/>
             <Typography sx = {{flex: 1, mx: theme.spacing(3)}} variant = 'subtitle2'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci commodi impedit, nihil quo,
+                {
+                    answer
+                }
             </Typography>
             <Check  sx = {{ color: 'green'}}/>
         </div>
@@ -80,36 +79,46 @@ const Answer = (props) => {
 }
 const QuestionRowItem = (props) => {
     const classes = useStyles()
+    const {isShowAll} = props
     const [isShow, setIsShow] = useState(false)
+    const {question, index} = props
+    console.log("Question :", question)
+    const {title, image, answers, correct_answers, time_limit } = question
     const handleShowChange = () => {
         setIsShow(!isShow)
     }
 
     useEffect(() => {
-        setIsShow(props.isShowAll)
+        setIsShow(isShowAll)
         return () => {
-            //
+            
         }
-    }, [props.isShowAll])
+    }, [isShowAll])
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}>
             <div className = {classes.header} onClick = {handleShowChange}>
               
                 <div className = {classes.infor}>
-                    <Typography variant = 'subtitle1'>1 - Quiz</Typography>
-                    <Typography variant = 'subtitle1'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum modi, omnis debitis, distincti</Typography>
+                    <Typography variant = 'subtitle1'>
+                        {`Quiz : ${index}`}
+                    </Typography>
+                    <Typography variant = 'subtitle1'>
+                        {title}
+                    </Typography>
                 </div>
-                <img className = {classes.img} src = 'https://vnn-imgs-a1.vgcloud.vn/image-english.vov.vn/h500/uploaded/vn1pm7jlycly8uzveukg/2019_11_28/1_LDJZ.jpg'/>
-                <div className = {classes.time}>
-                    <Typography variant = 'subtitle2' sx = {{color: 'white'}}> 30 sec</Typography>
+                <img className = {classes.img} src = {createUrl(image)}/>
+                <div className = {classes.time_limit}>
+                    <Typography variant = 'subtitle2' sx = {{color: 'white'}}>
+                        {time_limit + ' sec'}
+                    </Typography>
                 </div>
             </div>
             {
                 (isShow) &&
                 <div className = {classes.answers}>
                     {
-                        Array.from(Array(4)).map((_, index) => (
-                            <Answer   key = {''+index}/>
+                        answers.map((item, index) => (
+                            <Answer   key = {''+index} answer = {item} correct = { correct_answers.indexOf(index) != -1 }/>
                         ))
                     }
                 </div>
