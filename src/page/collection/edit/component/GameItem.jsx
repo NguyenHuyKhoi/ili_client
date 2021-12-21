@@ -2,12 +2,11 @@ import { MoreVert, Star } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, { useState , useContext } from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { selectCollection } from '../../../context/collection/actions'
-import { CollectionContext } from '../../../context/collection/context'
-import { theme } from '../../../theme'
-import { createUrl } from '../../../util/helper'
+import { addGameToCollection, removeGameToCollection } from '../../../../context/collection/actions'
+import { CollectionContext } from '../../../../context/collection/context'
+
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1),
         paddingLeft: theme.spacing(2)
     },
-    gameNums: {
+    questionNums: {
         position: 'absolute',
         bottom: theme.spacing(0.5),
         right: theme.spacing(0.5),
@@ -54,33 +53,44 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'black',
         opacity: 0.8,
         zIndex: 99
-    }
+    },
+    draftTag: {
+        position: 'absolute',
+        top: theme.spacing(0.5),
+        left: theme.spacing(0.5),
+        padding: theme.spacing(0.6),
+        borderRadius: theme.spacing(0.5),
+        backgroundColor: 'red',
+        opacity: 0.8,
+        zIndex: 99
+    },
 }))
- 
-export const CollectionRowItem = (props) => {
-    const navigate = useNavigate()
-    const {dispatch} = useContext(CollectionContext)
-    const classes = useStyles()
-    const {collection} = props
-    const {title, games, cover} = collection
-    const handleView = () => {
-        dispatch(selectCollection(collection))
-        navigate('/collection/detail', {replace: false})
-    }
 
-    const handleEdit = (e) => {
-        e.stopPropagation()
-        navigate('/collection/edit', {replace: false})
+export const GameItem = (props) => {
+    const navigate = useNavigate()
+    const classes = useStyles()
+    const {dispatch} = useContext(CollectionContext)
+    const {game, owner, isAdded} = props
+    const {title, questions} = game
+    const handleSelect = () => {
+        if (isAdded) {
+            dispatch(removeGameToCollection(game))
+        }
+        else {
+            dispatch(addGameToCollection(game))
+        }
     }
     return (
-        <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}
-            onClick={handleView}>
+        <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}>
             <div className = {classes.left}>
-                <img className = {classes.img} src = {createUrl(cover)}/>
-                <div className = {classes.gameNums}>
+                <img className = {classes.img} src = 'https://vnn-imgs-a1.vgcloud.vn/image-english.vov.vn/h500/uploaded/vn1pm7jlycly8uzveukg/2019_11_28/1_LDJZ.jpg'/>
+                <div className = {classes.questionNums}>
                     <Typography variant = 'caption' sx = {{color: 'white'}}> 
-                        {games.length + ' games'}
-                     </Typography>
+                        {questions.length} questions 
+                    </Typography>
+                </div>
+                <div className = {classes.draftTag}>
+                    <Typography variant = 'caption' sx = {{color: 'white'}}> Draf </Typography>
                 </div>
             </div>
             <div className = {classes.right}>
@@ -88,22 +98,19 @@ export const CollectionRowItem = (props) => {
                     <Typography variant = 'subtitle1' sx = {{color: 'black', fontWeight: 'bold', flex: 1}}> 
                         {title}
                     </Typography>
-                    <Star sx = {{color: 'yellow'}} />
-                    <MoreVert/>
+                    <Button variant='contained' color = {isAdded ? 'neutral':'info'}
+                        onClick = {handleSelect}>
+                        {
+                            isAdded? 'Added' : 'Add'
+                        }
+                    </Button>
                 </div>
                 <div className = {classes.rightBottom}>
                     <Typography variant = 'subtitle1' sx = {{color: 'black', flex: 1}}>
-
+                        {owner.username}
                     </Typography>
-                    <Button variant = 'contained' size = 'small' color = 'primary' sx = {{ml: theme.spacing(2)}}
-                        onClick = {handleEdit}>Edit </Button>
-                    <Button variant = 'contained' size = 'small' color = 'success' sx = {{ml: theme.spacing(2)}}>
-                        Open
-                    </Button>
                 </div>
             </div>
         </div>
     )
 }
-
-export default CollectionRowItem

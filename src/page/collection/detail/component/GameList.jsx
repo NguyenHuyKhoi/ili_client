@@ -22,15 +22,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const GameList = () => {
+const GameList = (props) => {
     const classes = useStyles()
+    const {collection} = props
+    const {games} = collection
     return (
         <div className = {classes.container}>
             <div className = {classes.list} >
             {
-                Array.from(Array(3)).map((_, index) => (
+                games.map((item, index) => (
                     <div className = {classes.item}   key = {''+index}>
-                        <GameRowItem/>
+                        <GameRowItem game = {item} owner = {{
+                            username: 'test user',
+                            avatar: ''
+                        }}/>
                     </div>
                 ))
             }

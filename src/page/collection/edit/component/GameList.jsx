@@ -2,6 +2,7 @@ import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { GameRowItem } from '../../../game/component/GameRowItem'
+import { GameItem } from './GameItem'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -19,18 +20,19 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
         display:'flex',
         flexDirection:'column'
-    }
+    },
 }))
 
-const GameList = () => {
+const GameList = (props) => {
     const classes = useStyles()
+    const {games, owner} = props
     return (
         <div className = {classes.container}>
             <div className = {classes.list} >
             {
-                Array.from(Array(3)).map((_, index) => (
+                games.map((game, index) => (
                     <div className = {classes.item}   key = {''+index}>
-                        <GameRowItem/>
+                        <GameItem game = {game} owner = {owner} isAdded = {true}/>
                     </div>
                 ))
             }

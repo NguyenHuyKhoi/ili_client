@@ -1,10 +1,14 @@
 import { Button, Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import HeaderBar from '../../../component/HeaderBar'
+import { AuthContext } from '../../../context/auth/context'
+import { CollectionContext } from '../../../context/collection/context'
+import { getCollectionLibraryAPI } from '../../../context/collection/apiCalls'
 import SideMenu from '../../game/library/component/SideMenu'
 import CollectionCreateModal from './component/CollectionCreateModal'
 import CollectionList from './component/CollectionList'
+import { resetState } from '../../../context/collection/actions'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +30,18 @@ const useStyles = makeStyles((theme) => ({
 const CollectionLibraryPage = () => {
     const classes = useStyles()
     const [modal, setModal] = useState({})
+    const {collections, isLoading, message, isSuccess, dispatch} = useContext(CollectionContext)
+    const {user} = useContext(AuthContext)
+    useEffect(() => {
+        dispatch(resetState)
+        getCollectionLibraryAPI(
+            user.accessToken,
+            dispatch
+        )
+        return () => {
+            
+        }
+    }, [])
     const handleModalChange = (modal) => {
         setModal(modal)
     }
@@ -53,7 +69,7 @@ const CollectionLibraryPage = () => {
                                 Create
                             </Button>
                         </div>
-                        <CollectionList/>
+                        <CollectionList collections = {collections}/>
                     </div>
                 
                 </Grid>

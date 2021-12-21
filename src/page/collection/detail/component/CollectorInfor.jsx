@@ -2,6 +2,7 @@ import { makeStyles } from '@mui/styles'
 import React from 'react'
 import logo from '../../../../asset/image/logo.jpg'
 import OwnerInfor from '../../../../component/OwnerInfor'
+import { createUrl } from '../../../../util/helper'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -24,11 +25,17 @@ const useStyles = makeStyles((theme) => ({
 
 const CollectorInfor = (props) => {
     const classes = useStyles()
+    const {collection} = props
+    const { cover} = collection 
+    const owner = {
+        username: 'User 001',
+        avatar: ''
+    }
     return (
         <div className = {classes.container}>
-            <img className = {classes.img} src = {logo}/>
+            <img className = {classes.img} src = {createUrl(cover)}/>
             <div className = {classes.body} >
-                <OwnerInfor/>
+                <OwnerInfor owner = {owner}/>
             </div>
            
         </div>

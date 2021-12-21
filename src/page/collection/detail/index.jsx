@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, {useContext} from 'react'
+import { CollectionContext } from '../../../context/collection/context'
 import CollectorInfor from './component/CollectorInfor'
 import GameList from './component/GameList'
 const useStyles = makeStyles((theme) => ({
@@ -11,15 +12,16 @@ const useStyles = makeStyles((theme) => ({
 
 const CollectionDetailPage = () => {
     const classes = useStyles()
+    const {collection} = useContext(CollectionContext)
     return (
         <div className = {classes.container}>
             {/* <Topbar/> */}
             <Grid container>
                 <Grid item sm={3} >
-                    <CollectorInfor/>
+                    <CollectorInfor collection = {collection}/>
                 </Grid>
                 <Grid item sm={9}>
-                    <GameList/>
+                    <GameList collection = {collection}/>
                 </Grid>
             </Grid>
         </div>

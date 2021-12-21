@@ -41,8 +41,7 @@ const useStyles = makeStyles((theme) => ({
 const CollectionList = (props) => {
     const classes = useStyles()
     const [selectedIndex, setSelectedIndex] = useState(0)
-    //const {collections} = props
-    const collections = [1,2,3,4]
+    const {collections} = props
     const [isShowAll, setIsShowAll] = useState(false)
     const handleShowAllChange = () => {
         setIsShowAll(!isShowAll)
@@ -63,9 +62,9 @@ const CollectionList = (props) => {
                     </Typography>
                 </div>
                 :
-                collections.map((_, index) => (
+                collections.map((item, index) => (
                     <div className = {classes.item}   key = {''+index}>
-                        <CollectionRowItem/>
+                        <CollectionRowItem collection = {item}/>
                     </div>
                 ))
             }

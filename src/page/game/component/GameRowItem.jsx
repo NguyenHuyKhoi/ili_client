@@ -77,6 +77,7 @@ export const GameRowItem = (props) => {
         dispatch(selectGame(game))
     }
 
+
     const handleViewDetail = () => {
         handleSelect()
         navigate('/game/detail/'+game._id, {replace: false})
