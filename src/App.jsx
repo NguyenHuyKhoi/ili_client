@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@mui/material/styles';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import { AuthContext } from "./context/auth/context";
 import ForgotPasswordPage from "./page/auth/forgot_password";
@@ -36,8 +36,28 @@ import ProfilePage from "./page/user/profile";
 import SettingPage from "./page/user/setting";
 import { theme } from "./theme";
 
+const { io } = require("socket.io-client");
+
 const App = () => {
   const {user} = useContext(AuthContext)
+  const connect = () => {
+    // client-side
+    const socket = io("http://localhost:8800");
+    socket.on("connect", () => {
+      console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    });
+
+    socket.on("disconnect", () => {
+    });
+  }
+
+  useEffect(() => {
+    connect()
+    return () => {
+      
+    }
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
