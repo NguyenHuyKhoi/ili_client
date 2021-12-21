@@ -20,17 +20,18 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const GameList = () => {
+const GameList = (props) => {
     const classes = useStyles()
+    const {games} = props
     return (
         <div className = {classes.container}>
             <div className = {classes.list} >
                 <Grid container sx = {{flex: 1}} columnSpacing = {2} rowSpacing = {2}>
                 {
 
-                    Array.from(Array(40)).map((_, index) => (
+                    games.map((game, index) => (
                         <Grid item xs = {3}   key = {''+index}>
-                            <GameCellItem/>
+                            <GameCellItem game = {game}/>
                         </Grid>
                     ))
                 }

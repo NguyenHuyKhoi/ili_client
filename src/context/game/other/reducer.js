@@ -34,6 +34,15 @@ const reducer = (state, action) => {
                 games,
                 game: games.length >0 ? games[0] : {}
             }
+        case 'SEARCH_GAMES_SUCCESS': 
+            console.log("Games ",games)
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: true,
+                games,
+                game: games.length >0 ? games[0] : {}
+            }
         case 'SELECT_GAME': 
             return {
                 ...state,

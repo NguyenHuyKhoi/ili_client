@@ -3,7 +3,7 @@ import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../../../context/auth/context'
-import { getCompleteGameAPI } from '../../../../context/game/other/apiCalls'
+import { getCompleteGamesAPI } from '../../../../context/game/other/apiCalls'
 import { GameContext } from '../../../../context/game/other/context'
 import { GameRowItem } from '../../component/GameRowItem'
 
@@ -87,7 +87,7 @@ const GameList = () => {
     const {user} = useContext(AuthContext)
     const {games, isLoading, isSuccess, dispatch} = useContext(GameContext)
     useEffect(() => {
-        getCompleteGameAPI(
+        getCompleteGamesAPI(
             user.accessToken,
             dispatch
         )
@@ -109,7 +109,7 @@ const GameList = () => {
             {
                 games.map((item, index) => (
                     <div className = {classes.gameContainer}   key = {''+index}>
-                        <GameRowItem game = {item} owner = {user}/>
+                        <GameRowItem game = {item}/>
                     </div>
                 ))
             }

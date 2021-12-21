@@ -70,7 +70,7 @@ const App = () => {
 
           <Route exact path = '/report' element = {user ? <DashboardReportPage/> : <Navigate to = '/auth/login'/>}/>
 
-          <Route exact path = '/user/profile' element = {user ? <ProfilePage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/profiles/:id' element = {user ? <ProfilePage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/user/setting' element = {user ? <SettingPage/> : <Navigate to = '/auth/login'/>}/>
         </Routes>
       </Router>

@@ -1,7 +1,7 @@
 import { Button, Divider } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
-import DropdownMenu from '../../../../component/DropdownMenu'
+import DropdownSelect from '../../../../component/DropdownSelect'
 import { updateQuestion } from '../../../../context/game/creator/actions'
 import { GameCreatorContext } from '../../../../context/game/creator/context'
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +54,7 @@ const QuestionConfig = (props) => {
         <div className = {classes.container}>
             <div className = {classes.inputs} >
                 <div className = {classes.input}>
-                    <DropdownMenu title = 'Time limit'
+                    <DropdownSelect title = 'Time limit'
                         list = {[
                             {label: '10', value: 10},
                             {label: '20', value: 20},

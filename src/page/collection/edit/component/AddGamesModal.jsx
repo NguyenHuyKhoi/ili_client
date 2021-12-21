@@ -82,9 +82,7 @@ const AddGamesModal = (props) => {
 							<GameItem game = {game}
 								key = {''+ index}
 								isAdded = {inAddedGames(game._id)}
-								owner = {{
-									username: 'huy khoi'
-								}}/>
+								/>
 						))
 					}
 				</div>

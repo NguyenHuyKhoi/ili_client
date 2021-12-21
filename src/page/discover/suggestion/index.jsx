@@ -14,10 +14,14 @@ const useStyles = makeStyles((theme) => ({
 const DiscoverPage = () => {
     const navigate = useNavigate()
     const classes = useStyles()
+
+    const handleSearch = () => {
+        navigate('/discover/search', {replace: true})
+    }
     return (
         <div className = {classes.container}>
             <HeaderBar selectedIndex = {1}/>
-            <GameFilter/>
+            <GameFilter onSearch = {handleSearch}/>
         </div>
     )
 }

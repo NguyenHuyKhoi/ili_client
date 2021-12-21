@@ -1,13 +1,5 @@
 import { HomeOutlined, Logout, NotificationsOutlined } from '@mui/icons-material'
-import ExpandLess from '@mui/icons-material/ExpandLess'
-import ExpandMore from '@mui/icons-material/ExpandMore'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import { Avatar, Button, Link, Popover, Typography } from '@mui/material'
-import Collapse from '@mui/material/Collapse'
-import List from '@mui/material/List'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
+import { Avatar, Button, Popover, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -16,6 +8,7 @@ import { AuthContext } from '../context/auth/context'
 import { startCreateGame } from '../context/game/creator/actions'
 import { GameCreatorContext } from '../context/game/creator/context'
 import { theme } from '../theme'
+import { DropdownMenu } from './DropdownMenu'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -63,61 +56,6 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center'
     }
 }))
-export const DropDownMenu = (props) => {
-    // props.menu.title, items: [title]
-    const classes = useStyles()
-    const [open, setOpen] = React.useState(false);
-    const {menu} = props
-    if (menu == undefined) menu = {}
-
-    const {title, items} = menu
-    const handleClick = () => {
-        if (items == undefined || items.length == 0) {
-            if (props.onClick)  props.onClick()
-            
-        }
-        else {
-            setOpen(!open);
-        }
-    };
-
-    const handleClickItem = () => {
-        if (props.onClickItem)   props.onClickItem()
-        
-    }
-    return (
-        <List
-            sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-            component="nav"
-            aria-labelledby="nested-list-subheader"
-        >
-            
-            <ListItemButton onClick={handleClick}>
-                <ListItemIcon>
-                    <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary={title} />
-                {
-                    items == undefined? null:
-                         open ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    {
-                        items != undefined &&
-                        items.map((item, index) => (
-                            <ListItemButton sx={{ pl: 4 }}  
-                                key = {''+index}
-                                onClick = {handleClickItem}>
-                                <ListItemText primary={item} />
-                            </ListItemButton>
-                        ))
-                    }
-                </List>
-            </Collapse>
-        </List>
-    )
-}
 
 export const TabItem = (props) => {
     const classes = useStyles()
@@ -168,21 +106,21 @@ const AvatarPopover = () => {
                     View profile    
                 </Typography>
             </div>
-            <DropDownMenu menu = {{
+            <DropdownMenu menu = {{
                 title: 'Change Language'
             }}
             />
-              <DropDownMenu menu = {{
+              <DropdownMenu menu = {{
                 title: 'Subscriptions',
                 items: [
                     'Kahoot AccessPass'
                 ]
             }}/>
-            <DropDownMenu menu = {{
+            <DropdownMenu menu = {{
                 title: 'Profile Settings'
             }}
                 onClick = {handleClickSettings}/>
-            <DropDownMenu menu = {{
+            <DropdownMenu menu = {{
                 title: 'Resources',
                 items: [
                     'Help & Support Center',

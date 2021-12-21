@@ -32,10 +32,7 @@ const GameList = (props) => {
             {
                 games.map((item, index) => (
                     <div className = {classes.item}   key = {''+index}>
-                        <GameRowItem game = {item} owner = {{
-                            username: 'test user',
-                            avatar: ''
-                        }}/>
+                        <GameRowItem game = {item}/>
                     </div>
                 ))
             }

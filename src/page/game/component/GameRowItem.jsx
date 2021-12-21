@@ -71,8 +71,8 @@ export const GameRowItem = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const {dispatch} = useContext(GameContext)
-    const {game, owner} = props
-    const {title, questions} = game
+    const {game} = props
+    const {title, questions, owner} = game
     const handleSelect = () => {
         dispatch(selectGame(game))
     }

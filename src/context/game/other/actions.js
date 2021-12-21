@@ -17,9 +17,18 @@ export const getCompleteGamesSuccess = (games) => ({
     }
 })
 
+
+export const searchGamesSuccess = (games) => ({
+    type: 'SEARCH_GAME_SUCCESS',
+    payload: {
+        games
+    }
+})
+
 export const selectGame = (game) => ({
     type: 'SELECT_GAME',
     payload: {
         game
     }
 })
+

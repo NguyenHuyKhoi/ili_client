@@ -2,7 +2,7 @@ import { TextareaAutosize } from '@mui/base';
 import { Button, FormControlLabel, Grid, MenuItem, Modal, Radio, RadioGroup, Select, TextField, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useState, useEffect} from 'react';
-import DropdownMenu from '../../../../component/DropdownMenu';
+import DropdownSelect from '../../../../component/DropdownSelect';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
 import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
 import { theme } from "../../../../theme";

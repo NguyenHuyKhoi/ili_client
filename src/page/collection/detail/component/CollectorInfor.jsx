@@ -26,11 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const CollectorInfor = (props) => {
     const classes = useStyles()
     const {collection} = props
-    const { cover} = collection 
-    const owner = {
-        username: 'User 001',
-        avatar: ''
-    }
+    const { cover, owner} = collection 
     return (
         <div className = {classes.container}>
             <img className = {classes.img} src = {createUrl(cover)}/>

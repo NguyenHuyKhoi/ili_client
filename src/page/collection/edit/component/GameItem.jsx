@@ -70,8 +70,8 @@ export const GameItem = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const {dispatch} = useContext(CollectionContext)
-    const {game, owner, isAdded} = props
-    const {title, questions} = game
+    const {game, isAdded} = props
+    const {title, questions, owner} = game
     const handleSelect = () => {
         if (isAdded) {
             dispatch(removeGameToCollection(game))

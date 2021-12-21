@@ -16,7 +16,7 @@ import { handleBreakpoints } from '@mui/system'
 import { editCollectionAPI } from '../../../context/collection/apiCalls'
 import SuccessModal from './component/SuccessModal'
 import { useNavigate } from 'react-router-dom'
-import { getCompleteGameAPI } from '../../../context/game/other/apiCalls'
+import { getCompleteGamesAPI } from '../../../context/game/other/apiCalls'
 import { GameContext } from '../../../context/game/other/context'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -47,7 +47,7 @@ const CollectionEditPage = () => {
     const {games, owner} = collection
     const [modal, setModal] = useState({state: ''})
     useEffect(() => {
-        getCompleteGameAPI(user.accessToken, gameDispatch)
+        getCompleteGamesAPI(user.accessToken, gameDispatch)
         dispatch(resetState())
         return () => {
             
@@ -107,7 +107,7 @@ const CollectionEditPage = () => {
                                 No games
                             </Typography>
                             :
-                            <GameList games = {games} owner = {owner} />
+                            <GameList games = {games} />
                         }
                     </div>
                 </Grid>

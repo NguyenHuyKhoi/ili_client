@@ -25,14 +25,14 @@ const useStyles = makeStyles((theme) => ({
 
 const GameList = (props) => {
     const classes = useStyles()
-    const {games, owner} = props
+    const {games} = props
     return (
         <div className = {classes.container}>
             <div className = {classes.list} >
             {
                 games.map((game, index) => (
                     <div className = {classes.item}   key = {''+index}>
-                        <GameItem game = {game} owner = {owner} isAdded = {true}/>
+                        <GameItem game = {game} isAdded = {true}/>
                     </div>
                 ))
             }
