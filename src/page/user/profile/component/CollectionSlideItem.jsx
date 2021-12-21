@@ -22,20 +22,25 @@ const useStyles = makeStyles((theme) => ({
 
 const CollectionSlideItem = (props) => {
     const classes = useStyles()
+    const {collection} = props
+    const {title, games} = collection
     return (
         <div className = {classes.container}>
             
             <div className = {classes.header} > 
-                <Typography variant = 'h6'>Title</Typography>
+                <Typography variant = 'h6'>
+                    {title}
+                </Typography>
                 <Link underline = 'hover' href = '/collection/detail' sx = {{color: 'black'}}>See all</Link>
             </div>
             <div className={classes.games}>
                 <Grid container sx = {{flex: 1}} columnSpacing = {2} rowSpacing = {2}>
                     {
 
-                        Array.from(Array(4)).map((_, index) => (
+                        games.map((game, index) => (
                             <Grid item xs = {3}   key = {''+index}>
-                                <GameCellItem disableProfileLink = {true}/>
+                                <GameCellItem disableProfileLink = {true}
+                                    game = {game}/>
                             </Grid>
                         ))
                     }

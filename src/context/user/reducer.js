@@ -1,4 +1,5 @@
 const reducer = (state, action) => {
+    const {user} = action.payload != undefined ? action.payload : {}
     switch (action.type) {
         case 'LOADING':
             return {
@@ -20,6 +21,14 @@ const reducer = (state, action) => {
                 isLoading: false,
                 message: "Profile Edit Sucessfully",
                 isSuccess: true
+            }
+        case 'PROFILE_DETAIL_SUCCESS': 
+            return{
+                ...state,
+                isLoading: false,
+                message: "Profile Edit Sucessfully",
+                isSuccess: true,
+                user
             }
         default: 
             return state

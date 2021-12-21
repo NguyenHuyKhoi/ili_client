@@ -1,6 +1,5 @@
 import { makeStyles } from '@mui/styles'
 import React from 'react'
-import logo from '../../../../asset/image/logo.jpg'
 import OwnerInfor from '../../../../component/OwnerInfor'
 import { createUrl } from '../../../../util/helper'
 
@@ -31,7 +30,7 @@ const CollectorInfor = (props) => {
         <div className = {classes.container}>
             <img className = {classes.img} src = {createUrl(cover)}/>
             <div className = {classes.body} >
-                <OwnerInfor owner = {owner}/>
+                <OwnerInfor owner = {owner} />
             </div>
            
         </div>

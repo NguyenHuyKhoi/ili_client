@@ -35,15 +35,16 @@ export const editCollectionAPI = async (collection, token, dispatch) =>  {
     }
 }
 
-export const getCollectionLibraryAPI = async (token, dispatch) =>  {
+export const getCollectionLibraryAPI = async (userId, token, dispatch) =>  {
     dispatch(loading())
     try {
-        const res = await axios.get('collection/library', {
+        const res = await axios.get('collection/library/' + userId, {
             headers: {
                 'x-access-token': token
             }
         })    
         const collections = res.data
+        console.log("collections :", collections)
         dispatch(getCollectionLibrarySuccess(collections))
     }catch (err) {
         const {error} = err.response.data

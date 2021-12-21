@@ -5,7 +5,7 @@ import {theme} from '../../../../theme'
 import MediaUploadCard from '../../../../component/MediaUploadCard'
 import {AuthContext} from '../../../../context/auth/context'
 import { createUrl } from '../../../../util/helper'
-import { profileEdit } from '../../../../context/user/apiCalls'
+import { profileEditAPI } from '../../../../context/user/apiCalls'
 import { UserContext } from '../../../../context/user/context'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -64,7 +64,7 @@ const UserInforForm = (props) => {
 
 	const handleSubmit = (e) => {
 			e.preventDefault() 
-			profileEdit(
+			profileEditAPI(
 				inputs,
 				user,
 				dispatch,

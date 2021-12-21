@@ -2,10 +2,11 @@ import { Add, ArrowBackIosOutlined, ArrowForwardIosOutlined, Check, ClassSharp, 
 import { AppBar, Avatar, Button, Chip, Divider, Grid, IconButton, Link, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { Box } from '@mui/system'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import { grey, blue } from '@mui/material/colors';
 import CollectionSlideItem from './CollectionSlideItem'
 import CollectionFilter from './CollectionFilter'
+import { CollectionContext } from '../../../../context/collection/context'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -31,17 +32,18 @@ const useStyles = makeStyles((theme) => ({
 
 const CollectionList = () => {
     const classes = useStyles()
+    const {collections} = useContext(CollectionContext)
     return (
         <div className = {classes.container}>
             <div className= {classes.filter}>
-                <CollectionFilter/>
+                <CollectionFilter collections = {collections}/>
             </div>
 
             <div className = {classes.list} >
                 {
-                    Array.from(Array(3)).map((_, index) => (
+                    collections.map((item, index) => (
                         <div className = {classes.item}   key = {''+index}>
-                            <CollectionSlideItem/>
+                            <CollectionSlideItem collection = {item}/>
                         </div>
                     ))
                 }

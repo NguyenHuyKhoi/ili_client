@@ -35,7 +35,7 @@ const GameInfor = (props) => {
     const classes = useStyles()
     const {game} = props
     console.log("Game infor :", game)
-    const {title, description, cover} = game
+    const {title, description, cover, owner} = game
     const handleEdit = () => {
         if (props.onEdit) {
             props.onEdit()
@@ -68,7 +68,7 @@ const GameInfor = (props) => {
                     {description}
                 </Typography>
             </div>
-            <OwnerInfor/>
+            <OwnerInfor owner = {owner}/>
            
         </div>
     )

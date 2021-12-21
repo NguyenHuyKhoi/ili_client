@@ -2,6 +2,7 @@ import { Avatar, Link, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { createUrl } from '../util/helper'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -18,16 +19,21 @@ const useStyles = makeStyles((theme) => ({
 
 export const OwnerInfor = (props) => {
     const navigate = useNavigate()
+    const {owner} = props
+    const {username, avatar, id} = owner
     const classes = useStyles()
-    const handleClick = () => {
-        navigate('/user/profile', {replace: false})
+    const handleViewProfile = (e) => {
+        e.stopPropagation()
+        navigate('/profiles/' + id , {replace: false})
     }
     return (
-        <div className = {classes.container} onClick={handleClick}>
-            <Avatar alt="Remy Sharp" src="../../../asset/image/logo.jpg"/>
+        <div className = {classes.container} onClick={handleViewProfile}>
+            <Avatar alt="Remy Sharp" src={createUrl(avatar)}/>
             <div className ={classes.infor}>
-                <Link href="#" underline="hover" color = {'black'}>
-                    Game Owner
+                <Link href="" underline="hover" color = {'black'}>
+                    {
+                        username
+                    }
                 </Link>
                 <Typography variant = 'subtitle2'>
                     Update 1 hour ago

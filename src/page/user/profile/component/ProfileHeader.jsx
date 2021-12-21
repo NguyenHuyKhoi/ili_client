@@ -1,6 +1,11 @@
 import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
+import { UserContext } from '../../../../context/user/context'
+import { AuthContext } from '../../../../context/auth/context'
+import { profileDetailAPI } from '../../../../context/user/apiCalls'
+import { createUrl } from '../../../../util/helper'
+import { useLocation } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -62,16 +67,23 @@ const InforItem = (props) => {
     )
 }
 
-const ProfileHeader = () => {
+const ProfileHeader = (props) => {
     const classes = useStyles()
+    const {user} = props
+
+    const {username, avatar, banner} = user
     return (
         <div className = {classes.container}>
-            <img className = {classes.banner} src = 'http://t2.gstatic.com/licensed-image?q=tbn:ANd9GcQyg88kimEj5cTPQwl81-F6lHFaDhcBl6beaRZ4Erpl_fyd9G6JrqU7qsPgb-WRAKzIHTWs-mDPjvss0rFkpaI'/>
+            <img className = {classes.banner} 
+                src = {createUrl(banner)}/>
             <div className = {classes.body}>
-                <img className = {classes.avatar} alt="Remy Sharp" src='http://t2.gstatic.com/licensed-image?q=tbn:ANd9GcQyg88kimEj5cTPQwl81-F6lHFaDhcBl6beaRZ4Erpl_fyd9G6JrqU7qsPgb-WRAKzIHTWs-mDPjvss0rFkpaI'/>
+                <img className = {classes.avatar} alt="Remy Sharp" 
+                    src={createUrl(avatar)}/>
                 <div className = {classes.inforLeft}>
-                    <Typography variant = 'h6'> User Name</Typography>
-                    <Typography variant = 'h6'> 12/20/2021</Typography>
+                    <Typography variant = 'h6'> 
+                        {username}
+                    </Typography>
+                    <Typography variant = 'h6'> . </Typography>
                 </div>
                 <div className = {classes.inforRight}>
                     <InforItem/>

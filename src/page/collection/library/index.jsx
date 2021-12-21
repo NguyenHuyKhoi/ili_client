@@ -35,6 +35,7 @@ const CollectionLibraryPage = () => {
     useEffect(() => {
         dispatch(resetState)
         getCollectionLibraryAPI(
+            user._id,
             user.accessToken,
             dispatch
         )

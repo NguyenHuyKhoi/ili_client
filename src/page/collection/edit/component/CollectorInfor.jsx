@@ -1,8 +1,6 @@
-import { Button, Typography, Divider } from '@mui/material'
+import { Button, Divider, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useContext} from 'react'
-import logo from '../../../../asset/image/logo.jpg'
-import OwnerInfor from '../../../../component/OwnerInfor'
+import React, { useContext } from 'react'
 import { CollectionContext } from '../../../../context/collection/context'
 import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({

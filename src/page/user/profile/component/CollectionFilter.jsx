@@ -22,17 +22,18 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const CollectionFilter = () => {
+const CollectionFilter = (props) => {
     const classes = useStyles()
+    const {collections} = props
     return (
         <div className = {classes.container}>
             <Typography variant = 'subtitle2'>Filter</Typography>
             <div className = {classes.values}>
                 {
 
-                    Array.from(Array(10)).map((_, index) => (
+                    collections.map((item, index) => (
                         <div className = {classes.value}   key = {''+index}>
-                            <Chip label="Chip Filled" />
+                            <Chip label={item.title} />
                         </div>
                     ))
                 }
