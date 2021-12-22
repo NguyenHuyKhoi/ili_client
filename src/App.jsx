@@ -18,17 +18,20 @@ import DiscoverPage from "./page/discover/suggestion";
 import GameCreatorPage from "./page/game/creator";
 import GameDetailPage from "./page/game/detail";
 import GameLibraryPage from "./page/game/library";
-import GameEntrancePage from "./page/game/play/entrance";
-import GameFinishPage from "./page/game/play/finish";
-import GameHostSettingPage from "./page/game/play/host_setting";
-import GameLobbyPage from "./page/game/play/lobby";
-import GameStadiumPage from "./page/game/play/stadium";
 import GameReportPage from "./page/game/report";
 // Group
 import GroupListPage from "./page/group/list";
 import HomePage from "./page/home/auth";
 // Home
 import HomeGuestPage from "./page/home/guest";
+import MatchHostFinishPage from './page/match/host/finish';
+import MatchHostLobbyPage from './page/match/host/lobby';
+import MatchHostSettingPage from './page/match/host/setting';
+import MatchHostStadiumPage from './page/match/host/stadium';
+import MatchPlayerEntrancePage from './page/match/player/entrance';
+import MatchPlayerFinishPage from './page/match/player/finish';
+import MatchPlayerLobbyPage from './page/match/player/lobby';
+import MatchPlayerStadiumPage from './page/match/player/stadium';
 // Report
 import DashboardReportPage from "./page/report/dashboard";
 // User
@@ -79,12 +82,16 @@ const App = () => {
           <Route exact path = '/game/detail/:id' element = {user ? <GameDetailPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/game/library' element = {user ? <GameLibraryPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/game/report' element = {user ? <GameReportPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/game/entrance' element = {user ? <GameEntrancePage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/game/lobby' element = {user ? <GameLobbyPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/game/stadium' element = {user ? <GameStadiumPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/game/finish' element = {user ? <GameFinishPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/game/host_setting' element = {user ? <GameHostSettingPage/> : <Navigate to = '/auth/login'/>}/>
+          
+          <Route exact path = '/match/player/entrance' element = { <MatchPlayerEntrancePage/>}/>
+          <Route exact path = '/match/player/lobby' element = {<MatchPlayerLobbyPage/>}/>
+          <Route exact path = '/match/player/stadium' element = {<MatchPlayerStadiumPage/>}/>
+          <Route exact path = '/match/player/finish' element = {<MatchPlayerFinishPage/>}/>
 
+          <Route exact path = '/match/host/setting' element = {user ? <MatchHostSettingPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/match/host/lobby' element = { user ? <MatchHostLobbyPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/match/host/stadium' element = {user ? <MatchHostStadiumPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/match/host/finish' element = {user ? <MatchHostFinishPage/> : <Navigate to = '/auth/login'/>}/>
 
           <Route exact path = '/group/list' element = {user ? <GroupListPage/> : <Navigate to = '/auth/login'/>}/>
 

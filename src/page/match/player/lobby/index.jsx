@@ -1,7 +1,11 @@
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import Header from './component/Header'
 import Lobby from './component/Lobby'
+import {MatchPlayContext} from '../../../../context/match/play/context'
+import {GameContext} from '../../../../context/game/other/context'
+import {AuthContext} from '../../../../context/auth/context'
+import { createMatchAPI } from '../../../../context/match/play/apiCalls'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -14,11 +18,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const GameLobbyPage = () => {
+const MatchPlayerLobbyPage = () => {
     const classes = useStyles()
+    useEffect(() => {
+        return () => {
+            
+        }
+    }, [])
     return (
         <div className = {classes.container}>
-            <Header/>
+            <Header />
             <div className = {classes.body}>
                 <Lobby/>
             </div>  
@@ -26,4 +35,4 @@ const GameLobbyPage = () => {
     )
 }
 
-export default GameLobbyPage
+export default MatchPlayerLobbyPage

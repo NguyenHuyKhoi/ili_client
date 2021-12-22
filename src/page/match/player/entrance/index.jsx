@@ -23,7 +23,7 @@ const INPUT_STAGE = {
     ENTER_PIN: 0, 
     ENTER_NAME: 1
 }
-const GameEntrancePage = () => {
+const MatchPlayerEntrancePage = () => {
     const classes = useStyles()
     const [input, setInput] = useState('')
     const [stage, setStage] = useState(INPUT_STAGE.ENTER_PIN)
@@ -77,4 +77,4 @@ const GameEntrancePage = () => {
     )
 }
 
-export default GameEntrancePage
+export default MatchPlayerEntrancePage

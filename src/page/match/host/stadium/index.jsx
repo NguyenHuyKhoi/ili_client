@@ -23,7 +23,7 @@ const INPUT_STAGE = {
     ENTER_PIN: 0, 
     ENTER_NAME: 1
 }
-const GameStadiumPage = () => {
+const MatchHostStadiumPage = () => {
     const classes = useStyles()
     return (
         <div className = {classes.container}>
@@ -37,4 +37,4 @@ const GameStadiumPage = () => {
     )
 }
 
-export default GameStadiumPage
+export default MatchHostStadiumPage

@@ -27,6 +27,7 @@ const GameDetailPage = () => {
     }
 
     const handlePlay = () => {
+        console.log("Play game")
         navigate('/game/host-setting', {replace: false})
     }
     return (
@@ -34,10 +35,11 @@ const GameDetailPage = () => {
             <HeaderBar/>
             <Grid container>
                 <Grid item sm={3} >
-                    <GameInfor game = {game} onEdit = {handleEdit}/>
+                    <GameInfor game = {game} onEdit = {handleEdit}
+                         onPlay = {handlePlay}/>
                 </Grid>
                 <Grid item sm={9} sx = {{overflow: 'auto', maxHeight: '90vh'}}>
-                    <QuestionList game = {game} onPlay = {handlePlay}/>
+                    <QuestionList game = {game}/>
                 </Grid>
             </Grid>
         </div>

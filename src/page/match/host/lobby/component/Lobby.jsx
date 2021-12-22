@@ -1,8 +1,9 @@
 import { PersonOutline } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, {useContext} from 'react'
 import { theme } from '../../../../../theme'
+import {MatchPlayContext} from '../../../../../context/match/play/context'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -76,6 +77,8 @@ const PlayerCard = (props) => {
 
 const Lobby = (props) => {
     const classes = useStyles()
+    const {match} = useContext(MatchPlayContext)
+    const {title} = match
     return (
         <div className = {classes.container}>
             <div className = {classes.header}>
@@ -83,7 +86,9 @@ const Lobby = (props) => {
                     <PersonOutline sx = {{color: 'white', fontSize: 30}}/>
                     <Typography variant = 'h6' sx = {{color: 'white', fontWeight: 'bold', ml: theme.spacing(1)}}>6</Typography>
                 </div>
-                <Typography variant = 'h2' sx = {{fontWeight: 'bold', color: 'white' }}>Kahoot</Typography>
+                <Typography variant = 'h2' sx = {{fontWeight: 'bold', color: 'white' }}>
+                    {title}
+                </Typography>
                 <div className = {classes.btns}>
                     <Button variant = 'contained'>
                         Lock

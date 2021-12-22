@@ -34,7 +34,6 @@ const GameInfor = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const {game} = props
-    console.log("Game infor :", game)
     const {title, description, cover, owner} = game
     const handleEdit = () => {
         if (props.onEdit) {

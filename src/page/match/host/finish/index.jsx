@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const GameFinishPage = () => {
+const MatchHostFinishPage = () => {
     const classes = useStyles()
     return (
         <div className = {classes.container}>
@@ -62,4 +62,4 @@ const GameFinishPage = () => {
     )
 }
 
-export default GameFinishPage
+export default MatchHostFinishPage

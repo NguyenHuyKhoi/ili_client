@@ -82,7 +82,6 @@ const QuestionRowItem = (props) => {
     const {isShowAll} = props
     const [isShow, setIsShow] = useState(false)
     const {question, index} = props
-    console.log("Question :", question)
     const {title, image, answers, correct_answers, time_limit } = question
     const handleShowChange = () => {
         setIsShow(!isShow)

@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { theme } from '../../../../../theme'
 import { Grid } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -38,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
 
 const ModeItem = () => {
     const classes = useStyles()
+    const navigate = useNavigate()
+    const handleSelectMode = () => {
+        navigate('/game/lobby', {replace: false})
+    }
     return (
         <div className = {classes.item}>
             <img src = 'https://dothethao.net.vn/wp-content/uploads/2020/06/logo-ha-noi-fc.jpg' 
@@ -57,7 +62,7 @@ const ModeItem = () => {
             </div>
       
 
-            <Button variant = 'contained'>
+            <Button variant = 'contained'  onClick = {handleSelectMode}>
                 Choose Mode
             </Button>
         </div>

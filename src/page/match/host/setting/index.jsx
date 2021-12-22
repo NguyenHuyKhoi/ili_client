@@ -1,7 +1,8 @@
 import { ArrowDropDown, ArrowLeft } from '@mui/icons-material'
 import { Button, Grid, Switch, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { GameContext } from '../../../../context/game/other/context'
 import { theme } from '../../../../theme'
 import GameModes from './component/GameModes'
 import GameModeItem from './component/GameModes'
@@ -30,15 +31,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const GameHostSettingPage = () => {
+const MatchHostSettingPage = () => {
     const classes = useStyles()
+    const {game} = useContext(GameContext)
+    const {title} = game
     return (
         <div className = {classes.container}>
             <Header/>
             <div className = {classes.body}>
                 <div className = {classes.title}>
                     <Typography variant = 'h5' sx = {{color: 'black', fontWeight: 'bold'}}>
-                        Game Title
+                        {title}
                     </Typography>
                 </div>
                 <GameModes/>
@@ -48,4 +51,4 @@ const GameHostSettingPage = () => {
     )
 }
 
-export default GameHostSettingPage
+export default MatchHostSettingPage

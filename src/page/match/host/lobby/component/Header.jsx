@@ -1,9 +1,9 @@
 import { Fullscreen, Language, MusicNote, VolumeDown } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, {useContext} from 'react'
 import { theme } from '../../../../../theme'
-
+import { MatchPlayContext } from '../../../../../context/match/play/context'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -50,7 +50,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 const Header = (props) => {
     const classes = useStyles()
-
+    const {match} = useContext(MatchPlayContext)
+    const {pinCode} = match
     return (
         <div className = {classes.container}>   
             <div className = {classes.langContainer}>
@@ -60,7 +61,9 @@ const Header = (props) => {
             <div className = {classes.pinContainer}>
                 <Typography variant = 'h6' sx  ={{ color: 'black'}}>Game pin</Typography>
                 <Typography variant = 'h1'  sx  ={{ color: 'black', fontWeight: 'bold'}}> 
-                    123 585
+                    {
+                        pinCode == undefined || pinCode == null ? 'XXXXXX' : pinCode
+                    }
                 </Typography>
             </div>
             <div className = {classes.btnsContainer}>
