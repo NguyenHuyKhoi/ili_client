@@ -20,7 +20,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 isLoading: false,
-                message: false,
+                message: '',
                 isSuccess: false
             }
         }
@@ -31,6 +31,22 @@ const reducer = (state, action) => {
                 isLoading: false,
                 isSuccess: true,
                 ...match
+            }
+        }
+        case 'JOIN_MATCH_SUCCESS': {
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: true,
+                message: 'Join game successfully'
+            }
+        }
+        case 'JOIN_MATCH_FAILURE': {
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: false,
+                message: 'Pincode is wrong'
             }
         }
         default: 

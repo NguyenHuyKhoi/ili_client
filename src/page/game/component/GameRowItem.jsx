@@ -92,7 +92,7 @@ export const GameRowItem = (props) => {
     const handlePlay = (e) => {
         e.stopPropagation()
         handleSelect()
-        navigate('/game/host_setting', {replace: false})
+        navigate('/match/host/setting', {replace: false})
     }
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}

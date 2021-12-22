@@ -41,7 +41,7 @@ const ModeItem = () => {
     const classes = useStyles()
     const navigate = useNavigate()
     const handleSelectMode = () => {
-        navigate('/game/lobby', {replace: false})
+        navigate('/match/host/lobby', {replace: false})
     }
     return (
         <div className = {classes.item}>

@@ -8,7 +8,8 @@ const INITIAL_STATE = () => {
     let state = {
         isLoading: false,
         isSuccess: false,
-        message: ''
+        message: '',
+        match: {}
     }
     const saved = localStorage.getItem('match_play_creator')
     if (saved) {

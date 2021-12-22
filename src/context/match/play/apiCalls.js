@@ -12,8 +12,8 @@ export const createMatchAPI = async (game, token, dispatch) =>  {
             }
         })    
         const match = res.data
-        console.log("Match Create: ",match)
         dispatch(createMatchSuccess(match))
+
     }catch (err) {
         console.log('Create match error :', err.response.data)
         const {error} = err.response.data

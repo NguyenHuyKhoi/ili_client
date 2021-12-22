@@ -5,7 +5,6 @@ export const generateError = (error) => ({
     }
 })
 
-
 export const loading = () => ({
     type: 'LOADING'
 })
@@ -19,4 +18,12 @@ export const createMatchSuccess = (match) => ({
     payload: {
         match
     }
+})
+
+export const joinMatchSuccess = () => ({
+    type: 'JOIN_MATCH_SUCCESS'
+})
+
+export const joinMatchFailure = () => ({
+    type: 'JOIN_MATCH_FAILURE'
 })
