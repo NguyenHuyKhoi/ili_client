@@ -1,9 +1,8 @@
 import { CheckCircleSharp } from '@mui/icons-material'
 import { Alert, Button, Link, Snackbar, TextField, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useState, useContext, useEffect } from 'react'
-import { requestResetPassword } from '../../../context/auth/apiCalls'
-import { AuthContext } from '../../../context/auth/context'
+import axios from 'axios'
+import React, { useState } from 'react'
 import { theme } from '../../../theme'
 import { validateEmail } from '../../../util/validator'
 const useStyles = makeStyles((theme) => ({
@@ -47,53 +46,40 @@ const useStyles = makeStyles((theme) => ({
 
 const ForgotPasswordPage = () => {
     const classes = useStyles()
-    const {dispatch, isSuccess, message, isLoading} = useContext(AuthContext)
-    const [isSubmited, setIsSubmited] = useState(false)
     const [inputs, setInputs] = useState({email: ''})
-    const [msg, setMsg] = useState("")
-    const [showAlert, setShowAlert] = useState(false)
-
-    const handleMsg = (msg) => {
-        setMsg(msg)
-        setShowAlert(msg != '')
-    }
-
-    useEffect(() => {
-        handleMsg(message)
-        //console.log("Update message", message)
-        return () => {
-            
-        }
-    }, [message])
+    const [alert, setAlert] = useState({})
+    const {email} = inputs
 
     const handleSubmit = (e) => {
         e.preventDefault() 
 
-        if (!validateEmail(inputs.email)) {
-            handleMsg("Email is empty or invalid")
+        if (!validateEmail(email)) {
+            setAlert({
+                type: 'error',
+                msg: 'Email is empty or invalid'
+            })
             return
         }
 
-        requestResetPassword({
-            email: inputs.email
-        },dispatch)
-
-        setIsSubmited(true)
+        axios.post('auth/forgot-password', {email})
+            .then (() => {
+                setAlert({
+                    type: 'success'
+                })
+            })
     }
 
     const handleChange = (key, value) => {
-        handleMsg("")
+        setAlert({})
         setInputs({
             ...inputs,
             [key]: value
         })
     }
-
-    const {email} = inputs
     return (
         <div className = {classes.container}>
             {
-                isSuccess ?
+                alert.type == 'success' ?
                 <div className = {classes.checkEmail}>
                     <CheckCircleSharp sx = {{color: 'green', fontSize: 60}}/>
                     <Typography variant = 'h5' sx = {{fontWeight: 'bold', mt: theme.spacing(2)}}>
@@ -111,11 +97,11 @@ const ForgotPasswordPage = () => {
                 </div>
                 :
                 <>
-                 <Snackbar open={showAlert} autoHideDuration={5000} onClose={() => setShowAlert(false)}
+                 <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                     anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
-                    <Alert onClose={() => setShowAlert(false)} severity={"error"} sx={{ width: '100%' }}>
+                    <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
                         {
-                            msg
+                            alert.msg
                         }
                     </Alert>
                 </Snackbar>
@@ -129,8 +115,7 @@ const ForgotPasswordPage = () => {
                                    onChange = {(e) => handleChange('email', e.target.value)}
                                  />
                             <Button variant = 'contained' sx = {{width: '100%', mt: theme.spacing(2)}}
-                                onClick = {handleSubmit}
-                                disabled = {isLoading}>
+                                onClick = {handleSubmit}>
                                 Send reset link
                             </Button>
                         </div>

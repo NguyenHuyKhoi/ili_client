@@ -1,8 +1,7 @@
     import { Alert, Button, Checkbox, Divider, Link, Snackbar, TextField, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { signup } from '../../../context/auth/apiCalls'
+import axios from 'axios'
+import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
 import { validateEmail } from '../../../util/validator'
@@ -50,55 +49,53 @@ const useStyles = makeStyles((theme) => ({
 
 const SignupPage = () => {
     const classes = useStyles()
-    const navigate = useNavigate()
-    const {dispatch, message, isSuccess, isLoading} = useContext(AuthContext)
+    const {dispatch} = useContext(AuthContext)
     const [inputs, setInputs] = useState({email: "", password: ""})
-    const [msg, setMsg] = useState("")
-    const [showAlert, setShowAlert] = useState(false)
+    const [alert, setAlert] = useState({})
+    const {email, password} = inputs
 
-    useEffect(() => {
-        handleMsg(message)
-        return () => {
-            
-        }
-    }, [message])
-
-    const handleMsg = (msg) => {
-        setMsg(msg)
-        setShowAlert(msg != '')
-    }
     const handleSignup = (e) => {
         e.preventDefault() 
-        //console.log("Is success", isSuccess)
-        if (!validateEmail(inputs.email)) {
-            handleMsg("Email is empty or invalid")
+        if (!validateEmail(email)) {
+            setAlert({
+                type: 'error',
+                msg: 'Email is not invalid'
+            })
             return
         }
-        // if (!validatePassword(inputs.password)) {
+        // if (!validatePassword(password)) {
         //     handleMsg("Password is empty or invalid")
         //     return
         // }
 
-        signup({
-            email: inputs.email, 
-            password: inputs.password
-        }, dispatch)
+        axios.post('auth/signup', { email, password})
+        .then ((res) => {
+            setAlert({
+                type: 'success',
+                msg: 'Signup sucess'
+            })
+        })
+        .catch((err) => {
+            setAlert({
+                type: 'error',
+                msg: 'Sign up error'
+            })
+        })
     }
     const handleChange = (key, value) => {
-        handleMsg("")
+        setAlert({})
         setInputs({
             ...inputs,
             [key]: value
         })
     }
-    const {email, password} = inputs
     return (
         <div className = {classes.container}>
-            <Snackbar open={showAlert} autoHideDuration={5000} onClose={() => setShowAlert(false)}
+            <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
-                <Alert onClose={() => setShowAlert(false)} severity={isSuccess== "" ?"error": "success"} sx={{ width: '100%' }}>
+                <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
                     {
-                        msg
+                        alert.msg
                     }
                 </Alert>
             </Snackbar>
@@ -116,7 +113,6 @@ const SignupPage = () => {
                     sx = {{my: theme.spacing(2)}}/>
                 <Button variant = 'contained' 
                     onClick = {handleSignup}
-                    disabled = {isLoading}
                     color = 'success' sx = {{my: theme.spacing(3)}}>
                     <Link href = '/auth/login' underline = 'none' sx = {{color: 'white'}}>
                         Sign up

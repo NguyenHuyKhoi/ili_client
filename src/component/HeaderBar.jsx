@@ -1,9 +1,10 @@
 import { HomeOutlined, Logout, NotificationsOutlined } from '@mui/icons-material'
 import { Avatar, Button, Popover, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import axios from 'axios'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { logout } from '../context/auth/apiCalls'
+import { logoutSuccess } from '../context/auth/actions'
 import { AuthContext } from '../context/auth/context'
 import { startCreateGame } from '../context/game/creator/actions'
 import { GameCreatorContext } from '../context/game/creator/context'
@@ -88,9 +89,17 @@ const AvatarPopover = () => {
     const classes = useStyles()
     const navigate = useNavigate()
     const {dispatch, user} = useContext(AuthContext)
+
     const handleLogout = (e) => {
         e.preventDefault()
-        logout(user, dispatch)
+        axios.post('auth/logout', null, {
+                headers: {
+                    'x-access-token': user.accessToken
+                }
+            })
+        .then((res) => {
+            dispatch(logoutSuccess())
+        })   
     }
 
     const handleClickSettings = () => {

@@ -2,10 +2,7 @@ import { createContext, useEffect, useReducer } from "react"
 import reducer from "./reducer"
 
 const INITIAL_STATE = {
-    user: JSON.parse(localStorage.getItem('user') || null) ,
-    isLoading: false,
-    message: "",
-    isSuccess: false
+    user: JSON.parse(localStorage.getItem('user') || null)
 }
 
 export const AuthContext = createContext(reducer)
@@ -22,9 +19,6 @@ export const AuthContextProvider = ({children}) => {
     return <AuthContext.Provider
         value = {{
             user: state.user,
-            message: state.message,
-            isLoading: state.isLoading,
-            isSuccess: state.isSuccess,
             dispatch,
         }}>
         {

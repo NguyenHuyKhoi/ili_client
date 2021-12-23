@@ -1,10 +1,7 @@
 
-import { Button, Divider, Link, TextField, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useContext } from 'react'
-import { login } from '../../../context/auth/apiCalls'
-import { AuthContext } from '../../../context/auth/context'
-import { theme } from '../../../theme'
+import React from 'react'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',

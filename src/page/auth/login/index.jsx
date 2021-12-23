@@ -1,11 +1,12 @@
 
 import { Alert, Button, Divider, Link, Snackbar, TextField, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useContext, useEffect, useState } from 'react'
-import { login } from '../../../context/auth/apiCalls'
+import axios from 'axios'
+import React, { useContext, useState } from 'react'
+import { loginSuccess } from '../../../context/auth/actions'
 import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
-import { validateEmail, validatePassword } from '../../../util/validator'
+import { validateEmail } from '../../../util/validator'
 import { LinkedLoginButton } from '../component/LinkedLoginButton'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -58,54 +59,59 @@ export const LoginWithButton = () => {
 
 const LoginPage = () => {
     const classes = useStyles()
-    const {dispatch, message, isSuccess, isLoading} = useContext(AuthContext)
+    const {dispatch} = useContext(AuthContext)
     const [inputs, setInputs] = useState({email: "", password: ""})
-    const [msg, setMsg] = useState("")
-    const [showAlert, setShowAlert] = useState(false)
-    
-    useEffect(() => {
-        handleMsg(message)
-        return () => {
-            
-        }
-    }, [message])
-    const handleMsg = (msg) => {
-        setMsg(msg)
-        setShowAlert(msg != '')
-    }
+    const [alert, setAlert] = useState({})
+    const {email, password} = inputs
 
     const handleLogin = (e) => {
         e.preventDefault() 
 
-        if (!validateEmail(inputs.email)) {
-            handleMsg("Email is empty or invalid")
+        if (!validateEmail(email)) {
+            setAlert({
+                type: 'error',
+                msg: 'Email is empty or invalid'
+            })
             return
         }
-        // if (!validatePassword(inputs.password)) {
+        // if (!validatePassword(password)) {
         //     handleMsg("Password is empty or invalid")
         //     return
         // }
 
-        login({
-            email: inputs.email, 
-            password: inputs.password
-        }, dispatch)
+        axios.post('auth/login', { email, password})
+            .then ((res) => {
+                let user = res.data
+                dispatch(loginSuccess(user))
+                setAlert({
+                    type: 'success',
+                    msg: 'Login sucess'
+                })
+            })
+            .catch((err) => {
+                let error = err.response.data
+                console.log("Error :", error)
+                setAlert({
+                    type: 'error',
+                    msg: 'Login Error'
+                })
+            })
     }
 
     const handleChange = (key, value) => {
-        handleMsg("")
+        setAlert({})
         setInputs({
             ...inputs,
             [key]: value
         })
     }
-    const {email, password} = inputs
+    
     return (
         <div className = {classes.container}>
-            <Snackbar open={showAlert} autoHideDuration={5000} onClose={() => setShowAlert(false)}
+            <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
-                <Alert onClose={() => setShowAlert(false)} severity={isSuccess ? 'success': 'error'} sx={{ width: '100%' }}>
-                    {msg}
+                <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
+                    {alert.msg}
                 </Alert>
             </Snackbar>
             <div className = {classes.form}>
@@ -129,11 +135,7 @@ const LoginPage = () => {
                     </Link>
                 </div>
                 <Button variant = 'contained' color = 'success' sx = {{my: theme.spacing(3)}}
-                    disabled = {isLoading}
                     onClick = {handleLogin}>
-                    {/* <Link href = '/' underline = 'none' sx = {{color: 'white'}} >
-                       Log in
-                    </Link> */}
                     Login
                 </Button>
                 <div className = {classes.divider}>
