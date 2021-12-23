@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ChangePasswordForm = (props) => {
 	const classes = useStyles()
-	const {dispatch, user} = useContext(AuthContext)
+	const {dispatch, user, token} = useContext(AuthContext)
 	const [inputs, setInputs] = useState({old: "", neww: "", repeat: ""})
     const [alert, setAlert] = useState({})
     const {old, neww, repeat} = inputs
@@ -63,7 +63,7 @@ const ChangePasswordForm = (props) => {
 		}
 
 		axios.post('auth/change-password', {
-			token: user.accessToken,
+			token,
 			oldPassword: old,
 			newPassword: neww
 		})

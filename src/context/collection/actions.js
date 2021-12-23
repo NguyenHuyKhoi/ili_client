@@ -1,35 +1,8 @@
-export const generateError = (error) => ({
-    type: 'GENERATE_ERROR',
-    payload: {
-        error
-    }
-})
 
-export const loading = () => ({
-    type: 'LOADING'
-})
-
-export const resetState = () => ({
-    type: 'RESET_STATE'
-})
-export const getCollectionLibrarySuccess = (collections) => ({
-    type: 'GET_COLLECTION_LIBRARY_SUCCESS',
+export const getCollectionsSuccess = (collections) => ({
+    type: 'GET_COLLECTIONS_SUCCESS',
     payload: {
         collections
-    }
-})
-
-export const createCollectionSuccess = (collection) => ({
-    type: 'CREATE_COLLECTION_SUCCESS',
-    payload: {
-        collection
-    }
-})
-
-export const editCollectionSuccess = (collection) => ({
-    type: 'EDIT_COLLECTION_SUCCESS',
-    payload: {
-        collection
     }
 })
 

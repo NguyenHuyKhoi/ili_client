@@ -1,8 +1,10 @@
 import { Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
+import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../../../context/auth/context'
+import { getGamesSuccess } from '../../../../context/game/other/actions'
 import { GameContext } from '../../../../context/game/other/context'
 import { GameRowItem } from '../../component/GameRowItem'
 
@@ -83,8 +85,8 @@ export const Tabs = (props) => {
 
 const GameList = () => {
     const classes = useStyles()
-    const {user} = useContext(AuthContext)
-    const {games, isLoading, isSuccess, dispatch} = useContext(GameContext)
+    const {token} = useContext(AuthContext)
+    const {games, dispatch} = useContext(GameContext)
     useEffect(() => {
         axios.get('game/library?status=complete', {
             headers: {

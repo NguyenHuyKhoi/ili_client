@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const UserInforForm = (props) => {
 	const classes = useStyles()
-	const {user} = useContext(AuthContext)
+	const {user, token} = useContext(AuthContext)
 	const authDispatch = useContext(AuthContext).dispatch
 	const {dispatch} = useContext(UserContext)
 
@@ -52,7 +52,7 @@ const UserInforForm = (props) => {
 		e.preventDefault() 
 		axios.put('user/'+ user._id, inputs, {
             headers: {
-                'x-access-token': user.accessToken
+                'x-access-token': token
             }
         })    
 		.then((res) => {

@@ -48,8 +48,9 @@ const useStyles = makeStyles((theme) => ({
 
 const CollectionCreateModal = (props) => {
 	const classes = useStyles()
-	const {setting} = props
-	const [draftSetting, setDraftSetting] = useState({...setting})
+	const [collection, setCollection] = 
+		useState({title: '', cover: 'https://vtv1.mediacdn.vn/thumb_w/650/2019/7/22/lion-king-1-1563155068176555217978-15637834089391350227836-crop-15637834158711662738000.jpeg', description: '', visibility: 'public'})
+	const {title, cover, description, visibility} = collection
 
 	var {open} = props
 	if (open == undefined) open = false
@@ -60,15 +61,13 @@ const CollectionCreateModal = (props) => {
 		}
 	}
 
-
-
 	const handleChange = (key, value) => {
-		setDraftSetting({
-			...draftSetting,
+		setCollection({
+			...collection,
 			[key]: value
 		})
 	}
-	const {title, image, description, language, visibility} = draftSetting
+
 	return (
 		<Modal
 			open={open}
@@ -101,19 +100,12 @@ const CollectionCreateModal = (props) => {
 								placeholder="Describe your game..."
 								style={{ width: '100%', height: 120,m: theme.spacing(0.5) }}
 							/>
-							<WrappedRadioGroup title = 'Owner' 
-								list = {[
-									{label: 'Personal', value: 'personal'}
-								]}
-								value = {'personal'}
-								/>
-
 							<WrappedRadioGroup title = 'Visibility' 
 								list = {[
 									{label: 'Public', value: 'public'},
 									{label: 'Private', value: 'private'}
 								]}
-								value = {'public'}
+								value = {visibility}
 								/>
 						</div>
 					</Grid>
@@ -125,9 +117,9 @@ const CollectionCreateModal = (props) => {
 							</Typography>
 							<div className = {classes.uploadImg}>
 								<MediaUploadCard 
-									onSelectImage = {file => handleChange('image', file)}
-									onRemoveImage = {() => handleChange('image', null)}
-									src = {createUrl(image)}/>
+									onSelectImage = {file => handleChange('cover', file)}
+									onRemoveImage = {() => handleChange('cover', null)}
+									src = {createUrl(cover)}/>
 							</div>
 						</div>
 					</Grid>
@@ -139,7 +131,7 @@ const CollectionCreateModal = (props) => {
 					</Button>
 					<Button variant="contained" color="success" sx = {{ml: theme.spacing(2)}}
 						onClick = {() => {
-							if (props.onDone) props.onDone(draftSetting)
+							if (props.onDone) props.onDone(collection)
 						}}>
 						Create
 					</Button>

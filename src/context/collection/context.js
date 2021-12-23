@@ -3,9 +3,6 @@ import reducer from "./reducer"
 
 const INITIAL_STATE = () => {
     let state = {
-        isLoading: false,
-        isSuccess: false,
-        message: '',
         collection: null,
         collections: []
     }
@@ -38,9 +35,6 @@ export const CollectionContextProvider = ({children}) => {
         value = {{
             collections: state.collections,
             collection: state.collection,
-            isLoading: state.isLoading,
-            message: state.message,
-            isSuccess: state.isSuccess,
             dispatch
         }}>
         {

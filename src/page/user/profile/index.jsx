@@ -3,7 +3,7 @@ import axios from 'axios'
 import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { AuthContext } from '../../../context/auth/context'
-import { getCollectionLibraryAPI } from '../../../context/collection/apiCalls'
+import { getCollectionsSuccess } from '../../../context/collection/actions'
 import { CollectionContext } from '../../../context/collection/context'
 import { profileDetailSuccess } from '../../../context/user/actions'
 import { UserContext } from '../../../context/user/context'
@@ -22,22 +22,25 @@ const ProfilePage = (props) => {
     const {user, dispatch} = useContext(UserContext)
     const collectionDispatch =  useContext(CollectionContext).dispatch
 
-    const me = useContext(AuthContext).user
+    const {token} = useContext(AuthContext)
     useEffect(() => {
         axios.get('user/'+ id, {
             headers: {
-                'x-access-token': me.accessToken
+                'x-access-token': token
             }
         })    
         .then ((res) => {
             dispatch(profileDetailSuccess(res.data))
         })
 
-        getCollectionLibraryAPI(
-            id, 
-            me.accessToken,
-            collectionDispatch
-        )
+        axios.get('collection/library/' + id, {
+            headers: {
+                'x-access-token': token
+            }
+        })   
+        .then ((res) => {
+            dispatch(getCollectionsSuccess(res.data))
+        }) 
         return () => {
             
         }

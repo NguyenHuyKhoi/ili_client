@@ -6,7 +6,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../context/auth/context'
 import { saveLocalEditedCollection } from '../../../context/collection/actions'
-import { editCollectionAPI } from '../../../context/collection/apiCalls'
 import { CollectionContext } from '../../../context/collection/context'
 import { getGamesSuccess } from '../../../context/game/other/actions'
 import { GameContext } from '../../../context/game/other/context'
@@ -60,11 +59,20 @@ const CollectionEditPage = () => {
     }, [])
 
     const handleSaveToServer = () => {
-        editCollectionAPI({...collection}, token, dispatch)
+        let temp = {...collection}
+        temp.games = collection.games.map((item) => item._id)
+
+        axios.put('collection/'+collection._id, temp, {
+            headers: {
+                'x-access-token': token
+            }
+        })    
+        .then ((res) => {
+            setModal({state: 'success'})
+        })
     }
 
     const handleSave = (setting) => {
-        console.log("Handle save", setting)
         dispatch(saveLocalEditedCollection(setting))
         setModal({})
     }
@@ -82,7 +90,7 @@ const CollectionEditPage = () => {
                 onDone = {handleSave}
             />
             <SuccessModal 
-                open = {isSuccess}
+                open = {modal.state == 'success'}
                 onClose = {() => setModal({})}
                 onDone = {() => {navigate(-1)}}
             />

@@ -88,13 +88,13 @@ export const TabItem = (props) => {
 const AvatarPopover = () => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {dispatch, user} = useContext(AuthContext)
+    const {dispatch, user, token} = useContext(AuthContext)
 
     const handleLogout = (e) => {
         e.preventDefault()
         axios.post('auth/logout', null, {
                 headers: {
-                    'x-access-token': user.accessToken
+                    'x-access-token': token
                 }
             })
         .then((res) => {
