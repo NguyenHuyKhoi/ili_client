@@ -19,6 +19,7 @@ export const AuthContextProvider = ({children}) => {
     return <AuthContext.Provider
         value = {{
             user: state.user,
+            token: state.user == null ? '' : state.user.accessToken,
             dispatch,
         }}>
         {

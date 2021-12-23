@@ -41,13 +41,13 @@ const useStyles = makeStyles((theme) => ({
 const CollectionEditPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {user} = useContext(AuthContext)
+    const {token} = useContext(AuthContext)
     const gameDispatch = useContext(GameContext).dispatch
     const {collection, dispatch, isSuccess} = useContext(CollectionContext)
     const {games, owner} = collection
     const [modal, setModal] = useState({state: ''})
     useEffect(() => {
-        getCompleteGamesAPI(user.accessToken, gameDispatch)
+        getCompleteGamesAPI(token, gameDispatch)
         dispatch(resetState())
         return () => {
             
@@ -55,7 +55,7 @@ const CollectionEditPage = () => {
     }, [])
 
     const handleSaveToServer = () => {
-        editCollectionAPI({...collection}, user.accessToken, dispatch)
+        editCollectionAPI({...collection}, token, dispatch)
     }
 
     const handleSave = (setting) => {

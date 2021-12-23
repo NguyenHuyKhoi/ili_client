@@ -47,11 +47,13 @@ const useStyles = makeStyles((theme) => ({
 	}
 }))
 
-const GameSettingModal = (props) => {
+const SettingModal = (props) => {
 	const classes = useStyles()
 	const {setting} = props
+	console.log("Setting: ",setting)
 	const [draftSetting, setDraftSetting] = useState({...setting})
-
+	const {title, image, description, language, visibility} = draftSetting
+	
 	var {open} = props
 	if (open == undefined) open = false
 
@@ -72,13 +74,11 @@ const GameSettingModal = (props) => {
 	}
 
 	const handleChange = (key, value) => {
-		console.log("Handle change:", key, value)
 		setDraftSetting({
 			...draftSetting,
 			[key]: value
 		})
 	}
-	const {title, image, description, language, visibility} = draftSetting
 	return (
 		<Modal
 			open={open}
@@ -98,7 +98,9 @@ const GameSettingModal = (props) => {
 								sx= {{fontWeight: 'bold'}} >
 								Title
 							</Typography>
-							<TextField id="outlined-basic" label="" value = {title} variant="outlined"
+							<TextField id="outlined-basic" label="" 
+								value = {title ? title : ''} 
+								variant="outlined"
 								onChange = {(e) => handleChange('title', e.target.value)} />
 							<Typography variant = 'subtitle1' 
 								sx = {{ mt: theme.spacing(2), fontWeight: 'bold'}}>
@@ -106,7 +108,7 @@ const GameSettingModal = (props) => {
 							</Typography>
 							<TextareaAutosize
 								aria-label="empty textarea"
-								value = {description}
+								value = {description ? description : ''}
 								onChange={(e) => handleChange('description', e.target.value)}
 								placeholder="Describe your game..."
 								style={{ width: '100%', height: 120,m: theme.spacing(0.5) }}
@@ -159,4 +161,4 @@ const GameSettingModal = (props) => {
 	);
 }
 
-export default GameSettingModal
+export default SettingModal

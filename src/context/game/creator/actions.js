@@ -1,19 +1,3 @@
-export const generateError = (error) => ({
-    type: 'GENERATE_ERROR',
-    payload: {
-        error
-    }
-})
-
-
-export const loading = () => ({
-    type: 'LOADING'
-})
-
-export const resetState = () => ({
-    type: 'RESET_STATE'
-})
-
 export const startCreateGame = () => ({
     type: 'START_CREATE_GAME'
 })
@@ -24,6 +8,7 @@ export const startEditGame = (game) => ({
         game
     }
 })
+
 export const updateGameSetting = (setting) => ({
     type: 'UPDATE_GAME_SETTING',
     payload: {
@@ -67,12 +52,4 @@ export const deleteQuestion = (index) => ({
     payload: {
         index
     }
-})
-
-export const createGameSuccess = () => ({
-    type: 'CREATE_GAME_SUCCESS'
-})
-
-export const editGameSuccess = () => ({
-    type: 'EDIT_GAME_SUCCESS'
 })

@@ -1,20 +1,20 @@
 import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { deleteQuestion, duplicateQuestion, resetState, selectQuestion, updateGameSetting, validateGame } from '../../../context/game/creator/actions'
-import { createGameAPI, editGameAPI } from '../../../context/game/creator/apiCalls'
-import { GameCreatorContext } from '../../../context/game/creator/context'
 import { AuthContext } from '../../../context/auth/context'
+import { deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, validateGame } from '../../../context/game/creator/actions'
+import { GameCreatorContext } from '../../../context/game/creator/context'
 import { theme } from '../../../theme'
 import DeleteQuestionModal from './component/DeleteQuestionModal'
-import GameSettingModal from './component/GameSettingModal'
 import QuestionBuilder from './component/QuestionBuilder'
 import QuestionConfig from './component/QuestionConfig'
 import QuestionList from './component/QuestionList'
+import SettingModal from './component/SettingModal'
+import SuccessModal from './component/SuccessModal'
 import Topbar from './component/Topbar'
 import ValidateGameModal from './component/ValidateGameModal'
-import SuccessModal from './component/SuccessModal'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
 const GameCreatorPage = (props) => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {user} = useContext(AuthContext)
-    const {game, dispatch, isSuccess, isLoading, mode} = useContext(GameCreatorContext)
+    const {token} = useContext(AuthContext)
+    const {game, dispatch, mode} = useContext(GameCreatorContext)
     const {questions, question_index, isValidated} = game
 
     const [canDeleteQuestion, setCanDeleteQuestion] = useState(false)
@@ -43,12 +43,10 @@ const GameCreatorPage = (props) => {
     }, [questions.length])
 
     const handleExit= () => {
-        dispatch(resetState())
         navigate('/game/library')
     }
 
     const handleSave = async () => {
-        if (isLoading) return
         await dispatch(validateGame())
 
         let qs = questions.filter((item, index) => item.defectives!= undefined && item.defectives.length > 0)
@@ -60,34 +58,38 @@ const GameCreatorPage = (props) => {
             setModal({state: 'setting'})
         }
         else if (mode == 'create') {
-            createGameAPI(
-                game,
-                user.accessToken,
-                dispatch
-            )
+            console.log("Token :", token)
+            axios.post('game/', game, {
+                headers: {
+                    'x-access-token': token
+                }
+            })   
+            .then (() => {
+                setModal({state: 'success'})
+            })
         }
         else if (mode == 'edit') {
-            editGameAPI(
-                game,
-                user.accessToken,
-                dispatch
-            )
+            axios.put('game/'+game._id, game, {
+               headers: {
+                   'x-access-token': token
+               }
+           })    
+           .then (() => {
+                setModal({state: 'success'})
+            })
         }
     }
     const handleSaveDraft = () => {
-        if (isLoading) return
         setModal({})
-        dispatch(resetState())
         navigate('/game/library')
     }
     const handleSelectFixQuestion = (index) => {
-        if (isLoading) return
         setModal({})
         dispatch(selectQuestion(index))
     }
 
     const handleDoneCreate = () => {
-        dispatch(resetState())
+        setModal({})
         navigate('/game/library', {replace: true})
     }
 
@@ -99,11 +101,11 @@ const GameCreatorPage = (props) => {
                 onExit = {handleExit}
                 />
             <SuccessModal 
-                open = { isSuccess }     
-                onClose = {() => {}}
+                open = { modal.state == 'success' }     
+                onClose = {() => setModal({})}
                 onDone = {handleDoneCreate}/>
 
-            <GameSettingModal 
+            <SettingModal 
                 setting = {game}
                 open = {modal.state == 'setting'}     
                 onClose = {() => setModal({})}

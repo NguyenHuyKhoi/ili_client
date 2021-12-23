@@ -35,37 +35,12 @@ const validateGameSetting = (game) => {
 const reducer = (state, action) => {
     const {question, index, setting} = action.payload != undefined ? action.payload : {}
     switch (action.type) {
-        case 'LOADING':
-            return {
-                ...state,
-                isLoading: true,
-                message: '',
-                isSuccess: false
-            }
-        case 'GENERATE_ERROR':
-            return {
-                ...state,
-                isLoading: false,
-                message: action.payload.error,
-                isSuccess: false
-            }
-        case 'RESET_STATE': {
-            console.log("Call reset state")
-            return {
-                ...state,
-                isLoading: false,
-                message: false,
-                isSuccess: false
-            }
-        }
         case 'UPDATE_GAME_SETTING':
-            //console.log("Update setting reducer ", setting)
             return {
                 ...state,
                 ...setting
             }
         case 'VALIDATE_GAME':
-            //console.log("Validate game")
             state.isValidated = validateGameSetting(state)
             state.questions.forEach((item, index) => item.defectives = validateQuestion(item)) 
             return {
@@ -84,7 +59,6 @@ const reducer = (state, action) => {
             }
         case 'DUPLICATE_QUESTION':
             let q = {...state.questions[index]}
-            //console.log("Inset question at:", index)
             state.questions.splice(index, 0, q)
             return {
                 ...state
@@ -102,29 +76,9 @@ const reducer = (state, action) => {
             return {
                 ...state
             }
-        case 'CREATE_GAME_SUCCESS': {
-            console.log('Create succcess')
-            return {
-                ...state,
-                isLoading: false,
-                message: 'Create game successfully',
-                isSuccess: true
-            }
-        }
-
-        case 'EDIT_GAME_SUCCESS': {
-            console.log("Edit success")
-            return {
-                ...state,
-                isLoading: false,
-                message: 'Edit game successfully',
-                isSuccess: true
-            }
-        }
-
+    
         case 'START_CREATE_GAME': {
             return {
-                ...state,
                 ...sample_game,
                 mode: 'create'
             }
@@ -132,7 +86,6 @@ const reducer = (state, action) => {
 
         case 'START_EDIT_GAME': {
             return {
-                ...state,
                 ...action.payload.game,
                 mode: 'edit'
             }

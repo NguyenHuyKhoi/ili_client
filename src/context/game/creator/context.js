@@ -26,10 +26,7 @@ export const sample_game = {
 
 const INITIAL_STATE = () => {
     let state = {
-        mode: 'create',
-        isLoading: false,
-        isSuccess: false,
-        message: ''
+        mode: 'create'
     }
     const saved = localStorage.getItem('game_creator')
     if (saved) {
@@ -61,9 +58,6 @@ export const GameCreatorContextProvider = ({children}) => {
         value = {{
             game: state,
             mode: state.mode,
-            isLoading: state.isLoading,
-            message: state.message,
-            isSuccess: state.isSuccess,
             dispatch
         }}>
         {
