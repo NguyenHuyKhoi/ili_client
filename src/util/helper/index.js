@@ -9,7 +9,7 @@ export const createUrl = (data) => {
         // If data is string: 
         if (typeof data === 'string' || data instanceof String) {
             // Check format is url:
-            if (validateUrl(data)) {
+            if (data != '' && validateUrl(data)) {
                 return data
             }
             else {

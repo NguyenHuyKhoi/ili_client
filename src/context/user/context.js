@@ -2,9 +2,6 @@ import { createContext, useEffect, useReducer } from "react"
 import reducer from "./reducer"
 
 const INITIAL_STATE = {
-    isLoading: false,
-    message: "",
-    isSuccess: false,
     user: {}
 }
 
@@ -16,9 +13,6 @@ export const UserContextProvider = ({children}) => {
     return <UserContext.Provider
         value = {{
             user: state.user,
-            message: state.message,
-            isLoading: state.isLoading,
-            isSuccess: state.isSuccess,
             dispatch,
         }}>
         {

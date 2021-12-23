@@ -1,12 +1,13 @@
-import React, {useContext, useState, useEffect} from 'react'
-import { makeStyles } from '@mui/styles'
 import { Alert, Button, Grid, Snackbar, TextField, Typography } from '@mui/material'
-import {theme} from '../../../../theme'
+import { makeStyles } from '@mui/styles'
+import axios from 'axios'
+import React, { useContext, useEffect, useState } from 'react'
 import MediaUploadCard from '../../../../component/MediaUploadCard'
-import {AuthContext} from '../../../../context/auth/context'
-import { createUrl } from '../../../../util/helper'
-import { profileEditAPI } from '../../../../context/user/apiCalls'
+import { updateUserInfor } from '../../../../context/auth/actions'
+import { AuthContext } from '../../../../context/auth/context'
 import { UserContext } from '../../../../context/user/context'
+import { theme } from '../../../../theme'
+import { createUrl } from '../../../../util/helper'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -35,57 +36,54 @@ const UserInforForm = (props) => {
 	const classes = useStyles()
 	const {user} = useContext(AuthContext)
 	const authDispatch = useContext(AuthContext).dispatch
-	const {dispatch, message, isSuccess, isLoading} = useContext(UserContext)
-	const [inputs, setInputs] = useState({username: "", name: "", banner: "", avatar: "", email: ""})
-	const [msg, setMsg] = useState("")
-	const [showAlert, setShowAlert] = useState(false)
-  
-	useEffect(() => {
-		handleMsg(message)
-		setInputs({
-			banner: user.banner,
-			avatar: user.avatar,
-			email: user.email,
-			username: user.username,
-			name: user.name
-		})
-		//console.log("Update inputs from user ",user)
-		return () => {
-			
-		}
-	}, [message, isSuccess, user])
+	const {dispatch} = useContext(UserContext)
 
-	const handleMsg = (msg) => {
-		setMsg(msg)
-		setShowAlert(msg != '')
-	}
-
+	const [inputs, setInputs] = useState({...user})
+    const [alert, setAlert] = useState({})
 	const {username, name, banner, avatar, email} = inputs
 
+	useEffect(() => {
+		setInputs({...user})
+		return () => {
+		}
+	}, [user])
+
 	const handleSubmit = (e) => {
-			e.preventDefault() 
-			profileEditAPI(
-				inputs,
-				user,
-				dispatch,
-				authDispatch
-			)
+		e.preventDefault() 
+		axios.put('user/'+ user._id, inputs, {
+            headers: {
+                'x-access-token': user.accessToken
+            }
+        })    
+		.then((res) => {
+			setAlert({
+				type: 'success',
+				msg: 'Update  successfully'
+			})
+			authDispatch(updateUserInfor(res.data))
+		})
+		.catch ((err) => {
+			setAlert({
+				type: 'error',
+				msg: 'Something is wrong'
+			})
+		})
 	}
 
 	const handleChange = (key, value) => {
-			handleMsg("")
-			setInputs({
-				...inputs,
-				[key]: value
-			})
+		setAlert({})
+		setInputs({
+			...inputs,
+			[key]: value
+		})
 	}
 
   	return (
     	<div className = {classes.container}>
-			<Snackbar open={showAlert} autoHideDuration={5000} onClose={() => setShowAlert(false)}
+			<Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
-                <Alert onClose={() => setShowAlert(false)} severity={isSuccess ? 'success': 'error'} sx={{ width: '100%' }}>
-                    {msg}
+                <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
+                    {alert.msg}
                 </Alert>
             </Snackbar>
 			<Typography variant = 'subtitle1'>
@@ -124,8 +122,7 @@ const UserInforForm = (props) => {
 
 			</Grid>
 			<Button variant = 'contained' 
-				onClick = {handleSubmit} 
-				disabled = {isLoading} >
+				onClick = {handleSubmit}>
 				Save
 			</Button>
 		</div>

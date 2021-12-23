@@ -1,16 +1,18 @@
 const reducer = (state, action) => {
+    const {user} = action.payload != undefined ? action.payload : {}
     switch (action.type) {
         case 'LOGIN_SUCCESS':
             return {
                 ...state,
-                user: action.payload.user,
+                user,
             }
         case 'UPDATE_USER_INFOR': {
+            console.log("Update user infor :", user)
             return {
                 ...state,
                 user: {
                     accessToken: state.user.accessToken,
-                    ...action.payload.user
+                    ...user
                 }
             }
         }

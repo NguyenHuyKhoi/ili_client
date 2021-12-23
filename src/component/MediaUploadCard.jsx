@@ -1,4 +1,5 @@
 import { Button, Typography } from '@mui/material'
+import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { theme } from '../theme'
@@ -6,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
     container: {
         width: '100%',
         height: '100%',
-        backgroundColor: 'white',
+        backgroundColor: grey[100],
         borderRadius: theme.spacing(1),
         boxShadow: `1px 3px 1px #f0f0f0`,
         borderRadius: theme.spacing(1),

@@ -1,11 +1,7 @@
 import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useContext, useEffect} from 'react'
-import { UserContext } from '../../../../context/user/context'
-import { AuthContext } from '../../../../context/auth/context'
-import { profileDetailAPI } from '../../../../context/user/apiCalls'
+import React from 'react'
 import { createUrl } from '../../../../util/helper'
-import { useLocation } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
