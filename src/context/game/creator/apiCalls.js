@@ -5,8 +5,7 @@ import { createGameSuccess, editGameSuccess, generateError, loading } from "./ac
 export const createGameAPI = async (game, token, dispatch) =>  {
     dispatch(loading())
     try {
-        console.log("create game: ", game)
-         await axios.post('game/', game, {
+        await axios.post('game/', game, {
             headers: {
                 'x-access-token': token
             }

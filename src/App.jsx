@@ -47,7 +47,7 @@ const App = () => {
     // client-side
     const socket = io("http://localhost:8800");
     socket.on("connect", () => {
-      console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+      // x8WIv7-mJelg7on_ALbx
     });
 
     socket.on("disconnect", () => {

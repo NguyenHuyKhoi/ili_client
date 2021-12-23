@@ -6,10 +6,10 @@ export const sample_match = {
 
 const INITIAL_STATE = () => {
     let state = {
+        match: {},
         isLoading: false,
         isSuccess: false,
-        message: '',
-        match: {}
+        message: ''
     }
     const saved = localStorage.getItem('match_play_creator')
     if (saved) {
@@ -39,7 +39,7 @@ export const MatchPlayContextProvider = ({children}) => {
     }, [state])
     return <MatchPlayContext.Provider
         value = {{
-            match: state,
+            match: state.match,
             isLoading: state.isLoading,
             message: state.message,
             isSuccess: state.isSuccess,

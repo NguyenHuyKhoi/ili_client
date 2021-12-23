@@ -4,7 +4,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { resetState } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
-import { joinMatch } from '../../../../context/match/play/socketHandler'
+import { joinMatch, listenUpdateMatch, updateNameOnMatch } from '../../../../context/match/play/socketHandler'
 import Form from './component/Form'
 
 const useStyles = makeStyles((theme) => ({
@@ -31,17 +31,28 @@ const INPUT_STAGE = {
 const MatchPlayerEntrancePage = () => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {isSuccess, isLoading, message} = useContext(MatchPlayContext)
+    const {isSuccess, isLoading, message, match} = useContext(MatchPlayContext)
     const [input, setInput] = useState('')
     const [stage, setStage] = useState(INPUT_STAGE.ENTER_PIN)
     const [showAlert, setShowAlert] = useState(false)
 
     useEffect(() => {
+        listenUpdateMatch(match.pinCode, dispatch)
         setShowAlert(message != '')
+        if (isSuccess) {
+            if (stage == INPUT_STAGE.ENTER_PIN) {
+                setStage(INPUT_STAGE.ENTER_NAME)
+                setInput('')
+            }
+            else if (stage == INPUT_STAGE.ENTER_NAME) {
+                navigate('/match/player/lobby')
+            }
+        }
+       
         return () => {
             
         }
-    }, [message])
+    }, [message, isSuccess, match])
 
     const {dispatch} = useContext(MatchPlayContext)
 
@@ -53,16 +64,16 @@ const MatchPlayerEntrancePage = () => {
     }
     const handleChangeInput = (value) => {
         setInput(value)
-        setShowAlert(false)
+        resetState()
     }
     const handleSubmit = () => {
         switch (stage) {
             case INPUT_STAGE.ENTER_PIN: 
                 joinMatch(input, dispatch)
-                setStage(INPUT_STAGE.ENTER_NAME)
-                setInput('')
+                break
             case INPUT_STAGE.ENTER_NAME: 
-                naviga
+                updateNameOnMatch(match.pinCode, input, dispatch)
+                break
         }
     }
     return (

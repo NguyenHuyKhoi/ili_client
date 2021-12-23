@@ -1,18 +1,20 @@
 
 import axios from 'axios'
 import {createMatchSuccess, generateError, loading } from "./actions"
+import { createMatch } from './socketHandler'
 
-export const createMatchAPI = async (game, token, dispatch) =>  {
+export const createMatchAPI = async (game, host, dispatch) =>  {
     dispatch(loading())
     try {
-        console.log('Game',token, game)
+        const {accessToken} = host
         const res = await axios.post('match/',game, {
             headers: {
-                'x-access-token': token
+                'x-access-token': accessToken
             }
         })    
         const match = res.data
         dispatch(createMatchSuccess(match))
+        createMatch(host, match, dispatch)
 
     }catch (err) {
         console.log('Create match error :', err.response.data)

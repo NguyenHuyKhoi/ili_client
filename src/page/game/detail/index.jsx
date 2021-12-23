@@ -28,7 +28,7 @@ const GameDetailPage = () => {
 
     const handlePlay = () => {
         console.log("Play game")
-        navigate('/game/host-setting', {replace: false})
+        navigate('/match/host/setting', {replace: false})
     }
     return (
         <div className = {classes.container}>

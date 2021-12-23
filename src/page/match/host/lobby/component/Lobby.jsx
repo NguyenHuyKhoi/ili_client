@@ -64,12 +64,15 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 
-const PlayerCard = (props) => {
+export const PlayerCard = (props) => {
     const classes = useStyles()
+    const {user} = props 
+    const {name} = user 
+    console.log("User :", user)
     return (
         <div className = {classes.player}>
             <Typography variant = 'subtitle1' sx = {{color: 'white', fontWeight: 'bold'}}>
-                Player
+                {name}
             </Typography>
         </div>
     )
@@ -78,7 +81,8 @@ const PlayerCard = (props) => {
 const Lobby = (props) => {
     const classes = useStyles()
     const {match} = useContext(MatchPlayContext)
-    const {title} = match
+    let {pinCode, title, users} = match
+    if (users == undefined) users = []
     return (
         <div className = {classes.container}>
             <div className = {classes.header}>
@@ -101,8 +105,8 @@ const Lobby = (props) => {
             <div className = {classes.body}>
                 <div className = {classes.players}>
                     {
-                        Array.from(Array(15)).map((_, index) => (
-                            <PlayerCard   key = {''+index}/>
+                        users.map((user, index) => (
+                            <PlayerCard   key = {''+index} user = {user}/>
                         ))
                     }
                 </div>

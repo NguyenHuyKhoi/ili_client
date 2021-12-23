@@ -30,15 +30,17 @@ const reducer = (state, action) => {
                 ...state,
                 isLoading: false,
                 isSuccess: true,
-                ...match
+                match
             }
         }
         case 'JOIN_MATCH_SUCCESS': {
+            console.log("Join match success: ", match)
             return {
                 ...state,
                 isLoading: false,
                 isSuccess: true,
-                message: 'Join game successfully'
+                message: 'Join game successfully',
+                match
             }
         }
         case 'JOIN_MATCH_FAILURE': {
@@ -47,6 +49,48 @@ const reducer = (state, action) => {
                 isLoading: false,
                 isSuccess: false,
                 message: 'Pincode is wrong'
+            }
+        }
+        case 'UPDATE_NAME_SUCCESS': {
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: true,
+                message: 'Update name successfully'
+            }
+        }
+        case 'UPDATE_NAME_FAILURE': {
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: false,
+                message: 'Update name failure'
+            }
+        }
+
+        case 'LEAVE_MATCH_SUCCESS': {
+            return {
+                ...state,
+                match: {},
+                isLoading: false,
+                isSuccess: true,
+                message: 'Leave match successfully'
+            }
+        }
+        case 'LEAVE_MATCH_FAILURE': {
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: false,
+                message: 'Leave match failure'
+            }
+        }
+
+        case 'UPDATE_MATCH': {
+            console.log('Update match from server :', match)
+            return {
+                ...state,
+                match
             }
         }
         default: 

@@ -4,6 +4,9 @@ import { makeStyles } from '@mui/styles'
 import React, {useContext} from 'react'
 import { theme } from '../../../../../theme'
 import {MatchPlayContext} from '../../../../../context/match/play/context'
+import { PlayerCard } from '../../../host/lobby/component/Lobby'
+import { leaveMatch } from '../../../../../context/match/play/socketHandler'
+import { useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -64,19 +67,18 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 
-const PlayerCard = (props) => {
-    const classes = useStyles()
-    return (
-        <div className = {classes.player}>
-            <Typography variant = 'subtitle1' sx = {{color: 'white', fontWeight: 'bold'}}>
-                Player
-            </Typography>
-        </div>
-    )
-}
-
 const Lobby = (props) => {
     const classes = useStyles()
+    const navigate = useNavigate()
+    const {match, dispatch} = useContext(MatchPlayContext)
+    let {pinCode, title, users} = match
+    if (users == undefined) users = []
+    
+    const handleLeave = () => {
+        leaveMatch(pinCode, dispatch)
+        navigate('/match/player/entrance')
+    }
+
     return (
         <div className = {classes.container}>
             <div className = {classes.header}>
@@ -85,22 +87,19 @@ const Lobby = (props) => {
                     <Typography variant = 'h6' sx = {{color: 'white', fontWeight: 'bold', ml: theme.spacing(1)}}>6</Typography>
                 </div>
                 <Typography variant = 'h2' sx = {{fontWeight: 'bold', color: 'white' }}>
-                    {'title'}
+                    {title}
                 </Typography>
                 <div className = {classes.btns}>
-                    <Button variant = 'contained'>
-                        Lock
-                    </Button>
-                    <Button variant = 'contained' sx = {{ml: theme.spacing(2)}}>
-                        Start
+                    <Button variant = 'contained' onClick ={handleLeave}>
+                        Leave
                     </Button>
                 </div>
             </div>
             <div className = {classes.body}>
                 <div className = {classes.players}>
                     {
-                        Array.from(Array(15)).map((_, index) => (
-                            <PlayerCard   key = {''+index}/>
+                        users.map((user, index) => (
+                            <PlayerCard   key = {''+index} user = {user}/>
                         ))
                     }
                 </div>

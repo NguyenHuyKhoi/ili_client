@@ -75,7 +75,7 @@ const GameModes = (props) => {
         <div className = {classes.container}>
             <Grid container columnSpacing = {6} rowSpacing = {6}>
                 {
-                    Array.from(Array(4)).map((_, index) => (
+                    Array.from(Array(2)).map((_, index) => (
                         <Grid item xs = {6}   key = {''+index}>
                             <ModeItem/>
                         </Grid>

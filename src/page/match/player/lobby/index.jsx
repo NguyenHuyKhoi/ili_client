@@ -1,11 +1,9 @@
 import { makeStyles } from '@mui/styles'
-import React, {useContext, useEffect} from 'react'
-import Header from './component/Header'
+import React, { useContext, useEffect } from 'react'
+import { MatchPlayContext } from '../../../../context/match/play/context'
+import { listenUpdateMatch } from '../../../../context/match/play/socketHandler'
+import Header from '../../host/lobby/component/Header'
 import Lobby from './component/Lobby'
-import {MatchPlayContext} from '../../../../context/match/play/context'
-import {GameContext} from '../../../../context/game/other/context'
-import {AuthContext} from '../../../../context/auth/context'
-import { createMatchAPI } from '../../../../context/match/play/apiCalls'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -20,7 +18,9 @@ const useStyles = makeStyles((theme) => ({
 
 const MatchPlayerLobbyPage = () => {
     const classes = useStyles()
+    const {dispatch, match} = useContext(MatchPlayContext)
     useEffect(() => {
+        listenUpdateMatch(match.pinCode, dispatch)
         return () => {
             
         }
