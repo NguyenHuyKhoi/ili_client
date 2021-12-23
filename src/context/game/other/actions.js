@@ -1,25 +1,6 @@
-export const generateError = (error) => ({
-    type: 'GENERATE_ERROR',
-    payload: {
-        error
-    }
-})
 
-
-export const loading = () => ({
-    type: 'LOADING'
-})
-
-export const getCompleteGamesSuccess = (games) => ({
-    type: 'GET_COMPLETE_GAMES_SUCCESS',
-    payload: {
-        games
-    }
-})
-
-
-export const searchGamesSuccess = (games) => ({
-    type: 'SEARCH_GAME_SUCCESS',
+export const getGamesSuccess = (games) => ({
+    type: 'GET_GAMES_SUCCESS',
     payload: {
         games
     }

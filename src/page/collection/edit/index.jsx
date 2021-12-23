@@ -1,23 +1,22 @@
-import { Games } from '@mui/icons-material'
 import { Button, Grid, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, {useState, useContext, useEffect} from 'react'
+import axios from 'axios'
+import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../../context/auth/context'
+import { saveLocalEditedCollection } from '../../../context/collection/actions'
+import { editCollectionAPI } from '../../../context/collection/apiCalls'
+import { CollectionContext } from '../../../context/collection/context'
+import { getGamesSuccess } from '../../../context/game/other/actions'
+import { GameContext } from '../../../context/game/other/context'
 import { theme } from '../../../theme'
 import AddGamesModal from './component/AddGamesModal'
 import CollectorInfor from './component/CollectorInfor'
 import GameList from './component/GameList'
 import SettingModal from './component/SettingModal'
-import Topbar from './component/Topbar'
-import {CollectionContext} from '../../../context/collection/context'
-import {AuthContext} from '../../../context/auth/context'
-import { resetState, saveLocalEditedCollection } from '../../../context/collection/actions'
-import { handleBreakpoints } from '@mui/system'
-import { editCollectionAPI } from '../../../context/collection/apiCalls'
 import SuccessModal from './component/SuccessModal'
-import { useNavigate } from 'react-router-dom'
-import { getCompleteGamesAPI } from '../../../context/game/other/apiCalls'
-import { GameContext } from '../../../context/game/other/context'
+import Topbar from './component/Topbar'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -47,8 +46,14 @@ const CollectionEditPage = () => {
     const {games, owner} = collection
     const [modal, setModal] = useState({state: ''})
     useEffect(() => {
-        getCompleteGamesAPI(token, gameDispatch)
-        dispatch(resetState())
+        axios.get('game/library?status=complete', {
+            headers: {
+                'x-access-token': token
+            }
+        })    
+        .then ((res) => {
+            dispatch(getGamesSuccess(res.data))
+        })
         return () => {
             
         }

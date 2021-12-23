@@ -1,9 +1,8 @@
 import { Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../../../context/auth/context'
-import { getCompleteGamesAPI } from '../../../../context/game/other/apiCalls'
 import { GameContext } from '../../../../context/game/other/context'
 import { GameRowItem } from '../../component/GameRowItem'
 
@@ -87,10 +86,14 @@ const GameList = () => {
     const {user} = useContext(AuthContext)
     const {games, isLoading, isSuccess, dispatch} = useContext(GameContext)
     useEffect(() => {
-        getCompleteGamesAPI(
-            user.accessToken,
-            dispatch
-        )
+        axios.get('game/library?status=complete', {
+            headers: {
+                'x-access-token': token
+            }
+        })    
+        .then ((res) => {
+            dispatch(getGamesSuccess(res.data))
+        })
         return () => {
             
         }

@@ -3,9 +3,6 @@ import reducer from "./reducer"
 
 const INITIAL_STATE = () => {
     let state = {
-        isLoading: false,
-        isSuccess: false,
-        message: '',
         game: null,
         games: []
     }
@@ -38,9 +35,6 @@ export const GameContextProvider = ({children}) => {
         value = {{
             games: state.games,
             game: state.game,
-            isLoading: state.isLoading,
-            message: state.message,
-            isSuccess: state.isSuccess,
             dispatch
         }}>
         {
