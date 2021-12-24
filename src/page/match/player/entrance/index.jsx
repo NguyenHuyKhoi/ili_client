@@ -1,10 +1,10 @@
 import { Alert, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { resetState } from '../../../../context/match/play/actions'
+import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
-import { joinMatch, listenUpdateMatch, updateNameOnMatch } from '../../../../context/match/play/socketHandler'
+import { SocketContext } from '../../../../context/socket/context'
 import Form from './component/Form'
 
 const useStyles = makeStyles((theme) => ({
@@ -28,58 +28,58 @@ const INPUT_STAGE = {
     ENTER_PIN: 0, 
     ENTER_NAME: 1
 }
+
 const MatchPlayerEntrancePage = () => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {isSuccess, isLoading, message, match} = useContext(MatchPlayContext)
+    const {match, dispatch} = useContext(MatchPlayContext)
+    const {socket} = useContext(SocketContext)
     const [input, setInput] = useState('')
     const [stage, setStage] = useState(INPUT_STAGE.ENTER_PIN)
-    const [showAlert, setShowAlert] = useState(false)
+    const [alert, setAlert] = useState({})
 
+    const {pinCode} = match ? match : {}
     useEffect(() => {
-        listenUpdateMatch(match.pinCode, dispatch)
-        setShowAlert(message != '')
-        if (isSuccess) {
-            if (stage == INPUT_STAGE.ENTER_PIN) {
-                setStage(INPUT_STAGE.ENTER_NAME)
-                setInput('')
-            }
-            else if (stage == INPUT_STAGE.ENTER_NAME) {
-                navigate('/match/player/lobby')
-            }
-        }
-       
-        return () => {
-            
-        }
-    }, [message, isSuccess, match])
+        socket.on('match:update', (match) => {
+            dispatch(updateMatch(match))
+        })
+    }, [])  
 
-    const {dispatch} = useContext(MatchPlayContext)
-
-    const handleCloseAlert = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        dispatch(resetState())
-    }
-    const handleChangeInput = (value) => {
-        setInput(value)
-        resetState()
-    }
     const handleSubmit = () => {
         switch (stage) {
             case INPUT_STAGE.ENTER_PIN: 
-                joinMatch(input, dispatch)
+                socket.emit('match:join', input, (match) => {
+                    if (match) {
+                        dispatch(updateMatch(match))
+                        setStage(INPUT_STAGE.ENTER_NAME)
+                        setAlert({
+                            type: 'success',
+                            msg: 'Pincode is correct'
+                        })
+                        setInput('')
+                    }
+                    else {
+                        setAlert({
+                            type: 'error',
+                            msg: 'Pincode is wrong'
+                        })
+                    }
+                })
                 break
             case INPUT_STAGE.ENTER_NAME: 
-                updateNameOnMatch(match.pinCode, input, dispatch)
+                socket.emit('match:updateUser', pinCode, { name: input}, (response) => {
+                    if (response) {
+                        navigate('/match/player/lobby', {replace: false})
+                    }
+                } )
                 break
         }
     }
     return (
         <div className = {classes.container}>
             <img src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Kahoot_Logo.svg/1280px-Kahoot_Logo.svg.png' className = {classes.logo}/>
-            <Form onSubmit = {handleSubmit} onChange = {handleChangeInput} showAlert = {showAlert && !isSuccess}
+            <Form onSubmit = {handleSubmit} onChange = {(value) => setInput(value)} 
+                showAlert = {alert.type == 'error'}
                 value = {input}
                 btnTitle = {
                     stage == INPUT_STAGE.ENTER_PIN?'Enter':
@@ -91,11 +91,11 @@ const MatchPlayerEntrancePage = () => {
                     stage == INPUT_STAGE.ENTER_NAME?'Nickname':
                         ''
                 }/>
-            <Snackbar open={showAlert} autoHideDuration={5000} onClose={handleCloseAlert}
+            <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
 
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
-                <Alert onClose={handleCloseAlert} severity={isSuccess ? 'success' : 'error'} sx={{ width: '100%' }}>
-                    {message}
+                <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
+                    {alert.msg}
                 </Alert>
             </Snackbar>
         </div>

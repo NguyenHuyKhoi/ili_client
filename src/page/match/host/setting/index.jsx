@@ -1,17 +1,18 @@
-import { ArrowDropDown, ArrowLeft } from '@mui/icons-material'
-import { Button, Grid, Switch, Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useContext, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../../context/auth/context'
 import { GameContext } from '../../../../context/game/other/context'
-import { createMatchAPI } from '../../../../context/match/play/apiCalls'
+import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
+import { SocketContext } from '../../../../context/socket/context'
 import { theme } from '../../../../theme'
 import GameModes from './component/GameModes'
-import GameModeItem from './component/GameModes'
 import GameOptions from './component/GameOptions'
 import Header from './component/Header'
+
+
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -46,17 +47,25 @@ const MatchHostSettingPage = () => {
     const classes = useStyles()
     const {dispatch, match} = useContext(MatchPlayContext)
     const {game} = useContext(GameContext)
-    const {user} = useContext(AuthContext)
+    const {user, token} = useContext(AuthContext)
+    const {socket} = useContext(SocketContext)
+
     const handleStart = () => {
-        createMatchAPI(
-            {
-                title: game.title,
-                gameId: game._id
-            },
-            user,
-            dispatch
-        )
-        navigate('/match/host/lobby', {replace: false})
+        let host = {
+            _id: user._id,
+            name: user.username,
+            socketId: socket.id
+        }
+        socket.emit('match:host', host, game._id, (match) => {
+            if (match) {
+                navigate('/match/host/lobby')
+                console.log("Create match success: ", match)
+                dispatch(updateMatch(match))
+            }
+            else {
+                console.log("Host game failured")
+            }
+        })
     }
 
     const {title} = game

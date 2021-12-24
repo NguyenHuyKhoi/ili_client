@@ -1,9 +1,9 @@
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect } from 'react'
 import { AuthContext } from '../../../../context/auth/context'
-import { GameContext } from '../../../../context/game/other/context'
+import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
-import { listenUpdateMatch } from '../../../../context/match/play/socketHandler'
+import { SocketContext } from '../../../../context/socket/context'
 import Header from './component/Header'
 import Lobby from './component/Lobby'
 const useStyles = makeStyles((theme) => ({
@@ -21,16 +21,19 @@ const useStyles = makeStyles((theme) => ({
 const MatchHostLobbyPage = () => {
     const classes = useStyles()
     const {dispatch, match} = useContext(MatchPlayContext)
-    const {game} = useContext(GameContext)
     const {user} = useContext(AuthContext)
-    const {pinCode} = match
+    const {socket} = useContext(SocketContext)
+    const {game, host, pinCode} = match
     
     useEffect(() => {
-        listenUpdateMatch(pinCode, dispatch)
-        return () => {
-            
-        }
-    }, [])
+        console.log("Handle with pinCode: ", pinCode)
+        socket.emit('match:update', pinCode, (match) => {
+            dispatch(updateMatch(match))
+        })
+        // socket.on('match:update', (match) => {
+        //     dispatch(updateMatch(match))
+        // })
+    }, [])  
     return (
         <div className = {classes.container}>
             <Header />

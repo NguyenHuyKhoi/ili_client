@@ -8,6 +8,7 @@ import axios from 'axios'
 import { GameContextProvider } from './context/game/other/context';
 import { CollectionContextProvider } from './context/collection/context';
 import { MatchPlayContextProvider } from './context/match/play/context';
+import { SocketContextProvider } from './context/socket/context';
 
 axios.defaults.baseURL = 'http://localhost:8800/api/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -20,7 +21,9 @@ ReactDOM.render(
     <GameContextProvider>
     <UserContextProvider>
     <AuthContextProvider>
+      <SocketContextProvider>
       <App />
+      </SocketContextProvider>
     </AuthContextProvider>
     </UserContextProvider>
     </GameContextProvider>

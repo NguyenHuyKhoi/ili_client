@@ -68,7 +68,6 @@ export const PlayerCard = (props) => {
     const classes = useStyles()
     const {user} = props 
     const {name} = user 
-    console.log("User :", user)
     return (
         <div className = {classes.player}>
             <Typography variant = 'subtitle1' sx = {{color: 'white', fontWeight: 'bold'}}>

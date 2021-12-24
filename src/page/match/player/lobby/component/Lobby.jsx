@@ -1,12 +1,11 @@
 import { PersonOutline } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useContext} from 'react'
-import { theme } from '../../../../../theme'
-import {MatchPlayContext} from '../../../../../context/match/play/context'
-import { PlayerCard } from '../../../host/lobby/component/Lobby'
-import { leaveMatch } from '../../../../../context/match/play/socketHandler'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { MatchPlayContext } from '../../../../../context/match/play/context'
+import { theme } from '../../../../../theme'
+import { PlayerCard } from '../../../host/lobby/component/Lobby'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -75,7 +74,7 @@ const Lobby = (props) => {
     if (users == undefined) users = []
     
     const handleLeave = () => {
-        leaveMatch(pinCode, dispatch)
+        //leaveMatch(pinCode, dispatch)
         navigate('/match/player/entrance')
     }
 

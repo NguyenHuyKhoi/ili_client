@@ -39,27 +39,8 @@ import ProfilePage from "./page/user/profile";
 import SettingPage from "./page/user/setting";
 import { theme } from "./theme";
 
-const { io } = require("socket.io-client");
-
 const App = () => {
   const {user} = useContext(AuthContext)
-  const connect = () => {
-    // client-side
-    const socket = io("http://localhost:8800");
-    socket.on("connect", () => {
-      // x8WIv7-mJelg7on_ALbx
-    });
-
-    socket.on("disconnect", () => {
-    });
-  }
-
-  useEffect(() => {
-    connect()
-    return () => {
-      
-    }
-  }, [])
 
   return (
     <ThemeProvider theme={theme}>
