@@ -1,5 +1,6 @@
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../../context/auth/context'
 import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MatchHostLobbyPage = () => {
     const classes = useStyles()
+    const navigate = useNavigate()
     const {dispatch, match} = useContext(MatchPlayContext)
     const {user} = useContext(AuthContext)
     const {socket} = useContext(SocketContext)
@@ -27,12 +29,19 @@ const MatchHostLobbyPage = () => {
     
     useEffect(() => {
         console.log("Handle with pinCode: ", pinCode)
-        socket.emit('match:update', pinCode, (match) => {
+        socket.emit('match:requireSync', pinCode, (match) => {
+            console.log("Update match on require sync : ", match)
             dispatch(updateMatch(match))
         })
-        // socket.on('match:update', (match) => {
-        //     dispatch(updateMatch(match))
-        // })
+        socket.on('match:sync', (match) => {
+            console.log("Update on sync : ", match)
+            dispatch(updateMatch(match))
+        })
+        socket.on('match:onQuestion', (match) => {
+            console.log("On Question: ", match)
+            dispatch(updateMatch(match))
+            navigate('/match/host/stadium', {replace: false})
+        })
     }, [])  
     return (
         <div className = {classes.container}>

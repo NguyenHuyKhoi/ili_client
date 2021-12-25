@@ -14,10 +14,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 const Header = (props) => {
     const classes = useStyles()
-
+    const {question_index, question_total} = props
     return (
         <div className = {classes.container}>
-            <Typography variant = 'h5'> 2/14 </Typography>
+            <Typography variant = 'h5'> 
+                {`${question_index}/${question_total}`}
+            </Typography>
             <Typography variant = 'h5'> Quiz </Typography>
             <Typography variant = 'h5'>  </Typography>
         </div>

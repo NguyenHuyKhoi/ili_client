@@ -6,9 +6,8 @@ export const sample_match = {
 const INITIAL_STATE = () => {
     let state = {
         match: {},
-        isLoading: false,
-        isSuccess: false,
-        message: ''
+        question: {},
+        answer_counts: [0,0,0,0]
     }
     const saved = localStorage.getItem('match_play_creator')
     if (saved) {
@@ -39,9 +38,8 @@ export const MatchPlayContextProvider = ({children}) => {
     return <MatchPlayContext.Provider
         value = {{
             match: state.match,
-            isLoading: state.isLoading,
-            message: state.message,
-            isSuccess: state.isSuccess,
+            question: state.question,
+            answer_counts: state.answer_counts,
             dispatch
         }}>
         {

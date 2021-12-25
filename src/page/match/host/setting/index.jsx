@@ -58,9 +58,8 @@ const MatchHostSettingPage = () => {
         }
         socket.emit('match:host', host, game._id, (match) => {
             if (match) {
-                navigate('/match/host/lobby')
-                console.log("Create match success: ", match)
                 dispatch(updateMatch(match))
+                navigate('/match/host/lobby')
             }
             else {
                 console.log("Host game failured")

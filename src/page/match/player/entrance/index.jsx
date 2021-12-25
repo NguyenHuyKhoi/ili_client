@@ -24,39 +24,34 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const INPUT_STAGE = {
-    ENTER_PIN: 0, 
-    ENTER_NAME: 1
-}
 
 const MatchPlayerEntrancePage = () => {
     const navigate = useNavigate()
     const classes = useStyles()
     const {match, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
-    const [input, setInput] = useState('')
-    const [stage, setStage] = useState(INPUT_STAGE.ENTER_PIN)
+    const [input, setInput] = useState({value: '', type: 'enter_pin'})
     const [alert, setAlert] = useState({})
 
     const {pinCode} = match ? match : {}
+    const {value, type} = input
     useEffect(() => {
-        socket.on('match:update', (match) => {
+        socket.on('match:sync', (match) => {
             dispatch(updateMatch(match))
         })
     }, [])  
 
     const handleSubmit = () => {
-        switch (stage) {
-            case INPUT_STAGE.ENTER_PIN: 
-                socket.emit('match:join', input, (match) => {
+        switch (type) {
+            case 'enter_pin': 
+                socket.emit('match:join', '111', (match) => {
                     if (match) {
                         dispatch(updateMatch(match))
-                        setStage(INPUT_STAGE.ENTER_NAME)
                         setAlert({
                             type: 'success',
                             msg: 'Pincode is correct'
                         })
-                        setInput('')
+                        setInput({type: 'enter_name',value: ''})
                     }
                     else {
                         setAlert({
@@ -66,8 +61,8 @@ const MatchPlayerEntrancePage = () => {
                     }
                 })
                 break
-            case INPUT_STAGE.ENTER_NAME: 
-                socket.emit('match:updateUser', pinCode, { name: input}, (response) => {
+            case 'enter_name': 
+                socket.emit('match:updateUser', pinCode, { name: value}, (response) => {
                     if (response) {
                         navigate('/match/player/lobby', {replace: false})
                     }
@@ -78,17 +73,17 @@ const MatchPlayerEntrancePage = () => {
     return (
         <div className = {classes.container}>
             <img src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Kahoot_Logo.svg/1280px-Kahoot_Logo.svg.png' className = {classes.logo}/>
-            <Form onSubmit = {handleSubmit} onChange = {(value) => setInput(value)} 
+            <Form onSubmit = {handleSubmit} onChange = {(value) => setInput({...input, value})} 
                 showAlert = {alert.type == 'error'}
-                value = {input}
+                value = {value}
                 btnTitle = {
-                    stage == INPUT_STAGE.ENTER_PIN?'Enter':
-                        stage == INPUT_STAGE.ENTER_NAME?'Ok, go':
+                    type == 'enter_pin'?'Enter':
+                    type == 'enter_name'?'Ok, go':
                             ''
                 } 
                 placeholder = {
-                    stage == INPUT_STAGE.ENTER_PIN?'Game pin':
-                    stage == INPUT_STAGE.ENTER_NAME?'Nickname':
+                    type == 'enter_pin'?'Game pin':
+                    type == 'enter_name'?'Nickname':
                         ''
                 }/>
             <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}

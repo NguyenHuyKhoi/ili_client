@@ -3,7 +3,9 @@ import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { updateMatch } from '../../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../../context/match/play/context'
+import { SocketContext } from '../../../../../context/socket/context'
 import { theme } from '../../../../../theme'
 import { PlayerCard } from '../../../host/lobby/component/Lobby'
 
@@ -70,12 +72,18 @@ const Lobby = (props) => {
     const classes = useStyles()
     const navigate = useNavigate()
     const {match, dispatch} = useContext(MatchPlayContext)
+    const {socket} = useContext(SocketContext)
     let {pinCode, title, users} = match
     if (users == undefined) users = []
     
     const handleLeave = () => {
-        //leaveMatch(pinCode, dispatch)
-        navigate('/match/player/entrance')
+        console.log("User request to leave")
+        socket.emit('match:leave', pinCode, (response) => {
+            if (response) {
+                dispatch(updateMatch({}))
+                navigate('/match/player/entrance', {replace: false})
+            }
+        })
     }
 
     return (
@@ -83,7 +91,9 @@ const Lobby = (props) => {
             <div className = {classes.header}>
                 <div className = {classes.playerCount}>
                     <PersonOutline sx = {{color: 'white', fontSize: 30}}/>
-                    <Typography variant = 'h6' sx = {{color: 'white', fontWeight: 'bold', ml: theme.spacing(1)}}>6</Typography>
+                    <Typography variant = 'h6' sx = {{color: 'white', fontWeight: 'bold', ml: theme.spacing(1)}}>
+                        {users.length}
+                    </Typography>
                 </div>
                 <Typography variant = 'h2' sx = {{fontWeight: 'bold', color: 'white' }}>
                     {title}

@@ -36,20 +36,19 @@ const useStyles = makeStyles((theme) => ({
 }))
 const Incorrect = (props) => {
     const classes = useStyles()
-    return (
-        <div className = {classes.container}>
+        return (
+            <div className = {classes.container}>
             <Typography variant = 'h4' sx = {{fontWeight: 'bold', color: 'white'}}> 
                 Incorrect
             </Typography>
             <div className = {classes.img}>
                 <ClearTwoTone sx = {{color: 'white', fontSize: 50}}/>
             </div>
-            <div className = {classes.img}>
+            <div className = {classes.msg}>
                 <Typography variant = 'h6' sx = {{fontWeight: 'bold', color: 'white'}}>
                     No one said it would be easy ;)
                 </Typography>
-            </div>
-            <Typography variant = 'h5'>  </Typography>
+            </div>  
         </div>
     )
 }

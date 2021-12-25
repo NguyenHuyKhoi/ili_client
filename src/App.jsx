@@ -64,7 +64,7 @@ const App = () => {
           <Route exact path = '/game/library' element = {user ? <GameLibraryPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/game/report' element = {user ? <GameReportPage/> : <Navigate to = '/auth/login'/>}/>
           
-          <Route exact path = '/match/player/entrance' element = { <MatchPlayerEntrancePage/>}/>
+          <Route exact path = '/match/player/entrance' element = {<MatchPlayerEntrancePage/>}/>
           <Route exact path = '/match/player/lobby' element = {<MatchPlayerLobbyPage/>}/>
           <Route exact path = '/match/player/stadium' element = {<MatchPlayerStadiumPage/>}/>
           <Route exact path = '/match/player/finish' element = {<MatchPlayerFinishPage/>}/>

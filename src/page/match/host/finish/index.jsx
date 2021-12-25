@@ -1,6 +1,9 @@
-import { Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, {useContext} from 'react'
+import { useNavigate } from 'react-router-dom'
+import { MatchPlayContext } from '../../../../context/match/play/context'
+import { theme } from '../../../../theme'
 import PlayerRank from './component/PlayerRank'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -32,11 +35,30 @@ const useStyles = makeStyles((theme) => ({
     },
     item: {
         marginBottom: theme.spacing(2)
+    },
+    actions: {
+        display: 'flex',
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: theme.spacing(2),
+        justifyContent: 'center'
     }
 }))
 
 const MatchHostFinishPage = () => {
     const classes = useStyles()
+    const navigate = useNavigate()
+    const {match} = useContext(MatchPlayContext)
+    const {host, users} = match
+
+    const handlePlayAgain = () => {
+        navigate('/match/host/setting', {replace: false})
+    }
+
+    const handleGoHome = () => {
+        navigate( '/', {replace: false})
+    }
     return (
         <div className = {classes.container}>
             <div className = {classes.header} >
@@ -46,12 +68,22 @@ const MatchHostFinishPage = () => {
                     </Typography>
                 </div>
             </div>
+
+            <div className= {classes.actions}>
+                <Button variant = 'contained' onClick = {handlePlayAgain}>
+                    Host again
+                </Button>
+                <Button variant = 'contained' sx = {{ml: theme.spacing(10)}}
+                    onClick = {handleGoHome}>
+                    Home
+                </Button>
+            </div>
             <div className = {classes.body}>
                 <div className = {classes.list}>
                     {
-                        Array.from(Array(3)).map((_, index) => (
+                        users.map((user, index) => (
                             <div className = {classes.item}   key = {''+index}>
-                                <PlayerRank widthPercent = { index < 5? 100 - index *10 : 50  }/>
+                                <PlayerRank widthPercent = { index < 5? 100 - index *10 : 50  } user = {user}/>
                             </div>
                         ))
                     }

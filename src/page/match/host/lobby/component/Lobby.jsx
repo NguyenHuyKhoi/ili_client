@@ -4,6 +4,9 @@ import { makeStyles } from '@mui/styles'
 import React, {useContext} from 'react'
 import { theme } from '../../../../../theme'
 import {MatchPlayContext} from '../../../../../context/match/play/context'
+import { useNavigate } from 'react-router-dom'
+import { SocketContext } from '../../../../../context/socket/context'
+import { updateMatch } from '../../../../../context/match/play/actions'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -79,15 +82,23 @@ export const PlayerCard = (props) => {
 
 const Lobby = (props) => {
     const classes = useStyles()
-    const {match} = useContext(MatchPlayContext)
+    const navigate = useNavigate()
+    const {match, dispatch} = useContext(MatchPlayContext)
+    const {socket} = useContext(SocketContext)
     let {pinCode, title, users} = match
     if (users == undefined) users = []
+
+    const handleStart = () => {
+        socket.emit('match:start', pinCode)
+    }
     return (
         <div className = {classes.container}>
             <div className = {classes.header}>
                 <div className = {classes.playerCount}>
                     <PersonOutline sx = {{color: 'white', fontSize: 30}}/>
-                    <Typography variant = 'h6' sx = {{color: 'white', fontWeight: 'bold', ml: theme.spacing(1)}}>6</Typography>
+                    <Typography variant = 'h6' sx = {{color: 'white', fontWeight: 'bold', ml: theme.spacing(1)}}>
+                        {users.length}
+                    </Typography>
                 </div>
                 <Typography variant = 'h2' sx = {{fontWeight: 'bold', color: 'white' }}>
                     {title}
@@ -96,7 +107,8 @@ const Lobby = (props) => {
                     <Button variant = 'contained'>
                         Lock
                     </Button>
-                    <Button variant = 'contained' sx = {{ml: theme.spacing(2)}}>
+                    <Button variant = 'contained' sx = {{ml: theme.spacing(2)}}
+                        onClick = {handleStart}>
                         Start
                     </Button>
                 </div>
