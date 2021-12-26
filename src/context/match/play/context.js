@@ -9,7 +9,7 @@ const INITIAL_STATE = () => {
         question: {},
         answer_counts: [0,0,0,0]
     }
-    const saved = localStorage.getItem('match_play_creator')
+    const saved = localStorage.getItem('match_play_context')
     if (saved) {
         return{
             ...state,
@@ -30,7 +30,7 @@ export const MatchPlayContext = createContext(reducer)
 export const MatchPlayContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, INITIAL_STATE())
     useEffect(() => {
-        localStorage.setItem('match_play_creator', JSON.stringify(state))
+        localStorage.setItem('match_play_context', JSON.stringify(state))
         return () => {
             
         }

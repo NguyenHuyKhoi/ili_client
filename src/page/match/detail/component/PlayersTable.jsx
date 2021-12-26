@@ -14,22 +14,13 @@ const useStyles = makeStyles((theme) => ({
 const createData = (nickname, rank, correctAnswersPercent, unansweredNum, finalScore) => {
   return { nickname, rank, correctAnswersPercent, unansweredNum, finalScore };
 }
-
-const rows = [
-  createData('Nick name 1', 1, '40%', 3, 1200),
-  createData('Nick name 1', 1, '40%', 3, 1200),
-  createData('Nick name 1', 1, '40%', 3, 1200),
-  createData('Nick name 1', 1, '40%', 3, 1200),
-  createData('Nick name 1', 1, '40%', 3, 1200),
-  createData('Nick name 1', 1, '40%', 3, 1200),
-  createData('Nick name 1', 1, '40%', 3, 1200),
-  createData('Nick name 1', 1, '40%', 3, 1200),
-];
-
 const PlayersTable = (props) => {
-  const handleClickRow = (e) => {
+
+  const {match} = props 
+  const {players} = match
+  const handleClickRow = (index) => {
       if (props.onClickRow) {
-        props.onClickRow()
+        props.onClickRow(index)
       }
   }
   return (
@@ -39,25 +30,21 @@ const PlayersTable = (props) => {
           <TableRow>
             <TableCell>Nickname</TableCell>
             <TableCell align="right">Rank</TableCell>
-            <TableCell align="right">Correct Answers</TableCell>
-            <TableCell align="right">Unanswered</TableCell>
             <TableCell align="right">Final Score</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {players.map((player, index) => (
             <TableRow
-              onClick = {handleClickRow}
-              key={row.nickname}
+              onClick = {() => handleClickRow(index)}
+              key={player.socketId }
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.nickname}
+                {player.name}
               </TableCell>
-              <TableCell align="right">{row.rank}</TableCell>
-              <TableCell align="right">{row.correctAnswersPercent}</TableCell>
-              <TableCell align="right">{row.unansweredNum}</TableCell>
-              <TableCell align="right">{row.finalScore}</TableCell>
+              <TableCell align="right">{player.rank}</TableCell>
+              <TableCell align="right">{player.score}</TableCell>
             </TableRow>
           ))}
         </TableBody>

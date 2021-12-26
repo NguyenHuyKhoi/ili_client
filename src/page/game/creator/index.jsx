@@ -60,7 +60,7 @@ const GameCreatorPage = (props) => {
         else if (mode == 'create') {
             console.log("Token :", token)
             // Add index for question:
-            game.questions.forEach((question, index) => question.index = index+1)
+            game.questions.forEach((question, index) => game.questions[index].index = index + 1)
             axios.post('game/', game, {
                 headers: {
                     'x-access-token': token

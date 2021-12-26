@@ -6,9 +6,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { makeStyles } from '@mui/styles';
-import * as React from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { selectMatch } from '../../../../context/match/other/actions';
+import { MatchContext } from '../../../../context/match/other/context';
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1
@@ -19,21 +20,13 @@ const createData = (name, date, gameMode, playerNum) => {
   return { name, date, gameMode, playerNum };
 }
 
-const rows = [
-  createData('Fincap Friday: Women in the suite', '	December 4, 2021, 3:21 PM', 'Live', 200),
-  createData('Fincap Friday: Women in the suite', '	December 4, 2021, 3:21 PM', 'Live', 200),
-  createData('Fincap Friday: Women in the suite', '	December 4, 2021, 3:21 PM', 'Live', 200),
-  createData('Fincap Friday: Women in the suite', '	December 4, 2021, 3:21 PM', 'Live', 200),
-  createData('Fincap Friday: Women in the suite', '	December 4, 2021, 3:21 PM', 'Live', 200),
-  createData('Fincap Friday: Women in the suite', '	December 4, 2021, 3:21 PM', 'Live', 200),
-  createData('Fincap Friday: Women in the suite', '	December 4, 2021, 3:21 PM', 'Live', 200),
-  createData('Fincap Friday: Women in the suite', '	December 4, 2021, 3:21 PM', 'Live', 200),
-];
 
-const GameTable = () => {
+const MatchTable = () => {
 	const navigate = useNavigate()
-	const handleClickRow = (e) => {
-		navigate('/game/report', {replace: false})
+	const {matches, dispatch} = useContext(MatchContext)
+	const handleClickRow = (match) => {
+		dispatch(selectMatch(match))
+		navigate('/match/detail/'+match._id, {replace: false})
 	}
 	return (
 		<TableContainer component={Paper}>
@@ -47,18 +40,18 @@ const GameTable = () => {
 			</TableRow>
 			</TableHead>
 			<TableBody>
-			{rows.map((row) => (
+			{matches.map((match) => (
 				<TableRow
-				onClick = {handleClickRow}
-				key={row.name}
+				onClick = {() => handleClickRow(match)}
+				key={match._id}
 				sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 				>
 				<TableCell component="th" scope="row">
-					{row.name}
+					{match.game.title}
 				</TableCell>
-				<TableCell align="right">{row.date}</TableCell>
-				<TableCell align="right">{row.gameMode}</TableCell>
-				<TableCell align="right">{row.playerNum}</TableCell>
+				<TableCell align="right">{match.createAt}</TableCell>
+				<TableCell align="right">{'Live'}</TableCell>
+				<TableCell align="right">{match.players.length}</TableCell>
 				</TableRow>
 			))}
 			</TableBody>
@@ -67,4 +60,4 @@ const GameTable = () => {
 	);
 }
 
-export default GameTable
+export default MatchTable

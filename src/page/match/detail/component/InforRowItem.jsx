@@ -15,16 +15,17 @@ const useStyles = makeStyles((theme) => ({
 	}
 }))
 
-export const InforRowItem = () => {
+export const InforRowItem = (props) => {
 	const classes = useStyles()
+	const {value, label} = props
 	return (
 		<div className = {classes.container}>
 			<Typography variant = 'subtitle1' sx = {{flex: 1}}>
-				Rank
+				{label}
 			</Typography>
-			<Add sx = {{mx: theme.spacing(1)}}/>
+			{/* <Add sx = {{mx: theme.spacing(1)}}/> */}
 			<Typography variant = 'subtitle1'>
-				0 of 7
+				{value}
 			</Typography>
 		</div>
 	)

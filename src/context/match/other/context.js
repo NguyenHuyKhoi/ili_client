@@ -3,6 +3,8 @@ import reducer from "./reducer"
 
 const INITIAL_STATE = () => {
     let state = {
+        matches: [],
+        match: {}
     }
     const saved = localStorage.getItem('match_context')
     if (saved) {
@@ -31,7 +33,9 @@ export const MatchContextProvider = ({children}) => {
     }, [state])
     return <MatchContext.Provider
         value = {{
-            dispatch
+            dispatch,
+            matches: state.matches,
+            match: state.match
         }}>
         {
             children

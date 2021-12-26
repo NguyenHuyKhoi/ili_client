@@ -22,25 +22,46 @@ const useStyles = makeStyles((theme) => ({
 
 const TopBarModal = (props) => {
 	const classes = useStyles()
+	const {title, index, total} = props 
 	const handleClose = () => {
 		if (props.onClose) {
 			props.onClose()
 		}
+	}
+
+	const handleLeft = () => {
+		if (index == 1) return 
+		if (props.onLeft) props.onLeft()
+	}
+
+	const handleRight = () => {
+		if (index == total) return 
+		if (props.onRight) props.onRight()
 	}
 	return (
 		<div className = {classes.container}>
 			<div className = {classes.left}>
 				<PersonOutline/>
 				<Typography variant = 'subtitle1'>
-					UserName
+					{title}
 				</Typography>
 			</div>
 			<div className = {classes.right}>
 				<Typography variant = 'subtitle1'>
-					1/4
+					{`${index}/${total}`}
 				</Typography>
-				<ChevronLeft/>
-				<ChevronRight/>
+				<ChevronLeft 
+					sx = {{
+						color: index == 1 ? 'gray' : 'black'
+					}}
+					onClick = {handleLeft}
+				/>
+				<ChevronRight
+					sx = {{
+						color: index == total ? 'gray' : 'black'
+					}}
+					onClick = {handleRight}
+				/>
 				<Close onClick = {handleClose}/>
 			</div>
 		</div>

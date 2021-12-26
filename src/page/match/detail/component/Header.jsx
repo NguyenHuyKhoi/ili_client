@@ -1,7 +1,8 @@
 import { MoreVert } from '@mui/icons-material';
 import { Divider, Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import * as React from 'react';
+import  React, {useContext} from 'react';
+import { MatchContext } from '../../../../context/match/other/context';
 import { theme } from '../../../../theme';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
 	const classes = useStyles()
+
+	const {match} = useContext(MatchContext)
+	const {game, host, players, createAt } = match
+	console.log("Match: ", match)
 	return (
 		<div className = {classes.container}>
 			<Grid container>
@@ -43,7 +48,7 @@ const Header = () => {
 								Report
 							</Typography>
 							<Typography variant = 'h5' sx = {{color: 'black'}}>
-								Game Title
+								{game.title}
 							</Typography>
 						</div>
 						<div className = {classes.options}>
@@ -57,15 +62,15 @@ const Header = () => {
 				<Grid item xs = {3}>
 					<div className = {classes.right}>
 						<Typography variant = 'subtitle1' sx = {{p: theme.spacing(1.5)}}>
-							Game infors detail 1
+							Live
 						</Typography>
 						<Divider/>
 						<Typography variant = 'subtitle1' sx = {{p: theme.spacing(1.5)}}>
-							Game infors detail 1
+							{createAt}
 						</Typography>
 						<Divider/>
 						<Typography variant = 'subtitle1' sx = {{p: theme.spacing(1.5)}}>
-							Game infors detail 1
+							Host by {host.name}
 						</Typography>
 					</div>
 				</Grid>

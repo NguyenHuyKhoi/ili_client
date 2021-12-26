@@ -1,7 +1,7 @@
 import { Add, ChevronLeft, ChevronRight, Close, PersonOutline } from '@mui/icons-material';
 import { Divider, Grid, Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { theme } from "../../../../theme";
 import InforRowItem from './InforRowItem';
 import PlayerDetailTable from './PlayerDetailTable';
@@ -55,42 +55,44 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const ColInforItem = () => {
+const ColInforItem = (props) => {
 	const classes = useStyles()
+	const {value, label} = props
 	return (
 		<div className = {classes.inforItem}>
 			<Typography variant = 'h4' sx = {{fontWeight: 'bold'}}>
-				0%
+				{value}
 			</Typography>
 			<Typography variant = 'subtitle1'>
-				Correct
+				{label}
 			</Typography>
 		</div>
 	)
 }
 
-const Header = () => {
+const Header = (props) => {
 	const classes = useStyles() 
+	const {player} = props 
 	return (
 		<div className = {classes.header}>
 			<Grid container >
 				<Grid item xs = {5} >
 					<div className = {classes.leftHeader}>
 						<div className = {classes.pieChart}/>
-						<ColInforItem/>
-						<ColInforItem/>
+						<ColInforItem value = '0%' label= 'Correct' />
 					</div>
 				</Grid>
 				<Grid item xs = {7}>
 					<Grid container >
-						{
-							Array.from(Array(5)).map((_, index) => (
-								<Grid item xs = {6}   key = {''+index}>
-									<InforRowItem />
-									<Divider/>
-								</Grid>
-							))
-						}
+						<Grid item xs = {6} >
+							<InforRowItem label = {'Rank'} value = {player.rank}/>
+						</Grid>
+						<Grid item xs = {6} >
+							<InforRowItem label = {'Score'} value = {player.score}/>
+						</Grid>
+						<Grid item xs = {6} >
+							<InforRowItem label = {'Question answered'} value = {'3'}/>
+						</Grid>
 					</Grid>
 				</Grid>
 			</Grid>
@@ -99,6 +101,15 @@ const Header = () => {
 }
 const PlayerDetailModal = (props) => {
 	const classes = useStyles()
+	const {match} = props 
+	const {players, progress} = match 
+	const [index, setIndex] = useState(0)
+	useEffect(() => {
+		setIndex(props.index)
+		return () => {
+			
+		}
+	}, [props.index])
 	var {open} = props
 	if (open == undefined) open = false
 	const handleClose = () => {
@@ -106,6 +117,7 @@ const PlayerDetailModal = (props) => {
 			props.onClose()
 		}
 	}
+	const player = players[index]
 	return (
 		<Modal
 			open={open}
@@ -115,12 +127,18 @@ const PlayerDetailModal = (props) => {
 			onBackdropClick = {handleClose}
 			> 
 			<div className={classes.container}>
-				<TopBarModal onClose = {handleClose}/>
+				<TopBarModal 
+					onClose = {handleClose} 
+					onRight = {() => setIndex(index + 1)}
+					onLeft = {() => setIndex(index - 1)}
+					title = {player.name} 
+					index = {index + 1} 
+					total = {players.length}/>
 				<Divider/>
 				<div className = {classes.body}>
-					<Header/>
+					<Header player = {player}/>
 					<div className = {classes.table}>
-						<PlayerDetailTable/>
+						<PlayerDetailTable progress = {progress} player = {player}/>
 					</div>
 				</div>
 			</div>

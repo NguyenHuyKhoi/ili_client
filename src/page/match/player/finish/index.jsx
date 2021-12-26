@@ -58,8 +58,6 @@ const MatchPlayerFinishPage = () => {
     const handleGoHome = () => {
         navigate( '/', {replace: false})
     }
-
-    players.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0))
     return (
         <div className = {classes.container}>
             <div className = {classes.header} >

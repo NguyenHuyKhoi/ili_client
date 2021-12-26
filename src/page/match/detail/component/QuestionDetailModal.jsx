@@ -2,11 +2,12 @@ import { Add, ChevronLeft, ChevronRight, Close, Square } from '@mui/icons-materi
 import { Divider, Grid, Modal, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { theme } from "../../../../theme";
 import InforRowItem from './InforRowItem';
 import PlayerDetailTable from './PlayerDetailTable';
 import QuestionDetailCard from './QuestionDetailCard';
+import QuestionDetailTable from './QuestionDetailTable';
 import TopBarModal from './TopBarModal';
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -40,6 +41,18 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestionDetailModal = (props) => {
 	const classes = useStyles()
+	const {match} = props 
+	const {progress, players} = match 
+
+	const [index, setIndex] = useState(0)
+	useEffect(() => {
+		setIndex(props.index)
+		console.log("Updatet index ", props.index)
+		return () => {
+			
+		}
+	}, [props.index])
+
 	var {open} = props
 	if (open == undefined) open = false
 	const handleClose = () => {
@@ -47,6 +60,23 @@ const QuestionDetailModal = (props) => {
 			props.onClose()
 		}
 	}
+
+	const stage = progress[index]
+	const {time_limit} = stage.question
+	const answerPlayers = stage.answers.length
+	let correctAnswerPercent = 0
+	let avgAnswerTime = time_limit
+	
+	if (answerPlayers > 0 ) {
+		correctAnswerPercent = stage.answers.filter((answer) => answer.isCorrect).length 
+			/ answerPlayers * 100
+
+		avgAnswerTime = stage.answers.reduce((sumTime, answer) => {
+			return sumTime += (time_limit - answer.answerTime)
+		}, 0) / answerPlayers
+	} 
+
+
 	return (
 		<Modal
 			open={open}
@@ -56,23 +86,36 @@ const QuestionDetailModal = (props) => {
 			onBackdropClick = {handleClose}
 			> 
 			<div className={classes.container}>
-				<TopBarModal onClose = {handleClose}/>
+				<TopBarModal
+					onClose = {handleClose} 
+					onRight = {() => setIndex(index + 1)}
+					onLeft = {() => setIndex(index - 1)}
+					title = {stage.question.index + '. ' + stage.question.title} 
+					index = {index + 1} 
+					total = {progress.length}/>
 				<Divider/>
 				<div className = {classes.body}>
-					<QuestionDetailCard/>
+					<QuestionDetailCard stage = {stage} players = {players}/>
+
 					<div className = {classes.infors}>
-						<Grid container rowSpacing = {3}>
-							{
-								Array.from(Array(3)).map((_, index) => (
-									<Grid item xs = {4}   key = {''+index}>
-										<InforRowItem/>
-									</Grid>
-								))
-							}
+						<Grid item xs = {4}  >
+							<InforRowItem 
+								label = 'Correct answers: ' 
+								value = {correctAnswerPercent + '%'}/>
+						</Grid>
+						<Grid item xs = {4}  >
+							<InforRowItem 
+								label = 'Avg. answer Time: ' 
+								value = {avgAnswerTime + 's'}/>
+						</Grid>
+						<Grid item xs = {4} >
+							<InforRowItem 
+								label = 'Player answered ' 
+								value = {answerPlayers + ' of ' + players.length}/>
 						</Grid>
 					</div>
 					<div className = {classes.table}>
-						<PlayerDetailTable/>
+						<QuestionDetailTable players = {players} stage = {stage} />
 					</div>
 				</div>
 			</div>

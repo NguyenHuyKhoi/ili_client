@@ -28,11 +28,24 @@ const rows = [
 ];
 
 const QuestionsTable = (props) => {
-  const handleClickRow = (e) => {
+  const {match} = props 
+  const {progress, players} = match
+  const handleClickRow = (index) => {
     if (props.onClickRow) {
-      props.onClickRow()
+      props.onClickRow(index)
     }
-}
+  }
+
+  const list = progress.map((item) => {
+    let row = {}
+    row.questionIndex = item.question.index 
+    row.questionTitle = item.question.title 
+    row.questionType = 'Quiz'
+    row.corrects = item.answers.filter((answer) => answer.isCorrect == true ).length 
+    row.inCorrects = item.answers.length - row.corrects 
+    row.unAnswers = players.length -  item.answers.length 
+    return row
+  })
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -40,21 +53,26 @@ const QuestionsTable = (props) => {
           <TableRow>
             <TableCell>Question</TableCell>
             <TableCell align="right">Type</TableCell>
-            <TableCell align="right">Correct/incorrect</TableCell>
+            <TableCell align="right">Correct</TableCell>
+            <TableCell align="right">InCorrect</TableCell>
+            <TableCell align="right">Not answered</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {list.map(({questionIndex, questionTitle, questionType, 
+            corrects, inCorrects, unAnswers}, index) => (
             <TableRow
-              onClick = {handleClickRow}
-              key={row.nickname}
+              onClick = {() => handleClickRow(index)}
+              key={index + ''}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.title}
+                {`${questionIndex}. ${questionTitle}`}
               </TableCell>
-              <TableCell align="right">{row.type}</TableCell>
-              <TableCell align="right">{row.correctPlayersNum + '/' + row.incorrectPlayersNum}</TableCell>
+              <TableCell align="right">{questionType}</TableCell>
+              <TableCell align="right">{corrects}</TableCell>
+              <TableCell align="right">{inCorrects}</TableCell>
+              <TableCell align="right">{unAnswers}</TableCell>
             </TableRow>
           ))}
         </TableBody>

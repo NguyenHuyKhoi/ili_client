@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { makeStyles } from '@mui/styles';
-import * as React from 'react';
+import React, {useState, useContext} from 'react';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -14,24 +14,36 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const createData = (title, type, answer, isCorrect, time, point) => {
-  return { title, type, answer, isCorrect, time, point };
-}
 
-const rows = [
-  createData('How many apple on the table?', 'Quiz', 'A', false, 4, 240),
-  createData('How many apple on the table?', 'Quiz', 'A', false, 4, 240),
-  createData('How many apple on the table?', 'Quiz', 'A', false, 4, 240)
-];
+const QuestionDetailTable = (props) => {
+  const {players, stage} = props 
 
-const QuestionDetailTable = () => {
+  const answerMappingChars = [ 'A', 'B', 'C', 'D']
+  const list = players.map((item, index) => {
+    let row = {}
+    row.playerName = item.name 
+
+    let answerPlayer = stage.answers.find((answer) => answer.socketId == item.socketId)
+    if (!answerPlayer) {
+      row.answer = 'No answer'
+      row.isCorrect = false 
+      row.score = 0
+      row.time = '--'
+    }
+    else  {
+      row.answer = answerMappingChars[answerPlayer.answerIndex]
+      row.isCorrect = answerPlayer.isCorrect
+      row.score = answerPlayer.earnScore 
+      row.time =answerPlayer.answerTime
+    }
+    return row 
+  })
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Question</TableCell>
-            <TableCell align="right">Type</TableCell>
             <TableCell align="right">Answered</TableCell>
             <TableCell align="right">Correct/incorrect</TableCell>
             <TableCell align="right">Time</TableCell>
@@ -39,19 +51,18 @@ const QuestionDetailTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {list.map(({playerName, answer, isCorrect, score, time}, index) => (
             <TableRow
-              key={row.nickname}
+              key={index + ''}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.title}
+                {playerName}
               </TableCell>
-              <TableCell align="right">{row.type}</TableCell>
-              <TableCell align="right">{row.answer}</TableCell>
-              <TableCell align="right">{row.isCorrect}</TableCell>
-              <TableCell align="right">{row.time}</TableCell>
-              <TableCell align="right">{row.point}</TableCell>
+              <TableCell align="right">{answer}</TableCell>
+              <TableCell align="right">{isCorrect? 'Correct' : 'Incorrect'}</TableCell>
+              <TableCell align="right">{time}</TableCell>
+              <TableCell align="right">{score}</TableCell>
 
             </TableRow>
           ))}

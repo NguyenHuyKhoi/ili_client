@@ -1,9 +1,11 @@
-import { Container, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import axios from 'axios'
+import React, { useContext, useEffect } from 'react'
 import HeaderBar from '../../../component/HeaderBar'
-import GameTable from './component/GameTable'
-
+import { AuthContext } from '../../../context/auth/context'
+import { getMatchesSuccess } from '../../../context/match/other/actions'
+import { MatchContext } from '../../../context/match/other/context'
+import MatchTable from './component/MatchTable'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -18,11 +20,31 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardReportPage = () => {
     const classes = useStyles()
+
+    const {token} = useContext(AuthContext)
+    const {dispatch} = useContext(MatchContext)
+    useEffect(() => {
+        axios.get('match/library', {
+            headers: {
+                'x-access-token': token
+            }
+        })
+        .then ((res) => {
+            console.log("Get matches: ", res.data)
+            dispatch(getMatchesSuccess(res.data))
+        })
+        .catch((err) => {
+            console.log("Error :", err.response.data)
+        })
+        return () => {
+            
+        }
+    }, [])
     return (
         <div className = {classes.container}>
             <HeaderBar selectedIndex = {3}/>
             <div className= {classes.body}>
-                <GameTable/>
+                <MatchTable />
             </div>
           
         </div>

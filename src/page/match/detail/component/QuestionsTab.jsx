@@ -1,12 +1,6 @@
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import { makeStyles } from '@mui/styles';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { MatchContext } from '../../../../context/match/other/context';
 import QuestionDetailModal from './QuestionDetailModal';
 import QuestionsTable from './QuestionsTable';
 
@@ -21,11 +15,21 @@ const useStyles = makeStyles((theme) => ({
 const QuestionsTab = () => {
     const classes = useStyles()
     const [modal, setModal] = useState({})
+    const {match} = useContext(MatchContext)
+  
+    const [index, setIndex] = useState(0)
+    const handleViewQuestion =  (index) => {
+      setIndex(index)
+      setModal({state: 'question_detail'})
+    }
     return (
       <div className = {classes.container}>
-        <QuestionsTable onClickRow = {() => setModal({state: 'question_detail'})}/>
+        <QuestionsTable onClickRow = {handleViewQuestion}
+          match = {match}/>
         <QuestionDetailModal 
           open = {modal.state == 'question_detail'} 
+          match = {match}
+          index = {index}
           onClose = {() => setModal({})}/>
       </div>
     )
