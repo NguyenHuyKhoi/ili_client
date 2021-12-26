@@ -11,7 +11,8 @@ export const sample_question = {
         null
     ],
     correct_answers: [],
-    time_limit: 20
+    time_limit: 20,
+    score: 1000
 }
 
 export const sample_game = {
@@ -20,7 +21,7 @@ export const sample_game = {
     cover: null,
     language: 'en',
     visibility: 'private',
-    question_index: 0,
+    questionIndex: 0,
     questions: [{...sample_question}]
 }
 

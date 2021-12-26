@@ -4,7 +4,7 @@ import React, {useContext} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { theme } from '../../../../theme'
-import PlayerRank from './component/PlayerRank'
+import PlayerRank from '../../host/finish/component/PlayerRank'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -50,7 +50,7 @@ const MatchPlayerFinishPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
     const {match} = useContext(MatchPlayContext)
-    const {host, users} = match
+    const {host, players} = match
     const handlePlayAgain = () => {
         navigate('/match/player/entrance', {replace: false})
     }
@@ -58,6 +58,8 @@ const MatchPlayerFinishPage = () => {
     const handleGoHome = () => {
         navigate( '/', {replace: false})
     }
+
+    players.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0))
     return (
         <div className = {classes.container}>
             <div className = {classes.header} >
@@ -79,9 +81,9 @@ const MatchPlayerFinishPage = () => {
             <div className = {classes.body}>
                 <div className = {classes.list}>
                     {
-                        Array.from(Array(3)).map((_, index) => (
+                        players.map((player, index) => (
                             <div className = {classes.item}   key = {''+index}>
-                                <PlayerRank widthPercent = { index < 5? 100 - index *10 : 50  }/>
+                                <PlayerRank player = {player} index = {index + 1} />
                             </div>
                         ))
                     }

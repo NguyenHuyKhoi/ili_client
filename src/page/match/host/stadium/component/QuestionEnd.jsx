@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 const QuestionEnd = (props) => {
     const classes = useStyles()
     const {match} = useContext(MatchPlayContext)
-    const {users} = match
+    const {players} = match
     const {time} = props 
     return (
         <div className = {classes.container}>
@@ -36,9 +36,9 @@ const QuestionEnd = (props) => {
             </Typography>
             <Grid container columnSpacing={2} rowSpacing={2}>
                 {
-                    users.map((user, index) => (
+                    players.map((player, index) => (
                         <Grid item xs = {6}> 
-                            <Player user = {user}/>
+                            <Player player = {player}/>
                         </Grid>
                     ))
                 

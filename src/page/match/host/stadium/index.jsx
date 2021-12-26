@@ -28,7 +28,7 @@ const MatchHostStadiumPage = () => {
     const {socket} = useContext(SocketContext)
     const [stage, setStage] = useState({type: 'on_question'})
     const [time, setTime] = useState(0)
-    const {question_index} = match
+    const {questionIndex, pinCode} = match
     
     useEffect(() => {
         socket.on('match:onCountdown', (time) => {
@@ -39,8 +39,9 @@ const MatchHostStadiumPage = () => {
             setTime(time)
         })
 
-        socket.on('match:onEndQuestion', () => {
+        socket.on('match:onEndQuestion', (match) => {
             console.log("On end question")
+            dispatch(updateMatch(match))
             setStage({type: 'end_question'})
         })
 
@@ -60,7 +61,7 @@ const MatchHostStadiumPage = () => {
     return (
         <div className = {classes.container}>
             <Header
-                 question_index = {question_index}
+                 questionIndex = {questionIndex + 1}
                  question_total = {match.game.questions.length}/>
             <Divider/>
             <div className = {classes.questionContainer}>
@@ -74,7 +75,7 @@ const MatchHostStadiumPage = () => {
                     null
                 }
             </div>  
-            <BottomBar/>
+            <BottomBar pinCode = {pinCode}/>
         </div>
     )
 }

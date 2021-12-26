@@ -48,14 +48,14 @@ const useStyles = makeStyles((theme) => ({
 const QuestionBuilder = () => {
     const classes = useStyles()
     const {game, dispatch} = useContext(GameCreatorContext)
-    const {questions, question_index} = game
-    let question = questions[question_index]
+    const {questions, questionIndex} = game
+    let question = questions[questionIndex]
 
     
     const {title, image, answers, correct_answers} = question
     const handleChange = (key, value) => {
         question[key] = value
-        dispatch(updateQuestion(question, question_index))
+        dispatch(updateQuestion(question, questionIndex))
     }
     return ( 
         <div className = {classes.container}>

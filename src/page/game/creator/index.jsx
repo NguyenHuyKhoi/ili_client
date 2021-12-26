@@ -29,7 +29,7 @@ const GameCreatorPage = (props) => {
     const navigate = useNavigate()
     const {token} = useContext(AuthContext)
     const {game, dispatch, mode} = useContext(GameCreatorContext)
-    const {questions, question_index, isValidated} = game
+    const {questions, questionIndex, isValidated} = game
 
     const [canDeleteQuestion, setCanDeleteQuestion] = useState(false)
     const [defectiveQuestions, setDefectiveQuestions] = useState([])
@@ -132,7 +132,7 @@ const GameCreatorPage = (props) => {
                 onCancel = {() => setModal({})}
                 onDone = {() => {
                     setModal({})
-                    if (canDeleteQuestion) dispatch(deleteQuestion(question_index))
+                    if (canDeleteQuestion) dispatch(deleteQuestion(questionIndex))
                 }}/>
 
             <Grid container sx = {{pt: theme.spacing(8), flex: 1}}>
@@ -144,7 +144,7 @@ const GameCreatorPage = (props) => {
                 </Grid>
                 <Grid item sm={2.5}>
                     <QuestionConfig onClickDelete = {() => setModal({state: 'delete_question'})}
-                        onClickDuplicate = {() => dispatch(duplicateQuestion(question_index))}/>
+                        onClickDuplicate = {() => dispatch(duplicateQuestion(questionIndex))}/>
                 </Grid>
             </Grid>
         </div>

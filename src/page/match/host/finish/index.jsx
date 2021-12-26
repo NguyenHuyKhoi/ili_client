@@ -50,7 +50,7 @@ const MatchHostFinishPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
     const {match} = useContext(MatchPlayContext)
-    const {host, users} = match
+    const {host, players} = match
 
     const handlePlayAgain = () => {
         navigate('/match/host/setting', {replace: false})
@@ -59,6 +59,7 @@ const MatchHostFinishPage = () => {
     const handleGoHome = () => {
         navigate( '/', {replace: false})
     }
+    players.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0))
     return (
         <div className = {classes.container}>
             <div className = {classes.header} >
@@ -81,9 +82,9 @@ const MatchHostFinishPage = () => {
             <div className = {classes.body}>
                 <div className = {classes.list}>
                     {
-                        users.map((user, index) => (
+                        players.map((player, index) => (
                             <div className = {classes.item}   key = {''+index}>
-                                <PlayerRank widthPercent = { index < 5? 100 - index *10 : 50  } user = {user}/>
+                                <PlayerRank player = {player} index = {index + 1}/>
                             </div>
                         ))
                     }

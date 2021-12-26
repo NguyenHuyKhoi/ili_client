@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 const Correct = (props) => {
     const classes = useStyles()
+    const {earnScore} = props
     return (
         <div className = {classes.container}>
             <Typography variant = 'h4' sx = {{fontWeight: 'bold', color: 'white'}}> Correct </Typography>
@@ -44,7 +45,7 @@ const Correct = (props) => {
             </div>
             <div className = {classes.msg}>
                 <Typography variant = 'h6' sx = {{fontWeight: 'bold', color: 'white'}}>
-                    + 975
+                    {`+ ${earnScore}`}
                 </Typography>
             </div>
             <Typography variant = 'h5'>  </Typography>

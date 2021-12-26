@@ -47,7 +47,7 @@ const reducer = (state, action) => {
                 ...state
             }
         case 'SELECT_QUESTION': 
-            state.question_index = index
+            state.questionIndex = index
             return {
                 ...state
             }
@@ -70,8 +70,8 @@ const reducer = (state, action) => {
             }
         case 'DELETE_QUESTION':
             state.questions.splice(index,1)
-            if (index <= state.question_index) {
-                state.question_index = Math.max(0, state.question_index - 1)
+            if (index <= state.questionIndex) {
+                state.questionIndex = Math.max(0, state.questionIndex - 1)
             }
             return {
                 ...state

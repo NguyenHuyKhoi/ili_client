@@ -44,25 +44,26 @@ const MatchPlayerEntrancePage = () => {
     const handleSubmit = () => {
         switch (type) {
             case 'enter_pin': 
-                socket.emit('match:join', '111', (match) => {
+                socket.emit('match:join', value, (match) => {
                     if (match) {
                         dispatch(updateMatch(match))
                         setAlert({
                             type: 'success',
-                            msg: 'Pincode is correct'
+                            msg: 'pinCode is correct'
                         })
                         setInput({type: 'enter_name',value: ''})
                     }
                     else {
                         setAlert({
                             type: 'error',
-                            msg: 'Pincode is wrong'
+                            msg: 'pinCode is wrong'
                         })
                     }
                 })
                 break
             case 'enter_name': 
-                socket.emit('match:updateUser', pinCode, { name: value}, (response) => {
+                console.log("Enter name: ", value)
+                socket.emit('match:updatePlayer', pinCode, { name: value}, (response) => {
                     if (response) {
                         navigate('/match/player/lobby', {replace: false})
                     }

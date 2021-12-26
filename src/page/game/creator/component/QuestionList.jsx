@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 const QuestionList = (props) => {
     const classes = useStyles()
     const {game, dispatch} = useContext(GameCreatorContext)
-    const {question_index, questions} = game
+    const {questionIndex, questions} = game
     const handleSelected = (index) => {
         dispatch(selectQuestion(index))
     }
@@ -50,14 +50,14 @@ const QuestionList = (props) => {
                     <div className = {classes.item} onClick = {()=>handleSelected(index)} 
                         key = {''+index}
                         style={{
-                            backgroundColor: question_index == index ? blue[100]:'white'
+                            backgroundColor: questionIndex == index ? blue[100]:'white'
                         }}>
                         <Typography variant='subtitle2' sx = {{mb: theme.spacing(1)}}>
                             {
                                 (index + 1) + ' quiz'
                             }
                         </Typography>
-                        <QuestionMiniItem selected = {question_index == index} question = {item}/>
+                        <QuestionMiniItem selected = {questionIndex == index} question = {item}/>
                     </div>
                 ))
             }

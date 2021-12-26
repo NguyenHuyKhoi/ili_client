@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Player = (props) => {
     const classes = useStyles()
-    const {user} = props 
-    const {name} = user
+    const {player} = props 
+    const {name, score} = player
     return (
         <div className = {classes.container} 
             onClick = {() => {
@@ -33,7 +33,7 @@ const Player = (props) => {
             </Typography>
             
             <Typography variant = 'h6' sx = {{flex: 1, ml: theme.spacing(2), fontWeight: 'bold', color: 'white'}}>
-                {'Score: '}
+                {'Score: ' + score}
             </Typography>
             
         </div>

@@ -85,8 +85,8 @@ const Lobby = (props) => {
     const navigate = useNavigate()
     const {match, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
-    let {pinCode, title, users} = match
-    if (users == undefined) users = []
+    let {pinCode, title, players} = match
+    if (players == undefined) players = []
 
     const handleStart = () => {
         socket.emit('match:start', pinCode)
@@ -97,7 +97,7 @@ const Lobby = (props) => {
                 <div className = {classes.playerCount}>
                     <PersonOutline sx = {{color: 'white', fontSize: 30}}/>
                     <Typography variant = 'h6' sx = {{color: 'white', fontWeight: 'bold', ml: theme.spacing(1)}}>
-                        {users.length}
+                        {players.length}
                     </Typography>
                 </div>
                 <Typography variant = 'h2' sx = {{fontWeight: 'bold', color: 'white' }}>
@@ -116,7 +116,7 @@ const Lobby = (props) => {
             <div className = {classes.body}>
                 <div className = {classes.players}>
                     {
-                        users.map((user, index) => (
+                        players.map((user, index) => (
                             <PlayerCard   key = {''+index} user = {user}/>
                         ))
                     }

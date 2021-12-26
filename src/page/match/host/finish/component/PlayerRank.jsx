@@ -26,23 +26,25 @@ const useStyles = makeStyles((theme) => ({
 
 const PlayerRank = (props) => {
     const classes = useStyles() 
+    const {player, index} = props 
+    const {name, score} = player 
     return (
         <div className = {classes.container} style = {{
             width: `${props.widthPercent}%`
         }}>
             <div className = {classes.infor}>
                 <Typography variant = 'h4' sx = {{color: 'white', fontWeight: 'bold'}}>
-                    1
+                    {index}
                 </Typography>
                 <div className = {classes.score}>
                     <Typography variant = 'h6' sx = {{color: 'black', fontWeight: 'bold'}}>
-                        650
+                        {score}
                     </Typography>
                 </div>
             </div>
           
             <Typography variant = 'h4' sx = {{color: 'white', fontWeight: 'bold'}}>
-                User name
+                {name}
             </Typography>
         </div>
     )

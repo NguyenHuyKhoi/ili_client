@@ -33,8 +33,9 @@ const useStyles = makeStyles((theme) => ({
 const QuestionConfig = (props) => {
     const classes = useStyles()
     const {game, dispatch} = useContext(GameCreatorContext)
-    const {questions, question_index} = game
-    const question = questions[question_index]
+    const {questions, questionIndex} = game
+    const question = questions[questionIndex]
+    const {score, time_limit} = question
     const handleDeleteQuestion = () => {
         if (props.onClickDelete) {
             props.onClickDelete()
@@ -60,8 +61,18 @@ const QuestionConfig = (props) => {
                             {label: '20', value: 20},
                             {label: '30', value: 30}
                         ]}
-                        value = {question.time_limit}
+                        value = {time_limit}
                         onChange = {(value)=>handleChange('time_limit',value)}/>
+                </div>
+                <div className = {classes.input}>
+                    <DropdownSelect title = 'Score'
+                        list = {[
+                            {label: '1000', value: 1000},
+                            {label: '1200', value: 1200},
+                            {label: '1500', value: 1500}
+                        ]}
+                        value = {score}
+                        onChange = {(value)=>handleChange('score',value)}/>
                 </div>
             </div>
             <Divider />

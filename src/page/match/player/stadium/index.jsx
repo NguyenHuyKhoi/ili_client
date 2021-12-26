@@ -32,9 +32,10 @@ const MatchPlayerStadiumPage = () => {
     const navigate = useNavigate()
     const {question, match, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
+    const [earnScore, setEarnScore] = useState(0)
     const [time, setTime] = useState(0)
     const [stage, setStage] = useState({type:'on_question'})
-    const {question_index, pinCode} = match
+    const {questionIndex, pinCode} = match
 
 
     useEffect(() => {
@@ -49,8 +50,9 @@ const MatchPlayerStadiumPage = () => {
             setStage({type: 'not_answer'})
         })
 
-        socket.on('match:onCorrectAnswer', () => {
+        socket.on('match:onCorrectAnswer', (earnScore) => {
             setStage({type: 'correct_answer'})
+            setEarnScore(earnScore)
         })
 
         socket.on('match:onWrongAnswer', () => {
@@ -72,12 +74,23 @@ const MatchPlayerStadiumPage = () => {
     }, [])
 
     const handleAnswer = (index) => {
-        socket.emit('match:answer', pinCode, index)
+        socket.emit('match:answer', pinCode, index, time)
+    }
+
+    const findMe = () => {
+        let player = match.players.find((item, index) => item.socketId == socket.id) 
+            ||
+            {
+                name: 'Unknown',
+                score: 0
+            }
+        console.log("Find me: ", player)
+        return player
     }
     return (
         <div className = {classes.container}>
             <Header
-                 question_index = {question_index}
+                 questionIndex = {questionIndex + 1}
                  question_total = {match.game.questions.length}/>
             <Divider/>
             {
@@ -89,12 +102,12 @@ const MatchPlayerStadiumPage = () => {
                 : stage.type == 'not_answer'? 
                 <Timesup/>
                 : stage.type == 'correct_answer'?
-                <Correct/>
+                <Correct earnScore = {earnScore}/>
                 : stage.type == 'wrong_answer' ?
                 <Incorrect/>
                 : null
             }
-            <BottomBar />
+            <BottomBar player = {findMe()}/>
         </div>
     )
 }
