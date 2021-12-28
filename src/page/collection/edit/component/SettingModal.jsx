@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 		width: '50vw',
 		maxHeight: '80vh',
 		backgroundColor: 'white',
-		border: '2px solid #000',
+		borderRadius: theme.spacing(1),
 		padding: theme.spacing(2),
 		display: 'flex',
 		flexDirection: 'column',
@@ -43,7 +43,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	uploadImg: {
 		width: '100%',
-		height:200
+		height:200,
+		borderRadius: theme.spacing(1),
+		border: '2px solid #f2f2f2'
 	}
 }))
 
@@ -87,21 +89,28 @@ const SettingModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: 'black'}}>
-					Settings
+				<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
+					Setting
 				</Typography>
 				<Grid container columnSpacing = {5} rowSpacing = {2} 
 					sx = {{mt: theme.spacing(2)}}>
 					<Grid item xs = {7}>
 						<div className = {classes.leftCol}>
-							<Typography variant = 'subtitle1' 
-								sx= {{fontWeight: 'bold'}} >
+							<Typography variant = 'subtitle2' 
+								sx= {{fontWeight: 'bold', color: '#333333', mb: theme.spacing(1)}}  >
 								Title
 							</Typography>
-							<TextField id="outlined-basic" label="" value = {title} variant="outlined"
+							<TextField 	
+								placeholder='Enter collection title ...'	
+								id="outlined-basic" 
+								label="" value = {title} 
+								size='small'
+								variant="outlined"
 								onChange = {(e) => handleChange('title', e.target.value)} />
-							<Typography variant = 'subtitle1' 
-								sx = {{ mt: theme.spacing(2), fontWeight: 'bold'}}>
+							<Typography 
+								variant = 'subtitle2' 
+								placeholder="Describe your collection..."
+								sx = {{ mt: theme.spacing(2), fontWeight: 'bold', color: '#333333', mb: theme.spacing(1)}}>
 								Description(optional)
 							</Typography>
 							<TextareaAutosize
@@ -124,8 +133,8 @@ const SettingModal = (props) => {
 					<Grid item xs = {5}>
 						<div className = {classes.rightCol}>
 
-							<Typography variant = 'subtitle1' 
-								sx= {{fontWeight: 'bold'}} >
+							<Typography variant = 'subtitle2' 
+								sx= {{fontWeight: 'bold', color: '#333333', mb: theme.spacing(1)}} >
 								Cover image
 							</Typography>
 							<div className = {classes.uploadImg}>
@@ -138,10 +147,12 @@ const SettingModal = (props) => {
 				</Grid>
 				<div className = {classes.footer}>
 					<Button variant="contained" color="neutral"
+						sx = {{color: '#333333', fontWeight: 'bold', textTransform: 'none'}}
 						onClick = {handleCancel}>
 						Cancel
 					</Button>
-					<Button variant="contained" color="success" sx = {{ml: theme.spacing(2)}}
+					<Button variant="contained" color="success" 
+						sx = {{ml: theme.spacing(2),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
 						onClick = {handleDone}>
 						Done
 					</Button>

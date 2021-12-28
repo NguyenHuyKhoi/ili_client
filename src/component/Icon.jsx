@@ -1,4 +1,4 @@
-import { Add, ExploreOutlined, GroupsOutlined, Home, TocOutlined, TrendingUpOutlined ,BarChartTwoTone,CircleRounded,DiamondSharp,ReportProblem, Square } from "@mui/icons-material"
+import { Add, ExploreOutlined, GroupsOutlined, Home, TocOutlined, TrendingUpOutlined ,BarChartTwoTone,CircleRounded,DiamondSharp,ReportProblem, Square, TableRows, SnippetFolder } from "@mui/icons-material"
 import React from 'react'
 import { makeStyles } from '@mui/styles'
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +30,10 @@ export const Icon = (props) => {
             name == 'Square' ? <Square sx = {style} />
             : 
             name == 'Rhombus' ? <DiamondSharp  sx = {style} />
+            : 
+            name == 'TableRows' ? <TableRows sx = {style} /> 
+            :
+            name == 'SnippetFolder' ? <SnippetFolder sx = {style} />
             : <Home/>
             
         }

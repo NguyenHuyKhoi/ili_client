@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
 		transform: 'translate(-50%, -50%)',
 		width: '30vw',
 		backgroundColor: 'white',
-		border: '2px solid #000',
+		borderRadius: theme.spacing(1),
 		padding: theme.spacing(2),
 		display: 'flex',
 		flexDirection: 'column',
@@ -42,7 +42,7 @@ const DeleteQuestionModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: 'black'}}>
+				<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
 					{
 						canDelete ?
 						'Delete Quiz Question'
@@ -51,7 +51,7 @@ const DeleteQuestionModal = (props) => {
 					}
 					
 				</Typography>
-				<Typography variant = 'caption' sx = {{ color: 'black', my: theme.spacing(4)}}>
+				<Typography variant = 'subtitle1' sx = {{ color: '#5F5F5F', my: theme.spacing(4)}}>
 					{
 						canDelete ?
 						'Are you sure you want to delete this question? This action can\'t be undone.'
@@ -63,13 +63,16 @@ const DeleteQuestionModal = (props) => {
 				<div className = {classes.footer}>
 					{
 						canDelete &&
-						<Button variant="contained" color="neutral"
+						<Button variant="contained" 	
+							sx = {{color: '#333333', fontWeight: 'bold', textTransform: 'none'}}
+							color="neutral"
 							onClick = {handleClose}>
 							Cancel
 						</Button>
 					}
 				
-					<Button variant="contained" color="success" sx = {{ml: theme.spacing(2)}}
+					<Button variant="contained" color="success" 
+						sx = {{ml: theme.spacing(2),fontWeight: 'bold', textTransform: 'none', color: 'white'}}
 						onClick = {
 							() => {
 								if (props.onDone) props.onDone()
@@ -79,7 +82,7 @@ const DeleteQuestionModal = (props) => {
 							canDelete? 
 							'Delete'
 							:
-							'OK'
+							'Ok'
 						}
 					</Button>
 				</div>

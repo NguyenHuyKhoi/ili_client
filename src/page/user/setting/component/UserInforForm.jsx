@@ -92,13 +92,13 @@ const UserInforForm = (props) => {
 			<MediaUploadCard 
 				onSelectImage = {file => handleChange('banner', file)}
 				onRemoveImage = {() => handleChange('banner', null)}
-				src = {createUrl(banner)}/>
+				image = {banner}/>
 			<Grid container columnSpacing = {2} rowSpacing = {2} sx = {{my: theme.spacing(2)}} >
 				<Grid item xs = {5} >
 					<MediaUploadCard 
 						onSelectImage = {file => handleChange('avatar', file)}
 						onRemoveImage = {() => handleChange('avatar', null)}
-						src = {createUrl(avatar)}/>
+						image = {avatar}/>
 				</Grid>
 				<Grid item xs = {7} >
 					<div className = {classes.inputs}>

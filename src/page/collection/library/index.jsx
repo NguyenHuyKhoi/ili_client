@@ -18,12 +18,14 @@ const useStyles = makeStyles((theme) => ({
     body: {
         display: 'flex',
         flexDirection: 'column',
+        backgroundColor: '#F2F2F2'
     },
     header: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: theme.spacing(4)
+        marginTop: theme.spacing(4),
+        padding: theme.spacing(2)
     }
 }))
 
@@ -76,10 +78,11 @@ const CollectionLibraryPage = () => {
                 <Grid item sm={10}>
                     <div className= {classes.body}>
                         <div className= {classes.header} >
-                            <Typography variant= 'h5' sx = {{fontWeight: 'bold'}}>
+                            <Typography variant= 'h6' sx = {{fontWeight: 'bold', color: '#333333'}}>
                                 Collections
                             </Typography>
-                            <Button variant= 'contained' onClick = {() => setModal({state: 'create'})}>
+                            <Button variant= 'contained' onClick = {() => setModal({state: 'create'})}
+                                sx = {{color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
                                 Create
                             </Button>
                         </div>

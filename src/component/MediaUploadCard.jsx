@@ -3,6 +3,7 @@ import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { theme } from '../theme'
+import { createUrl } from '../util/helper'
 const useStyles = makeStyles((theme) => ({
     container: {
         width: '100%',
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MediaUploadCard = (props) => {
     const classes = useStyles()
-    const {src} = props
+    const {image} = props
     //console.log('src :', src)
     const handleSelectImage = (e) => {
         if (e.target.files.length > 0) {
@@ -44,11 +45,11 @@ const MediaUploadCard = (props) => {
     return (
         <div className = {classes.container}>
             {
-                src == undefined? 
+                image == undefined? 
                 <>
-                
                 <Button variant='contained' size = 'large' color="primary" aria-label="upload picture"
-                component="label">
+                component="label"
+                sx = {{color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
                     Upload
                     <input
                         type="file"
@@ -63,7 +64,7 @@ const MediaUploadCard = (props) => {
                 </>
                 :
                 <>
-                    <img src = {src} className = {classes.img}/>
+                    <img src = {createUrl(image)} className = {classes.img}/>
                     <Button 
                         variant = 'contained'
                         onClick = {handleRemoveImage}

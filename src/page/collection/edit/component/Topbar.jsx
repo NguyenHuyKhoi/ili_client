@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
     logoSm: {
         width: 100,
-        height:45
+        height:30
     },
     settingBox: {
         display: 'flex',
@@ -22,12 +22,11 @@ const useStyles = makeStyles((theme) => ({
         justifyContent:'space-between',
         flexDirection:'row',
         marginLeft: theme.spacing(2),
-        border: '1px solid gray',
-        padding: theme.spacing(1),
+        border: '1px solid #f2f2f2',
+        borderRadius: theme.spacing(0.4),   
+        padding: theme.spacing(0.6),
+        paddingLeft: theme.spacing(1.5),
         alignItems: 'center'
-    },
-    title: {
-        color: 'gray'
     },
     button: {
         marginLeft: theme.spacing(3)
@@ -51,7 +50,7 @@ const Topbar = (props) => {
                     }}
                 
                 >
-                    <Typography variant='subtitle1' className = {classes.title}> 
+                    <Typography variant='subtitle1' sx = {{color: '#333333', fontWeight: 'bold'}}> 
                         {
                             title == '' || title == null ?
                             'Enter name ...'
@@ -60,15 +59,21 @@ const Topbar = (props) => {
                         }
                      
                     </Typography>
-                    <Button variant="contained" size = "small" color = "info" sx = {{ marginLeft: theme.spacing(3)}}>Setting</Button>
+                    <Button 
+                        variant="contained" size = "small" color = "primary" 
+                        sx = {{ marginLeft: theme.spacing(3), color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
+                        Setting
+                        </Button>
                 </div>
                 <div style = {{flex:1}}/> 
-                <Button variant="contained" color = "neutral"  sx = {{ marginLeft: theme.spacing(3)}}
+                <Button variant="outlined" color = "neutral"  
+                    sx = {{ marginLeft: theme.spacing(3),color: '#333333',borderColor: '#333333' ,fontWeight: 'bold', textTransform: 'none'}}
                     onClick = {() => {
                         navigate(-1)
                     }}
                     >Exit</Button>
-                <Button variant="contained" color = "primary"  sx = {{ marginLeft: theme.spacing(3)}}
+                <Button variant="contained" color = "success" 
+                    sx = {{ marginLeft: theme.spacing(3),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
                     onClick = {() => {
                         if (props.onSave) props.onSave()
                     }}

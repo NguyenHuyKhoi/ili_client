@@ -2,6 +2,7 @@ import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import HeaderBar from '../../../component/HeaderBar'
 import { AuthContext } from '../../../context/auth/context'
 import { getGamesSuccess } from '../../../context/game/other/actions'
 import { GameContext } from '../../../context/game/other/context'
@@ -10,9 +11,15 @@ import GameList from './component/GameList'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
-        padding: theme.spacing(8),
-        paddingTop: theme.spacing(3),
 
+    },
+    body: {
+        backgroundColor: '#f2f2f2',
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: theme.spacing(10),
+        paddingTop: theme.spacing(3),
     }
 }))
 
@@ -40,8 +47,12 @@ const SearchPage = () => {
 
     return (
         <div className = {classes.container}>
-            <GameFilter onSearch = {handleSearch}/>
-            <GameList games = {games}/>
+            <HeaderBar selectedIndex = {1}/>
+            <div className= {classes.body} >
+                <GameFilter onSearch = {handleSearch}/>
+                <GameList games = {games}/>
+            </div>
+         
         </div>
     )
 }

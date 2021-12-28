@@ -78,7 +78,8 @@ const QuestionConfig = (props) => {
             </div>
             <Divider />
             <div className = {classes.bottom} >
-                <Button
+                <Button 
+                    onClick= {handleDeleteQuestion}
                     sx = {{color: '#333333', borderColor: 'rgba(0,0,0,0)', fontWeight: 'bold', textTransform: 'none'}}>
                     Delete
                 </Button>

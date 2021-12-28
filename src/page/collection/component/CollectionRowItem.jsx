@@ -1,5 +1,5 @@
 import { MoreVert, Star } from '@mui/icons-material'
-import { Button, Typography } from '@mui/material'
+import { Button, Typography ,Avatar} from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React, { useState , useContext } from 'react'
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     img: {
         height: '100%',
-        width: 160,
+        width: 180,
     },
     right: {
         flex: 1,
@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
         flex:1,
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
         backgroundColor: 'white',
         padding: theme.spacing(2)
     },
@@ -42,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: grey[100],
-        padding: theme.spacing(1),
+        padding: theme.spacing(0.6),
         paddingLeft: theme.spacing(2)
     },
     gameNums: {
@@ -52,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0.6),
         borderRadius: theme.spacing(0.5),
         backgroundColor: 'black',
-        opacity: 0.8,
+        opacity: 0.5,
         zIndex: 99
     }
 }))
@@ -62,15 +61,15 @@ export const CollectionRowItem = (props) => {
     const {dispatch} = useContext(CollectionContext)
     const classes = useStyles()
     const {collection} = props
-    const {title, games, cover} = collection
+    const {title, games, cover, owner} = collection
     const handleView = () => {
         dispatch(selectCollection(collection))
-        navigate('/collection/detail', {replace: false})
+        navigate('/collection/detail/' + collection._id, {replace: false})
     }
 
     const handleEdit = (e) => {
         e.stopPropagation()
-        navigate('/collection/edit', {replace: false})
+        navigate('/collection/edit/' + collection._id, {replace: false})
     }
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}
@@ -88,16 +87,17 @@ export const CollectionRowItem = (props) => {
                     <Typography variant = 'subtitle1' sx = {{color: 'black', fontWeight: 'bold', flex: 1}}> 
                         {title}
                     </Typography>
-                    <Star sx = {{color: 'yellow'}} />
-                    <MoreVert/>
                 </div>
                 <div className = {classes.rightBottom}>
-                    <Typography variant = 'subtitle1' sx = {{color: 'black', flex: 1}}>
-
+                    <Avatar src = {createUrl(owner.avatar)} sx={{ width: 24, height: 24 }}  />
+                    <Typography variant = 'subtitle1' sx = {{color: '#7D7D7D', flex: 1, ml: theme.spacing(1)}}>
+                        {owner.username}
                     </Typography>
-                    <Button variant = 'contained' size = 'small' color = 'primary' sx = {{ml: theme.spacing(2)}}
+                    <Button variant = 'contained' size = 'small' color = 'primary'
+                        sx = {{ml: theme.spacing(2), color: 'white', fontWeight: 'bold', textTransform: 'none'}}
                         onClick = {handleEdit}>Edit </Button>
-                    <Button variant = 'contained' size = 'small' color = 'success' sx = {{ml: theme.spacing(2)}}>
+                    <Button variant = 'contained' size = 'small' color = 'success' 
+                        sx = {{ml: theme.spacing(2), color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
                         Open
                     </Button>
                 </div>

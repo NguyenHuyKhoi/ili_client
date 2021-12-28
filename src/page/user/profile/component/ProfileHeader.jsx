@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     },
     banner: {
         width: '100%',
-        height: 250,
+        height: 200,
     },
     body: {
         display: 'flex',
@@ -55,10 +55,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 const InforItem = (props) => {
     const classes = useStyles()
+    const {label, value} = props 
     return (
         <div className = {classes.inforItem}>
-            <Typography variant = 'subtitle2' >Plays</Typography>
-            <Typography variant = 'subtitle1' sx = {{fontWeight: 'bold'}} > 134 </Typography>
+            <Typography variant = 'subtitle2' sx = {{color: '#5f5f5f'}} >
+                {label}
+            </Typography>
+            <Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}} > 
+                {value}
+            </Typography>
         </div>
     )
 }
@@ -76,17 +81,20 @@ const ProfileHeader = (props) => {
                 <img className = {classes.avatar} alt="Remy Sharp" 
                     src={createUrl(avatar)}/>
                 <div className = {classes.inforLeft}>
-                    <Typography variant = 'h6'> 
+                    <Typography variant = 'h5' sx = {{fontWeight: 'semi-bold', color: '#333333'}}>  
                         {username}
                     </Typography>
                     <Typography variant = 'h6'> . </Typography>
                 </div>
                 <div className = {classes.inforRight}>
-                    <InforItem/>
-                    <InforItem/>
-                    <InforItem/>
+                    <InforItem label = {'Games'} value = {120} />
+                    <InforItem label = {'Collections'} value = {12} />
+                    <InforItem label = {'Matches'} value = {12}/>
                 </div>
-                <Button size = 'large' variant = 'contained' color = 'primary'>Follow</Button>
+                <Button size = 'large' variant = 'contained' color = 'primary'
+                    sx = {{fontWeight: 'bold', textTransform: 'none', color: 'white', width: 160}}>
+                    Follow
+                </Button>
 
             </div>
         </div>

@@ -7,7 +7,12 @@ import GameFilter from '../component/GameFilter'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
-        backgroundColor: grey[300]
+        backgroundColor: '#f2f2f2',
+        height: '100vh'
+    },
+    body: {
+        paddingLeft: theme.spacing(8),
+        paddingRight: theme.spacing(8)
     }
 }))
 
@@ -21,7 +26,10 @@ const DiscoverPage = () => {
     return (
         <div className = {classes.container}>
             <HeaderBar selectedIndex = {1}/>
-            <GameFilter onSearch = {handleSearch}/>
+            <div className= {classes.body}>
+                <GameFilter onSearch = {handleSearch}/>
+            </div>
+       
         </div>
     )
 }

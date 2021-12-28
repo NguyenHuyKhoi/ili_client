@@ -14,6 +14,14 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         backgroundColor: 'white',
         borderRadius: theme.spacing(0.5)
+    },
+    descEmpty: {
+        height: 200,
+        backgroundColor: '#f2f2f2',
+        margin: theme.spacing(1.5),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 }))
 const InforsCard = (props) => {
@@ -22,18 +30,28 @@ const InforsCard = (props) => {
     const {description} = collection
     return (
         <div className= {classes.infors}>
-            <Typography variant = 'h6' sx = {{fontWeight: 'bold', p: theme.spacing(1.5)}}>
+            <Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333', p: theme.spacing(1.5)}}>
                  Description
             </Typography>
             <Divider/>
-            <Typography variant= 'subtitle1' sx = {{p: theme.spacing(1.5)}}>
+            {
+                description == null || description == '' ? 
+                <div className= {classes.descEmpty}>
+                    <Typography variant= 'subtitl2' sx = {{color: '#5c5c5c'}}>
+                        Please add a description of your collection.
+                    </Typography>
+                </div>
+                :
+                <Typography variant= 'subtitle1' sx = {{p: theme.spacing(1.5)}}>
                 {
                     description
                 }
-            </Typography>
+                </Typography>
+            }
+          
             <Button variant = 'contained' 
                 color= 'info'
-                sx = {{alignSelf: 'center',mb: theme.spacing(2)}}
+                sx = {{alignSelf: 'center',mb: theme.spacing(2), fontWeight: 'bold', textTransform: 'none'}}
                 onClick = {() => {
                     if (props.onSetting) props.onSetting()
                 }}>

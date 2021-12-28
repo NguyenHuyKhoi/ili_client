@@ -53,8 +53,8 @@ const App = () => {
           <Route exact path = '/auth/reset-password' element = {!user ? <ResetPasswordPage/> : <Navigate to = '/'/>}/>
 
           <Route exact path = '/collection/library' element = {user ? <CollectionLibraryPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/collection/edit' element = {user ? <CollectionEditPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/collection/detail' element = {user ? <CollectionDetailPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/collection/edit/:id' element = {user ? <CollectionEditPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/collection/detail/:id' element = {user ? <CollectionDetailPage/> : <Navigate to = '/auth/login'/>}/>
           
           <Route exact path = '/discover/suggestion' element = {user ? <DiscoverPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/discover/search' element = {user ? <SearchPage/> : <Navigate to = '/auth/login'/>}/>

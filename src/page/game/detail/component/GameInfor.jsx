@@ -50,24 +50,28 @@ const GameInfor = (props) => {
         <div className = {classes.container}>
             <img className = {classes.gameImg} src = {createUrl(cover)}/>
             <div className = {classes.body} >
-                <Typography variant = 'h6'>
+                <Typography variant = 'h5' sx = {{fontWeight: 'bold', color: 'black'}}>
                     {title}
+                </Typography>
+                <Typography variant = 'subtitle2' sx = {{my: theme.spacing(2)}}>
+                    {description == '' || description == null? 'No description...' : description}
                 </Typography>
                 <div className = {classes.btnBar} >
                     <Button variant="contained" color="success"
-                        onClick={handlePlay}>
+                        onClick={handlePlay}
+                        sx = {{color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
                         Play
                     </Button>
-                    <Button variant="contained" color="primary" sx = {{mx: theme.spacing(2)}}
+                    <Button variant="contained" color="primary" 
+                        sx = {{mx: theme.spacing(2),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
                         onClick={handleEdit}>
                         Edit
                     </Button>
                 </div>
-                <Typography variant = 'subtitle2' sx = {{my: theme.spacing(2)}}>
-                    {description}
-                </Typography>
+                <div style= {{marginTop: theme.spacing(2)}}>
+                    <OwnerInfor owner = {owner}/>
+                </div>
             </div>
-            <OwnerInfor owner = {owner}/>
            
         </div>
     )

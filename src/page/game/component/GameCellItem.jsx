@@ -7,12 +7,14 @@ import {GameContext} from '../../../context/game/other/context'
 import { useNavigate } from 'react-router-dom'
 import {createUrl} from '../../../util/helper'
 import { selectGame } from '../../../context/game/other/actions'
+import { theme } from '../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
         display:'flex',
         flexDirection:'column',
-        backgroundColor:'gray'
+        borderRadius: theme.spacing(1),
+        boxShadow: '1px 3px 6px #5f5f5f'
     },
     body: {
         flex: 1, 
@@ -20,18 +22,35 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         padding: theme.spacing(1),
         backgroundColor: 'white',
+        borderBottomLeftRadius: theme.spacing(1),
+        borderBottomRightRadius: theme.spacing(1)
+    },
+    header: {
+        position: 'relative',
+        height: 220
     },
     img: {
         width: '100%',
-        height: 200
+        height: '100%'
+    },
+    questionNums: {
+        position: 'absolute',
+        bottom: theme.spacing(1),
+        right: theme.spacing(1),
+        padding: theme.spacing(0.6),
+        borderRadius: theme.spacing(0.5),
+        backgroundColor: 'black',
+        opacity: 0.4,
+        zIndex: 99
     },
     infor: {
         display: 'flex',
         flexDirection: 'column',
         height: 70,
         flex: 1,
-        marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2)
+        marginLeft: theme.spacing(1.5),
+        marginRight: theme.spacing(2),
+
     },
 }))
 
@@ -39,7 +58,7 @@ export const GameCellItem = (props) => {
     const navigate = useNavigate()
     const {game} = props 
     const {dispatch} = useContext(GameContext)
-    const {title, image, owner} = game
+    const {title, image, owner, questions} = game
     const classes = useStyles()
     const {disableProfileLink} = props
     const handleSelect = () => {
@@ -54,11 +73,18 @@ export const GameCellItem = (props) => {
     }
     return (
         <div className = {classes.container} onClick = {handleSelect} >
-            <img className = {classes.img} src = 'https://vnn-imgs-a1.vgcloud.vn/image-english.vov.vn/h500/uploaded/vn1pm7jlycly8uzveukg/2019_11_28/1_LDJZ.jpg'/>
+            <div className = {classes.header} >
+                <img className = {classes.img} src = {createUrl(image)}/>
+                <div className= {classes.questionNums} >
+                    <Typography variant = 'caption' 
+                        sx = {{color: 'white', fontWeight: 'bold'}}> {questions.length} questions </Typography>
+                </div>
+            </div>
+         
             <div className = {classes.body}>
-                <Avatar alt="Remy Sharp" src={createUrl(owner.avatar)} />
+                <Avatar alt="Remy Sharp" src={createUrl(owner.avatar)} sx = {{width: 30, height: 30, mt: theme.spacing(1) }} />
                 <div className = {classes.infor}>
-                    <Typography variant = 'subtitle1' sx = {{color: 'black', fontWeight: 'bold'}}>
+                    <Typography variant = 'subtitle1' sx = {{color: '#333333', fontWeight: 'bold'}}>
                         {title}
                     </Typography>
                     {
@@ -69,7 +95,7 @@ export const GameCellItem = (props) => {
                             }
                         </Typography>
                         :
-                        <Link href = ''  underline='hover' onClick={handleViewProfile}>
+                        <Link href = ''  underline='hover' onClick={handleViewProfile} sx = {{color: '#5f5f5f'}}>
                             {
                                 owner.username
                             }

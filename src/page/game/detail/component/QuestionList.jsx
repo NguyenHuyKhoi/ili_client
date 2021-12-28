@@ -10,13 +10,15 @@ const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
         padding: theme.spacing(2),
-        backgroundColor: grey[100],
+        backgroundColor: '#f2f2f2',
+        height: '100vh',
         display: 'flex',
         flexDirection:'column',
     },
     list: {
         display:'flex',
-        flexDirection:'column'
+        flexDirection:'column',
+        marginTop: theme.spacing(2)
     },
     item: {
         marginBottom: theme.spacing(2),
@@ -36,6 +38,7 @@ const QuestionList = (props) => {
     const {game} = props
     const {questions} = game
     const [isShowAll, setIsShowAll] = useState(false)
+    const [selectedIndex, setSelectedIndex] = useState(0)
     const handleShowAllChange = () => {
         setIsShowAll(!isShowAll)
     }
@@ -43,11 +46,11 @@ const QuestionList = (props) => {
     return (
         <div className = {classes.container}>
             <div className = {classes.header}>
-                <Typography variant = 'h6'>
+                <Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}}>
                     {`Question(${questions ? questions.length : 0})`}
                 </Typography>
                 <div onClick = {handleShowAllChange}>
-                    <Typography variant = 'h6' sx = {{textDecorationLine: 'underline'}}>
+                    <Typography  variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333', textDecoration: 'underline'}}>
                         {
                             isShowAll?
                             'Hide Answers'
@@ -63,7 +66,10 @@ const QuestionList = (props) => {
             {
                 questions.map((item, index) => (
                     <div className = {classes.item}   key = {''+index}>
-                        <QuestionRowItem isShowAll = {isShowAll} question = {item} index = {index}/>
+                        <QuestionRowItem 
+                            isShowAll = {isShowAll} question = {item} index = {index}
+                            selected = {selectedIndex == index}
+                            onSelect = {() => setSelectedIndex(index)}/>
                     </div>
                 ))
             }

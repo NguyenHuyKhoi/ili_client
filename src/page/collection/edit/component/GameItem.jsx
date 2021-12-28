@@ -6,6 +6,7 @@ import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { addGameToCollection, removeGameToCollection } from '../../../../context/collection/actions'
 import { CollectionContext } from '../../../../context/collection/context'
+import { createUrl } from '../../../../util/helper'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -32,17 +33,16 @@ const useStyles = makeStyles((theme) => ({
         flex:1,
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
         backgroundColor: 'white',
-        padding: theme.spacing(2)
+        padding: theme.spacing(1.5)
     },
     rightBottom: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: grey[100],
-        padding: theme.spacing(1),
-        paddingLeft: theme.spacing(2)
+        backgroundColor: '#f2f2f2',
+        padding: theme.spacing(0.6),
+        paddingLeft: theme.spacing(1.5)
     },
     questionNums: {
         position: 'absolute',
@@ -51,19 +51,9 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0.6),
         borderRadius: theme.spacing(0.5),
         backgroundColor: 'black',
-        opacity: 0.8,
+        opacity: 0.5,
         zIndex: 99
-    },
-    draftTag: {
-        position: 'absolute',
-        top: theme.spacing(0.5),
-        left: theme.spacing(0.5),
-        padding: theme.spacing(0.6),
-        borderRadius: theme.spacing(0.5),
-        backgroundColor: 'red',
-        opacity: 0.8,
-        zIndex: 99
-    },
+    }
 }))
 
 export const GameItem = (props) => {
@@ -71,7 +61,7 @@ export const GameItem = (props) => {
     const classes = useStyles()
     const {dispatch} = useContext(CollectionContext)
     const {game, isAdded} = props
-    const {title, questions, owner} = game
+    const {title, questions, owner, image} = game
     const handleSelect = () => {
         if (isAdded) {
             dispatch(removeGameToCollection(game))
@@ -83,14 +73,12 @@ export const GameItem = (props) => {
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}>
             <div className = {classes.left}>
-                <img className = {classes.img} src = 'https://vnn-imgs-a1.vgcloud.vn/image-english.vov.vn/h500/uploaded/vn1pm7jlycly8uzveukg/2019_11_28/1_LDJZ.jpg'/>
+                <img className = {classes.img} 
+                    src = {createUrl(image)}/>
                 <div className = {classes.questionNums}>
                     <Typography variant = 'caption' sx = {{color: 'white'}}> 
                         {questions.length} questions 
                     </Typography>
-                </div>
-                <div className = {classes.draftTag}>
-                    <Typography variant = 'caption' sx = {{color: 'white'}}> Draf </Typography>
                 </div>
             </div>
             <div className = {classes.right}>
@@ -98,12 +86,19 @@ export const GameItem = (props) => {
                     <Typography variant = 'subtitle1' sx = {{color: 'black', fontWeight: 'bold', flex: 1}}> 
                         {title}
                     </Typography>
-                    <Button variant='contained' color = {isAdded ? 'neutral':'info'}
-                        onClick = {handleSelect}>
-                        {
-                            isAdded? 'Added' : 'Add'
-                        }
-                    </Button>
+                    <div >
+                        <Button 
+                            variant='contained' 
+                            size = 'small'
+                            color = {isAdded ? 'neutral':'info'}
+                            sx = {{color: isAdded ? '#333333' : 'white', fontWeight: 'bold', textTransform: 'none'}}
+                            onClick = {handleSelect}>
+                            {
+                                isAdded? 'Added' : 'Add'
+                            }
+                        </Button>
+                    </div>
+                   
                 </div>
                 <div className = {classes.rightBottom}>
                     <Typography variant = 'subtitle1' sx = {{color: 'black', flex: 1}}>

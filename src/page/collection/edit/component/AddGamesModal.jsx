@@ -14,13 +14,15 @@ const useStyles = makeStyles((theme) => ({
 		transform: 'translate(-50%, -50%)',
 		width: '40vw',
 		backgroundColor: 'white',
-		border: '2px solid #000',
+		borderRadius: theme.spacing(1),
 		display: 'flex',
 		flexDirection: 'column',
 
     },
 	header: {
 		padding: theme.spacing(3),
+		borderTopLeftRadius: theme.spacing(1),
+		borderTopRightRadius: theme.spacing(1),
 		backgroundColor: 'white',
 		display: 'flex',
 		flexDirection: 'column'
@@ -37,7 +39,9 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: theme.spacing(2),
 	},
 	footer: {
-		padding: theme.spacing(3),
+		padding: theme.spacing(2),
+		borderBottomLeftRadius: theme.spacing(1),
+		borderBottomRightRadius: theme.spacing(1),
 		backgroundColor: 'white',
 		display: 'flex',
 		flexDirection: 'row',
@@ -72,8 +76,8 @@ const AddGamesModal = (props) => {
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
 				<div className = {classes.header}>
-					<Typography variant = 'h5' sx = {{fontWeight: 'bold'}}>
-						Choose Games: 
+					<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
+						Choose Games
 					</Typography>
 				</div>
 				<div className= {classes.body}>
@@ -87,7 +91,8 @@ const AddGamesModal = (props) => {
 					}
 				</div>
 				<div className = {classes.footer}>
-					<Button variant="contained" color="success" sx = {{ml: theme.spacing(2)}}
+					<Button variant="contained" color="success" 
+						sx = {{ml: theme.spacing(2), fontWeight: 'bold', textTransform: 'none'}}
 						onClick = {handleClose}>
 						Done
 					</Button>

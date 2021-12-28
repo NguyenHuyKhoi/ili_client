@@ -10,7 +10,6 @@ import { CollectionContext } from '../../../../context/collection/context'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
-        backgroundColor: grey[100],
         display: 'flex',
         flexDirection:'column',
     },
@@ -19,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(10),
         paddingRight: theme.spacing(10),
         backgroundColor: 'white',
-        marginTop: theme.spacing(3)
+        marginTop: theme.spacing(4)
     },
     item: {
         padding: theme.spacing(2),
@@ -33,15 +32,16 @@ const useStyles = makeStyles((theme) => ({
 const CollectionList = () => {
     const classes = useStyles()
     const {collections} = useContext(CollectionContext)
+    let nonEmptyCollections = collections.filter((item) => item.games.length > 0)
     return (
         <div className = {classes.container}>
             <div className= {classes.filter}>
-                <CollectionFilter collections = {collections}/>
+                <CollectionFilter collections = {nonEmptyCollections}/>
             </div>
 
             <div className = {classes.list} >
                 {
-                    collections.map((item, index) => (
+                    nonEmptyCollections.map((item, index) => (
                         <div className = {classes.item}   key = {''+index}>
                             <CollectionSlideItem collection = {item}/>
                         </div>

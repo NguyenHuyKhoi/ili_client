@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 		padding: theme.spacing(0.5)
 	},
 	img: {
-		height: 60,
+		height: 70,
 		aspectRatio: 1.6
 	},
 	infor: {
@@ -37,10 +37,11 @@ const useStyles = makeStyles((theme) => ({
 	note: {
 		display: 'flex',
 		flexDirection: 'row',
-		paddingLeft: theme.spacing(1),
-		paddingRight: theme.spacing(1),
+		padding: theme.spacing(1),
+		paddingTop: theme.spacing(0.5),
+		paddingBottom: theme.spacing(0.5),
 		alignItems: 'center',
-		borderBottom: '1px solid gray'
+		borderBottom: '1px solid #f2f2f2'
 	}
 }))
 
@@ -49,8 +50,8 @@ const ErrorNote = (props) => {
 	const {defective} = props
 	return (
 		<div className= {classes.note}>
-			<Error sx = {{color: 'purple'}}/>
-			<Typography variant = 'subtitle1' sx = {{ml: theme.spacing(1)}}>
+			<Error sx = {{color: '#46178F'}}/>
+			<Typography variant = 'subtitle2' sx = {{ml: theme.spacing(1), color: '#5F5F5F'}}>
 				{defective}
 			</Typography>
 		</div>
@@ -72,10 +73,10 @@ const ValidateQuestionItem = (props) => {
 				<img src = {createUrl(image)}
 					className= {classes.img}/>
 				<div className = {classes.infor}>
-					<Typography variant = 'subtitle1'>
+					<Typography variant = 'subtitle2' sx = {{color: '#5F5F5F'}}>
 						1 - Quiz
 					</Typography> 
-					<Typography variant = 'caption' sx = {{fontWeight: 'bold'}}>
+					<Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}}>
 						{
 							title == null || title == '' ?
 							'Untitled'
@@ -85,7 +86,10 @@ const ValidateQuestionItem = (props) => {
 					</Typography>
 				</div>
 				<div >
-					<Button variant = 'contained' onClick = {handleClick}>
+					<Button 	
+						size = 'small'
+						variant = 'contained' onClick = {handleClick}
+						sx = {{color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
 						Fix
 					</Button>
 				</div>

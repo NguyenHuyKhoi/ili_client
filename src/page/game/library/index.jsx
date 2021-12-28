@@ -8,7 +8,8 @@ import SideMenu from './component/SideMenu'
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        flex: 1
+        flex: 1,
+        height: '100%'
     }
 }))
 

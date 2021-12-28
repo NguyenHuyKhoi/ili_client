@@ -16,8 +16,8 @@ const WrappedRadioGroup = (props) => {
     }
     return (
         <FormControl fullWidth>
-           <Typography variant = 'subtitle1' 
-                sx= {{fontWeight: 'bold', mt: theme.spacing(2)}} >
+           <Typography variant = 'subtitle2' 
+                sx= {{fontWeight: 'bold', color: '#333333', mt: theme.spacing(2)}} >
                 {title}
             </Typography>
             <RadioGroup

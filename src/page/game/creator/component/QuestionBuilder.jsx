@@ -33,11 +33,7 @@ const useStyles = makeStyles((theme) => ({
         border: 'none',
         backgroundColor: 'rgba(0,0,0,0)',
         textAlign: 'center',
-        flex: 1,
-        "&$focuse": {
-            outline: 'none'
-        }
-
+        flex: 1
     },
     uploadImg: {
         width: 420,
@@ -50,7 +46,6 @@ const QuestionBuilder = () => {
     const {game, dispatch} = useContext(GameCreatorContext)
     const {questions, questionIndex} = game
     let question = questions[questionIndex]
-
     
     const {title, image, answers, correct_answers} = question
     const handleChange = (key, value) => {
@@ -72,9 +67,10 @@ const QuestionBuilder = () => {
                 <MediaUploadCard 
                     onSelectImage = {(image) => handleChange('image', image)}
                     onRemoveImage = {() => handleChange('image', null)}
-                    src = {createUrl(image)}/>
+                    image = {image}/>
             </div>
-            <Answers answers = {answers}
+            <Answers 
+                answers = {answers}
                 correct_answers = {correct_answers}
                 onAnswerCorrectChange = {(correct_answers) => handleChange('correct_answers', correct_answers)}
                 onAnswerChange = {(answers) => handleChange('answers',answers)}/>

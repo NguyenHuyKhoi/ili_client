@@ -1,9 +1,9 @@
 import { validateUrl } from "../validator"
-
+import no_image from '../../asset/image/no_image_available.jpg'
 export const createUrl = (data) => {
     //console.log("Create url with :",data)
     if (data == undefined || data == null) {
-        return null
+        return no_image
     }
     try {
         // If data is string: 
@@ -13,7 +13,7 @@ export const createUrl = (data) => {
                 return data
             }
             else {
-                return null
+                return no_image
             }
         }
         // Check if data is File:
@@ -22,11 +22,11 @@ export const createUrl = (data) => {
             return url
         }
         else {
-            return null
+            return no_image
         }
     
     }
     catch (err){
-        return null
+        return no_image
     }
 }

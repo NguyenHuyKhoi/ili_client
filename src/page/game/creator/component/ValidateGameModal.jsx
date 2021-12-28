@@ -12,23 +12,24 @@ const useStyles = makeStyles((theme) => ({
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
 		width: '40vw',
-		backgroundColor: 'white',
-		border: '2px solid #000',
+		backgroundColor: '#rgba(0,0,0,0)',
 		display: 'flex',
 		flexDirection: 'column',
 
     },
 	header: {
 		padding: theme.spacing(3),
+		borderTopLeftRadius: theme.spacing(1),
+		borderTopRightRadius: theme.spacing(1),
 		backgroundColor: 'white',
 		display: 'flex',
 		flexDirection: 'column'
 	},
 	body: {
 		display: 'flex',
-		padding: theme.spacing(3),
+		padding: theme.spacing(2),
 		flexDirection: 'column',
-		backgroundColor: grey[200],
+		backgroundColor: '#F2F2F2',
 		overflow: 'auto',
 		maxHeight: '50vh'
 	},
@@ -37,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 	footer: {
 		padding: theme.spacing(3),
+		borderBottomLeftRadius: theme.spacing(1),
+		borderBottomRightRadius: theme.spacing(1),
 		backgroundColor: 'white',
 		display: 'flex',
 		flexDirection: 'row',
@@ -65,10 +68,10 @@ const ValidateGameModal = (props) => {
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
 				<div className = {classes.header}>
-					<Typography variant = 'h5' sx = {{fontWeight: 'bold'}}>
+					<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
 						This kahoot can't be played
 					</Typography>
-					<Typography variant = 'caption' sx = {{mt: theme.spacing(2)}}>
+					<Typography variant = 'subtitl1' sx = {{mt: theme.spacing(2), color: '#5F5F5F'}}>
 						All questions need to be completed before you can start playing.
 					</Typography>
 				</div>
@@ -91,10 +94,12 @@ const ValidateGameModal = (props) => {
 				</div>
 				<div className = {classes.footer}>
 					<Button variant="contained" color="neutral"
+						sx = {{color: '#333333', fontWeight: 'bold', textTransform: 'none'}}
 						onClick = {handleClose}>
 						Back to Edit
 					</Button>
-					<Button variant="contained" color="success" sx = {{ml: theme.spacing(2)}}
+					<Button variant="contained" color="success" 
+						sx = {{ml: theme.spacing(2),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
 						onClick = {() => {
 							if (props.onSaveDraft) props.onSaveDraft()
 						}}>

@@ -119,7 +119,7 @@ const CollectionCreateModal = (props) => {
 								<MediaUploadCard 
 									onSelectImage = {file => handleChange('cover', file)}
 									onRemoveImage = {() => handleChange('cover', null)}
-									src = {createUrl(cover)}/>
+									image = {cover}/>
 							</div>
 						</div>
 					</Grid>

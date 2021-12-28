@@ -11,13 +11,14 @@ import { GameCreatorContext } from '../context/game/creator/context'
 import { theme } from '../theme'
 import { DropdownMenu } from './DropdownMenu'
 import Tabbar from './Tabbar'
+import {createUrl} from '../util/helper'
 import HeaderTabs from './Tabbar'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-       // height: theme.spacing(7),
+        boxShadow: '1px 3px 1px #f2f2f2',
         backgroundColor: 'white',
         paddingLeft: theme.spacing(1),
         paddingRight:  theme.spacing(2)
@@ -130,11 +131,6 @@ const tabs = [
         label: 'Report',
         link: '/report',
         icon: 'BarChartOutlined'
-    },
-    {
-        label: 'Groups',
-        link: '/group/list',
-        icon: 'GroupsOutlined'
     }
 ]
 
@@ -142,8 +138,10 @@ const HeaderBar = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const {dispatch} = useContext(GameCreatorContext)
+    const {user} = useContext(AuthContext)
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const {selectedIndex} = props
+    const {selectedIndex} = props 
+    const {avatar} = user 
     const handleClickAvatar = (event) => {
         setAnchorEl(event.currentTarget);
       };
@@ -165,11 +163,12 @@ const HeaderBar = (props) => {
                 className = {classes.logo}/>
             
             <Tabbar tabs = {tabs} selectedIndex = {selectedIndex}/>
-            <Button variant = 'contained' onClick = {handleCreate}>
+            <Button variant = 'contained' onClick = {handleCreate}
+                sx = {{fontWeight: 'bold', textTransform: 'none', color: 'white'}}>
                 Create
             </Button>
-            <Avatar sx = {{mx: theme.spacing(2)}} 
-                src = 'https://thuthuatnhanh.com/wp-content/uploads/2019/05/gai-xinh-toc-ngan-facebook.jpg'
+            <Avatar sx = {{mx: theme.spacing(2), width: 30, height: 30}} 
+                src = {createUrl(avatar)}
                 onClick = {handleClickAvatar}/>
             <Popover
                 id = {id}

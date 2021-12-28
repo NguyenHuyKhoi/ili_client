@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
         padding: theme.spacing(2),
-        backgroundColor: grey[100],
+        height: '100vh',
+        backgroundColor: '#f2f2f2',
         display: 'flex',
         flexDirection:'column',
     },
@@ -27,20 +28,23 @@ const useStyles = makeStyles((theme) => ({
     },
     tabsContainer: {
         marginTop: theme.spacing(3),
-        marginBottom: theme.spacing(3)
+        marginBottom: theme.spacing(3),
+        alignSelf:'baseline'
     },
     tabs: {
         display: 'flex',
         flexDirection:'row',
-    },
-    tabContainer: {
+        border: '0.5px solid #CCCCCC',
+        borderRadius: theme.spacing(0.5),
+        alignSelf:'baseline'
+
     },
     tab: {
         padding: theme.spacing(0.8),
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
       //  borderRadius: theme.spacing(1),
-        border: '0.5px solid gray',
+        borderRight: '0.5px solid #CCCCCC',
     }
 }))
 
@@ -54,7 +58,10 @@ const TabItem = (props) => {
     return (
         <div className = {classes.tab} style= {{backgroundColor: props.isSelected? 'white':grey[100]}}
             onClick = {handleClick} >
-            <Typography variant = 'caption' style= {{ color: props.isSelected?'blue':'gray', fontWeight: 'bold'}}>{props.title}</Typography>
+            <Typography variant = 'caption' 
+                style= {{ color: props.isSelected?'#46178f':'#333333', fontWeight: 'bold', fontSize: 13}}>
+                    {props.title}
+            </Typography>
         </div>
     )
 }

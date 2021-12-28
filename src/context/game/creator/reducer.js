@@ -80,14 +80,16 @@ const reducer = (state, action) => {
         case 'START_CREATE_GAME': {
             return {
                 ...sample_game,
-                mode: 'create'
+                mode: 'create',
+                questionIndex: 0
             }
         }
 
         case 'START_EDIT_GAME': {
             return {
                 ...action.payload.game,
-                mode: 'edit'
+                mode: 'edit',
+                questionIndex: 0
             }
         }
         default: 

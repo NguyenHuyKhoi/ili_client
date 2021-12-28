@@ -12,6 +12,7 @@ import ProfileHeader from './component/ProfileHeader'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
+        backgroundColor: '#f2f2f2'
     }
 }))
 

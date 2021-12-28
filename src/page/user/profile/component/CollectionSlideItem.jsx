@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
     },
     games: {
         display:'flex',
-        flexDirection:'column'
+        flexDirection:'column',
+        marginTop: theme.spacing(1.5)
     }
 }))
 
@@ -28,10 +29,12 @@ const CollectionSlideItem = (props) => {
         <div className = {classes.container}>
             
             <div className = {classes.header} > 
-                <Typography variant = 'h6'>
+                <Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}}>
                     {title}
                 </Typography>
-                <Link underline = 'hover' href = '/collection/detail' sx = {{color: 'black'}}>See all</Link>
+                <Link underline = 'hover' href = '/collection/detail'  sx = {{fontSize: 16, fontWeight: 'bold', color: '#333333'}}>
+                    See all
+                </Link>
             </div>
             <div className={classes.games}>
                 <Grid container sx = {{flex: 1}} columnSpacing = {2} rowSpacing = {2}>

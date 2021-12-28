@@ -6,9 +6,6 @@ import { GameItem } from './GameItem'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
-        backgroundColor: grey[100],
         display: 'flex',
         flexDirection:'column',
     },

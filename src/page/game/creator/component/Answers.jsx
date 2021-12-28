@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const answerStyles = [
+export const answerStyles = [
     {
         color: '#D01937',
         icon: 'Triangle',
