@@ -14,7 +14,7 @@ const HomeGuestPage = () => {
     const classes = useStyles()
     return (
         <div className = {classes.container}>
-            <GuestHeaderBar/>
+            <GuestHeaderBar selectedIndex = {0}/>
         </div>
     )
 }

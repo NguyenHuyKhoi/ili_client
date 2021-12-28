@@ -2,6 +2,8 @@
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
+import facebook_icon from '../../../asset/image/facebook_icon.png'
+import google_icon from '../../../asset/image/google_icon.png'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -22,14 +24,28 @@ const useStyles = makeStyles((theme) => ({
         margin: 'auto'
     },
 }))
-export const LinkedLoginButton = () => {
+
+const types = {
+    google: {
+        img: google_icon,
+        label: 'Continue with Google'
+    },
+    facebook: {
+        img: facebook_icon,
+        label: 'Continue with Facebook'
+    }
+}
+export const LinkedLoginButton = (props) => {
     const classes = useStyles()
+    const {type} = props 
+    const {img, label} = types[type]
     return (
         <div className = {classes.container}>
             <img className = {classes.img}
-                src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png'/>
+                src = {img }
+                />
             <Typography variant = 'subtitle1'>
-                Continue with Google
+               {label}
             </Typography>
         </div>
     )

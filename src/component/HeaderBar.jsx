@@ -10,6 +10,8 @@ import { startCreateGame } from '../context/game/creator/actions'
 import { GameCreatorContext } from '../context/game/creator/context'
 import { theme } from '../theme'
 import { DropdownMenu } from './DropdownMenu'
+import Tabbar from './Tabbar'
+import HeaderTabs from './Tabbar'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -22,20 +24,6 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         height: theme.spacing(5)
-    },
-    menu: {
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'row',
-        marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2)
-    },
-    tabItem: {
-        display: 'flex',
-        flexDirection: 'row',
-        padding: theme.spacing(1.5),
-        alignItems: 'center',
-        marginLeft: theme.spacing(1.5)
     },
     avatarPopover: {
         display: 'flex',
@@ -57,33 +45,6 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center'
     }
 }))
-
-export const TabItem = (props) => {
-    const classes = useStyles()
-    const {isSelected, label} = props
-    const handleClick = () => {
-        if (props.onClick != undefined) {
-            props.onClick()
-        }
-    }
-    return (
-        <div className = {classes.tabItem}
-            onClick = {handleClick}
-            style ={{
-                borderBottom: isSelected ?
-                    '2px solid purple' : null
-            }}>
-            <HomeOutlined sx = {{
-                color: isSelected ? 'purple':'gray'
-            }}/>
-            <Typography variant = 'subtitle1' 
-                sx = {{ml: theme.spacing(1.5),
-                    color: isSelected ? 'purple':'gray'}}>
-                {label}
-            </Typography>
-        </div> 
-    )
-}
 
 const AvatarPopover = () => {
     const classes = useStyles()
@@ -148,26 +109,32 @@ const AvatarPopover = () => {
         </div>
     )
 }
+
 const tabs = [
     {
         label: 'Home',
         link: '/',
+        icon: 'Home'
     },
     {
         label: 'Discover',
-        link: '/discover/suggestion'
+        link: '/discover/suggestion',
+        icon: 'ExploreOutlined'
     },
     {
         label: 'Library',
-        link: '/game/library'
+        link: '/game/library',
+        icon: 'TocOutlined'
     },
     {
         label: 'Report',
-        link: '/report'
+        link: '/report',
+        icon: 'BarChartOutlined'
     },
     {
         label: 'Groups',
-        link: '/group/list'
+        link: '/group/list',
+        icon: 'GroupsOutlined'
     }
 ]
 
@@ -187,9 +154,6 @@ const HeaderBar = (props) => {
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-    const handleTabChange = (tab) => {
-        navigate(tab.link, {replace: false})
-    }
 
     const handleCreate = () => {
         dispatch(startCreateGame())
@@ -199,16 +163,8 @@ const HeaderBar = (props) => {
         <div className = {classes.container}>
             <img src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Kahoot_Logo.svg/1280px-Kahoot_Logo.svg.png'
                 className = {classes.logo}/>
-            <div className = {classes.menu}>
-                {
-                    tabs.map((item, index) => (
-                        <TabItem isSelected = {selectedIndex == index}
-                            key = {''+index}
-                            label = {item.label}
-                            onClick = {()=>handleTabChange(tabs[index])}/>
-                    ))
-                }
-            </div>
+            
+            <Tabbar tabs = {tabs} selectedIndex = {selectedIndex}/>
             <Button variant = 'contained' onClick = {handleCreate}>
                 Create
             </Button>

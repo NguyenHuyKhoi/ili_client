@@ -8,13 +8,13 @@ import { createUrl } from '../../../../util/helper';
 import Answers from './Answers';
 const useStyles = makeStyles((theme) => ({
     container: {
-        padding: theme.spacing(3),
+        padding: theme.spacing(2),
         display: 'flex',
         flex:1,
         height: '85vh',
         flexDirection: 'column',
         justifyContent: 'space-evenly',
-        backgroundColor: grey[300],
+        backgroundColor: '#f2f2f1',
         alignItems:'center',
     },
     titleBox: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent:'center',
         alignItems:'center',
         boxShadow: `1px 3px 1px #f0f0f0`,
-        borderRadius: theme.spacing(1)
+        borderRadius: theme.spacing(0.5)
 
     },
     titleInput: {
@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
 
     },
     uploadImg: {
-        width: 400,
-        height: 250
+        width: 420,
+        height: 280
     }
 }))
 
@@ -60,7 +60,11 @@ const QuestionBuilder = () => {
     return ( 
         <div className = {classes.container}>
             <div className = {classes.titleBox} >
-                <input type = 'text' placeholder = 'Enter question here' className = {classes.titleInput}
+                <input 
+                    type = 'text' 
+                    style = {{fontSize: 25, color: '#757575'}}
+                    placeholder = 'Enter question here' 
+                    className = {classes.titleInput}
                     value={title == null ? '':title}
                     onChange={e => handleChange('title',e.target.value)}/>
             </div>

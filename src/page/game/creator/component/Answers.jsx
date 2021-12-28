@@ -3,6 +3,8 @@ import CropDinSharpIcon from '@mui/icons-material/CropDinSharp';
 import { Grid, Tooltip } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
+import Icon from '../../../../component/Icon';
+import {theme} from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
         width: '100%'   
@@ -10,11 +12,11 @@ const useStyles = makeStyles((theme) => ({
     answer: {
         backgroundColor: 'white ',
         flex:1,
-        borderRadius: theme.spacing(1),
+        borderRadius: theme.spacing(0.6),
         boxShadow: `1px 3px 1px #f0f0f0`,
         display:'flex',
         flexDirection: 'row',
-        height: 85,
+        height: 90,
         alignItems:'center',
         padding: theme.spacing(1)
     },
@@ -23,8 +25,9 @@ const useStyles = makeStyles((theme) => ({
         display:'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingRight: theme.spacing(1),
-        paddingLeft: theme.spacing(1)
+        paddingRight: theme.spacing(0.5),
+        paddingLeft: theme.spacing(0.5),
+        borderRadius: theme.spacing(0.6)
     },
     titleInput: {
         flex:1,
@@ -36,9 +39,33 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+const answerStyles = [
+    {
+        color: '#D01937',
+        icon: 'Triangle',
+        placeholder: 'Add answer 1'
+    },
+    {
+        color: '#1260BE',
+        icon: 'Rhombus',
+        placeholder: 'Add answer 2'
+    },
+    {
+        color: '#C79200',
+        icon: 'CircleRounded',
+        placeholder: 'Add answer 3'
+    },
+    {
+        color: '#237E0B',
+        icon: 'Square',
+        placeholder: 'Add answer 4'
+    }
+]
+
 const Answer = (props) => {
     const classes = useStyles()
-    const {answer, isCorrect, color} = props
+    const {answer, isCorrect, style} = props
+    const {color, icon, placeholder} = style
     const handleAnswerChange = (e) => {
         var value = e.target.value
         if (props.onChange) {
@@ -53,13 +80,22 @@ const Answer = (props) => {
             props.onChangeCorrect(!isCorrect)
         }
     }
+    console.log("Placehold: ", placeholder)
     return (
         <div className = {classes.answer} style={{backgroundColor: answer == null || answer == '' ?'white':color}}>
             <div className = {classes.shapeContainer}
                 style={{backgroundColor: color}} >
-                <CropDinSharpIcon sx = {{backgroundColor: 'white', color: 'white'}} />
+                <Icon name = {icon} style= {{ color: 'white', fontSize: 30}} />
+                {/* <CropDinSharpIcon sx = {{backgroundColor: 'white', color: 'white'}} /> */}
             </div>
-            <input type = 'text' placeholder = '' 
+            <input 
+                style = {{
+                    color: answer == '' ? '#838383' : 'white',
+                    marginLeft: theme.spacing(2),
+                    fontSize: 16
+                }}
+                placeholder= {placeholder}
+                type = 'text' 
                 className = {classes.titleInput} 
                 value = {answer == null ? '' : answer}
                 onChange = {handleAnswerChange}/>
@@ -96,8 +132,9 @@ const Answers = (props) => {
             <Grid container rowSpacing={1.5} columnSpacing={{ xs: 1.5 }} sx = {{width:'100%',height:'100%'}}>
                 {answers.map((item, index) => (
                     <Grid item xs={6}   key = {''+index}>
-                        <Answer answer = {item} 
-                            color = {['red','blue','yellow','green'][index]}
+                        <Answer 
+                            answer = {item} 
+                            style= {answerStyles[index]}
                             isCorrect = {(correct_answers.indexOf(index) != -1)}
                             onChange = {(value) => handleAnswerChange(index, value)}
                             onChangeCorrect = {(isCorrect)=> handleAnswerCorrectChange(index,isCorrect)}/>

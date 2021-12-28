@@ -1,8 +1,9 @@
 import { Button, Link } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { theme } from '../theme'
-import { TabItem } from './HeaderBar'
+import Tabbar, { TabItem } from './Tabbar'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -51,11 +52,18 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+const tabs = [
+    {
+        label: 'Home',
+        link: '/',
+        icon: 'Home'
+    }
+]
 
-const GuestHeaderBar = () => {
+const GuestHeaderBar = (props) => {
     const classes = useStyles()
- //   const history = useHistory()
-    const [selectedIndex, setSelectedIndex] = useState(0)
+    const navigate = useNavigate()
+    const {selectedIndex} = props
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClickAvatar = (event) => {
         setAnchorEl(event.currentTarget);
@@ -67,41 +75,29 @@ const GuestHeaderBar = () => {
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-    const handleTabChange = (index) => {
-        setSelectedIndex(index)
-    }
-
     const handleClickSignUp = () => {
         
-    }
-    const handleClickLogin = () => {
-
     }
     return (
         <div className = {classes.container}>
             <img src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Kahoot_Logo.svg/1280px-Kahoot_Logo.svg.png'
                 className = {classes.logo}/>
-            <div className = {classes.menu}>
-                {
-                    Array.from(Array(3)).map((_, index) => (
-                        <TabItem isSelected = {selectedIndex == index}
-                            onClick = {()=>handleTabChange(index)}
-                            key = {''+index}/>
-                    ))
-                }
-            </div>
-            <Button variant = 'outlined'>
+            
+            <Tabbar tabs = {tabs} selectedIndex = {selectedIndex}/>
+            <Button variant = 'outlined' 
+                sx = {{color: '#333333', borderColor: 'rgba(0,0,0,0)', fontWeight: 'bold', textTransform: 'none'}}
+                onClick = {() => navigate('/match/player/entrance', {replace: false})}>
                 Play
             </Button>
-            <Button variant = 'contained' sx = {{mx: theme.spacing(2)}} onClick = {handleClickSignUp}>
-                <Link href = '/auth/signup' sx = {{color: 'white'}} underline = 'none'>
-                    Sign up
-                </Link>
+            <Button variant = 'contained' 
+                sx = {{mx: theme.spacing(2),color: 'white', fontWeight: 'bold', textTransform: 'none'}} 
+                onClick = {() => navigate('/auth/signup', {replace: false})}>
+                Sign up
             </Button>
-            <Button variant = 'outlined' onClick = {handleClickLogin}>
-                <Link href = '/auth/login' sx = {{color: 'blue'}} underline = 'none'>
-                    Login
-                </Link>
+            <Button variant = 'out  lined' 
+                sx = {{color: '#333333', borderColor: 'rgba(0,0,0,0)', fontWeight: 'bold', textTransform: 'none'}}
+                onClick = {() => navigate('/auth/login', {replace: false})}>
+                Log in
             </Button>
         </div>
     )

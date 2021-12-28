@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'white',
         display: 'flex',
         flexDirection:'column',
+        boxShadow: `1px 3px 1px #f0f0f0`,
     },
     inputs: {
         flex:1, 
@@ -77,8 +78,13 @@ const QuestionConfig = (props) => {
             </div>
             <Divider />
             <div className = {classes.bottom} >
-                <Button variant = 'text'    onClick = {handleDeleteQuestion} >Delete</Button>
-                <Button variant = 'outlined'   onClick = {handleDuplicateQuestion}>Duplicate</Button>
+                <Button
+                    sx = {{color: '#333333', borderColor: 'rgba(0,0,0,0)', fontWeight: 'bold', textTransform: 'none'}}>
+                    Delete
+                </Button>
+                <Button variant = 'outlined'   
+                    sx = {{color: '#333333', borderColor: '#333333', fontWeight: 'bold', textTransform: 'none'}}
+                    onClick = {handleDuplicateQuestion}>Duplicate</Button>
             </div>
         </div>
     )

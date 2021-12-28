@@ -135,14 +135,14 @@ const GameCreatorPage = (props) => {
                     if (canDeleteQuestion) dispatch(deleteQuestion(questionIndex))
                 }}/>
 
-            <Grid container sx = {{pt: theme.spacing(8), flex: 1}}>
+            <Grid container sx = {{pt: theme.spacing(7), flex: 1}}>
                 <Grid item sm={1.5} >
                     <QuestionList/>
                 </Grid>
-                <Grid item sm={8}>
+                <Grid item sm={8.3}>
                     <QuestionBuilder/>
                 </Grid>
-                <Grid item sm={2.5}>
+                <Grid item sm={2.2}>
                     <QuestionConfig onClickDelete = {() => setModal({state: 'delete_question'})}
                         onClickDuplicate = {() => dispatch(duplicateQuestion(questionIndex))}/>
                 </Grid>

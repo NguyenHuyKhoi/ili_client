@@ -12,21 +12,21 @@ const useStyles = makeStyles((theme) => ({
         height: '100%',
         backgroundColor: 'white',
         display: 'flex',
-        flexDirection:'column',
+        flexDirection:'column'
     },
     list: {
         display:'flex',
         flexDirection:'column',
-        maxHeight: '70vh',
+        maxHeight: '72vh',
         overflow: 'auto'
     },
     item: {
-        padding: theme.spacing(1),
+        padding: theme.spacing(1.5),
         display:'flex',
         flexDirection:'column'
     },
     bottom: {
-        padding: theme.spacing(3),
+        padding: theme.spacing(2),
         display: 'flex',
         flexDirection: 'column'
     }
@@ -50,9 +50,11 @@ const QuestionList = (props) => {
                     <div className = {classes.item} onClick = {()=>handleSelected(index)} 
                         key = {''+index}
                         style={{
-                            backgroundColor: questionIndex == index ? blue[100]:'white'
+                            backgroundColor: questionIndex == index ? '#eaf4fc':'white'
                         }}>
-                        <Typography variant='subtitle2' sx = {{mb: theme.spacing(1)}}>
+                        <Typography 
+                            variant='subtitle2' 
+                            sx = {{mb: theme.spacing(0.2), fontWeight: 'bold', color: '#6E6E6E'}}>
                             {
                                 (index + 1) + ' quiz'
                             }
@@ -64,9 +66,16 @@ const QuestionList = (props) => {
             </div>
             <Divider />
             <div className = {classes.bottom} >
-                <Button variant = 'contained' color = 'primary' size = 'small' sx = {{py: theme.spacing(1.2)}}
+                <Button 
+                    variant = 'contained' 
+                    color = 'primary' 
+                    size = 'small' 
+                    sx = {{py: theme.spacing(1.2),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
                     onClick = {handleAddQuestion}>Add Question</Button>
-                <Button variant = 'contained'  color = 'neutral' size = 'small' sx = {{mt: theme.spacing(2), py: theme.spacing(1.2)}}>Import Excel</Button>
+                <Button variant = 'contained'  color = 'neutral' size = 'small' 
+                    sx = {{mt: theme.spacing(2), py: theme.spacing(1.2),color: '#333333', fontWeight: 'bold', textTransform: 'none' }}>
+                    Import Excel
+                </Button>
             </div>
         </div>
     )

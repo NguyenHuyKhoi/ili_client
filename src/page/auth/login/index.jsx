@@ -11,7 +11,7 @@ import { LinkedLoginButton } from '../component/LinkedLoginButton'
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh',
-        backgroundColor: 'gray',
+        backgroundColor: '#f2f2f2',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
@@ -40,8 +40,7 @@ const useStyles = makeStyles((theme) => ({
     btns: {
         display: 'flex',
         flexDirection: 'column',
-        marginTop: theme.spacing(3),
-        marginBottom: theme.spacing(1)
+        marginTop: theme.spacing(3)
     }
 }))
 export const LoginWithButton = () => {
@@ -66,7 +65,6 @@ const LoginPage = () => {
 
     const handleLogin = (e) => {
         e.preventDefault() 
-
         if (!validateEmail(email)) {
             setAlert({
                 type: 'error',
@@ -122,41 +120,41 @@ const LoginPage = () => {
                     value = {email}
                     onChange = {(e) => handleChange('email', e.target.value)}
                     sx = {{mt: theme.spacing(2)}}/>
-                <TextField id="outlined-basic" label="Password" variant="outlined" 
-                      value = {password}
-                      onChange = {(e) => handleChange('password', e.target.value)}
+                <TextField 
+                    id="outlined-password-input"
+                    label="Password" variant="outlined" 
+                    type="password"  
+                    value = {password}
+                    onChange = {(e) => handleChange('password', e.target.value)}
                     sx = {{my: theme.spacing(2)}}/>
                 <div className = {classes.forgotPassword}>
                     <Typography variant = 'caption' >
                         Forgot password?
                     </Typography>
-                    <Link href = '/auth/forgot-password' >
+                    <Link href = '/auth/forgot-password' sx = {{ml: theme.spacing(1)}}>
                         Reset your password
                     </Link>
                 </div>
-                <Button variant = 'contained' color = 'success' sx = {{my: theme.spacing(3)}}
-                    onClick = {handleLogin}>
+                <Button 
+                    variant = 'contained' 
+                    color = {email == '' && password == '' ? 'neutral' : 'success'}
+                    disabled = {email == '' && password == ''}
+                    sx = {{my: theme.spacing(3)}}
+                    onClick = {handleLogin}
+                    >
                     Login
                 </Button>
                 <div className = {classes.divider}>
-                    <Divider/>
                     <Typography variant = 'subtitle1' sx = {{alignSelf: 'center'}}>
                         or
                     </Typography>
-                    <Divider/>
                 </div>
                 <div className = {classes.btns}>
                     <div className = {classes.btn}>
-                        <LinkedLoginButton/>
+                        <LinkedLoginButton type = 'google' />
                     </div>
                     <div className = {classes.btn}>
-                        <LinkedLoginButton/>
-                    </div>
-                    <div className = {classes.btn}>
-                        <LinkedLoginButton/>
-                    </div>
-                    <div className = {classes.btn}>
-                        <LinkedLoginButton/>
+                        <LinkedLoginButton type = 'facebook'/>
                     </div>
                 </div>
               
@@ -165,7 +163,7 @@ const LoginPage = () => {
                     <Typography variant = 'caption' >
                         Don't have an account?
                     </Typography>
-                    <Link href = '/auth/signup' >
+                    <Link href = '/auth/signup' sx = {{ml: theme.spacing(1)}}>
                         Sign up
                     </Link>
                 </div>

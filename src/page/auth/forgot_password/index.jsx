@@ -8,14 +8,14 @@ import { validateEmail } from '../../../util/validator'
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh',
-        backgroundColor: 'gray',
+        backgroundColor: '#f2f2f2',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column'
     },
     form: {
-        width: '25%',
+        width: '28%',
         backgroundColor: 'white',
         borderRadius: theme.spacing(0.5),
         display: 'flex',
@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
     inputs: {
         display: 'flex',
         flexDirection: 'column',
-        padding: theme.spacing(2),
-        borderBottom: '1px solid gray'
+        padding: theme.spacing(3),
+        borderBottom: '2px solid #f2f2f2'
     },
     footer: {
         padding: theme.spacing(2),
@@ -51,6 +51,7 @@ const ForgotPasswordPage = () => {
     const {email} = inputs
 
     const handleSubmit = (e) => {
+        console.log("Handle submit")
         e.preventDefault() 
 
         if (!validateEmail(email)) {
@@ -65,6 +66,12 @@ const ForgotPasswordPage = () => {
             .then (() => {
                 setAlert({
                     type: 'success'
+                })
+            })
+            .catch((err) => {
+                setAlert({
+                    type: 'error',
+                    msg: err.response.data.error
                 })
             })
     }
@@ -82,7 +89,7 @@ const ForgotPasswordPage = () => {
                 alert.type == 'success' ?
                 <div className = {classes.checkEmail}>
                     <CheckCircleSharp sx = {{color: 'green', fontSize: 60}}/>
-                    <Typography variant = 'h5' sx = {{fontWeight: 'bold', mt: theme.spacing(2)}}>
+                    <Typography variant = 'h4' sx = {{fontWeight: 'bold', mt: theme.spacing(2)}}>
                         Check your email
                     </Typography>
                     <Typography variant = 'caption' sx = {{textAlign: 'center',mx: theme.spacing(3), my: theme.spacing(2)}}>
@@ -105,7 +112,7 @@ const ForgotPasswordPage = () => {
                         }
                     </Alert>
                 </Snackbar>
-                   <Typography variant = 'h6' sx = {{alignSelf: 'center', mb: theme.spacing(3)}}>
+                   <Typography variant = 'h5' sx = {{alignSelf: 'center',fontWeight: 'bold', mb: theme.spacing(3)}}>
                         Reset Password
                     </Typography>
                     <div className = {classes.form}>
@@ -114,7 +121,11 @@ const ForgotPasswordPage = () => {
                                    value = {email}
                                    onChange = {(e) => handleChange('email', e.target.value)}
                                  />
-                            <Button variant = 'contained' sx = {{width: '100%', mt: theme.spacing(2)}}
+                            <Button 
+                                color = {email == ''? 'neutral' : 'success'}
+                                disabled = {email == ''}
+                                variant = 'contained' 
+                                sx = {{width: '100%', mt: theme.spacing(2)}}
                                 onClick = {handleSubmit}>
                                 Send reset link
                             </Button>

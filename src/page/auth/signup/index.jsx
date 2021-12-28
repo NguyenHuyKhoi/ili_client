@@ -9,7 +9,7 @@ import { LinkedLoginButton } from '../component/LinkedLoginButton'
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh',
-        backgroundColor: 'gray',
+        backgroundColor: '#f2f2f2',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     btns: {
         display: 'flex',
         flexDirection: 'column',
-        marginTop: theme.spacing(3),
+        marginTop: theme.spacing(2),
         marginBottom: theme.spacing(1)
     },
     checkboxRegisterInfor: {
@@ -107,13 +107,19 @@ const SignupPage = () => {
                     value = {email}
                     onChange = {(e) => handleChange('email', e.target.value)}
                     sx = {{mt: theme.spacing(2)}}/>
-                <TextField id="outlined-basic" label="Password" variant="outlined" 
+                <TextField 
+                    id="outlined-password-input"
+                    label="Password" variant="outlined" 
+                    type="password" 
                     value = {password}
                     onChange = {(e) => handleChange('password', e.target.value)}
                     sx = {{my: theme.spacing(2)}}/>
-                <Button variant = 'contained' 
+                <Button 
+                    variant = 'contained' 
                     onClick = {handleSignup}
-                    color = 'success' sx = {{my: theme.spacing(3)}}>
+                    color = {email == '' && password == '' ? 'neutral' : 'success'}
+                    disabled = {email == '' && password == ''}
+                    sx = {{my: theme.spacing(3)}}>
                     <Link href = '/auth/login' underline = 'none' sx = {{color: 'white'}}>
                         Sign up
                     </Link>
@@ -127,33 +133,25 @@ const SignupPage = () => {
                 </div>
 
                 <div className = {classes.divider}>
-                    <Divider/>
                     <Typography variant = 'subtitle1' sx = {{alignSelf: 'center'}}>
                         or
                     </Typography>
-                    <Divider/>
                 </div>
                 <div className = {classes.btns}>
                     <div className = {classes.btn}>
-                        <LinkedLoginButton/>
+                        <LinkedLoginButton type = 'google'/>
                     </div>
                     <div className = {classes.btn}>
-                        <LinkedLoginButton/>
-                    </div>
-                    <div className = {classes.btn}>
-                        <LinkedLoginButton/>
-                    </div>
-                    <div className = {classes.btn}>
-                        <LinkedLoginButton/>
+                        <LinkedLoginButton type = 'facebook'/>
                     </div>
                 </div>
               
 
                 <div className = {classes.linkRow} style = {{alignSelf: 'center'}}>
-                    <Typography variant = 'caption' >
+                    <Typography variant = ' ' >
                         Already have an account?
                     </Typography>
-                    <Link href = '/auth/login' >
+                    <Link href = '/auth/login' sx = {{ml: theme.spacing(1)}} >
                         Log in
                     </Link>
                 </div>
