@@ -8,7 +8,7 @@ import { theme } from '../../../../theme';
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
-		flexDirection: 'row',
+		flexDirection: 'row'
     },
 	left: {
 		display: 'flex',
@@ -44,32 +44,35 @@ const Header = () => {
 				<Grid item xs = {9}>
 					<div className = {classes.left}>
 						<div className = {classes.title}>
-							<Typography variant = 'subtitle1' sx = {{color: 'black'}}>
+							<Typography variant = 'subtitle1' sx = {{color: '#333333', fontWeight: 'bold'}}>
 								Report
 							</Typography>
-							<Typography variant = 'h5' sx = {{color: 'black'}}>
+							<Typography variant = 'h4' sx = {{color: '#333333', mt: theme.spacing(2)}}>
 								{game.title}
 							</Typography>
 						</div>
-						<div className = {classes.options}>
-							<Typography variant = 'subtitle1' sx = {{color: 'black'}}>
-								Report options
-							</Typography>
-							<MoreVert sx = {{color: 'black'}}/>
+						<div >
+							<div className = {classes.options}>
+								<Typography variant = 'subtitle1' sx = {{color: 'black'}}>
+									Report options
+								</Typography>
+								<MoreVert sx = {{color: 'black'}}/>
+							</div>
 						</div>
+						
 					</div>
 				</Grid>
 				<Grid item xs = {3}>
 					<div className = {classes.right}>
-						<Typography variant = 'subtitle1' sx = {{p: theme.spacing(1.5)}}>
+						<Typography variant = 'subtitle2' sx = {{p: theme.spacing(1.5), color: '#5f5f5f'}}>
 							Live
 						</Typography>
 						<Divider/>
-						<Typography variant = 'subtitle1' sx = {{p: theme.spacing(1.5)}}>
-							{createAt}
+						<Typography variant = 'subtitle2' sx = {{p: theme.spacing(1.5), color: '#5f5f5f'}}>
+							{'November 18, 2021, 9:28 PM'}
 						</Typography>
 						<Divider/>
-						<Typography variant = 'subtitle1' sx = {{p: theme.spacing(1.5)}}>
+						<Typography variant = 'subtitle2' sx = {{p: theme.spacing(1.5), color: '#5f5f5f'}}>
 							Host by {host.name}
 						</Typography>
 					</div>

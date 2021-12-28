@@ -1,55 +1,52 @@
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import { makeStyles } from '@mui/styles';
-import React, { useState } from 'react';
-import PlayerDetailModal from './PlayerDetailModal';
+import { DataGrid } from '@mui/x-data-grid';
+import React from 'react';
 const useStyles = makeStyles((theme) => ({
 }))
 
-const createData = (nickname, rank, correctAnswersPercent, unansweredNum, finalScore) => {
-  return { nickname, rank, correctAnswersPercent, unansweredNum, finalScore };
+const columns = [
+	{ field: 'id', headerName: 'Id', hidden: true},
+	{ field: 'name', headerName: 'Nick name', flex: 3 },
+	{ field: 'rank', headerName: 'Rank', type: 'number', flex: 1 },
+	{ field: 'correctPercent',headerName: 'Correct answers',type: 'number',flex: 1},
+  { field: 'unanswers', headerName: 'Unanswers', type: 'number',flex: 1},
+  { field: 'score', headerName: 'Final score', type: 'number',flex: 1}
+];
+
+const getRows = (players, match) => {
+	return players.map((player, index) => {
+		return {
+			id: index,
+			name: player.name,
+			rank: '124',
+			correctPercent: 12,
+      unanswers: 123,
+      score: player.score
+		}
+	})
 }
 const PlayersTable = (props) => {
-
   const {match} = props 
   const {players} = match
-  const handleClickRow = (index) => {
-      if (props.onClickRow) {
-        props.onClickRow(index)
+  const handleSelectRows = (indexes) => {
+    if (indexes.length == 0) return
+    if (props.onClickRow) {
+        props.onClickRow(indexes[0])
       }
   }
+
+  console.log("layers: ", players)
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Nickname</TableCell>
-            <TableCell align="right">Rank</TableCell>
-            <TableCell align="right">Final Score</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {players.map((player, index) => (
-            <TableRow
-              onClick = {() => handleClickRow(index)}
-              key={player.socketId }
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {player.name}
-              </TableCell>
-              <TableCell align="right">{player.rank}</TableCell>
-              <TableCell align="right">{player.score}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div style={{ height: 400, width: '100%', backgroundColor: 'white' }}>
+    <DataGrid
+      rows={getRows(players)}
+      columns={columns.filter((col) => col.hidden != true)}
+      pageSize={5}
+      rowsPerPageOptions={[5]}
+      onSelectionModelChange={handleSelectRows}
+      // checkboxSelection
+    />
+  </div>
   );
 }
 

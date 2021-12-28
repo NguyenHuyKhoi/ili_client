@@ -1,83 +1,50 @@
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import { makeStyles } from '@mui/styles';
-import React, { useState } from 'react';
-import QuestionDetailModal from './QuestionDetailModal';
+import { DataGrid } from '@mui/x-data-grid';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
 }))
 
-const createData = (title, type, correctPlayersNum, incorrectPlayersNum) => {
-  return { title, type, correctPlayersNum, incorrectPlayersNum};
-}
-
-const rows = [
-  createData('How many apple on the table?', 'Quiz', 0, 3),
-  createData('How many apple on the table?', 'Quiz', 0, 3),
-  createData('How many apple on the table?', 'Quiz', 0, 3),
-  createData('How many apple on the table?', 'Quiz', 0, 3),
-  createData('How many apple on the table?', 'Quiz', 0, 3),
-  createData('How many apple on the table?', 'Quiz', 0, 3),
-  createData('How many apple on the table?', 'Quiz', 0, 3),
-  createData('How many apple on the table?', 'Quiz', 0, 3)
+const columns = [
+	{ field: 'id', headerName: 'Id', hidden: true},
+	{ field: 'title', headerName: 'Title', flex: 4 },
+	{ field: 'type', headerName: 'Type', flex: 1 },
+	{ field: 'correctPercent', type: 'number',headerName: 'Correct/incorrect',flex: 1},
 ];
 
+
+const getRows = (progress, match) => {
+	return progress.map((stage, index) => {
+    let q =stage.question
+		return {
+			id: index,
+			title: q.index + '. ' + q.title,
+			type: 'Quiz',
+			correctPercent: 12
+		}
+	})
+}
 const QuestionsTable = (props) => {
   const {match} = props 
   const {progress, players} = match
-  const handleClickRow = (index) => {
+  const handleSelectRows = (indexes) => {
+    if (indexes.length == 0) return
     if (props.onClickRow) {
-      props.onClickRow(index)
+      props.onClickRow(indexes[0])
     }
   }
 
-  const list = progress.map((item) => {
-    let row = {}
-    row.questionIndex = item.question.index 
-    row.questionTitle = item.question.title 
-    row.questionType = 'Quiz'
-    row.corrects = item.answers.filter((answer) => answer.isCorrect == true ).length 
-    row.inCorrects = item.answers.length - row.corrects 
-    row.unAnswers = players.length -  item.answers.length 
-    return row
-  })
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Question</TableCell>
-            <TableCell align="right">Type</TableCell>
-            <TableCell align="right">Correct</TableCell>
-            <TableCell align="right">InCorrect</TableCell>
-            <TableCell align="right">Not answered</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {list.map(({questionIndex, questionTitle, questionType, 
-            corrects, inCorrects, unAnswers}, index) => (
-            <TableRow
-              onClick = {() => handleClickRow(index)}
-              key={index + ''}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {`${questionIndex}. ${questionTitle}`}
-              </TableCell>
-              <TableCell align="right">{questionType}</TableCell>
-              <TableCell align="right">{corrects}</TableCell>
-              <TableCell align="right">{inCorrects}</TableCell>
-              <TableCell align="right">{unAnswers}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div style={{ height: 400, width: '100%' }}>
+      <DataGrid
+        rows={getRows(progress)}
+        columns={columns.filter((col) => col.hidden != true)}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        onSelectionModelChange={handleSelectRows}
+        // checkboxSelection
+      />
+    </div>
   );
 }
 

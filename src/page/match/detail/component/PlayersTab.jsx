@@ -5,7 +5,8 @@ import PlayerDetailModal from './PlayerDetailModal';
 import PlayersTable from './PlayersTable';
 const useStyles = makeStyles((theme) => ({
     container: {
-        flex: 1
+        flex: 1,
+        paddingTop: theme.spacing(3)
     }
 }))
 

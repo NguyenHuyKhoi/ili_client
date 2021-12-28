@@ -1,7 +1,8 @@
-import { Add, ChevronLeft, ChevronRight, Close, PersonOutline } from '@mui/icons-material';
+import { PersonOutline } from '@mui/icons-material';
 import { Divider, Grid, Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import Icon from '../../../../component/Icon';
 import { theme } from "../../../../theme";
 import InforRowItem from './InforRowItem';
 import PlayerDetailTable from './PlayerDetailTable';
@@ -15,15 +16,16 @@ const useStyles = makeStyles((theme) => ({
 		width: '80vw',
 		maxHeight: '80vh',
 		backgroundColor: 'white',
-		border: '2px solid #000',
-		padding: theme.spacing(2),
+		borderRadius: theme.spacing(1),
 		display: 'flex',
 		flexDirection: 'column',
 
     },
 	header: {
 		display: 'flex',
-		flexDirection: 'row'
+		flexDirection: 'row',
+		padding: theme.spacing(3),
+		backgroundColor: '#f5f5f5'
 	},
 	body: {
 		flex: 1,
@@ -50,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	table: {
 		padding: theme.spacing(3),
-		marginTop: theme.spacing(5)
 	}
 }))
 
@@ -63,7 +64,7 @@ const ColInforItem = (props) => {
 			<Typography variant = 'h4' sx = {{fontWeight: 'bold'}}>
 				{value}
 			</Typography>
-			<Typography variant = 'subtitle1'>
+			<Typography variant = 'subtitle1' sx = {{fontWeight:'bold'}}>
 				{label}
 			</Typography>
 		</div>
@@ -78,20 +79,22 @@ const Header = (props) => {
 			<Grid container >
 				<Grid item xs = {5} >
 					<div className = {classes.leftHeader}>
-						<div className = {classes.pieChart}/>
+						{/* <div className = {classes.pieChart}/> */}
+						<Icon name ='DataUsage' 
+							style = {{width: theme.spacing(12),height: theme.spacing(12), color: '#1368CE'}}/>
 						<ColInforItem value = '0%' label= 'Correct' />
 					</div>
 				</Grid>
-				<Grid item xs = {7}>
-					<Grid container >
+				<Grid item xs = {7} >
+					<Grid container columnSpacing={10}>
 						<Grid item xs = {6} >
-							<InforRowItem label = {'Rank'} value = {player.rank}/>
+							<InforRowItem label = {'Rank'} value = {player.rank+12} icon = 'BarChartOutlined' color = '#46178F'/>
 						</Grid>
 						<Grid item xs = {6} >
-							<InforRowItem label = {'Score'} value = {player.score}/>
+							<InforRowItem label = {'Score'} value = {player.score} icon = 'MilitaryTech' color = '#1368CE'/>
 						</Grid>
 						<Grid item xs = {6} >
-							<InforRowItem label = {'Question answered'} value = {'3'}/>
+							<InforRowItem label = {'Question answered'} value = {'3'} icon = 'Help' color = '#0AA3A3'/>
 						</Grid>
 					</Grid>
 				</Grid>
@@ -128,6 +131,7 @@ const PlayerDetailModal = (props) => {
 			> 
 			<div className={classes.container}>
 				<TopBarModal 
+					leftLabel = {<PersonOutline/>}
 					onClose = {handleClose} 
 					onRight = {() => setIndex(index + 1)}
 					onLeft = {() => setIndex(index - 1)}

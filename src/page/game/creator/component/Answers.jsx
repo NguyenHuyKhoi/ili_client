@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
         border: 'none',
         backgroundColor: 'rgba(0,0,0,0)',
         flex: 1,
-
     }
 }))
 

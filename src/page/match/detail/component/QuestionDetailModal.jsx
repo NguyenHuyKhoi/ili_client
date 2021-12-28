@@ -1,11 +1,8 @@
-import { Add, ChevronLeft, ChevronRight, Close, Square } from '@mui/icons-material';
 import { Divider, Grid, Modal, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
 import { makeStyles } from '@mui/styles';
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import { theme } from "../../../../theme";
 import InforRowItem from './InforRowItem';
-import PlayerDetailTable from './PlayerDetailTable';
 import QuestionDetailCard from './QuestionDetailCard';
 import QuestionDetailTable from './QuestionDetailTable';
 import TopBarModal from './TopBarModal';
@@ -16,10 +13,9 @@ const useStyles = makeStyles((theme) => ({
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
 		width: '80vw',
-		maxHeight: '80vh',
+		maxHeight: '85vh',
 		backgroundColor: 'white',
-		border: '2px solid #000',
-		padding: theme.spacing(2),
+		borderRadius: theme.spacing(1),
 		display: 'flex',
 		flexDirection: 'column',
 
@@ -30,13 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	table: {
 		padding: theme.spacing(3)
-	},
-	infors: {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		padding: theme.spacing(1)
-	},
+	}
 }))
 
 const QuestionDetailModal = (props) => {
@@ -87,33 +77,47 @@ const QuestionDetailModal = (props) => {
 			> 
 			<div className={classes.container}>
 				<TopBarModal
+					leftLabel = {
+						<Typography variant= 'subtitle2' sx = {{color: '#5f5f55'}}>
+							{(index + 1) + ' -Quiz'}
+						</Typography>
+					}
 					onClose = {handleClose} 
 					onRight = {() => setIndex(index + 1)}
 					onLeft = {() => setIndex(index - 1)}
-					title = {stage.question.index + '. ' + stage.question.title} 
+					title = {stage.question.title} 
 					index = {index + 1} 
 					total = {progress.length}/>
 				<Divider/>
 				<div className = {classes.body}>
 					<QuestionDetailCard stage = {stage} players = {players}/>
 
-					<div className = {classes.infors}>
+	
+					<Grid container columnSpacing={5} sx = {{px: theme.spacing(3), mt: theme.spacing(5)}}>
 						<Grid item xs = {4}  >
 							<InforRowItem 
 								label = 'Correct answers: ' 
-								value = {correctAnswerPercent + '%'}/>
+								value = {correctAnswerPercent + '%'}
+								icon = 'Check'
+								color = '#D01937'/>
 						</Grid>
 						<Grid item xs = {4}  >
 							<InforRowItem 
 								label = 'Avg. answer Time: ' 
-								value = {avgAnswerTime + 's'}/>
+								value = {avgAnswerTime + 's'}
+								icon = 'WatchLater' 
+								color = '#0AA3A3'/>
 						</Grid>
 						<Grid item xs = {4} >
 							<InforRowItem 
 								label = 'Player answered ' 
-								value = {answerPlayers + ' of ' + players.length}/>
+								value = {answerPlayers + ' of ' + players.length}
+								icon = 'Person'
+								color = '#864cbf'/>
 						</Grid>
-					</div>
+			
+					</Grid>
+		
 					<div className = {classes.table}>
 						<QuestionDetailTable players = {players} stage = {stage} />
 					</div>

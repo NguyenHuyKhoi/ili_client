@@ -14,12 +14,23 @@ const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
     },
+    header: {
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: '#f2f2f2',
+        paddingLeft: theme.spacing(10),
+        paddingRight: theme.spacing(10),
+        paddingTop: theme.spacing(2)
+    },
     body: {
         flex: 1, 
         display: 'flex',
+        height: '70vh',
         flexDirection: 'column',
-        paddingLeft: theme.spacing(8),
-        paddingRight: theme.spacing(8)
+        backgroundColor: 'white',
+        paddingLeft: theme.spacing(10),
+        paddingRight: theme.spacing(10),
+        paddingTop: theme.spacing(2)
     }
 }))
 
@@ -35,9 +46,11 @@ const MatchDetailPage = () => {
     return (
         <div className = {classes.container}>
             <HeaderBar selectedIndex = {3}/>
-            <div className= {classes.body}>
+            <div className= {classes.header}>
                 <Header />
                 <Tabs tabs = {['Summary','Players', 'Questions', 'Feed back']} onClickTab = {handleTabChange}/>
+            </div>
+            <div className= {classes.body}>
                 {
                     tabIndex == 0 ?
                         <Typography variant = 'h1'></Typography>

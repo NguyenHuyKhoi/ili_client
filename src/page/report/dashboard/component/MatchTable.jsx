@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,53 +11,57 @@ import React, {useEffect, useState, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { selectMatch } from '../../../../context/match/other/actions';
 import { MatchContext } from '../../../../context/match/other/context';
+
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1
     }
 }))
 
-const createData = (name, date, gameMode, playerNum) => {
-  return { name, date, gameMode, playerNum };
+
+const columns = [
+	{ field: 'id', headerName: 'Id', hidden: true},
+	{ field: 'title', headerName: 'Name', flex: 3 },
+	{ field: 'date', headerName: 'Date', flex: 1 },
+	{ field: 'mode',headerName: 'Game Mode',flex: 1},
+	{ field: 'playerNums',	headerName: 'No. of Players',flex: 1},
+];
+
+const getRows = (matches) => {
+	return matches.map((match, index) => {
+		return {
+			id: index,
+			title: match.game.title,
+			date: "12/20/2021",
+			mode: 'Live',
+			playerNums: match.players.length
+		}
+	})
 }
-
-
+  
 const MatchTable = () => {
+	const classes = useStyles()
 	const navigate = useNavigate()
 	const {matches, dispatch} = useContext(MatchContext)
-	const handleClickRow = (match) => {
+	const handleSelectRows = (indexes) => {
+		console.log(" indexes: ", indexes)
+		if (indexes.length == 0 ) return 
+		let match = matches[indexes[0]]
 		dispatch(selectMatch(match))
 		navigate('/match/detail/'+match._id, {replace: false})
 	}
 	return (
-		<TableContainer component={Paper}>
-		<Table sx={{ minWidth: 650 }} aria-label="simple table">
-			<TableHead>
-			<TableRow>
-				<TableCell>Name</TableCell>
-				<TableCell align="right">Date</TableCell>
-				<TableCell align="right">Game Mode</TableCell>
-				<TableCell align="right">No. of Players</TableCell>
-			</TableRow>
-			</TableHead>
-			<TableBody>
-			{matches.map((match) => (
-				<TableRow
-				onClick = {() => handleClickRow(match)}
-				key={match._id}
-				sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-				>
-				<TableCell component="th" scope="row">
-					{match.game.title}
-				</TableCell>
-				<TableCell align="right">{match.createAt}</TableCell>
-				<TableCell align="right">{'Live'}</TableCell>
-				<TableCell align="right">{match.players.length}</TableCell>
-				</TableRow>
-			))}
-			</TableBody>
-		</Table>
-		</TableContainer>
+		<div style={{ height: 400, width: '100%', backgroundColor: 'white' }}>
+			<DataGrid
+				rows={getRows(matches)}
+				columns={columns.filter((col) => col.hidden != true)}
+				pageSize={5}
+				rowsPerPageOptions={[5]}
+				onSelectionModelChange={handleSelectRows}
+				// checkboxSelection
+			/>
+		</div>
 	);
 }
 
