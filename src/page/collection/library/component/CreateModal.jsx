@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 		width: '50vw',
 		maxHeight: '80vh',
 		backgroundColor: 'white',
-		border: '2px solid #000',
+		borderRadius: theme.spacing(1),
 		padding: theme.spacing(2),
 		display: 'flex',
 		flexDirection: 'column',
@@ -76,29 +76,29 @@ const CollectionCreateModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: 'black'}}>
-					Kahoot Summary
+				<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
+					Create new collection
 				</Typography>
 				<Grid container columnSpacing = {5} rowSpacing = {2} 
 					sx = {{mt: theme.spacing(2)}}>
 					<Grid item xs = {7}>
 						<div className = {classes.leftCol}>
-							<Typography variant = 'subtitle1' 
-								sx= {{fontWeight: 'bold'}} >
-								Title
+							<Typography variant = 'subtitle2' 
+								sx= {{fontWeight: 'bold', color: '#333333'}} >
+								Title (*)
 							</Typography>
 							<TextField id="outlined-basic" label="" value = {title} variant="outlined"
 								onChange = {(e) => handleChange('title', e.target.value)} />
-							<Typography variant = 'subtitle1' 
-								sx = {{ mt: theme.spacing(2), fontWeight: 'bold'}}>
-								Description(optional)
+							<Typography variant = 'subtitle2' 
+								sx = {{ mt: theme.spacing(2), fontWeight: 'bold', color: '#333333'}}>
+								Description
 							</Typography>
 							<TextareaAutosize
 								aria-label="empty textarea"
 								value = {description}
 								onChange={(e) => handleChange('description', e.target.value)}
 								placeholder="Describe your game..."
-								style={{ width: '100%', height: 120,m: theme.spacing(0.5) }}
+								style={{ width: '100%', height: 120,m: theme.spacing(0.5) ,resize: 'none'}}
 							/>
 							<WrappedRadioGroup title = 'Visibility' 
 								list = {[
@@ -111,8 +111,8 @@ const CollectionCreateModal = (props) => {
 					</Grid>
 					<Grid item xs = {5}>
 						<div className = {classes.rightCol}>
-							<Typography variant = 'subtitle1' 
-								sx= {{fontWeight: 'bold'}} >
+							<Typography variant = 'subtitle2' 
+								sx= {{fontWeight: 'bold', color: '#333333'}} >
 								Cover image
 							</Typography>
 							<div className = {classes.uploadImg}>
@@ -126,10 +126,12 @@ const CollectionCreateModal = (props) => {
 				</Grid>
 				<div className = {classes.footer}>
 					<Button variant="contained" color="neutral"
-						onClick = {handleClose}>
+						onClick = {handleClose}
+						sx = {{color: '#333333', fontWeight: 'bold', textTransform: 'none'}}>
 						Cancel
 					</Button>
-					<Button variant="contained" color="success" sx = {{ml: theme.spacing(2)}}
+					<Button variant="contained" color="success" 
+						sx = {{ml: theme.spacing(2),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
 						onClick = {() => {
 							if (props.onDone) props.onDone(collection)
 						}}>

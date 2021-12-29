@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { CollectionContext } from '../../../../context/collection/context'
 import { GameCreatorContext } from '../../../../context/game/creator/context'
 import { theme } from '../../../../theme'
+import logo from '../../../../asset/image/logo.png'
 const useStyles = makeStyles((theme) => ({
     toolbar: {
         display: 'flex',
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent:'space-between',
         backgroundColor: 'white'
     },
-    logoSm: {
+    logo: {
         width: 100,
         height:30
     },
@@ -41,7 +42,9 @@ const Topbar = (props) => {
     return (
         <AppBar position = 'fixed' sx = {{height: 60}}>
             <Toolbar className = {classes.toolbar}>
-                <img src={'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Kahoot_Logo.svg/1280px-Kahoot_Logo.svg.png'} className = {classes.logoSm}/>
+                <div onClick = {() => navigate('/', {replace: false})}>
+                    <img src = {logo} className = {classes.logo}/>
+                </div>
                 <div className = {classes.settingBox} 
                     onClick = {() => {
                         if (props.onSetting) {

@@ -118,7 +118,7 @@ const SettingModal = (props) => {
 								value = {description ? description : ''}
 								onChange={(e) => handleChange('description', e.target.value)}
 								placeholder="Describe your game..."
-								style={{ width: '100%', height: 150	,m: theme.spacing(0.5) }}
+								style={{ width: '100%', height: 150	,m: theme.spacing(0.5), resize: 'none' }}
 							/>
 							<div style = {{marginTop: theme.spacing(2)}} >
 								<DropdownSelect title = 'Language'

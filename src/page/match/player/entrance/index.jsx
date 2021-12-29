@@ -6,7 +6,7 @@ import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import Form from './component/Form'
-
+import logo from '../../../../asset/image/logo.png'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -73,7 +73,9 @@ const MatchPlayerEntrancePage = () => {
     }
     return (
         <div className = {classes.container}>
-            <img src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Kahoot_Logo.svg/1280px-Kahoot_Logo.svg.png' className = {classes.logo}/>
+            <div onClick = {() => navigate('/', {replace: false})}>
+                <img src = {logo} className = {classes.logo}/>
+            </div>
             <Form onSubmit = {handleSubmit} onChange = {(value) => setInput({...input, value})} 
                 showAlert = {alert.type == 'error'}
                 value = {value}

@@ -13,6 +13,7 @@ import { DropdownMenu } from './DropdownMenu'
 import Tabbar from './Tabbar'
 import {createUrl} from '../util/helper'
 import HeaderTabs from './Tabbar'
+import logo from '../asset/image/logo.png'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -159,8 +160,9 @@ const HeaderBar = (props) => {
     }
     return (
         <div className = {classes.container}>
-            <img src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Kahoot_Logo.svg/1280px-Kahoot_Logo.svg.png'
-                className = {classes.logo}/>
+            <div onClick = {() => navigate('/', {replace: false})}>
+                <img src = {logo} className = {classes.logo}/>
+            </div>
             
             <Tabbar tabs = {tabs} selectedIndex = {selectedIndex}/>
             <Button variant = 'contained' onClick = {handleCreate}

@@ -3,6 +3,8 @@ import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { GameCreatorContext } from '../../../../context/game/creator/context'
 import { theme } from '../../../../theme'
+import logo from '../../../../asset/image/logo.png'
+import { useNavigate } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     toolbar: {
         display: 'flex',
@@ -10,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent:'space-between',
         backgroundColor: 'white'
     },
-    logoSm: {
+    logo: {
         width: 80,
         height:30
     },
@@ -35,13 +37,16 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Topbar = (props) => {
+    const navigate = useNavigate()
     const classes = useStyles()
     const {game} = useContext(GameCreatorContext)
     const {title} = game
     return (
         <AppBar position = 'fixed'>
             <Toolbar className = {classes.toolbar}>
-                <img src={'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Kahoot_Logo.svg/1280px-Kahoot_Logo.svg.png'} className = {classes.logoSm}/>
+                <div onClick = {() => navigate('/', {replace: false})}>
+                    <img src = {logo} className = {classes.logo}/>
+                </div>
                 <div className = {classes.settingBox} 
                     onClick = {() => {
                         if (props.onSetting) {

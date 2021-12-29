@@ -7,7 +7,7 @@ import { AuthContext } from '../../../context/auth/context'
 import { getCollectionsSuccess } from '../../../context/collection/actions'
 import { CollectionContext } from '../../../context/collection/context'
 import SideMenu from '../../game/library/component/SideMenu'
-import CollectionCreateModal from './component/CollectionCreateModal'
+import CreateModal from './component/CreateModal'
 import CollectionList from './component/CollectionList'
 
 
@@ -66,7 +66,7 @@ const CollectionLibraryPage = () => {
 
     return (
         <div className = {classes.container}>
-            <CollectionCreateModal 
+            <CreateModal 
                 open =  {modal.state === 'create'}     
                 onClose = {() => setModal({})}
                 onDone = {handleCreate}/>

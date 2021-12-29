@@ -118,7 +118,7 @@ const SettingModal = (props) => {
 								value = {description}
 								onChange={(e) => handleChange('description', e.target.value)}
 								placeholder="Describe your game..."
-								style={{ width: '100%', height: 120,m: theme.spacing(0.5) }}
+								style={{ width: '100%', height: 120,m: theme.spacing(0.5), resize: 'none' }}
 							/>
 							<WrappedRadioGroup title = 'Visibility' 
 								list = {[
