@@ -71,9 +71,10 @@ const useStyles = makeStyles((theme) => ({
 
 export const PlayerCard = (props) => {
     const classes = useStyles()
-    const {player,  showScore, disable} = props 
+    const {player,  showScore, disable, isMe} = props 
     
     const {name, score} = player 
+    console.log("Is me :", isMe)
     return (
         <div className = {classes.player}
             onClick = {() => {
@@ -81,7 +82,7 @@ export const PlayerCard = (props) => {
                 if (props.onSelect) props.onSelect()
             }}>
             {
-                score && showScore &&  
+                showScore &&  
                 <Typography variant = 'h4' 
                     sx = {{color: 'white', fontWeight: 'bold'}}>
                     {score}
@@ -93,7 +94,7 @@ export const PlayerCard = (props) => {
                     textDecoration: !disable ? 'line-through' : 'none',
                     cursor: 'pointer'
                   }}}>
-                {name}
+                {name + (isMe ? ' (me) ' : '')}
             </Typography>
         </div>
     )
@@ -104,8 +105,10 @@ const Lobby = (props) => {
     const navigate = useNavigate()
     const {match, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
-    const [lock, setLock] = useState(false)
-    let {pinCode, title, players} = match
+    let {pinCode, title, players, state} = match
+
+    const locked = (state == 'locking')
+    const enableStart = (players.length > 0)
     if (players == undefined) players = []
 
     const handleStart = () => {
@@ -113,11 +116,26 @@ const Lobby = (props) => {
     }
 
     const handleLock = () => {
-        setLock(!lock)
+        if (!locked) {
+            socket.emit('match:lock', pinCode, (ok) => {
+                if (ok ) console.log("Lock successfully")
+                else console.log("Lock failed")
+            })
+        }
+        else {
+            socket.emit('match:unlock', pinCode, (ok) => {
+                if (ok ) console.log("UnLock successfully")
+                else console.log("UnLock failed")
+            })
+        }
+       
     }
 
-    const handleSelectPlayer = (user) => {
-        console.log("Kick user")
+    const handleSelectPlayer = (player) => {
+        socket.emit('match:kickPlayer', pinCode, player, (ok) => {
+            if (ok )
+                console.log("Kick successfully")
+        })
     }
     return (
         <div className = {classes.container}>
@@ -136,13 +154,14 @@ const Lobby = (props) => {
                         variant = 'contained'   
                         sx = {{
                             fontWeight: 'bold', textTransform: 'none', 
-                            backgroundColor: lock ? '#9E9E9E' : 'white',
-                            color: lock ? 'white' : '#333333'
+                            backgroundColor: locked ? '#9E9E9E' : 'white',
+                            color: locked ? 'white' : '#333333'
                         }}
                         onClick = {handleLock}>
                         Lock
                     </Button>
                     <Button variant = 'contained' 
+                        disabled = {!enableStart}
                         sx = {{ml: theme.spacing(2),fontWeight: 'bold', textTransform: 'none'}}
                         onClick = {handleStart}>
                         Start
@@ -153,9 +172,12 @@ const Lobby = (props) => {
                 <div className = {classes.players}>
                     {
                         players.map((player, index) => (
-                            <PlayerCard   key = {''+index} player = {player}
+                            <PlayerCard   
+                                key = {''+index} player = {player}
                                 disable = {false}
-                                onSelect = {() => handleSelectPlayer(player)}/>
+                                showScore = {false}
+                                onSelect = {() => handleSelectPlayer(player)}
+                                isMe = {false}/>
                         ))
                     }
                 </div>

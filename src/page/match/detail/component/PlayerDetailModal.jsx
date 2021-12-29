@@ -74,6 +74,7 @@ const ColInforItem = (props) => {
 const Header = (props) => {
 	const classes = useStyles() 
 	const {player} = props 
+	const {rank, score, correctNum, incorrectNum, unanswerNum} = player
 	return (
 		<div className = {classes.header}>
 			<Grid container >
@@ -88,13 +89,13 @@ const Header = (props) => {
 				<Grid item xs = {7} >
 					<Grid container columnSpacing={10}>
 						<Grid item xs = {6} >
-							<InforRowItem label = {'Rank'} value = {player.rank+12} icon = 'BarChartOutlined' color = '#46178F'/>
+							<InforRowItem label = {'Rank'} value = {rank} icon = 'BarChartOutlined' color = '#46178F'/>
 						</Grid>
 						<Grid item xs = {6} >
-							<InforRowItem label = {'Score'} value = {player.score} icon = 'MilitaryTech' color = '#1368CE'/>
+							<InforRowItem label = {'Score'} value = {score} icon = 'MilitaryTech' color = '#1368CE'/>
 						</Grid>
 						<Grid item xs = {6} >
-							<InforRowItem label = {'Question answered'} value = {'3'} icon = 'Help' color = '#0AA3A3'/>
+							<InforRowItem label = {'Question answered'} value = {correctNum + incorrectNum} icon = 'Help' color = '#0AA3A3'/>
 						</Grid>
 					</Grid>
 				</Grid>

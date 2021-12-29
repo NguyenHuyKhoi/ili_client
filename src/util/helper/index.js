@@ -30,3 +30,11 @@ export const createUrl = (data) => {
         return no_image
     }
 }
+
+export const printDate = (date) => {
+    return  date.getDate() + "/"
+                + (date.getMonth()+1)  + "/" 
+                + date.getFullYear() + ", "  
+                + date.getHours() + ":"  
+                + date.getMinutes()
+}

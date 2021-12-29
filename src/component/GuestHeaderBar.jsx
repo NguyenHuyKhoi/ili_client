@@ -66,19 +66,9 @@ const GuestHeaderBar = (props) => {
     const navigate = useNavigate()
     const {selectedIndex} = props
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const handleClickAvatar = (event) => {
-        setAnchorEl(event.currentTarget);
-      };
     
-    const handleClose = () => {
-    setAnchorEl(null);
-    };
 
     const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-    const handleClickSignUp = () => {
-        
-    }
     return (
         <div className = {classes.container}>
             <div onClick = {() => navigate('/', {replace: false})}>

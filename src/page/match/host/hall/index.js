@@ -41,13 +41,8 @@ const MatchHostHallPage = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const  {match} = useContext(MatchPlayContext)
-    const players = [
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123}
-    ]
+    const {players} = match 
+    const topPlayers = players.length <= 5 ? players : players.splice(0, 5)
     const handleNext = () => {
         
         navigate('/match/host/setting')
@@ -63,7 +58,7 @@ const MatchHostHallPage = (props) => {
             <div className = {classes.center}>
                 <div className = {classes.players}>
                     {
-                        players.map((player, index) => (
+                        topPlayers.map((player, index) => (
                             <div style = {{}}>
                                 <TopPlayerCard player = {player}
                                     highlight = {index == 0}/>

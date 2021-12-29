@@ -83,7 +83,7 @@ const Question = (props) => {
                     </Typography>
                 </div>
                 {
-                    !image ?
+                    image != null ?
                     <img className = {classes.img} src = {createUrl(image)}/>
                     :
                     <div className = {classes.img} />
@@ -99,7 +99,7 @@ const Question = (props) => {
                                     style = {answerStyles[index]}
                                     answer = {item} 
                                     onClick = {() => handleAnswer(index)}
-                                    isSelected = {selected == index}/>
+                                    isSelected = {selected == null ? null : (selected == index)}/>
                             </Grid> 
                         ))
                     }

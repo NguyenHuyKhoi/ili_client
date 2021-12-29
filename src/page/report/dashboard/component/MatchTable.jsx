@@ -13,6 +13,7 @@ import { selectMatch } from '../../../../context/match/other/actions';
 import { MatchContext } from '../../../../context/match/other/context';
 
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { printDate } from '../../../../util/helper';
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1
@@ -30,10 +31,11 @@ const columns = [
 
 const getRows = (matches) => {
 	return matches.map((match, index) => {
+		console.log("Fnishat: ", match.finishAt)
 		return {
 			id: index,
 			title: match.game.title,
-			date: "12/20/2021",
+			date: printDate(new Date(match.finishAt)),
 			mode: 'Live',
 			playerNums: match.players.length
 		}

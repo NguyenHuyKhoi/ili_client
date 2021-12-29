@@ -34,17 +34,9 @@ const MatchPlayerStadiumPage = () => {
     const {socket} = useContext(SocketContext)
     const [earnScore, setEarnScore] = useState(0)
     const [time, setTime] = useState(0)
-    const [stage, setStage] = useState({type:'correct_answer'})
-    const {questionIndex, pinCode} = match
+    const [stage, setStage] = useState({type:'on_question'})
+    const {questionIndex, pinCode, players} = match
 
-    const players = [
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-    ]
     useEffect(() => {
         socket.on('match:onCountdown', (time) => {
             setTime(time)
@@ -78,7 +70,7 @@ const MatchPlayerStadiumPage = () => {
 
         socket.on('match:onEnd', match => {
             dispatch(updateMatch(match))
-            navigate('/match/player/finish', {replace: false})
+            navigate('/match/player/hall', {replace: false})
         })
         return () => {
             
@@ -96,7 +88,6 @@ const MatchPlayerStadiumPage = () => {
                 name: 'Unknown',
                 score: 0
             }
-        console.log("Find me: ", player)
         return player
     }
     return (
@@ -117,7 +108,7 @@ const MatchPlayerStadiumPage = () => {
                 <Correct earnScore = {earnScore}/>
                 : stage.type == 'wrong_answer' ?
                 <Incorrect/>
-                : stage.type == 'score_board' ?
+                : stage.type == 'scoreboard' ?
                 <Scoreboard time = {time} players = {players}/>
                 : null
             }

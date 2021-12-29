@@ -60,7 +60,6 @@ const QuestionEnd = (props) => {
     const classes = useStyles()
     let {question, time, answer_counts} = props
     const {title, image, answers, time_limit, correct_answers} = question
-    answer_counts = [1,4,0,8]
     const total_count = answer_counts.reduce((res, count) => res += count, 0)
     return (
         <div className = {classes.container}>
@@ -74,7 +73,7 @@ const QuestionEnd = (props) => {
                 <div className = {classes.answerCounts}>
                     {
                         answers.map((answer, index) => (
-                            <div style = {{marginLeft: theme.spacing(2)}}>
+                            <div style = {{marginLeft: theme.spacing(2)}} key = {'' + index}>
                                 <AnswerCount   
                                     style = {answerStyles[index]}
                                     answer = {answer} 
@@ -88,7 +87,7 @@ const QuestionEnd = (props) => {
               
                 <div className = {classes.countdown}>
                     <Typography variant = 'h3' sx = {{color: '#333333', fontWeight: 'bold'}}>
-                        5
+                        {time}
                     </Typography>
                     <Typography variant = 'h5' sx = {{color: '#333333', fontWeight: 'bold'}}>
                         Get ready

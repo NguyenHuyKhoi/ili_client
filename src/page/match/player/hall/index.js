@@ -41,13 +41,7 @@ const MatchPlayerHallPage = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const  {match} = useContext(MatchPlayContext)
-    const players = [
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123}
-    ]
+    const {players} = match
     const handleNext = () => {
         navigate('/match/player/entrance')
     }

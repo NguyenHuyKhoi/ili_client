@@ -1,3 +1,4 @@
+import { Alert, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -26,6 +27,7 @@ const MatchPlayerLobbyPage = () => {
     const {dispatch, match} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
     const [modal, setModal] = useState({state: ''})
+    const [alert, setAlert] = useState({})
     const {pinCode} = match
     useEffect(() => {
         socket.emit('match:requireSync', pinCode, (match) => {
@@ -40,10 +42,39 @@ const MatchPlayerLobbyPage = () => {
             dispatch(updateMatch(match))
             navigate('/match/player/stadium', {replace: false})
         })
+        socket.on('match:playerLeave', (player) => {
+            console.log("Player is removed: ", player)
+            setAlert({
+                type: 'warning',
+                msg: 'Player ' + player.name + ' has leave game.'
+            })
+        })
+        socket.on('match:kickPlayerDone', (player) => {
+            console.log("Player is Kicked: ", player)
+            if (player.socketId == socket.id) {
+                dispatch(updateMatch({}))
+                navigate('/match/player/entrance', {replace: false})
+            }
+            else {
+                setAlert({
+                    type: 'warning',
+                    msg: 'Player ' + player.name + ' has kicked out game.'
+                })
+            }
+           
+        })
     }, [])  
 
     return (
         <div className = {classes.container}>
+            <Snackbar open={alert.type != undefined} autoHideDuration={2000} onClose={() => setAlert({})}
+                    anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
+                    <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
+                        {
+                            alert.msg
+                        }
+                    </Alert>
+            </Snackbar>
             <JoinMethodModal 
                 open = {modal.state == 'join_method'}
                 onClose = {() => setModal({})}

@@ -15,12 +15,14 @@ const columns = [
 
 const getRows = (players, match) => {
 	return players.map((player, index) => {
+    const {correctNum, incorrectNum, unanswerNum} = player
+    let answerNum = correctNum + incorrectNum
 		return {
 			id: index,
 			name: player.name,
-			rank: '124',
-			correctPercent: 12,
-      unanswers: 123,
+			rank: player.rank,
+			correctPercent: answerNum == 0? '0 %' : Math.round( 100 * correctNum / answerNum) + ' %',
+      unanswers: unanswerNum,
       score: player.score
 		}
 	})

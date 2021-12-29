@@ -27,18 +27,10 @@ const MatchHostStadiumPage = () => {
     const navigate = useNavigate()
     const {question, match, answer_counts, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
-    const [stage, setStage] = useState({type: 'scoreboard'})
+    const [stage, setStage] = useState({type: 'on_question'})
     const [time, setTime] = useState(0)
-    const {questionIndex, pinCode} = match
-    
-    const players = [
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-        {  name: 'user 001', score: 123},
-    ]
+    const {questionIndex, pinCode, players} = match
+
     useEffect(() => {
         socket.on('match:onCountdown', (time) => {
             setTime(time)
@@ -66,7 +58,7 @@ const MatchHostStadiumPage = () => {
 
         socket.on('match:onEnd', match => {
             dispatch(updateMatch(match))
-            navigate('/match/host/finish', {replace: false})
+            navigate('/match/host/hall', {replace: false})
         })
         return () => {
             

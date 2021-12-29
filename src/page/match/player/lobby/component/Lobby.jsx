@@ -1,4 +1,4 @@
-import { PersonOutline } from '@mui/icons-material'
+import { Person, PersonOutline } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
@@ -90,8 +90,8 @@ const Lobby = (props) => {
         <div className = {classes.container}>
             <div className = {classes.header}>
                 <div className = {classes.playerCount}>
-                    <PersonOutline sx = {{color: 'white', fontSize: 30}}/>
-                    <Typography variant = 'h6' sx = {{color: 'white', fontWeight: 'bold', ml: theme.spacing(1)}}>
+                    <Person sx = {{color: '#333333', fontSize: 30}}/>
+                    <Typography variant = 'h6' sx = {{color: '#333333', fontWeight: 'bold', ml: theme.spacing(1)}}>
                         {players.length}
                     </Typography>
                 </div>
@@ -109,7 +109,11 @@ const Lobby = (props) => {
                 <div className = {classes.players}>
                     {
                         players.map((player, index) => (
-                            <PlayerCard   key = {''+index} player = {player}  disable = {true}/>
+                            <PlayerCard  
+                                key = {''+index} 
+                                player = {player}  
+                                disable = {true}
+                                isMe = {player.socketId == socket.id} />
                         ))
                     }
                 </div>

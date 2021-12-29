@@ -35,7 +35,6 @@ const AnswerCount = (props) => {
     const classes = useStyles()
     const { count, isCorrect, percent, style} = props 
     const {color, icon} = style
-    console.log("AnswerCount :", 30 * (percent))
     return (
         <div className = {classes.container} 
             style={{backgroundColor: color}}
@@ -47,7 +46,7 @@ const AnswerCount = (props) => {
                     backgroundColor: color,
                     margin: percent > 0 ? theme.spacing(0.2) : 0,
                     opacity: 1, 
-                    height: theme.spacing(30 * (percent))}}/>
+                    height: theme.spacing(25 * (percent))}}/>
             <div className = {classes.body} >
                 <Icon name = {icon} style = {{fontSize: 25, color: 'white'}}/>
                 <Typography variant = 'h5' sx = {{mx: theme.spacing(1),color: 'white'}}>

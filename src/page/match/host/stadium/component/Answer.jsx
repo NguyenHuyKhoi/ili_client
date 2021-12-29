@@ -25,11 +25,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Answer = (props) => {
     const classes = useStyles()
-    const {answer, count, isCorrect, isSelected, style} = props 
+    const {answer, isCorrect, isSelected, style} = props 
     const {color, icon} = style
     return (
         <div className = {classes.container} 
-            style={{backgroundColor: color, opacity: isCorrect == false ? 0.6 : 1}}
+            style={{backgroundColor: color, opacity: isCorrect == false || isSelected == false ? 0.5 : 1}}
             onClick = {() => {
                 if (props.onClick) props.onClick()
             }}>
@@ -48,7 +48,7 @@ const Answer = (props) => {
             }
             {
                 isSelected == true && 
-                <Check sx = {{color: 'white'}}/>
+                <Check sx = {{color: 'white', fontSize: 40}}/>
             }
         </div>
     )

@@ -16,11 +16,13 @@ const columns = [
 const getRows = (progress, match) => {
 	return progress.map((stage, index) => {
     let q =stage.question
+    const {correctNum, incorrectNum, unanswerNum} = stage
+    let answerNum = correctNum + incorrectNum
 		return {
 			id: index,
 			title: q.index + '. ' + q.title,
 			type: 'Quiz',
-			correctPercent: 12
+			correctPercent: answerNum == 0? '0 %' : Math.round( 100 * correctNum / answerNum) + ' %',
 		}
 	})
 }

@@ -86,8 +86,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Question = (props) => {
     const classes = useStyles()
-    const {question, time, answer_counts} = props
+    const {question, time,answer_counts} = props
     const {title, image, answers, time_limit, correct_answers} = question
+    const total_count = answer_counts.reduce((res, count) => res += count, 0)
+
+    console.log(" image : ", image)
     return (
         <div className = {classes.container}>
             <div className = {classes.title} >
@@ -103,7 +106,7 @@ const Question = (props) => {
                     </Typography>
                 </div>
                 {
-                    !image ?
+                    image != null ?
                     <img className = {classes.img} src = {createUrl(image)}/>
                     :
                     <div className = {classes.img} />
@@ -112,7 +115,7 @@ const Question = (props) => {
                 <div className = {classes.answerNumDiv}>
                     <div className = {classes.answerNumValue}>
                         <Typography variant = 'h4' sx = {{color: '#333333', fontWeight: 'bold'}}>
-                            5
+                            {total_count}
                         </Typography>
                     </div>
                     <div className = {classes.answerNumLabel}>
@@ -131,8 +134,7 @@ const Question = (props) => {
                                 <Answer 
                                     style = {answerStyles[index]}
                                     answer = {item} 
-                                    count = {answer_counts[index]}
-                                    isCorrect = {correct_answers.indexOf(index) != -1}/>
+                                    isCorrect = {null}/>
                             </Grid>
                         ))
                     }

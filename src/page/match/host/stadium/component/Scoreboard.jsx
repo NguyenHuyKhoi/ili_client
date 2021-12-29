@@ -2,13 +2,14 @@ import { Square } from '@mui/icons-material'
 import { Divider, Grid, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, {useContext} from 'react'
 import { theme } from '../../../../../theme'
 import {createUrl} from '../../../../../util/helper'
 import Answer from './Answer'
 import {answerStyles} from '../../../../game/creator/component/Answers'
 import AnswerCount from './AnswerCount'
 import { PlayerCard } from '../../lobby/component/Lobby'
+import { SocketContext } from '../../../../../context/socket/context'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Scoreboard = (props) => {
     const classes = useStyles()
+    const {socket} = useContext(SocketContext)
     let {players, time} = props
     return (
         <div className = {classes.container}>
@@ -72,6 +74,7 @@ const Scoreboard = (props) => {
                         players.map((player, index) => (
                             <div style = {{marginLeft: theme.spacing(2)}}>
                                 <PlayerCard  
+                                    isMe = {(player.socketId == socket.id)}
                                     showScore = {true}
                                     player = {player}
                                     disable = {true}/>

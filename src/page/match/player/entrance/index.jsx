@@ -40,6 +40,13 @@ const MatchPlayerEntrancePage = () => {
     const handleSubmit = () => {
         switch (type) {
             case 'enter_pin': 
+                if (value == '') {
+                    setAlert({
+                        type: 'error',
+                        msg: 'pinCode is empty'
+                    })
+                    return 
+                }
                 socket.emit('match:join', value, (match) => {
                     if (match) {
                         dispatch(updateMatch(match))
@@ -52,12 +59,19 @@ const MatchPlayerEntrancePage = () => {
                     else {
                         setAlert({
                             type: 'error',
-                            msg: 'pinCode is wrong'
+                            msg: 'pinCode is wrong or match is locked.'
                         })
                     }
                 })
                 break
             case 'enter_name': 
+                if (value == '') {
+                    setAlert({
+                        type: 'error',
+                        msg: 'Username is empty'
+                    })
+                    return 
+                }
                 console.log("Enter name: ", value)
                 socket.emit('match:updatePlayer', pinCode, { name: value}, (response) => {
                     if (response) {
