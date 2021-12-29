@@ -18,7 +18,9 @@ const useStyles = makeStyles((theme) => ({
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: 'purple'
+        backgroundColor: '#46178f',
+        height: '100vh',
+        overflow: 'auto'
     },
     body: {
         flex: 1,
@@ -51,6 +53,7 @@ const MatchHostSettingPage = () => {
     const {socket} = useContext(SocketContext)
 
     const handleStart = () => {
+        console.log("Handle start")
         let host = {
             _id: user._id,
             name: user.username,
@@ -78,13 +81,9 @@ const MatchHostSettingPage = () => {
                             {title}
                         </Typography>
                     </div>
-                    <Button variant = 'contained' color = 'success' sx = {{ml: theme.spacing(5)}}
-                        onClick ={handleStart}>
-                            Play
-                    </Button>
                 </div>
                
-                <GameModes/>
+                <GameModes onSelectMode = {(mode) => handleStart()}/>
                 <GameOptions/>
             </div>  
         </div>

@@ -4,6 +4,8 @@ import React from 'react'
 import { theme } from '../../../../../theme'
 import { Grid } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import classic_mode from '../../../../../asset/image/classis_mode.png'
+import youtube_mode from '../../../../../asset/image/youtube_mode.png'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -12,13 +14,13 @@ const useStyles = makeStyles((theme) => ({
     },
     item: {
         height: theme.spacing(20),
-        backgroundColor: 'rgba(52, 52, 52, 0.8)',
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
         borderRadius: theme.spacing(1),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         position: 'relative',
-        padding: theme.spacing(1.5),
+        padding: theme.spacing(2),
         paddingTop: theme.spacing(6)
     },
     logo: {
@@ -29,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
         top: theme.spacing(-5),
         left: 0,
         right: 0,
+        backgroundColor: 'white',
         margin: 'auto'
     },
     infor: {
@@ -37,33 +40,51 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const ModeItem = () => {
+const modes = [
+    {
+        title: 'Classic',
+        desc: 'Player go head-to-head using their own devices.',
+        link: '/match/host/lobby',
+        icon: classic_mode
+    },
+    {
+        title: 'Gameshow on Youtube',
+        desc: 'Stream your game on Youtube and viewer can play in chatbox.',
+        link: '/match/host/lobby',
+        icon: youtube_mode
+    },
+]
+const ModeItem = (props) => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const handleSelectMode = () => {
-        navigate('/match/host/lobby', {replace: false})
-    }
+    const {mode} = props 
+    const {title, desc, link, icon} = mode
+
     return (
         <div className = {classes.item}>
-            <img src = 'https://dothethao.net.vn/wp-content/uploads/2020/06/logo-ha-noi-fc.jpg' 
+            <img src = {icon}
                 className = {classes.logo}/>
             <div className = {classes.infor}>
                 <Typography variant = 'h6' 
                     sx = {{
                         color: 'white', fontWeight: 'bold', alignSelf: 'center', textAlign: 'center'}}>
-                    Mode Title
+                    {title}
                 </Typography>
                 <Typography variant = 'subtitle1' 
                     sx = {{
                         color: 'white', alignSelf: 'center', textAlign: 'center', my: theme.spacing(1), 
                             px: theme.spacing(6)}}>
-                    Lorem ipsum dolor sit amet consrat quam quibusdam. uam quibusdam.
+                    {desc}
                 </Typography>
             </div>
       
 
-            <Button variant = 'contained'  onClick = {handleSelectMode}>
-                Choose Mode
+            <Button variant = 'contained' color = 'success'  
+                onClick = {() => {
+                    if (props.onSelect) props.onSelect()
+                }}
+                sx = {{color: 'white', fontWeight: 'bold', textTransform: 'none', width: '90%'}}>
+                Play
             </Button>
         </div>
     )
@@ -75,9 +96,12 @@ const GameModes = (props) => {
         <div className = {classes.container}>
             <Grid container columnSpacing = {6} rowSpacing = {6}>
                 {
-                    Array.from(Array(2)).map((_, index) => (
+                    modes.map((mode, index) => (
                         <Grid item xs = {6}   key = {''+index}>
-                            <ModeItem/>
+                            <ModeItem mode = {mode} 
+                                onSelect = {() => {
+                                    if (props.onSelectMode) props.onSelectMode(mode) 
+                                }}/>
                         </Grid>
                     ))
                 }

@@ -1,4 +1,4 @@
-import { Alert, Snackbar } from '@mui/material'
+import { Alert, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -7,6 +7,7 @@ import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import Form from './component/Form'
 import logo from '../../../../asset/image/logo.png'
+import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -15,12 +16,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'purple'
-    },
-    logo: {
-        width: 250,
-        height: 120,
-        marginBottom: theme.spacing(5)
+        backgroundColor: '#46178F'
     }
 }))
 
@@ -74,7 +70,10 @@ const MatchPlayerEntrancePage = () => {
     return (
         <div className = {classes.container}>
             <div onClick = {() => navigate('/', {replace: false})}>
-                <img src = {logo} className = {classes.logo}/>
+                {/* <img src = {logo} className = {classes.logo}/> */}
+                <Typography variant='h2' sx = {{color: 'white', fontWeight: 'bold', mb: theme.spacing(3)}}>
+                    Kahoot
+                </Typography>
             </div>
             <Form onSubmit = {handleSubmit} onChange = {(value) => setInput({...input, value})} 
                 showAlert = {alert.type == 'error'}

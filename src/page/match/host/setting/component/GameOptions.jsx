@@ -15,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'rgba(52,52,52,0.8)',
+        backgroundColor: 'rgba(0,0,0,0.2)',
         borderRadius: theme.spacing(1),
-        padding: theme.spacing(1),
+        padding: theme.spacing(1.5),
     },
     infor: {
         display: 'flex',
@@ -35,19 +35,36 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const OptionItem = () => {
+const options = [
+    {
+        title: 'Random order of questions',     
+        defaultValue: false
+    },
+    {
+        title: 'Random order of answers',
+        defaultValue: false
+
+    }
+]
+const OptionItem = (props) => {
     const classes = useStyles()
+    const {option} = props 
+    const {title, desc, defaultValue } = option
     return (
         <div className = {classes.item}>
             <div className = {classes.infor}>
                 <Typography variant = 'h6' sx = {{color: 'white', fontWeight: 'bold'}}>
-                    Game option title
+                    {title}
                 </Typography>
-                <Typography variant = 'subtitle1' sx = {{color: 'white'}}>
-                    Game option description,  Game option description,  Game option description
-                </Typography>
+                {
+                    desc &&
+                    <Typography variant = 'subtitle2' sx = {{color: 'white'}}>
+                        {desc}
+                    </Typography>
+                }
+               
             </div>
-            <Switch {...{inputProps: {'aria-label': 'Turn on/off'}}} defaultChecked />
+            <Switch {...{inputProps: {'aria-label': 'Turn on/off'}}} defaultChecked = {defaultValue} />
         </div>
     )
 }
@@ -74,9 +91,9 @@ const GameOptions = () => {
             </div>
             {
                 showOptions && 
-                Array.from(Array(4)).map((_, index) => (
+                options.map((option, index) => (
                     <div className = {classes.itemContainer}   key = {''+index}>
-                        <OptionItem/>
+                        <OptionItem option = {option}/>
                     </div>
                 ))
             }

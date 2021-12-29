@@ -49,7 +49,8 @@ const Header = (props) => {
                 <Language   sx = {{color: 'black', fontSize: 20}} />
                 <Typography variant = 'subtitle1' sx  ={{ml: theme.spacing(1),fontWeight: 'bold', color: 'black'}}>EN</Typography>
             </div>
-            <Typography variant = 'h3'  sx  ={{ color: 'white', fontWeight: 'bold'}}> 
+            <Typography variant = 'h3'  
+                sx  ={{ color: 'white', fontWeight: 'bold'}}> 
                 Kahoot
             </Typography>
             <div className = {classes.btns}>

@@ -1,7 +1,7 @@
-import { PersonOutline } from '@mui/icons-material'
+import { Person, PersonOutline } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import { theme } from '../../../../../theme'
 import {MatchPlayContext} from '../../../../../context/match/play/context'
 import { useNavigate } from 'react-router-dom'
@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        backgroundColor: 'purple',
         padding: theme.spacing(3)
     },
     header: {
@@ -31,10 +30,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        padding: theme.spacing(1),
-        backgroundColor: 'black',
-        opacity: 0.4,
-        borderRadius: theme.spacing(1)
+        padding: theme.spacing(0.6),
+        paddingLeft: theme.spacing(1.5),
+        paddingRight: theme.spacing(1.5),
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        borderRadius: theme.spacing(0.6)
     },
     players: {
         width: '50%',
@@ -46,12 +46,11 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(10)
     },
     player: {
-        borderRadius: theme.spacing(1),
-        backgroundColor: 'black',
-        opacity: 0.4,
-        padding: theme.spacing(1),
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
+        borderRadius: theme.spacing(0.6),
+        backgroundColor: 'rgba(255,255,255,0.4)',
+        padding: theme.spacing(0.8),
+        paddingLeft: theme.spacing(2.5),
+        paddingRight: theme.spacing(2.5),
         margin: theme.spacing(1)
 
     },
@@ -69,11 +68,20 @@ const useStyles = makeStyles((theme) => ({
 
 export const PlayerCard = (props) => {
     const classes = useStyles()
-    const {user} = props 
+    const {user,  disable} = props 
+    
     const {name} = user 
     return (
-        <div className = {classes.player}>
-            <Typography variant = 'subtitle1' sx = {{color: 'white', fontWeight: 'bold'}}>
+        <div className = {classes.player}
+            onClick = {() => {
+                if (disable) return 
+                if (props.onSelect) props.onSelect()
+            }}>
+            <Typography variant = 'h6' 
+                sx = {{color: 'white', fontWeight: 'bold',"&:hover": {
+                    textDecoration: !disable ? 'line-through' : 'none',
+                    cursor: 'pointer'
+                  }}}>
                 {name}
             </Typography>
         </div>
@@ -85,18 +93,27 @@ const Lobby = (props) => {
     const navigate = useNavigate()
     const {match, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
+    const [lock, setLock] = useState(false)
     let {pinCode, title, players} = match
     if (players == undefined) players = []
 
     const handleStart = () => {
         socket.emit('match:start', pinCode)
     }
+
+    const handleLock = () => {
+        setLock(!lock)
+    }
+
+    const handleSelectPlayer = (user) => {
+        console.log("Kick user")
+    }
     return (
         <div className = {classes.container}>
             <div className = {classes.header}>
                 <div className = {classes.playerCount}>
-                    <PersonOutline sx = {{color: 'white', fontSize: 30}}/>
-                    <Typography variant = 'h6' sx = {{color: 'white', fontWeight: 'bold', ml: theme.spacing(1)}}>
+                    <Person sx = {{color: '#333333', fontSize: 30}}/>
+                    <Typography variant = 'h6' sx = {{color: '#333333', fontWeight: 'bold', ml: theme.spacing(1)}}>
                         {players.length}
                     </Typography>
                 </div>
@@ -104,10 +121,18 @@ const Lobby = (props) => {
                     {title}
                 </Typography>
                 <div className = {classes.btns}>
-                    <Button variant = 'contained'>
+                    <Button 
+                        variant = 'contained'   
+                        sx = {{
+                            fontWeight: 'bold', textTransform: 'none', 
+                            backgroundColor: lock ? '#9E9E9E' : 'white',
+                            color: lock ? 'white' : '#333333'
+                        }}
+                        onClick = {handleLock}>
                         Lock
                     </Button>
-                    <Button variant = 'contained' sx = {{ml: theme.spacing(2)}}
+                    <Button variant = 'contained' 
+                        sx = {{ml: theme.spacing(2),fontWeight: 'bold', textTransform: 'none'}}
                         onClick = {handleStart}>
                         Start
                     </Button>
@@ -117,7 +142,9 @@ const Lobby = (props) => {
                 <div className = {classes.players}>
                     {
                         players.map((user, index) => (
-                            <PlayerCard   key = {''+index} user = {user}/>
+                            <PlayerCard   key = {''+index} user = {user}
+                                disable = {false}
+                                onSelect = {() => handleSelectPlayer(user)}/>
                         ))
                     }
                 </div>

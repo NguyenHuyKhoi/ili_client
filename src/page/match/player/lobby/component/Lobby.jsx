@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        backgroundColor: 'purple',
         padding: theme.spacing(3)
     },
     header: {
@@ -32,10 +31,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        padding: theme.spacing(1),
-        backgroundColor: 'black',
-        opacity: 0.4,
-        borderRadius: theme.spacing(1)
+        padding: theme.spacing(0.6),
+        paddingLeft: theme.spacing(1.5),
+        paddingRight: theme.spacing(1.5),
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        borderRadius: theme.spacing(0.6)
     },
     players: {
         width: '50%',
@@ -99,7 +99,8 @@ const Lobby = (props) => {
                     {title}
                 </Typography>
                 <div className = {classes.btns}>
-                    <Button variant = 'contained' onClick ={handleLeave}>
+                    <Button variant = 'contained' onClick ={handleLeave}
+                        sx  = {{color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
                         Leave
                     </Button>
                 </div>
@@ -108,7 +109,7 @@ const Lobby = (props) => {
                 <div className = {classes.players}>
                     {
                         players.map((user, index) => (
-                            <PlayerCard   key = {''+index} user = {user}/>
+                            <PlayerCard   key = {''+index} user = {user}  disable = {true}/>
                         ))
                     }
                 </div>

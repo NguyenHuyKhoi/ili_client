@@ -1,18 +1,20 @@
 import { makeStyles } from '@mui/styles'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../../context/auth/context'
 import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import Header from './component/Header'
+import JoinMethodModal from './component/JoinMethodModal'
 import Lobby from './component/Lobby'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
         height: '100vh',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        backgroundColor: '#46178f'
     },
     body: {
         flex: 1
@@ -26,6 +28,7 @@ const MatchHostLobbyPage = () => {
     const {user} = useContext(AuthContext)
     const {socket} = useContext(SocketContext)
     const {game, host, pinCode} = match
+    const [modal, setModal] = useState({state: ''})
     
     useEffect(() => {
         console.log("Handle with pinCode: ", pinCode)
@@ -43,9 +46,15 @@ const MatchHostLobbyPage = () => {
             navigate('/match/host/stadium', {replace: false})
         })
     }, [])  
+
     return (
         <div className = {classes.container}>
-            <Header />
+            <JoinMethodModal 
+                open = {modal.state == 'join_method'}
+                onClose = {() => setModal({})}
+            />
+            <Header onSelectQR = { () => setModal({state: 'join_method'})}
+                showQR = {modal.state != 'join_method'}/>
             <div className = {classes.body}>
                 <Lobby/>
             </div>  
