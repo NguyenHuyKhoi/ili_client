@@ -3,6 +3,7 @@ import { Divider, Grid, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
+import Icon from '../../../../../component/Icon'
 import { theme } from '../../../../../theme'
 import {createUrl} from '../../../../../util/helper'
 const useStyles = makeStyles((theme) => ({
@@ -16,34 +17,33 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'red',
         borderRadius: theme.spacing(0.5),
         boxShadow: `1px 3px 1px #f0f0f0`,
+        '&:hover': {
+            cursor: 'pointer'
+        }
     }
 }))
 
 const Answer = (props) => {
     const classes = useStyles()
-    const {answer, count, isCorrect, isSelected} = props 
+    const {answer, count, isCorrect, isSelected, style} = props 
+    const {color, icon} = style
     return (
         <div className = {classes.container} 
+            style={{backgroundColor: color, opacity: isCorrect == false ? 0.6 : 1}}
             onClick = {() => {
                 if (props.onClick) props.onClick()
             }}>
-            <Square sx ={{ fontSize: 30, color: 'white'}}/>
-            <Typography variant = 'h6' sx = {{flex: 1, ml: theme.spacing(2), fontWeight: 'bold', color: 'white'}}>
+            <Icon name = {icon} style = {{fontSize: 30, color: 'white'}}/>
+            <Typography variant = 'h5' sx = {{flex: 1, ml: theme.spacing(2), fontWeight: 'bold', color: 'white'}}>
                 {answer}
             </Typography>
-            {
-                count != undefined && 
-                <Typography variant = 'h6' sx = {{flex: 1, ml: theme.spacing(2), fontWeight: 'bold', color: 'white'}}>
-                    {'Answers: '+ count}
-                </Typography>
-            }
             {
                 isCorrect != undefined && 
                 (
                     isCorrect ?
-                    <Check sx = {{color: 'white'}}/>
+                    <Check sx = {{color: 'white', fontSize: 40}}/>
                     : 
-                    <Close sx = {{color: 'white'}}/>
+                    <Close sx = {{color: 'white', fontSize: 40}}/>
                 )
             }
             {

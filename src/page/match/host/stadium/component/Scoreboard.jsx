@@ -8,6 +8,7 @@ import {createUrl} from '../../../../../util/helper'
 import Answer from './Answer'
 import {answerStyles} from '../../../../game/creator/component/Answers'
 import AnswerCount from './AnswerCount'
+import { PlayerCard } from '../../lobby/component/Lobby'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -26,18 +27,19 @@ const useStyles = makeStyles((theme) => ({
     center: {
         flex: 1,
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
         position: 'relative',
         paddingTop: theme.spacing(7),
         paddingBottom: theme.spacing(7)
     },
-    answerCounts: {
+    players: {
+        width: '50%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'flex-end'
+        alignSelf: 'center',
+        flexFlow: 'wrap',
     },
     countdown: {
         width: theme.spacing(20),
@@ -50,45 +52,36 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         right: theme.spacing(2),
         top: theme.spacing(2),
-    },
-    answers: {
-        padding: theme.spacing(1),
     }
 }))
 
-const QuestionEnd = (props) => {
+const Scoreboard = (props) => {
     const classes = useStyles()
-    let {question, time, answer_counts} = props
-    const {title, image, answers, time_limit, correct_answers} = question
-    answer_counts = [1,4,0,8]
-    const total_count = answer_counts.reduce((res, count) => res += count, 0)
+    let {players, time} = props
     return (
         <div className = {classes.container}>
             <div className = {classes.title} >
                 <Typography variant = 'h5' sx = {{fontWeight: 600, color: '#333333'}}>
-                    {title}
+                    Scoreboard
                 </Typography>
             </div>
             <Divider/>
             <div className = {classes.center}>
-                <div className = {classes.answerCounts}>
+                <div className = {classes.players}>
                     {
-                        answers.map((answer, index) => (
+                        players.map((player, index) => (
                             <div style = {{marginLeft: theme.spacing(2)}}>
-                                <AnswerCount   
-                                    style = {answerStyles[index]}
-                                    answer = {answer} 
-                                    count = {answer_counts[index]}
-                                    percent = {total_count == 0 ? 0 : answer_counts[index] / total_count}
-                                    isCorrect = {correct_answers.indexOf(index) != -1}/>
+                                <PlayerCard  
+                                    showScore = {true}
+                                    player = {player}
+                                    disable = {true}/>
                             </div>
                         ))
                     }
                 </div>
-              
                 <div className = {classes.countdown}>
                     <Typography variant = 'h3' sx = {{color: '#333333', fontWeight: 'bold'}}>
-                        5
+                        {time}
                     </Typography>
                     <Typography variant = 'h5' sx = {{color: '#333333', fontWeight: 'bold'}}>
                         Get ready
@@ -96,23 +89,8 @@ const QuestionEnd = (props) => {
                 </div>
              
             </div>
-            <div className = {classes.answers} >
-                <Grid container columnSpacing = {1.5} rowSpacing = {1.5}>
-                    {
-                        answers.map((item, index) => (
-                            <Grid item xs = {6}   key = {''+index}>
-                                <Answer
-                                    style = {answerStyles[index]}
-                                    answer = {item} 
-                                    count = {answer_counts[index]}
-                                    isCorrect = {correct_answers.indexOf(index) != -1}/>
-                            </Grid>
-                        ))
-                    }
-                </Grid>
-            </div>
        </div>
     )
 }
 
-export default QuestionEnd
+export default Scoreboard

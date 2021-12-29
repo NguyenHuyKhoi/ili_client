@@ -7,7 +7,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const Icon = (props) => {
     const {name, style} = props 
-    console.log("Name:", name)
     return (
         <>
         {

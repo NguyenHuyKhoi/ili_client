@@ -108,8 +108,8 @@ const Lobby = (props) => {
             <div className = {classes.body}>
                 <div className = {classes.players}>
                     {
-                        players.map((user, index) => (
-                            <PlayerCard   key = {''+index} user = {user}  disable = {true}/>
+                        players.map((player, index) => (
+                            <PlayerCard   key = {''+index} player = {player}  disable = {true}/>
                         ))
                     }
                 </div>

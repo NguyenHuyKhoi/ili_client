@@ -11,6 +11,7 @@ import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import { updateMatch } from '../../../../context/match/play/actions'
 import { useNavigate } from 'react-router-dom'
+import Scoreboard from '../../host/stadium/component/Scoreboard'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -19,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column'
     },
     questionContainer: {
-        flex: 1
     }
 }))
 
@@ -34,10 +34,17 @@ const MatchPlayerStadiumPage = () => {
     const {socket} = useContext(SocketContext)
     const [earnScore, setEarnScore] = useState(0)
     const [time, setTime] = useState(0)
-    const [stage, setStage] = useState({type:'on_question'})
+    const [stage, setStage] = useState({type:'correct_answer'})
     const {questionIndex, pinCode} = match
 
-
+    const players = [
+        {  name: 'user 001', score: 123},
+        {  name: 'user 001', score: 123},
+        {  name: 'user 001', score: 123},
+        {  name: 'user 001', score: 123},
+        {  name: 'user 001', score: 123},
+        {  name: 'user 001', score: 123},
+    ]
     useEffect(() => {
         socket.on('match:onCountdown', (time) => {
             setTime(time)
@@ -62,6 +69,11 @@ const MatchPlayerStadiumPage = () => {
         socket.on('match:onQuestion', (match) => {
             dispatch(updateMatch(match))
             setStage({type: 'on_question'})
+        })
+
+        socket.on('match:scoreboard', (match) => {
+            dispatch(updateMatch(match))
+            setStage({type: 'scoreboard'})
         })
 
         socket.on('match:onEnd', match => {
@@ -105,6 +117,8 @@ const MatchPlayerStadiumPage = () => {
                 <Correct earnScore = {earnScore}/>
                 : stage.type == 'wrong_answer' ?
                 <Incorrect/>
+                : stage.type == 'score_board' ?
+                <Scoreboard time = {time} players = {players}/>
                 : null
             }
             <BottomBar player = {findMe()}/>

@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@mui/material/styles';
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import { AuthContext } from "./context/auth/context";
 import ForgotPasswordPage from "./page/auth/forgot_password";
@@ -24,12 +24,12 @@ import HomePage from "./page/home/auth";
 // Home
 import HomeGuestPage from "./page/home/guest";
 import MatchDetailPage from './page/match/detail';
-import MatchHostFinishPage from './page/match/host/finish';
+import MatchHostHallPage from './page/match/host/hall';
 import MatchHostLobbyPage from './page/match/host/lobby';
 import MatchHostSettingPage from './page/match/host/setting';
 import MatchHostStadiumPage from './page/match/host/stadium';
 import MatchPlayerEntrancePage from './page/match/player/entrance';
-import MatchPlayerFinishPage from './page/match/player/finish';
+import MatchPlayerHallPage from './page/match/player/hall';
 import MatchPlayerLobbyPage from './page/match/player/lobby';
 import MatchPlayerStadiumPage from './page/match/player/stadium';
 // Report
@@ -67,11 +67,12 @@ const App = () => {
           <Route exact path = '/match/player/entrance' element = {<MatchPlayerEntrancePage/>}/>
           <Route exact path = '/match/player/lobby' element = {<MatchPlayerLobbyPage/>}/>
           <Route exact path = '/match/player/stadium' element = {<MatchPlayerStadiumPage/>}/>
-          <Route exact path = '/match/player/finish' element = {<MatchPlayerFinishPage/>}/>
+          <Route exact path = '/match/player/hall' element = {<MatchPlayerHallPage/>}/>
           <Route exact path = '/match/host/setting' element = {user ? <MatchHostSettingPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/match/host/lobby' element = { user ? <MatchHostLobbyPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/match/host/stadium' element = {user ? <MatchHostStadiumPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/match/host/finish' element = {user ? <MatchHostFinishPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/match/host/hall' element = {user ? <MatchHostHallPage/> : <Navigate to = '/auth/login'/>}/>
+          
 
           <Route exact path = '/match/detail/:id' element = {user ? <MatchDetailPage/> : <Navigate to = '/auth/login'/>}/>
 

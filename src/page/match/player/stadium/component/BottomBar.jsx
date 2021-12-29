@@ -7,13 +7,17 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         backgroundColor: 'white',
-        padding: theme.spacing(2)
+        padding: theme.spacing(1)
     },
     scoreContainer: {
+        width: theme.spacing(15),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         padding: theme.spacing(1),
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
-        backgroundColor: 'black',
+        backgroundColor: 'rgba(0,0,0,0.9)',
         borderRadius: theme.spacing(0.5)
     }
 }))

@@ -11,11 +11,10 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'purple'
+        backgroundColor: '#46178f'
     },
     msg: {
-        backgroundColor: 'black',
-        opacity: 0.8,
+        backgroundColor: 'rgba(0,0,0,0.2)',
         padding: theme.spacing(1),
         paddingLeft: theme.spacing(8),
         paddingRight: theme.spacing(8),
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(10),
         borderRadius: theme.spacing(6),
         border: '6px solid #ffffff',
-        backgroundColor: 'green',
+        backgroundColor: '#237E0B',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

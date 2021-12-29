@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(10)
     },
     player: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
         borderRadius: theme.spacing(0.6),
         backgroundColor: 'rgba(255,255,255,0.4)',
         padding: theme.spacing(0.8),
@@ -68,15 +71,23 @@ const useStyles = makeStyles((theme) => ({
 
 export const PlayerCard = (props) => {
     const classes = useStyles()
-    const {user,  disable} = props 
+    const {player,  showScore, disable} = props 
     
-    const {name} = user 
+    const {name, score} = player 
     return (
         <div className = {classes.player}
             onClick = {() => {
                 if (disable) return 
                 if (props.onSelect) props.onSelect()
             }}>
+            {
+                score && showScore &&  
+                <Typography variant = 'h4' 
+                    sx = {{color: 'white', fontWeight: 'bold'}}>
+                    {score}
+                </Typography>
+            }
+          
             <Typography variant = 'h6' 
                 sx = {{color: 'white', fontWeight: 'bold',"&:hover": {
                     textDecoration: !disable ? 'line-through' : 'none',
@@ -141,10 +152,10 @@ const Lobby = (props) => {
             <div className = {classes.body}>
                 <div className = {classes.players}>
                     {
-                        players.map((user, index) => (
-                            <PlayerCard   key = {''+index} user = {user}
+                        players.map((player, index) => (
+                            <PlayerCard   key = {''+index} player = {player}
                                 disable = {false}
-                                onSelect = {() => handleSelectPlayer(user)}/>
+                                onSelect = {() => handleSelectPlayer(player)}/>
                         ))
                     }
                 </div>

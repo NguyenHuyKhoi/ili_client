@@ -7,13 +7,14 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         backgroundColor: 'white',
-        padding: theme.spacing(2)
+        alignItems: 'center',
+        padding: theme.spacing(1)
     },
     scoreContainer: {
         padding: theme.spacing(1),
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
-        backgroundColor: 'black',
+        backgroundColor: 'rgba(0,0,0,0.9)',
         borderRadius: theme.spacing(0.5)
     }
 }))
@@ -24,7 +25,7 @@ const BottomBar = (props) => {
     const {pinCode} = props
     return (
         <div className = {classes.container}>
-            <Typography variant = 'h6' sx = {{flex: 1, color: 'black'}}>
+            <Typography variant = 'h6' sx = {{flex: 1, color: 'black', fontWeight: 'bold'}}>
                 You are Host
             </Typography>
             <div className = {classes.scoreContainer} >

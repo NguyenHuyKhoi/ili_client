@@ -1,14 +1,15 @@
 import { Divider } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import BottomBar from './component/BottomBar'
 import Header from './component/Header'
-import QuestionEnd from './component/QuestionEnd'
 import Question from './component/Question'
-import { updateMatch } from '../../../../context/match/play/actions'
-import { useNavigate } from 'react-router-dom'
+import QuestionEnd from './component/QuestionEnd'
+import Scoreboard from './component/Scoreboard'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -26,10 +27,18 @@ const MatchHostStadiumPage = () => {
     const navigate = useNavigate()
     const {question, match, answer_counts, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
-    const [stage, setStage] = useState({type: 'on_question'})
+    const [stage, setStage] = useState({type: 'scoreboard'})
     const [time, setTime] = useState(0)
     const {questionIndex, pinCode} = match
     
+    const players = [
+        {  name: 'user 001', score: 123},
+        {  name: 'user 001', score: 123},
+        {  name: 'user 001', score: 123},
+        {  name: 'user 001', score: 123},
+        {  name: 'user 001', score: 123},
+        {  name: 'user 001', score: 123},
+    ]
     useEffect(() => {
         socket.on('match:onCountdown', (time) => {
             setTime(time)
@@ -50,6 +59,11 @@ const MatchHostStadiumPage = () => {
             setStage({type: 'on_question'})
         })
 
+        socket.on('match:scoreboard', (match) => {
+            dispatch(updateMatch(match))
+            setStage({type: 'scoreboard'})
+        })
+
         socket.on('match:onEnd', match => {
             dispatch(updateMatch(match))
             navigate('/match/host/finish', {replace: false})
@@ -67,10 +81,13 @@ const MatchHostStadiumPage = () => {
             <div className = {classes.questionContainer}>
                 {
                     stage.type == 'end_question' ?
-                    <QuestionEnd time = {time} /> 
+                    <QuestionEnd question = {question} time = {time} answer_counts = {answer_counts}/> 
                     :
                     stage.type == 'on_question' ?
                     <Question question = {question} time = {time} answer_counts = {answer_counts}/>
+                    :
+                    stage.type == 'scoreboard' ?
+                    <Scoreboard players = {players} time = {time}/>
                     :
                     null
                 }

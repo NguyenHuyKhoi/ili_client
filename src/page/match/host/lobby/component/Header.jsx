@@ -124,7 +124,7 @@ export const Header = (props) => {
             </div>
 
             <div className = {classes.right}>
-                <div className = {classes.btnsContainer}>
+                <div className = {classes.btns}>
                     <div className = {classes.btnIcon}>
                         <Fullscreen sx = {{color: 'black', fontSize: 20}} />
                     </div>
