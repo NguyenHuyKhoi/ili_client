@@ -28,6 +28,7 @@ import MatchHostHallPage from './page/match/host/hall';
 import MatchHostLobbyPage from './page/match/host/lobby';
 import MatchHostSettingPage from './page/match/host/setting';
 import MatchHostStadiumPage from './page/match/host/stadium';
+import MatchLivestreamPage from './page/match/livestream';
 import MatchPlayerEntrancePage from './page/match/player/entrance';
 import MatchPlayerHallPage from './page/match/player/hall';
 import MatchPlayerLobbyPage from './page/match/player/lobby';
@@ -72,7 +73,7 @@ const App = () => {
           <Route exact path = '/match/host/lobby' element = { user ? <MatchHostLobbyPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/match/host/stadium' element = {user ? <MatchHostStadiumPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/match/host/hall' element = {user ? <MatchHostHallPage/> : <Navigate to = '/auth/login'/>}/>
-          
+          <Route exact path = '/match/livestream' element = {user ? <MatchLivestreamPage/> : <Navigate to = '/auth/login'/>}/>
 
           <Route exact path = '/match/detail/:id' element = {user ? <MatchDetailPage/> : <Navigate to = '/auth/login'/>}/>
 

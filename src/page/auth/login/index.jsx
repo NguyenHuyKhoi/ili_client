@@ -144,19 +144,6 @@ const LoginPage = () => {
                     >
                     Login
                 </Button>
-                <div className = {classes.divider}>
-                    <Typography variant = 'subtitle1' sx = {{alignSelf: 'center'}}>
-                        or
-                    </Typography>
-                </div>
-                <div className = {classes.btns}>
-                    <div className = {classes.btn}>
-                        <LinkedLoginButton type = 'google' />
-                    </div>
-                    <div className = {classes.btn}>
-                        <LinkedLoginButton type = 'facebook'/>
-                    </div>
-                </div>
               
 
                 <div className = {classes.linkRow} style = {{alignSelf: 'center'}}>

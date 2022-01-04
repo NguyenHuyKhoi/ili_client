@@ -3,8 +3,8 @@ import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { updateMatch } from '../../../../../context/match/play/actions'
-import { MatchPlayContext } from '../../../../../context/match/play/context'
+import { updateMatch } from '../../../../../context/match/classic/actions'
+import { MatchClassicContext } from '../../../../../context/match/classic/context'
 import { SocketContext } from '../../../../../context/socket/context'
 import { theme } from '../../../../../theme'
 import { PlayerCard } from '../../../host/lobby/component/Lobby'
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 const Lobby = (props) => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {match, dispatch} = useContext(MatchPlayContext)
+    const {match, dispatch} = useContext(MatchClassicContext)
     const {socket} = useContext(SocketContext)
     let {pinCode, title, players} = match
     if (players == undefined) players = []

@@ -36,15 +36,15 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'row',
         border: '0.5px solid #CCCCCC',
         borderRadius: theme.spacing(0.5),
-        alignSelf:'baseline'
-
+        alignSelf:'baseline',
     },
     tab: {
+        flex: 1,
         padding: theme.spacing(0.8),
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
       //  borderRadius: theme.spacing(1),
-        borderRight: '0.5px solid #CCCCCC',
+        borderRight: '0.5px solid #CCCCCC'
     }
 }))
 
@@ -56,7 +56,8 @@ const TabItem = (props) => {
         }
     }
     return (
-        <div className = {classes.tab} style= {{backgroundColor: props.isSelected? 'white':grey[100]}}
+        <div className = {classes.tab} 
+            style= {{backgroundColor: props.isSelected? 'white':grey[100]}}
             onClick = {handleClick} >
             <Typography variant = 'caption' 
                 style= {{ color: props.isSelected?'#46178f':'#333333', fontWeight: 'bold', fontSize: 13}}>

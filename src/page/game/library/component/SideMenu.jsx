@@ -75,7 +75,8 @@ const SideMenu = (props) => {
                     menus.map((menu, index) => (
                         <MenuItem
                             menu = {menu}
-                            isSelected = {selectedIndex == index}/>
+                            isSelected = {selectedIndex == index}
+                            key = {"" + index}/>
                     ))
                 }
              

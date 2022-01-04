@@ -3,8 +3,8 @@ import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../../context/auth/context'
-import { updateMatch } from '../../../../context/match/play/actions'
-import { MatchPlayContext } from '../../../../context/match/play/context'
+import { updateMatch } from '../../../../context/match/classic/actions'
+import { MatchClassicContext } from '../../../../context/match/classic/context'
 import { SocketContext } from '../../../../context/socket/context'
 import Header from './component/Header'
 import JoinMethodModal from './component/JoinMethodModal'
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const MatchHostLobbyPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {dispatch, match} = useContext(MatchPlayContext)
+    const {dispatch, match} = useContext(MatchClassicContext)
     const {user} = useContext(AuthContext)
     const {socket} = useContext(SocketContext)
     const {game, host, pinCode} = match

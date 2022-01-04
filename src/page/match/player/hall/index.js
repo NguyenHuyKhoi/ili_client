@@ -2,7 +2,7 @@ import { Button, Divider, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, {useContext, useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MatchPlayContext } from '../../../../context/match/play/context'
+import { MatchClassicContext } from '../../../../context/match/classic/context'
 import { theme } from '../../../../theme'
 import TopPlayerCard from '../../host/hall/component/TopPlayerCard'
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const MatchPlayerHallPage = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const  {match} = useContext(MatchPlayContext)
+    const  {match} = useContext(MatchClassicContext)
     const {players} = match
     const handleNext = () => {
         navigate('/match/player/entrance')

@@ -4,11 +4,12 @@ import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../../context/auth/context'
 import { GameContext } from '../../../../context/game/other/context'
-import { updateMatch } from '../../../../context/match/play/actions'
-import { MatchPlayContext } from '../../../../context/match/play/context'
+import { updateMatch } from '../../../../context/match/classic/actions'
+import { MatchClassicContext } from '../../../../context/match/classic/context'
+import { MatchLivestreamContext } from '../../../../context/match/livestream/context'
 import { SocketContext } from '../../../../context/socket/context'
 import { theme } from '../../../../theme'
-import GameModes from './component/GameModes'
+import GameModes, { MODE_MATCH } from './component/GameModes'
 import GameOptions from './component/GameOptions'
 import Header from './component/Header'
 
@@ -47,27 +48,43 @@ const useStyles = makeStyles((theme) => ({
 const MatchHostSettingPage = () => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {dispatch, match} = useContext(MatchPlayContext)
+    const {match} = useContext(MatchClassicContext)
+    const dispatchClassic = useContext(MatchClassicContext).dispatch
+    const dispatchLivestream = useContext(MatchLivestreamContext).dispatch
     const {game} = useContext(GameContext)
     const {user, token} = useContext(AuthContext)
     const {socket} = useContext(SocketContext)
 
-    const handleStart = () => {
+    const handleStart = (mode) => {
         console.log("Handle start")
         let host = {
             _id: user._id,
             name: user.username,
             socketId: socket.id
         }
-        socket.emit('match:host', host, game._id, (match) => {
-            if (match) {
-                dispatch(updateMatch(match))
-                navigate('/match/host/lobby')
-            }
-            else {
-                console.log("Host game failured")
-            }
-        })
+        switch (mode) {
+            case MODE_MATCH.CLASSIC: 
+                socket.emit('match:host', host, game._id, (match) => {
+                    if (match) {
+                        dispatchClassic(updateMatch(match))
+                        navigate('/match/host/lobby')
+                    }
+                    else {
+                        console.log("Host game failured")
+                    }
+                })
+                break;
+            case MODE_MATCH.LIVESTREAM:
+                let initMatch = {
+                    game, 
+                    title: 'Livestream',
+                    description: 'Created by ILI...'
+                }
+                dispatchLivestream(updateMatch(initMatch))
+                navigate('/match/livestream', {replace: false})
+                break
+        }
+
     }
 
     const {title} = game
@@ -83,7 +100,7 @@ const MatchHostSettingPage = () => {
                     </div>
                 </div>
                
-                <GameModes onSelectMode = {(mode) => handleStart()}/>
+                <GameModes onSelectMode = {(mode) => handleStart(mode)}/>
                 <GameOptions/>
             </div>  
         </div>

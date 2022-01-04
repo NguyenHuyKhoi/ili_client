@@ -2,8 +2,8 @@ import { Divider } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { updateMatch } from '../../../../context/match/play/actions'
-import { MatchPlayContext } from '../../../../context/match/play/context'
+import { updateMatch } from '../../../../context/match/classic/actions'
+import { MatchClassicContext } from '../../../../context/match/classic/context'
 import { SocketContext } from '../../../../context/socket/context'
 import BottomBar from './component/BottomBar'
 import Header from './component/Header'
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const MatchHostStadiumPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {question, match, answer_counts, dispatch} = useContext(MatchPlayContext)
+    const {question, match, answer_counts, dispatch} = useContext(MatchClassicContext)
     const {socket} = useContext(SocketContext)
     const [stage, setStage] = useState({type: 'on_question'})
     const [time, setTime] = useState(0)

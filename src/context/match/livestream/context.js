@@ -1,15 +1,14 @@
 import { createContext, useEffect, useReducer } from "react"
 import reducer from "./reducer"
 export const sample_match = {
+    game: {}
 }
 
 const INITIAL_STATE = () => {
     let state = {
-        match: {},
-        question: {},
-        answer_counts: [0,0,0,0]
+        match: {}
     }
-    const saved = localStorage.getItem('match_play_context')
+    const saved = localStorage.getItem('match_livestream_context')
     if (saved) {
         return{
             ...state,
@@ -19,31 +18,32 @@ const INITIAL_STATE = () => {
     else {
         return {
             ...state,
-            ...sample_match
+            match: {...sample_match}
         }
     }
 }
 
 
-export const MatchPlayContext = createContext(reducer)
+export const MatchLivestreamContext = createContext(reducer)
 
-export const MatchPlayContextProvider = ({children}) => {
+export const MatchLivestreamContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, INITIAL_STATE())
     useEffect(() => {
-        localStorage.setItem('match_play_context', JSON.stringify(state))
+        localStorage.setItem('match_livestream_context', JSON.stringify(state))
         return () => {
             
         }
     }, [state])
-    return <MatchPlayContext.Provider
+
+    console.log("Export match: ", state.match)
+    return <MatchLivestreamContext.Provider
         value = {{
             match: state.match,
             question: state.question,
-            answer_counts: state.answer_counts,
             dispatch
         }}>
         {
             children
         }
-    </MatchPlayContext.Provider>
+    </MatchLivestreamContext.Provider>
 }

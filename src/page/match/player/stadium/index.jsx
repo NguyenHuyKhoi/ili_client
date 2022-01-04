@@ -7,9 +7,9 @@ import BottomBar from './component/BottomBar'
 import Correct from './component/Correct'
 import Incorrect from './component/Incorrect'
 import Question from './component/Question'
-import { MatchPlayContext } from '../../../../context/match/play/context'
+import { MatchClassicContext } from '../../../../context/match/classic/context'
 import { SocketContext } from '../../../../context/socket/context'
-import { updateMatch } from '../../../../context/match/play/actions'
+import { updateMatch } from '../../../../context/match/classic/actions'
 import { useNavigate } from 'react-router-dom'
 import Scoreboard from '../../host/stadium/component/Scoreboard'
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +30,7 @@ const INPUT_STAGE = {
 const MatchPlayerStadiumPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {question, match, dispatch} = useContext(MatchPlayContext)
+    const {question, match, dispatch} = useContext(MatchClassicContext)
     const {socket} = useContext(SocketContext)
     const [earnScore, setEarnScore] = useState(0)
     const [time, setTime] = useState(0)

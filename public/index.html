@@ -25,6 +25,42 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script >
+       function init() {
+        gapi.load('auth2', () => {
+            gapi.auth2.init({
+              client_id: '1074842855198-rrb2q04nb9ce0afthjjqc95f4snan139.apps.googleusercontent.com'
+            })
+            .then(() => {
+              console.log("Load gapi auth")
+            }, 
+            (err) => {
+              console.log("Err: ", err)
+            })
+        });
+        gapi.load('client', async () => {
+            // 2. Initialize the JavaScript client library.
+            console.log("Load gapi client")
+            await gapi.client.init({
+                discoveryDocs: ['https://discovery.googleapis.com/$discovery/rest']
+            });
+        });
+      }
+    </script>
+
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId            : '269861025134273',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v12.0'
+        });
+      };
+ 
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

@@ -40,18 +40,25 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
+export const MODE_MATCH = {
+    CLASSIC: 0,
+    LIVESTREAM: 1
+}
+
 const modes = [
     {
         title: 'Classic',
         desc: 'Player go head-to-head using their own devices.',
         link: '/match/host/lobby',
-        icon: classic_mode
+        icon: classic_mode,
+        mode: MODE_MATCH.CLASSIC
     },
     {
-        title: 'Gameshow on Youtube',
-        desc: 'Stream your game on Youtube and viewer can play in chatbox.',
-        link: '/match/host/lobby',
-        icon: youtube_mode
+        title: 'Livestream',
+        desc: 'Stream your game on Youtube, Facebook and viewer can play in chatbox.',
+        link: '/match/livestream',
+        icon: youtube_mode,
+        mode: MODE_MATCH.LIVESTREAM
     },
 ]
 const ModeItem = (props) => {
@@ -100,7 +107,7 @@ const GameModes = (props) => {
                         <Grid item xs = {6}   key = {''+index}>
                             <ModeItem mode = {mode} 
                                 onSelect = {() => {
-                                    if (props.onSelectMode) props.onSelectMode(mode) 
+                                    if (props.onSelectMode) props.onSelectMode(mode.mode) 
                                 }}/>
                         </Grid>
                     ))

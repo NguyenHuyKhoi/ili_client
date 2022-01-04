@@ -2,8 +2,8 @@ import { Alert, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { updateMatch } from '../../../../context/match/play/actions'
-import { MatchPlayContext } from '../../../../context/match/play/context'
+import { updateMatch } from '../../../../context/match/classic/actions'
+import { MatchClassicContext } from '../../../../context/match/classic/context'
 import { SocketContext } from '../../../../context/socket/context'
 import Header from '../../host/lobby/component/Header'
 import JoinMethodModal from '../../host/lobby/component/JoinMethodModal'
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const MatchPlayerLobbyPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {dispatch, match} = useContext(MatchPlayContext)
+    const {dispatch, match} = useContext(MatchClassicContext)
     const {socket} = useContext(SocketContext)
     const [modal, setModal] = useState({state: ''})
     const [alert, setAlert] = useState({})
