@@ -56,7 +56,8 @@ const QuestionConfig = (props) => {
         <div className = {classes.container}>
             <div className = {classes.inputs} >
                 <div className = {classes.input}>
-                    <DropdownSelect title = 'Time limit'
+                    <DropdownSelect 
+                        title = 'Time limit'
                         list = {[
                             {label: '10', value: 10},
                             {label: '20', value: 20},

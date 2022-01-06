@@ -2,8 +2,8 @@ import { Alert, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { updateMatch } from '../../../../context/match/classic/actions'
-import { MatchClassicContext } from '../../../../context/match/classic/context'
+import { updateMatch } from '../../../../context/match/play/actions'
+import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import Form from './component/Form'
 import logo from '../../../../asset/image/logo.png'
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const MatchPlayerEntrancePage = () => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {match, dispatch} = useContext(MatchClassicContext)
+    const {match, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
     const [input, setInput] = useState({value: '', type: 'enter_pin'})
     const [alert, setAlert] = useState({})
@@ -32,7 +32,8 @@ const MatchPlayerEntrancePage = () => {
     const {pinCode} = match ? match : {}
     const {value, type} = input
     useEffect(() => {
-        socket.on('match:sync', (match) => {
+        socket.on('match:sync', (data) => {
+            let {match} = data
             dispatch(updateMatch(match))
         })
     }, [])  
@@ -47,6 +48,7 @@ const MatchPlayerEntrancePage = () => {
                     })
                     return 
                 }
+                console.log("Client send request to join match:", socket.id)
                 socket.emit('match:join', value, (match) => {
                     if (match) {
                         dispatch(updateMatch(match))

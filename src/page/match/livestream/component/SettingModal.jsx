@@ -4,8 +4,9 @@ import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import facebook_icon from '../../../../asset/image/facebook_icon.png';
 import youtube_icon from '../../../../asset/image/youtube_icon.png';
+import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
 import { theme } from "../../../../theme";
-import { PLATFORM_APP } from '../../../../util/platform';
+import YoutubeHelper from '../../../../util/platform/youtube';
 import AccountCard from './AccountCard';
 
 
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: theme.spacing(1)
 	}
 }))
-const STREAM_ACCOUNT_TYPES_ID = {
+export const STREAM_ACCOUNT_TYPES_ID = {
 	YOUTUBE_BROAD_CAST: 0,
 	FB_LIVESTREAM_PROPFILE: 1,
 	FB_LIVESTREAM_GROUP: 2
@@ -75,10 +76,9 @@ const STREAM_ACCOUNT_TYPES = [
 
 const SettingModal = (props) => {
 	const classes = useStyles()
-	var GoogleAuth = gapi.auth2 != undefined ? gapi.auth2.getAuthInstance() : null
 	const {setting} = props
 	const [draftSetting, setDraftSetting] = useState({...setting})
-	const {title, description, account} = draftSetting
+	const {title, description, account, lobbyTime} = draftSetting
 	
 	var {open} = props
 	if (open == undefined) open = false
@@ -107,41 +107,21 @@ const SettingModal = (props) => {
 		})
 	}
 	 
-    const activeYT = () => {
-        GoogleAuth
-            .signIn({ scope: 'https://www.googleapis.com/auth/youtube.force-ssl' })
-            .then ((res) => {
-                gapi.client.setApiKey(PLATFORM_APP.YOUTUBE.API_KEY)
-                gapi.client.load('https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest')
-                    .then((res) => {
-                        console.log("Auth YT result :", res)
-
-						handleChange('account', {
-                            accountType: STREAM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST,
-                        })
-                    })
-            })
-            .catch((err) => console.log('Auth YT error: ', err))
-    }
+	const activeYT = () => {
+		YoutubeHelper.auth()
+			.then(() => {
+				console.log("Auth YT success")
+				handleChange('account', {
+					accountType: STREAM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST
+				})
+			})
+			.catch((err) => {
+				console.log("Youtube auth error")
+			})
+	}
 
 	const activeFBProfile = () => {
-		FB.login(res => {
-			if (res.status == 'connected') {
-				let {accessToken, userID} =  res.authResponse
-				handleChange('account', {
-					accountType: STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROPFILE,
-					userID,
-					accessToken
-				})
-				console.log("Auth FB successfully:", accessToken, userID)
-			}
-		  },{scope: 'publish_video'});
-	}
-	const activeFBGroup =  () => {
-
-	}
-	const acticeFBPage = () => {
-
+		if (props.onAlert) props.onAlert('Not supported now')
 	}
 
 	const selectAccountType = (type) => {
@@ -184,7 +164,7 @@ const SettingModal = (props) => {
 							<Grid container columnSpacing = {2} rowSpacing = {2} sx = {{mt: theme.spacing(1)}}>
 								{
 									STREAM_ACCOUNT_TYPES.map((type, index) => (
-										<Grid item xs = {4}>
+										<Grid item xs = {4} key = {'' + index}>
 											<AccountCard 
 												accountType = {type}
 												onSelect = {() => selectAccountType(type)}
@@ -218,6 +198,17 @@ const SettingModal = (props) => {
 								onChange={(e) => handleChange('description', e.target.value)}
 								placeholder="Describe your game..."
 								style={{ width: '100%', height: 150	,m: theme.spacing(0.5), resize: 'none' }}
+							/>
+
+							<WrappedRadioGroup title = 'Lobby time' 
+								list = {[
+									{label: '40 seconds', value: '40'},
+									{label: '60 seconds', value: '60'},
+									{label: '120 seconds', value: '120'},
+									{label: '300 seconds', value: '300'}
+								]}
+								value = {lobbyTime}
+								onChange = {(value)=>handleChange('lobbyTime',value)}
 							/>
 						</div>
 					</Grid>

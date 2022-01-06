@@ -3,10 +3,10 @@ import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, {useContext, useState} from 'react'
 import { theme } from '../../../../../theme'
-import {MatchClassicContext} from '../../../../../context/match/classic/context'
+import {MatchPlayContext} from '../../../../../context/match/play/context'
 import { useNavigate } from 'react-router-dom'
 import { SocketContext } from '../../../../../context/socket/context'
-import { updateMatch } from '../../../../../context/match/classic/actions'
+import { updateMatch } from '../../../../../context/match/play/actions'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -103,7 +103,7 @@ export const PlayerCard = (props) => {
 const Lobby = (props) => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {match, dispatch} = useContext(MatchClassicContext)
+    const {match, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
     let {pinCode, title, players, state} = match
 

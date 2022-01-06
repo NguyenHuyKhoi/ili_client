@@ -1,17 +1,19 @@
-import { Button, Typography } from '@mui/material'
+import { Alert, Button, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../../context/auth/context'
 import { GameContext } from '../../../../context/game/other/context'
-import { updateMatch } from '../../../../context/match/classic/actions'
-import { MatchClassicContext } from '../../../../context/match/classic/context'
-import { MatchLivestreamContext } from '../../../../context/match/livestream/context'
+import { updateMatch as updateMatchClassic } from '../../../../context/match/play/actions'
+import { updateLivestreamStage, updateMatch as updateMatchLivestream } from '../../../../context/match/play/actions'
+import { LIVESTREAM_STAGE, MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import { theme } from '../../../../theme'
-import GameModes, { MODE_MATCH } from './component/GameModes'
-import GameOptions from './component/GameOptions'
+import GameModes, { MODE_MATCH } from './component/MatchModes'
+import GameOptions from './component/MatchSetting'
 import Header from './component/Header'
+import MatchSetting from './component/MatchSetting'
+import MatchModes from './component/MatchModes'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,28 +47,80 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+export const MATCH_SETTINGS = [
+    {
+        key: 'delayStartTime',
+        values: [
+            {value: 0, label: ' Immediately'},
+            {value: 30, label: '  30 seconds'},
+            {value: 60, label: '  60 seconds'},
+            {value: 120, label: '  120 seconds'},
+        ],
+        title: 'Start Time after',
+    },
+    {
+        key: 'showQuestionEndTime',
+        values: [
+            {value: 10, label: '10 seconds'},
+            {value: 20, label: '20 seconds'},
+            {value: 30, label: '30 seconds'},
+        ],
+        title: 'Show result of question',
+    },
+    {
+        key: 'showLeaderboardTime',
+        values: [
+            {value: 10, label: '10 seconds'},
+            {value: 20, label: '20 seconds'},
+            {value: 30, label: '30 seconds'},
+        ],
+        title: 'Show leaderboard',
+    },
+    {
+        key: 'delayEndTime',
+        values: [
+            {value: 0, label: 'immediately'},
+            {value: 30, label: '  30 seconds'},
+            {value: 60, label: '  60 seconds'},
+            {value: 120, label: '  120 seconds'},
+        ],
+        title: 'End match after',
+    },
+]
+
 const MatchHostSettingPage = () => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {match} = useContext(MatchClassicContext)
-    const dispatchClassic = useContext(MatchClassicContext).dispatch
-    const dispatchLivestream = useContext(MatchLivestreamContext).dispatch
+    const {match} = useContext(MatchPlayContext)
+    const dispatchClassic = useContext(MatchPlayContext).dispatch
+    const dispatchLivestream = useContext(MatchPlayContext).dispatch
     const {game} = useContext(GameContext)
     const {user, token} = useContext(AuthContext)
     const {socket} = useContext(SocketContext)
+    const [alert, setAlert] = useState({})
 
+    const checkSetting = () => {
+
+    }
     const handleStart = (mode) => {
-        console.log("Handle start")
+        if (checkSetting()) {
+            setAlert({
+                type: 'error',
+                msg: 'Please setting all options below...'
+            })
+            return
+        }
         let host = {
-            _id: user._id,
-            name: user.username,
-            socketId: socket.id
+            userId: user._id,
+            name: user.username
         }
         switch (mode) {
             case MODE_MATCH.CLASSIC: 
+                console.log("Host send request to join match:", socket.id)
                 socket.emit('match:host', host, game._id, (match) => {
                     if (match) {
-                        dispatchClassic(updateMatch(match))
+                        console.log("Created match:", match)
+                        dispatchClassic(updateMatchClassic(match))
                         navigate('/match/host/lobby')
                     }
                     else {
@@ -77,10 +131,15 @@ const MatchHostSettingPage = () => {
             case MODE_MATCH.LIVESTREAM:
                 let initMatch = {
                     game, 
-                    title: 'Livestream',
-                    description: 'Created by ILI...'
+                    livestream: {
+                        title: 'Livestream',
+                        description: 'Created by ILI...',
+                        lobbyTime: 40
+                    }
                 }
-                dispatchLivestream(updateMatch(initMatch))
+                console.log("Init match with livestream:")
+                dispatchLivestream(updateMatchLivestream(initMatch))
+                dispatchLivestream(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
                 navigate('/match/livestream', {replace: false})
                 break
         }
@@ -90,6 +149,12 @@ const MatchHostSettingPage = () => {
     const {title} = game
     return (
         <div className = {classes.container}>
+            <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+                anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
+                <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
+                    {alert.msg}
+                </Alert>
+            </Snackbar>
             <Header/>
             <div className = {classes.body}>
                 <div className= {classes.bodyHeader} >
@@ -100,8 +165,8 @@ const MatchHostSettingPage = () => {
                     </div>
                 </div>
                
-                <GameModes onSelectMode = {(mode) => handleStart(mode)}/>
-                <GameOptions/>
+                <MatchModes onSelectMode = {(mode) => handleStart(mode)}/>
+                <MatchSetting/>
             </div>  
         </div>
     )

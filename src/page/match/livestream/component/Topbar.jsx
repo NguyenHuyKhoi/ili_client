@@ -5,7 +5,7 @@ import { GameCreatorContext } from '../../../../context/game/creator/context'
 import { theme } from '../../../../theme'
 import logo from '../../../../asset/image/logo.png'
 import { useNavigate } from 'react-router-dom'
-import { MatchLivestreamContext } from '../../../../context/match/livestream/context'
+import { LIVESTREAM_STAGE, MatchPlayContext } from '../../../../context/match/play/context'
 const useStyles = makeStyles((theme) => ({
     toolbar: {
         display: 'flex',
@@ -37,11 +37,21 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+const BTN_STYLES = [
+    { color: 'primary',  label: 'Go live'},
+    { color: 'warning',  label: 'Preparing...'},
+    { color: 'warning',  label: 'Waiting on live ...'},
+    { color: 'error',  label: 'End live'},
+    { color: 'success',  label: 'Exit'},
+]
+
 const Topbar = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {dispatch, match} = useContext(MatchLivestreamContext)
+    const {dispatch, match, livestreamStage} = useContext(MatchPlayContext)
     const {title} = match
+
+    const btnStyle = BTN_STYLES[livestreamStage ? livestreamStage : 0]
     return (
         <AppBar position = 'fixed'>
             <Toolbar className = {classes.toolbar}>
@@ -72,16 +82,16 @@ const Topbar = (props) => {
                 </div>
                 <div style = {{flex:1}}/> 
                 <Button variant="contained" 
-                    color = "primary"  
+                    color = {btnStyle.color}
                     sx = {{ 
                         marginLeft: theme.spacing(3),color: 'white', fontWeight: 'bold',
                         width: theme.spacing(25),
                     }}
                     onClick = {() => {
-                        if (props.onLive) props.onLive()
+                        if (props.onClickBtn) props.onClickBtn()
                     }}
                     >
-                    Go live
+                   {btnStyle.label}
                 </Button>
             </Toolbar>
         </AppBar>

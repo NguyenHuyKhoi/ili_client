@@ -1,14 +1,11 @@
-import { TextareaAutosize } from '@mui/base';
-import { Button, Grid, Modal, TextField, Typography } from '@mui/material';
+import { Button, Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useState , useContext} from 'react';
+import React, { useContext } from 'react';
 import facebook_icon from '../../../../asset/image/facebook_icon.png';
 import youtube_icon from '../../../../asset/image/youtube_icon.png';
-import { MatchLivestreamContext } from '../../../../context/match/livestream/context';
+import { MatchPlayContext } from '../../../../context/match/play/context';
 import { theme } from "../../../../theme";
-import { PLATFORM_APP } from '../../../../util/platform';
 import QuestionRowItem from '../../../game/detail/component/QuestionRowItem';
-import AccountCard from './AccountCard';
 
 
 /* global gapi */
@@ -77,7 +74,7 @@ const STREAM_ACCOUNT_TYPES = [
 
 const QuestionDetailModal = (props) => {
 	const classes = useStyles()
-	const {dispatch, question} = useContext(MatchLivestreamContext)
+	const {dispatch, question} = useContext(MatchPlayContext)
 	var {open} = props
 	if (open == undefined) open = false
 

@@ -3,7 +3,7 @@ import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, {useContext} from 'react'
 import { theme } from '../../../../../theme'
-import { MatchClassicContext } from '../../../../../context/match/classic/context'
+import { MatchPlayContext } from '../../../../../context/match/play/context'
 import qr_sample from '../../../../../asset/image/qr_sample.jpg'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 export const Header = (props) => {
     const classes = useStyles()
     const {showQR} = props 
-    const {match} = useContext(MatchClassicContext)
+    const {match} = useContext(MatchPlayContext)
     const {pinCode} = match
     return (
         <div className = {classes.container}>   

@@ -46,7 +46,6 @@ const TemplateSlider = (props) => {
 	return (
         <div className = {classes.container}>
             <img src = {images[index]}
-                resizeMode = 'contain'
                 className = {classes.img}/>
             <div className = {classes.screens}>
                 <Tabs tabs = {['Lobby', 'Round', 'Round end', 'Leaderboard', 'Game end']}/>

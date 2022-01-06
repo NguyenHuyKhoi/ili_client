@@ -12,3 +12,10 @@ export const viewQuestion = (question) => ({
         question
     }
 })
+
+export const updateLivestreamStage = (livestreamStage) => ({
+    type: 'UPDATE_LIVESTREAM_STAGE',
+    payload: {
+        livestreamStage
+    }
+})

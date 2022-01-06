@@ -72,9 +72,9 @@ const Scoreboard = (props) => {
                 <div className = {classes.players}>
                     {
                         players.map((player, index) => (
-                            <div style = {{marginLeft: theme.spacing(2)}}>
+                            <div style = {{marginLeft: theme.spacing(2)}} key = {'' + index}>
                                 <PlayerCard  
-                                    isMe = {(player.socketId == socket.id)}
+                                    isMe = {(player._id == socket.id)}
                                     showScore = {true}
                                     player = {player}
                                     disable = {true}/>

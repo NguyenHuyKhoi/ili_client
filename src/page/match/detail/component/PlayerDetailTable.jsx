@@ -23,7 +23,7 @@ const getRows = (player, progress) => {
   let chars = ['A','B','C','D']
 	return progress.map((stage, index) => {
     let {question, answers} = stage
-    let answer = answers.find((answer) => answer.socketId == player.socketId)
+    let answer = answers.find((answer) => answer._id == player._id)
 		return {
 			id: index,
 			question: question.title,

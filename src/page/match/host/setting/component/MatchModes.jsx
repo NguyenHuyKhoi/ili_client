@@ -97,7 +97,7 @@ const ModeItem = (props) => {
     )
 }
 
-const GameModes = (props) => {
+const MatchModes = (props) => {
     const classes = useStyles()
     return (
         <div className = {classes.container}>
@@ -116,4 +116,4 @@ const GameModes = (props) => {
         </div>
     )
 }
-export default GameModes
+export default MatchModes

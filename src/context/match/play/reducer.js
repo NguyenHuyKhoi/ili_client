@@ -1,6 +1,6 @@
 
 const reducer = (state, action) => {
-    const {match} = action.payload != undefined ? action.payload : {}
+    const {match,livestreamStage, question} = action.payload != undefined ? action.payload : {}
     switch (action.type) {
 
         case 'UPDATE_MATCH': {
@@ -21,8 +21,22 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 match: {...match},
-                question,
+                question: question == {} ? state.question : question,
                 answer_counts
+            }
+        }
+        case 'UPDATE_LIVESTREAM_STAGE': {
+            console.log("Update livestreamStage", livestreamStage)
+            return {
+                ...state,
+                livestreamStage
+            }
+        }
+
+        case 'VIEW_QUESTION': {
+            return {
+                ...state,
+                question
             }
         }
         default: 

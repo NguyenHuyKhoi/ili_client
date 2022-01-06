@@ -2,9 +2,9 @@ import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, {useState, useContext} from 'react';
 import { Tabs } from '../../../game/library/component/GameList';
-import {MatchLivestreamContext} from '../../../../context/match/livestream/context'
+import {MatchPlayContext} from '../../../../context/match/play/context'
 import QuestionRowItem from './QuestionRowItem';
-import { viewQuestion } from '../../../../context/match/livestream/actions';
+import { viewQuestion } from '../../../../context/match/play/actions';
 import PlayerRowItem from './PlayerRowItem';
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -54,12 +54,11 @@ const QuestionCard = (props) => {
 }
 const MatchStatus = (props) => {
 	const classes = useStyles()
-    const {dispatch, match} = useContext(MatchLivestreamContext)
+    const {dispatch, match} = useContext(MatchPlayContext)
     const {game, players} = match 
     const {questions} = game
     const [index, setIndex] = useState(0)
 
-    console.log("Question lis :",game, questions)
 
     const handleSelectQuestion = (question) => {
         console.log("Handle select question")

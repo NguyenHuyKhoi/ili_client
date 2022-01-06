@@ -7,9 +7,9 @@ import BottomBar from './component/BottomBar'
 import Correct from './component/Correct'
 import Incorrect from './component/Incorrect'
 import Question from './component/Question'
-import { MatchClassicContext } from '../../../../context/match/classic/context'
+import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
-import { updateMatch } from '../../../../context/match/classic/actions'
+import { updateMatch } from '../../../../context/match/play/actions'
 import { useNavigate } from 'react-router-dom'
 import Scoreboard from '../../host/stadium/component/Scoreboard'
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +30,7 @@ const INPUT_STAGE = {
 const MatchPlayerStadiumPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {question, match, dispatch} = useContext(MatchClassicContext)
+    const {question, match, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
     const [earnScore, setEarnScore] = useState(0)
     const [time, setTime] = useState(0)
@@ -38,37 +38,43 @@ const MatchPlayerStadiumPage = () => {
     const {questionIndex, pinCode, players} = match
 
     useEffect(() => {
-        socket.on('match:onCountdown', (time) => {
+        socket.on('match:onCountdown', (data) => {
+            let {time} = data
+            console.log("Receive emit on countdown: ",  time)
             setTime(time)
         })
-        socket.on('match:onTimeup', () => {
+        socket.on('match:onTimeup', (data) => {
             setTime(time)
         })
 
-        socket.on('match:onNotAnswer', () => {
+        socket.on('match:onNotAnswer', (data) => {
             setStage({type: 'not_answer'})
         })
 
-        socket.on('match:onCorrectAnswer', (earnScore) => {
+        socket.on('match:onCorrectAnswer', (data) => {
+            let {earnScore} = data
             setStage({type: 'correct_answer'})
             setEarnScore(earnScore)
         })
 
-        socket.on('match:onWrongAnswer', () => {
+        socket.on('match:onWrongAnswer', (data) => {
             setStage({type: 'wrong_answer'})
         })
 
-        socket.on('match:onQuestion', (match) => {
+        socket.on('match:onQuestion', (data) => {
+            let {match} = data
             dispatch(updateMatch(match))
             setStage({type: 'on_question'})
         })
 
-        socket.on('match:scoreboard', (match) => {
+        socket.on('match:scoreboard', (data) => {
+            let {match} = data
             dispatch(updateMatch(match))
             setStage({type: 'scoreboard'})
         })
 
-        socket.on('match:onEnd', match => {
+        socket.on('match:onEnd', (data) => {
+            let {match} = data
             dispatch(updateMatch(match))
             navigate('/match/player/hall', {replace: false})
         })
@@ -82,7 +88,7 @@ const MatchPlayerStadiumPage = () => {
     }
 
     const findMe = () => {
-        let player = match.players.find((item, index) => item.socketId == socket.id) 
+        let player = match.players.find((item, index) => item._id == socket.id) 
             ||
             {
                 name: 'Unknown',

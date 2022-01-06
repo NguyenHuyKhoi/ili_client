@@ -21,7 +21,7 @@ const getRows = (players, stage) => {
   const {answers, question} = stage
   let chars = ['A','B','C','D']
 	return players.map((player, index) => {
-    let answer = answers.find((answer) => answer.socketId == player.socketId)
+    let answer = answers.find((answer) => answer._id == player._id)
 		return {
 			id: index,
 			playerName: player.name,

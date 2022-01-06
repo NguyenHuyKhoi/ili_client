@@ -2,8 +2,8 @@ import { Divider } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { updateMatch } from '../../../../context/match/classic/actions'
-import { MatchClassicContext } from '../../../../context/match/classic/context'
+import { updateMatch } from '../../../../context/match/play/actions'
+import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import BottomBar from './component/BottomBar'
 import Header from './component/Header'
@@ -25,38 +25,45 @@ const useStyles = makeStyles((theme) => ({
 const MatchHostStadiumPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {question, match, answer_counts, dispatch} = useContext(MatchClassicContext)
+    const {question, match, answer_counts, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
     const [stage, setStage] = useState({type: 'on_question'})
     const [time, setTime] = useState(0)
     const {questionIndex, pinCode, players} = match
 
     useEffect(() => {
-        socket.on('match:onCountdown', (time) => {
+        socket.on('match:onCountdown', (data) => {
+            let {time} = data
+            console.log("Receive emit on countdown: ",  time)
             setTime(time)
         })
-        socket.on('match:onTimeup', () => {
+        socket.on('match:onTimeup', (data) => {
+            let {time} = data
             console.log("On timeup: ", time)
             setTime(time)
         })
 
-        socket.on('match:onEndQuestion', (match) => {
+        socket.on('match:onEndQuestion', (data) => {
+            let {match} = data
             console.log("On end question")
             dispatch(updateMatch(match))
             setStage({type: 'end_question'})
         })
 
-        socket.on('match:onQuestion', (match) => {
+        socket.on('match:onQuestion', (data) => {
+            let {match} = data
             dispatch(updateMatch(match))
             setStage({type: 'on_question'})
         })
 
-        socket.on('match:scoreboard', (match) => {
+        socket.on('match:scoreboard', (data) => {
+            let {match} = data
             dispatch(updateMatch(match))
             setStage({type: 'scoreboard'})
         })
 
-        socket.on('match:onEnd', match => {
+        socket.on('match:onEnd', (data) => {
+            let {match} = data
             dispatch(updateMatch(match))
             navigate('/match/host/hall', {replace: false})
         })

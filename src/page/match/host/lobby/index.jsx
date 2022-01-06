@@ -3,8 +3,8 @@ import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../../context/auth/context'
-import { updateMatch } from '../../../../context/match/classic/actions'
-import { MatchClassicContext } from '../../../../context/match/classic/context'
+import { updateMatch } from '../../../../context/match/play/actions'
+import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import Header from './component/Header'
 import JoinMethodModal from './component/JoinMethodModal'
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const MatchHostLobbyPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {dispatch, match} = useContext(MatchClassicContext)
+    const {dispatch, match} = useContext(MatchPlayContext)
     const {user} = useContext(AuthContext)
     const {socket} = useContext(SocketContext)
     const {game, host, pinCode} = match
@@ -37,23 +37,27 @@ const MatchHostLobbyPage = () => {
             console.log("Update match on require sync : ", match)
             dispatch(updateMatch(match))
         })
-        socket.on('match:sync', (match) => {
+        socket.on('match:sync', (data) => {
+            let {match} = data
             console.log("Update on sync : ", match)
             dispatch(updateMatch(match))
         })
-        socket.on('match:onQuestion', (match) => {
-            console.log("On Question: ", match)
+        socket.on('match:onQuestion', (data) => {
+            let {match} = data
+            console.log("Receive emit On Question: ", match)
             dispatch(updateMatch(match))
             navigate('/match/host/stadium', {replace: false})
         })
-        socket.on('match:playerLeave', (player) => {
+        socket.on('match:playerLeave', (data) => {
+            let {player} = data
             console.log("Player is removed: ", player)
             setAlert({
                 type: 'warning',
                 msg: 'Player ' + player.name + ' has leave game.'
             })
         })
-        socket.on('match:kickPlayerDone', (player) => {
+        socket.on('match:kickPlayerDone', (data) => {
+            let {player} = data
             console.log("Player is Kicked: ", player)
             setAlert({
                 type: 'warning',
