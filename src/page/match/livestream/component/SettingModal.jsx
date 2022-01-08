@@ -199,17 +199,6 @@ const SettingModal = (props) => {
 								placeholder="Describe your game..."
 								style={{ width: '100%', height: 150	,m: theme.spacing(0.5), resize: 'none' }}
 							/>
-
-							<WrappedRadioGroup title = 'Lobby time' 
-								list = {[
-									{label: '40 seconds', value: '40'},
-									{label: '60 seconds', value: '60'},
-									{label: '120 seconds', value: '120'},
-									{label: '300 seconds', value: '300'}
-								]}
-								value = {lobbyTime}
-								onChange = {(value)=>handleChange('lobbyTime',value)}
-							/>
 						</div>
 					</Grid>
 				</Grid>

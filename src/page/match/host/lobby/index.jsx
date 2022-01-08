@@ -31,6 +31,8 @@ const MatchHostLobbyPage = () => {
     const {game, host, pinCode} = match
     const [modal, setModal] = useState({state: ''})
     const [alert, setAlert] = useState({})
+    const [countdownToStart, setCountdownToStart] = useState(false)
+    const [time, setTime] = useState(0)
     useEffect(() => {
         console.log("Handle with pinCode: ", pinCode)
         socket.emit('match:requireSync', pinCode, (match) => {
@@ -64,6 +66,15 @@ const MatchHostLobbyPage = () => {
                 msg: 'Player ' + player.name + ' has kicked out game.'
             })
         })
+
+        socket.on('match:onCountdownToStart', (data) => {
+            setCountdownToStart(true)
+        })
+
+        socket.on('match:onCountdown', (data) => {
+            let {time} = data
+            setTime(time)
+        })
     }, [])  
 
     return (
@@ -83,7 +94,9 @@ const MatchHostLobbyPage = () => {
             <Header onSelectQR = { () => setModal({state: 'join_method'})}
                 showQR = {modal.state != 'join_method'}/>
             <div className = {classes.body}>
-                <Lobby/>
+                <Lobby 
+                    countdownToStart = {countdownToStart}
+                    time = {time}/>
             </div>  
         </div>
     )

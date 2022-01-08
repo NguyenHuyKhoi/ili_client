@@ -1,12 +1,11 @@
-import { Person, PersonOutline } from '@mui/icons-material'
+import { Person } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useContext, useState} from 'react'
-import { theme } from '../../../../../theme'
-import {MatchPlayContext} from '../../../../../context/match/play/context'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { MatchPlayContext } from '../../../../../context/match/play/context'
 import { SocketContext } from '../../../../../context/socket/context'
-import { updateMatch } from '../../../../../context/match/play/actions'
+import { theme } from '../../../../../theme'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -102,6 +101,7 @@ export const PlayerCard = (props) => {
 
 const Lobby = (props) => {
     const classes = useStyles()
+    const {countdownToStart, time} = props
     const navigate = useNavigate()
     const {match, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
@@ -183,7 +183,12 @@ const Lobby = (props) => {
                 </div>
                 <div className = {classes.waiting}>
                     <Typography variant = 'h6' sx = {{color: 'white'}} >
-                        Waiting for players....
+                        {
+                            countdownToStart ?
+                            `Game will start on ${time} seconds.`
+                            :
+                            'Waiting for players....'
+                        }
                     </Typography>
                 </div>
             </div>

@@ -3,19 +3,23 @@ import reducer from "./reducer"
 export const LIVESTREAM_STAGE = {
     NON_CREATED: 0,
     CREATING: 1,
-    WAITING_ON_LIVE: 2,
-    ON_LIVE: 3,
-    END: 4
+    READY: 2,
+    LIVE: 3,
+    COMPLETE: 4
 }
 
 export const sample_match = {
     game: {},
-    livestream: {}
+    livestream: null,
+    delayStartTime: 0,
+    showQuestionEndTime: 10,
+    showLeaderboardTime: 10,
+    delayEndTime: 60,
 }
 
 const INITIAL_STATE = () => {
     let state = {
-        match: {},
+        match: {...sample_match},
         question: {},
         answer_counts: [0,0,0,0],
         livestreamStage: LIVESTREAM_STAGE.NON_CREATED
@@ -28,10 +32,7 @@ const INITIAL_STATE = () => {
         }
     }
     else {
-        return {
-            ...state,
-            match: {...sample_match}
-        }
+        return state
     }
 }
 

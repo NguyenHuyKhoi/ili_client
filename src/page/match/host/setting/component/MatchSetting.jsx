@@ -1,9 +1,11 @@
 import { ArrowDropDown, ArrowLeft } from '@mui/icons-material'
 import { Switch, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import { MATCH_SETTINGS } from '..'
 import DropdownSelect from '../../../../../component/DropdownSelect'
+import { updateMatch } from '../../../../../context/match/play/actions'
+import { MatchPlayContext } from '../../../../../context/match/play/context'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -33,7 +35,10 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1),
         borderRadius: theme.spacing(1),
         backgroundColor: 'white',
-        marginBottom: theme.spacing(2)
+        marginBottom: theme.spacing(2),
+        '&:hover': {
+            cursor: 'pointer'
+        }
     },
     options: {
         width: theme.spacing(20)
@@ -68,6 +73,7 @@ const OptionItem = (props) => {
                     title = ''
                     list = {values}
                     value = {value}
+                    color = {'white'}
                     onChange = {(v)=>handleChange(key,v)}/>
             </div>
            
@@ -78,20 +84,28 @@ const OptionItem = (props) => {
 const MatchSetting = () => {
     const classes = useStyles()
     const [showOptions, setShowOptions] = useState(false)
+    const {dispatch, match} = useContext(MatchPlayContext)
     const handleShowOptions = () => {
         setShowOptions(!showOptions)
     }
+
+    const handleChange = (key, value) => {
+        console.log("Update match: ", key, value)
+        dispatch(updateMatch({
+            [key]: value
+        }))
+    }
     return (
         <div className = {classes.container}>
-            <div className = {classes.header}>
+            <div className = {classes.header} onClick = {handleShowOptions}>
                 <Typography variant = 'h6' sx = {{color: 'black', fontWeight: 'bold', flex: 1}}>
-                    Game options
+                    Setting
                 </Typography>
                 {
                     !showOptions? 
-                    <ArrowLeft onClick = {handleShowOptions} sx = {{color: 'black', fontSize: 30}}/>
+                    <ArrowLeft   sx = {{color: 'black', fontSize: 30}}/>
                     :
-                    <ArrowDropDown onClick = {handleShowOptions} sx = {{color: 'black', fontSize: 30}}/>
+                    <ArrowDropDown  sx = {{color: 'black', fontSize: 30}}/>
                 }
                 
             </div>
@@ -99,7 +113,10 @@ const MatchSetting = () => {
                 showOptions && 
                 MATCH_SETTINGS.map((item, index) => (
                     <div className = {classes.itemContainer}   key = {''+index}>
-                        <OptionItem item = {item} onChange = {() => handle}/>
+                        <OptionItem 
+                            item = {item} 
+                            onChange = {(key, value) => handleChange(key, value)}
+                            value = {match[item.key]}/>
                     </div>
                 ))
             }

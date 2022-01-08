@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const BTN_STYLES = [
     { color: 'primary',  label: 'Go live'},
     { color: 'warning',  label: 'Preparing...'},
-    { color: 'warning',  label: 'Waiting on live ...'},
+    { color: 'warning',  label: 'Ready to live ...'},
     { color: 'error',  label: 'End live'},
     { color: 'success',  label: 'Exit'},
 ]

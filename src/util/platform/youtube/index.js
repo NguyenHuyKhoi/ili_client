@@ -17,19 +17,24 @@ class YoutubeHelper {
                     contentDetails: {
                         recordFromStart: true,
                         // startWithSlate: true,
-                        enableAutoStart: true,
+                        enableAutoStart: false,
+                        enableAutoStop: true,
                         monitorStream: {
                             enableMonitorStream: false,
                         },
+                        latencyPreference: 'ultraLow',
+                        enableEmbed: true
                     },
                     status: {
-                        privacyStatus: livestream.privacy ? livestream.privacy : 'private',
+                        privacyStatus: livestream.privacy ? livestream.privacy : 'unlisted', //private//public
                         selfDeclaredMadeForKids: false,
                     },
                 },
                 })
-            console.log("Create broadcast ", res.result.id)
-            livestream.broadcastId = res.result.id
+            const data = res.result
+            console.log("Create broadcast ", data.id)
+            livestream.broadcastId = data.id
+            livestream.liveChatId = data.snippet.liveChatId
             return livestream
         }
         catch (err) {
@@ -101,13 +106,82 @@ class YoutubeHelper {
         if (livestream == null) return null 
 
         livestream = await this.bindBroadcastToStream(livestream)
+        livestream.access_token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true).access_token
         console.log("Livestream after bind:", livestream)
         return livestream
     }
 
-    static endLive = async (data) => {
-        
+    
+
+    static endLive = async (livestream) => {
+        try {
+            await gapi.client.youtube.liveBroadcasts
+                .transition({
+                    broadcastStatus: "complete",
+                    id: livestream.broadcastId,
+                    part: [
+                        "snippet,contentDetails,status"
+                    ]
+                })
+        }
+        catch (err) {
+            console.log("Auth YT endLive: ", err)
+            return null
+        }
     }
+
+    static transitionToLive = async (livestream) => {
+        try {
+            await gapi.client.youtube.liveBroadcasts
+                .transition({
+                    broadcastStatus: "live",
+                    id: livestream.broadcastId,
+                    part: [
+                        "snippet,contentDetails,status"
+                    ]
+                })
+        }
+        catch (err) {
+            console.log("Auth YT transitionToLive: ", err)
+            return null
+        }
+    }
+    static getBroadcast = async (id) => {
+        try {
+            let res = await gapi.client.youtube.liveBroadcasts
+                .list({
+                    "part": [ "snippet,contentDetails,status" ],
+                    "id": [   id ]
+                })
+            let items = res.result.items
+            console.log("Get broadcast: ", res.result, res.result.items)
+            if (items.length == 0) return null 
+            return items[0]
+        }
+        catch (err) {
+            console.log("getbroadcast error: ", err)
+            return null
+        }
+    }
+
+    static getLivestream = async (id) => {
+        try {
+            let res = await gapi.client.youtube.liveStreams
+                .list({
+                    "part": [ "id,cdn,snippet,status" ],
+                    "id": [ id ]
+                })
+            let items = res.result.items
+            console.log("Get stream: ", res.result, res.result.items)
+            if (items.length == 0) return null 
+            return items[0]
+        }
+        catch (err) {
+            console.log("getStream : ", err)
+            return null
+        }
+    }
+
     static auth = () => {
         return new Promise((resolve, reject) => {
             gapi.auth2.getAuthInstance()
@@ -115,7 +189,9 @@ class YoutubeHelper {
             .then ((res) => {
                 gapi.client.setApiKey(API_KEY)
                 gapi.client.load('https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest')
-                    .then((res) => resolve())
+                    .then((res) => {
+                        resolve()
+                    })
                     
             }
             )

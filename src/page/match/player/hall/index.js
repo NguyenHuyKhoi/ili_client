@@ -2,7 +2,9 @@ import { Button, Divider, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, {useContext, useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
+import { resetMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
+import { SocketContext } from '../../../../context/socket/context'
 import { theme } from '../../../../theme'
 import TopPlayerCard from '../../host/hall/component/TopPlayerCard'
 const useStyles = makeStyles((theme) => ({
@@ -34,15 +36,46 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignSelf: 'center',
+    },
+    notif: {
+        alignSelf: 'center',
+        borderRadius: theme.spacing(1),
+        backgroundColor: 'black',
+        opacity: 0.7,
+        padding: theme.spacing(1),
+        marginBottom: theme.spacing(10)
     }
 }))
 
 const MatchPlayerHallPage = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const  {match} = useContext(MatchPlayContext)
+    const  {match, dispatch} = useContext(MatchPlayContext)
+    const {socket} = useContext(SocketContext)
+    const [countdownOnEnd, setCountdownOnEnd] = useState(false)
+    const [time, setTime] = useState(0)
     const {players} = match
+
+    useEffect(() => {
+        socket.on('match:onCountdownToEnd', (data) => {
+            setCountdownOnEnd(true)
+        })
+
+        socket.on('match:onCountdown', (data) => {
+            let {time} = data
+            setTime(time)
+        })
+
+        socket.on('match:onEndMatch', (data) => {
+            console.log("Match is ended")
+            setCountdownOnEnd(false)
+        })
+        return () => {
+            
+        }
+    }, [])
     const handleNext = () => {
+        dispatch(resetMatch())
         navigate('/match/player/entrance')
     }
     return (
@@ -78,6 +111,14 @@ const MatchPlayerHallPage = (props) => {
                 </Button>
              
             </div>
+            {
+                countdownOnEnd && 
+                <div className = {classes.notif}>
+                    <Typography variant = 'h6' sx = {{color: 'white'}} >
+                        {`Game will end on ${time} seconds.`}
+                    </Typography>
+                </div>
+            }
        </div>
     )
 }

@@ -1,19 +1,15 @@
-import { Alert, Button, Snackbar, Typography } from '@mui/material'
+import { Alert, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../../context/auth/context'
 import { GameContext } from '../../../../context/game/other/context'
-import { updateMatch as updateMatchClassic } from '../../../../context/match/play/actions'
-import { updateLivestreamStage, updateMatch as updateMatchLivestream } from '../../../../context/match/play/actions'
+import { resetMatch, updateLivestreamStage, updateMatch } from '../../../../context/match/play/actions'
 import { LIVESTREAM_STAGE, MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
-import { theme } from '../../../../theme'
-import GameModes, { MODE_MATCH } from './component/MatchModes'
-import GameOptions from './component/MatchSetting'
 import Header from './component/Header'
+import MatchModes, { MODE_MATCH } from './component/MatchModes'
 import MatchSetting from './component/MatchSetting'
-import MatchModes from './component/MatchModes'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -91,36 +87,52 @@ export const MATCH_SETTINGS = [
 const MatchHostSettingPage = () => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {match} = useContext(MatchPlayContext)
-    const dispatchClassic = useContext(MatchPlayContext).dispatch
-    const dispatchLivestream = useContext(MatchPlayContext).dispatch
+    const {match, dispatch} = useContext(MatchPlayContext)
     const {game} = useContext(GameContext)
     const {user, token} = useContext(AuthContext)
     const {socket} = useContext(SocketContext)
     const [alert, setAlert] = useState({})
 
-    const checkSetting = () => {
+    useEffect(() => {
+        dispatch(resetMatch({
+            host: {
+                userId: user._id,
+                name: user.username
+            },
+            gameId: game._id,
+            game
+        }))
+        return () => {
+            
+        }
+    }, [])
 
+    const checkSetting = () => {
+        let isOk = true 
+        console.log("Check setting")
+        MATCH_SETTINGS.forEach((item) => {
+            console.log("Check setting key:", item.key, match[item.key])
+            if (match[item.key] == undefined) isOk = false
+        })
+        return isOk
     }
+
     const handleStart = (mode) => {
-        if (checkSetting()) {
+        if (!checkSetting()) {
             setAlert({
                 type: 'error',
                 msg: 'Please setting all options below...'
             })
             return
         }
-        let host = {
-            userId: user._id,
-            name: user.username
-        }
+
         switch (mode) {
             case MODE_MATCH.CLASSIC: 
                 console.log("Host send request to join match:", socket.id)
-                socket.emit('match:host', host, game._id, (match) => {
-                    if (match) {
-                        console.log("Created match:", match)
-                        dispatchClassic(updateMatchClassic(match))
+                socket.emit('match:host', match, (res) => {
+                    if (res) {
+                        console.log("Created match:", res)
+                        dispatch(updateMatch(res))
                         navigate('/match/host/lobby')
                     }
                     else {
@@ -129,17 +141,15 @@ const MatchHostSettingPage = () => {
                 })
                 break;
             case MODE_MATCH.LIVESTREAM:
-                let initMatch = {
-                    game, 
+                console.log("Init match with livestream:")
+                dispatch(updateMatch({
                     livestream: {
                         title: 'Livestream',
                         description: 'Created by ILI...',
                         lobbyTime: 40
                     }
-                }
-                console.log("Init match with livestream:")
-                dispatchLivestream(updateMatchLivestream(initMatch))
-                dispatchLivestream(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
+                }))
+                dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
                 navigate('/match/livestream', {replace: false})
                 break
         }

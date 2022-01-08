@@ -73,7 +73,7 @@ const MatchPlayerStadiumPage = () => {
             setStage({type: 'scoreboard'})
         })
 
-        socket.on('match:onEnd', (data) => {
+        socket.on('match:onSummary', (data) => {
             let {match} = data
             dispatch(updateMatch(match))
             navigate('/match/player/hall', {replace: false})
@@ -84,7 +84,10 @@ const MatchPlayerStadiumPage = () => {
     }, [])
 
     const handleAnswer = (index) => {
-        socket.emit('match:answer', pinCode, index, time)
+        let me = findMe()
+        if (me._id == undefined) return 
+        let answerTime = question.time_limt - time
+        socket.emit('match:answer', pinCode, me, index, answerTime)
     }
 
     const findMe = () => {

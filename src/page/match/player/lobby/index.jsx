@@ -2,7 +2,7 @@ import { Alert, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { updateMatch } from '../../../../context/match/play/actions'
+import { resetMatch, updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import Header from '../../host/lobby/component/Header'
@@ -57,7 +57,7 @@ const MatchPlayerLobbyPage = () => {
             let {player} = data
             console.log("Player is Kicked: ", player)
             if (player._id == socket.id) {
-                dispatch(updateMatch({}))
+                dispatch(resetMatch({}))
                 navigate('/match/player/entrance', {replace: false})
             }
             else {

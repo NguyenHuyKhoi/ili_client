@@ -1,9 +1,11 @@
+import { sample_match } from "./context"
 
 const reducer = (state, action) => {
     const {match,livestreamStage, question} = action.payload != undefined ? action.payload : {}
     switch (action.type) {
 
         case 'UPDATE_MATCH': {
+            console.log("Update match: ", action.payload)
             let question = {}
             let answer_counts = [0,0,0,0]
             const {progress} = match
@@ -15,12 +17,10 @@ const reducer = (state, action) => {
                 current.answers.forEach((answer, index) => {
                     answer_counts[answer.answerIndex] ++ 
                 })
-                
-
             }
             return {
                 ...state,
-                match: {...match},
+                match: {...state.match,...match},
                 question: question == {} ? state.question : question,
                 answer_counts
             }
@@ -37,6 +37,14 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 question
+            }
+        }
+
+        case 'RESET_MATCH': {
+            console.log("Reset match:", match)
+            return {
+                ...state,
+                match: {...sample_match, ...match}
             }
         }
         default: 

@@ -2,6 +2,13 @@ import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, {useState} from 'react';
 import { Tabs } from '../../../game/library/component/GameList';
+
+import waiting_template from '../../../../asset/image/game_template/waiting.png'
+import question_template from '../../../../asset/image/game_template/question.png'
+import question_end_template from '../../../../asset/image/game_template/question_end.png'
+import leader_board_template from '../../../../asset/image/game_template/leader_board.png'
+import complete_template from '../../../../asset/image/game_template/complete.png'
+
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -33,11 +40,11 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 const images = [
-    "https://image.freepik.com/free-photo/chinese-new-year-still-life-tiger-celebration_23-2149210715.jpg",
-    "https://image.freepik.com/free-photo/neon-frame-surrounded-by-balloons-color-year-2022_23-2149217418.jpg" ,
-    "https://image.freepik.com/free-vector/2022-tiger-year-greeting-card_317396-1413.jpg" ,
-    "https://image.freepik.com/free-vector/2022-tiger-year-greeting-card_317396-1413.jpg" ,
-    "https://image.freepik.com/free-vector/2022-tiger-year-greeting-card_317396-1413.jpg" ,
+    waiting_template,
+    question_template,
+    question_end_template,
+    leader_board_template,
+    complete_template
 ];
 
 const TemplateSlider = (props) => {
@@ -48,7 +55,8 @@ const TemplateSlider = (props) => {
             <img src = {images[index]}
                 className = {classes.img}/>
             <div className = {classes.screens}>
-                <Tabs tabs = {['Lobby', 'Round', 'Round end', 'Leaderboard', 'Game end']}/>
+                <Tabs tabs = {['Lobby', 'Round', 'Round end', 'Leaderboard', 'Game end']}
+                    onClickTab = {setIndex}/>
             </div>
           
         </div>

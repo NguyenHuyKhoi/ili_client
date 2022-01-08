@@ -6,13 +6,14 @@ const useStyles = makeStyles((theme) => ({
 
 const DropdownSelect = (props) => {
     const classes = useStyles()
-    const {title, list, value} = props
+    const {title, list, value, color} = props
     const handleChange = (e) => {
         let value = e.target.value
         if (props.onChange) {
             props.onChange(value)
         }
     }
+    console.log("Color: ", color)
     return (
         <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">
@@ -32,7 +33,7 @@ const DropdownSelect = (props) => {
                 {
                     list != undefined &&
                     list.map((item, index) => (
-                        <MenuItem value={item.value}   key = {''+index}>
+                        <MenuItem value={item.value}  key = {''+index} style = {{fontColor: color ? color : '#000'}}>
                             {item.label }
                         </MenuItem>
                     ))

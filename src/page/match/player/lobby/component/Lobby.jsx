@@ -3,7 +3,7 @@ import { Button, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { updateMatch } from '../../../../../context/match/play/actions'
+import { resetMatch, updateMatch } from '../../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../../context/match/play/context'
 import { SocketContext } from '../../../../../context/socket/context'
 import { theme } from '../../../../../theme'
@@ -80,7 +80,7 @@ const Lobby = (props) => {
         console.log("User request to leave")
         socket.emit('match:leave', pinCode, (response) => {
             if (response) {
-                dispatch(updateMatch({}))
+                dispatch(resetMatch({}))
                 navigate('/match/player/entrance', {replace: false})
             }
         })

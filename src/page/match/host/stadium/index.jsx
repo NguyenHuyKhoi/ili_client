@@ -62,7 +62,7 @@ const MatchHostStadiumPage = () => {
             setStage({type: 'scoreboard'})
         })
 
-        socket.on('match:onEnd', (data) => {
+        socket.on('match:onSummary', (data) => {
             let {match} = data
             dispatch(updateMatch(match))
             navigate('/match/host/hall', {replace: false})
