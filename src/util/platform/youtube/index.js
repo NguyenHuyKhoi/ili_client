@@ -1,8 +1,6 @@
 /* global gapi */
 const API_KEY = 'AIzaSyCpmqo8ByzMuPbZ8g97mSCRcs4Wi-bJTe0'
 class YoutubeHelper {
-
-
     static createBroadcast =async (livestream) => {
         try {
             let res = await gapi.client.youtube.liveBroadcasts
@@ -17,7 +15,7 @@ class YoutubeHelper {
                     contentDetails: {
                         recordFromStart: true,
                         // startWithSlate: true,
-                        enableAutoStart: false,
+                        enableAutoStart: true,
                         enableAutoStop: true,
                         monitorStream: {
                             enableMonitorStream: false,
@@ -154,7 +152,6 @@ class YoutubeHelper {
                     "id": [   id ]
                 })
             let items = res.result.items
-            console.log("Get broadcast: ", res.result, res.result.items)
             if (items.length == 0) return null 
             return items[0]
         }
@@ -172,7 +169,6 @@ class YoutubeHelper {
                     "id": [ id ]
                 })
             let items = res.result.items
-            console.log("Get stream: ", res.result, res.result.items)
             if (items.length == 0) return null 
             return items[0]
         }

@@ -128,7 +128,7 @@ const SignupPage = () => {
                 <div className = {classes.checkboxRegisterInfor}>
                     <Checkbox defaultChecked />
                     <Typography variant = 'caption'>
-                    I wish to receive information, offers, recommendations, and updates from Kahoot!
+                    I wish to receive information, offers, recommendations, and updates from Ili!
                     </Typography>
                 </div>
 

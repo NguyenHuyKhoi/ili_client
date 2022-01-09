@@ -141,14 +141,6 @@ const MatchHostSettingPage = () => {
                 })
                 break;
             case MODE_MATCH.LIVESTREAM:
-                console.log("Init match with livestream:")
-                dispatch(updateMatch({
-                    livestream: {
-                        title: 'Livestream',
-                        description: 'Created by ILI...',
-                        lobbyTime: 40
-                    }
-                }))
                 dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
                 navigate('/match/livestream', {replace: false})
                 break

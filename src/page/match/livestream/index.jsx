@@ -40,7 +40,7 @@ const MatchLivestreamPage = () => {
     const [alert, setAlert] = useState({})
 
     const handleClickBtn = () => {
-        console.log("Handle click btn")
+        //console.log("Handle click btn")
         switch (livestreamStage) {
             case LIVESTREAM_STAGE.NON_CREATED:
                 handleLive()
@@ -72,7 +72,7 @@ const MatchLivestreamPage = () => {
                 handleEndLiveYT()
                 break
             default:
-                console.log("Not supported now.")
+                //console.log("Not supported now.")
                 setAlert({
                     type: 'error',
                     msg: 'Not supported now'
@@ -83,9 +83,9 @@ const MatchLivestreamPage = () => {
     }
 
     const handleEndLiveYT = async () => {
-        console.log("End live YT")
+        //console.log("End live YT")
         await YoutubeHelper.endLive(livestream)
-        axios.post('match/livestream/complete', {pinCode: match.pinCode} ,{
+        axios.post('match/livestream/complete', {pinCode:match.pinCode} ,{
             headers: {
                 'x-access-token': token
             }
@@ -99,7 +99,7 @@ const MatchLivestreamPage = () => {
             })
             .catch((err) => {
                 let error = err.response ? err.response.data : 'Server is failure complete'
-                console.log("Error :", error)
+                //console.log("Error :", error)
                 dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
                 setAlert({
                     type: 'error',
@@ -123,7 +123,7 @@ const MatchLivestreamPage = () => {
                 handleLiveYT()
                 break
             default:
-                console.log("Not supported now.")
+                //console.log("Not supported now.")
                 setAlert({
                     type: 'error',
                     msg: 'Not supported now'
@@ -133,80 +133,71 @@ const MatchLivestreamPage = () => {
     }
 
     const handleLiveYT = async () => {
-        let res = await YoutubeHelper.goLive(livestream)
+        var res = await YoutubeHelper.goLive(livestream)
         if (res == null) {
-            console.log("Go live failured")
+            //console.log("Go live failured")
             dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
             return
         }
-        else {
-            console.log("Broadcast created, ready to stream:", res)
-            dispatch(updateMatch({
-                livestream: res
-            }))
-            match.livestream = res
-
-            console.log("Post to server to create match:", match)
+            //console.log("Broadcast created, ready to stream:", res)
+        try {
+            res = await axios.post('match/livestream/create', {...match, livestream: res}, {
+                headers: {
+                    'x-access-token': token
+                }
+            })
+            //console.log("Create match with livestream", data)
+            dispatch(updateMatch(res.data))
             dispatch(updateLivestreamStage(LIVESTREAM_STAGE.READY))
-            axios.post('match/livestream/create', match, {
-                    headers: {
-                        'x-access-token': token
-                    }
-                })
-                .then ((res) => {
-                    let match = res.data
-                    setAlert({
-                        type: 'success',
-                        msg: 'Create livestream succcessfully, waiting livestream on live...'
-                    })
-                    console.log("Create match with livestream", match)
-                    dispatch(updateMatch(match))
-                    listenStreamStatus('active')
-                    listenBroadcastStatus('live')
-                })
-                .catch((err) => {
-                    let error = err.response ? err.response.data : 'Server is failure create'
-                    console.log("Error :", error)
-                    dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
-                    setAlert({
-                        type: 'error',
-                        msg: 'Create livestream failure, try again....'
-                    })
+            
+            listenBroadcastStatus('live', res.data)
+            setAlert({
+                type: 'success',
+                msg: 'Create livestream succcessfully, waiting livestream on live...'
+            })
+        }
+        catch(err) {
+            let error = err.response ? err.response.data : 'Server is failure create'
+            console.log("Error:", err)
+            dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
+            setAlert({
+                type: 'error',
+                msg: 'Create livestream failure, try again....'
             })
            
-            // set state for prepare 
-
-            // set state for go live when broadcast is live
         }
+      
     }
 
 
-    const listenBroadcastStatus = (listened_status) => {
-        let {broadcastId} = livestream
+    const listenBroadcastStatus =  (listened_status = 'live', createdMatch) => {
         let count = 0
-        var broadcastStatusTimer = setInterval(async () => {
-            count ++ 
-            if (count >= 60) clearInterval(broadcastStatusTimer)
+        let _interval = setInterval(async() => {
+            count ++
+            if (count > 30) {
+                clearInterval(_interval)
+            }
+            let {broadcastId} = createdMatch.livestream
             let res = await YoutubeHelper.getBroadcast(broadcastId)
             if (res != null) {
                 let status = res.status.lifeCycleStatus
                 if (status == listened_status) {
-                    clearInterval(broadcastStatusTimer)
                     console.log("Livestream is live ")
-                   
-                    startMatchOnServer()
-                    dispatch(updateMatch({
-                        livestream
-                    }))
+                    clearInterval(_interval)
+                    startMatchOnServer(createdMatch)
                     dispatch(updateLivestreamStage(LIVESTREAM_STAGE.LIVE))
-                   
+                }
+                else {
+                    console.log("Livestream is not live")
                 }
             }
         }, 1000)
+    
     }
 
-    const startMatchOnServer = () => {
-        axios.post('match/livestream/start', {pinCode: match.pinCode}, {
+    const startMatchOnServer = (createdMatch) => {
+        console.log("Pincode on startMatch on Server:", createdMatch)
+        axios.post('match/livestream/start', {pinCode: createdMatch.pinCode}, {
             headers: {
                 'x-access-token': token
             }
@@ -219,31 +210,6 @@ const MatchLivestreamPage = () => {
 
         })
     }
-
-    const listenStreamStatus = (listened_status = 'active') => {
-        let {streamId} = livestream
-        let count = 0
-        var streamStatusTimer = setInterval(async () => {
-            count ++ 
-            if (count >= 100) clearInterval(streamStatusTimer)
-            let res = await YoutubeHelper.getLivestream(streamId)
-            if (res != null) {
-                let status = res.status.streamStatus
-                if (status == listened_status) { // default is active
-                    clearInterval(streamStatusTimer)
-                    console.log("Stream is active")
-                    //Transition to live
-                    await YoutubeHelper.transitionToLive(livestream)
-                }
-            }
-        }, 500)
-    }
-
-    const images = [
-        { url: "https://image.freepik.com/free-photo/chinese-new-year-still-life-tiger-celebration_23-2149210715.jpg" },
-        { url: "https://image.freepik.com/free-photo/neon-frame-surrounded-by-balloons-color-year-2022_23-2149217418.jpg" },
-        { url: "https://image.freepik.com/free-vector/2022-tiger-year-greeting-card_317396-1413.jpg" }
-    ];
 
     var showLivestream =  (livestreamStage == LIVESTREAM_STAGE.LIVE || livestreamStage == LIVESTREAM_STAGE.COMPLETE)
 
@@ -267,6 +233,7 @@ const MatchLivestreamPage = () => {
                 onDone = {(setting) => {
                     setModal({})
                     dispatch(updateMatch({
+                        ...match,
                         livestream: setting
                     }))
                 }}/>

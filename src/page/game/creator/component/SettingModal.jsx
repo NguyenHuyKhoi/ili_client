@@ -91,7 +91,7 @@ const SettingModal = (props) => {
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
 				<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
-					Kahoot Summary
+					Ili Summary
 				</Typography>
 				<Grid container columnSpacing = {5} rowSpacing = {2} 
 					sx = {{mt: theme.spacing(4)}}>

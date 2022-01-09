@@ -10,9 +10,12 @@ export const LIVESTREAM_STAGE = {
 
 export const sample_match = {
     game: {},
-    livestream: null,
+    livestream: {
+        title: 'Livestream',
+        description: 'Created by ILI'
+    },
     delayStartTime: 0,
-    showQuestionEndTime: 10,
+    showQuestionEndTime: 20,
     showLeaderboardTime: 10,
     delayEndTime: 60,
 }
@@ -41,10 +44,10 @@ export const MatchPlayContext = createContext(reducer)
 
 export const MatchPlayContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, INITIAL_STATE())
+    
     useEffect(() => {
         localStorage.setItem('match_play_context', JSON.stringify(state))
         return () => {
-            
         }
     }, [state])
     return <MatchPlayContext.Provider

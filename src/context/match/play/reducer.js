@@ -5,7 +5,7 @@ const reducer = (state, action) => {
     switch (action.type) {
 
         case 'UPDATE_MATCH': {
-            console.log("Update match: ", action.payload)
+            console.log("Update match: ", action.payload, {...state.match,...match})
             let question = {}
             let answer_counts = [0,0,0,0]
             const {progress} = match
@@ -18,12 +18,15 @@ const reducer = (state, action) => {
                     answer_counts[answer.answerIndex] ++ 
                 })
             }
-            return {
+
+            let newState = {
                 ...state,
-                match: {...state.match,...match},
+                match,
                 question: question == {} ? state.question : question,
                 answer_counts
             }
+            console.log("New match on state:", newState.match) 
+            return newState
         }
         case 'UPDATE_LIVESTREAM_STAGE': {
             console.log("Update livestreamStage", livestreamStage)

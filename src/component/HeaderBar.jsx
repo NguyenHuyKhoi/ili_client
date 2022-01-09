@@ -25,7 +25,9 @@ const useStyles = makeStyles((theme) => ({
         paddingRight:  theme.spacing(2)
     },
     logo: {
-        height: theme.spacing(5)
+        height: theme.spacing(5),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2)
     },
     avatarPopover: {
         display: 'flex',
@@ -85,7 +87,7 @@ const AvatarPopover = () => {
               <DropdownMenu menu = {{
                 title: 'Subscriptions',
                 items: [
-                    'Kahoot AccessPass'
+                    'Ili AccessPass'
                 ]
             }}/>
             <DropdownMenu menu = {{

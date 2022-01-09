@@ -51,7 +51,7 @@ const Header = (props) => {
             </div>
             <Typography variant = 'h3'  
                 sx  ={{ color: 'white', fontWeight: 'bold'}}> 
-                Kahoot
+                Ili
             </Typography>
             <div className = {classes.btns}>
                 <div className = {classes.btnIcon}>

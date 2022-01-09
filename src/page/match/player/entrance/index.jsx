@@ -88,7 +88,7 @@ const MatchPlayerEntrancePage = () => {
             <div onClick = {() => navigate('/', {replace: false})}>
                 {/* <img src = {logo} className = {classes.logo}/> */}
                 <Typography variant='h2' sx = {{color: 'white', fontWeight: 'bold', mb: theme.spacing(3)}}>
-                    Kahoot
+                    Ili
                 </Typography>
             </div>
             <Form onSubmit = {handleSubmit} onChange = {(value) => setInput({...input, value})} 

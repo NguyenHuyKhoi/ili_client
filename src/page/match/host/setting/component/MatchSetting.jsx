@@ -92,6 +92,7 @@ const MatchSetting = () => {
     const handleChange = (key, value) => {
         console.log("Update match: ", key, value)
         dispatch(updateMatch({
+            ...match,
             [key]: value
         }))
     }
