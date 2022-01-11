@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material'
+import {Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
@@ -6,12 +6,13 @@ import { GameRowItem } from '../../../game/component/GameRowItem'
 import empty_img from '../../../../asset/image/empty.png'
 import { theme } from '../../../../theme'
 import { useNavigate } from 'react-router-dom'
+import Button from '../../../../component/Button'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
-        backgroundColor: grey[100],
+        padding: theme.spacing(2),
+        backgroundColor:  theme.palette.background.main,
+        height: '100vh',
         display: 'flex',
         flexDirection:'column',
     },
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center'
     },
     emptyImg: {
-        height: 150
+        height: theme.spacing(20)
     }
 }))
 
@@ -51,16 +52,21 @@ const GameList = (props) => {
                 games.length == 0?
                 <div className = {classes.emptyDiv} >
                     <img className = {classes.emptyImg} src = {empty_img} />
-                    <Typography variant= 'subtitle2' sx = {{color: '#5f5f5f', my: theme.spacing(1)}}>
-                        Click to <b>Edit</b>  to add more game into this collection.
+                    <Typography variant= 'bigLabel' sx = {{color: '#000', mb: theme.spacing(2)}}>
+                       Add more games into this collection?
                     </Typography>
-                    <Button variant = 'contained' sx = {{color: 'white', fontWeight: 'bold', textTransform: 'none'}}
-                        onClick = {handleEdit}>
-                        Edit
-                    </Button>
+                    <Button 
+                        variant = 'primary' 
+                        size = 'big'
+                        label = 'Add games'
+                        onClick = {handleEdit}/>
                 </div>
                 :
                 <div className = {classes.list} >
+
+                    <Typography variant = 'label' sx = {{fontWeight: 'bold', color: '#000', mb: theme.spacing(3)}}>
+                        {`Game(${games ? games.length : 0})`}
+                    </Typography>
                 {
                     games.map((item, index) => (
                         <div className = {classes.item}   key = {''+index}>

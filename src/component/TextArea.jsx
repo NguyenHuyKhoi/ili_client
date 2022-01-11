@@ -14,13 +14,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const TextField = (props) => {
+const TextArea = (props) => {
     const classes = useStyles()
     var {label, variant, style, disabled, placeholder, type} = props
     
     if (!variant) variant = 'default'
     return (
-        <input 
+        <textarea 
             className = {classes.container}
             disabled = {disabled || false}
             placeholder = {placeholder || ''}
@@ -35,9 +35,9 @@ const TextField = (props) => {
                 padding: theme.spacing(1.5),
                 ...style,
             }}>
-        </input>
+        </textarea>
 
     )
 }
 
-export default TextField
+export default TextArea

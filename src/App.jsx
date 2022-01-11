@@ -57,13 +57,13 @@ const App = () => {
 
           <Route exact path = '/collection/library' element = {user ? <CollectionLibraryPage/> : <Navigate to = '/auth/login'/>}/>
           <Route exact path = '/collection/edit/:id' element = {user ? <CollectionEditPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/collection/detail/:id' element = {user ? <CollectionDetailPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/collection/detail/:id' element = {<CollectionDetailPage/> }/>
           
-          <Route exact path = '/discover/suggestion' element = {user ? <DiscoverPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/discover/search' element = {user ? <SearchPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/discover/suggestion' element = {<DiscoverPage/>}/>
+          <Route exact path = '/discover/search' element = {<SearchPage/>}/>
           
           <Route exact path = '/game/creator' element = {user ? <GameCreatorPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/game/detail/:id' element = {user ? <GameDetailPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/game/detail/:id' element = {<GameDetailPage/>}/>
           <Route exact path = '/game/library' element = {user ? <GameLibraryPage/> : <Navigate to = '/auth/login'/>}/>
      
           
@@ -83,7 +83,7 @@ const App = () => {
 
           <Route exact path = '/report' element = {user ? <DashboardReportPage/> : <Navigate to = '/auth/login'/>}/>
 
-          <Route exact path = '/profiles/:id' element = {user ? <ProfilePage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/profiles/:id' element = {<ProfilePage/>}/>
           <Route exact path = '/user/setting' element = {user ? <SettingPage/> : <Navigate to = '/auth/login'/>}/>
         </Routes>
       </Router>

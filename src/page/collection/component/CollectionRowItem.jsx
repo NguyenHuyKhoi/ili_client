@@ -1,9 +1,10 @@
 import { MoreVert, Star } from '@mui/icons-material'
-import { Button, Typography ,Avatar} from '@mui/material'
+import { Typography ,Avatar} from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React, { useState , useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Button from '../../../component/Button'
 import { selectCollection } from '../../../context/collection/actions'
 import { CollectionContext } from '../../../context/collection/context'
 import { theme } from '../../../theme'
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: grey[100],
+        backgroundColor: theme.palette.neutral.main,
         padding: theme.spacing(0.6),
         paddingLeft: theme.spacing(2)
     },
@@ -50,8 +51,8 @@ const useStyles = makeStyles((theme) => ({
         right: theme.spacing(0.5),
         padding: theme.spacing(0.6),
         borderRadius: theme.spacing(0.5),
-        backgroundColor: 'black',
-        opacity: 0.5,
+        backgroundColor: '#000',
+        opacity: 0.8,
         zIndex: 99
     }
 }))
@@ -84,22 +85,28 @@ export const CollectionRowItem = (props) => {
             </div>
             <div className = {classes.right}>
                 <div className = {classes.rightTop}>
-                    <Typography variant = 'subtitle1' sx = {{color: 'black', fontWeight: 'bold', flex: 1}}> 
+                    <Typography variant = 'btnLabel' sx = {{color: 'black', flex: 1}}> 
                         {title}
                     </Typography>
                 </div>
                 <div className = {classes.rightBottom}>
-                    <Avatar src = {createUrl(owner.avatar)} sx={{ width: 24, height: 24 }}  />
-                    <Typography variant = 'subtitle1' sx = {{color: '#7D7D7D', flex: 1, ml: theme.spacing(1)}}>
+                    <Typography variant = 'label' sx = {{color: '#000', flex: 1, ml: theme.spacing(1)}}>
                         {owner.username}
                     </Typography>
-                    <Button variant = 'contained' size = 'small' color = 'primary'
-                        sx = {{ml: theme.spacing(2), color: 'white', fontWeight: 'bold', textTransform: 'none'}}
-                        onClick = {handleEdit}>Edit </Button>
-                    <Button variant = 'contained' size = 'small' color = 'success' 
-                        sx = {{ml: theme.spacing(2), color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
-                        Open
-                    </Button>
+                    <Button 
+                        variant = 'primary' 
+                        size = 'small' 
+                        label = 'Edit'
+                        style = {{marginLeft: theme.spacing(2)}}
+                        onClick = {handleEdit}/>
+
+                    <Button 
+                        variant = 'success' 
+                        size = 'small' 
+                        label = 'View'
+                        style = {{marginLeft: theme.spacing(2)}}
+                        onClick = {handleView}/>
+              
                 </div>
             </div>
         </div>

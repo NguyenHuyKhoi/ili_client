@@ -8,9 +8,7 @@ import CollectorInfor from './component/CollectorInfor'
 import GameList from './component/GameList'
 const useStyles = makeStyles((theme) => ({
     container: {
-        flex: 1,
-        backgroundColor: '#f2f2f2',
-        height: '100vh'
+        flex: 1
     }
 }))
 
@@ -20,11 +18,11 @@ const CollectionDetailPage = () => {
     return (
         <div className = {classes.container}>
             <HeaderBar/>
-            <Grid container sx = {{p: theme.spacing(2), pt: theme.spacing(4)}}>
-                <Grid item sm={4} >
+            <Grid container >
+                <Grid item sm={3} >
                     <CollectorInfor collection = {collection}/>
                 </Grid>
-                <Grid item sm={8}>
+                <Grid item sm={9}>
                     <GameList collection = {collection}/>
                 </Grid>
             </Grid>

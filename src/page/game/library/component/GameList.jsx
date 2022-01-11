@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../../../context/auth/context'
 import { getGamesSuccess } from '../../../../context/game/other/actions'
 import { GameContext } from '../../../../context/game/other/context'
+import { theme } from '../../../../theme'
 import { GameRowItem } from '../../component/GameRowItem'
 
 const useStyles = makeStyles((theme) => ({
@@ -13,9 +14,9 @@ const useStyles = makeStyles((theme) => ({
         flex:1,
         padding: theme.spacing(2),
         height: '100vh',
-        backgroundColor: '#f2f2f2',
         display: 'flex',
         flexDirection:'column',
+        backgroundColor: theme.palette.background.main
     },
     games: {
         display:'flex',
@@ -34,17 +35,16 @@ const useStyles = makeStyles((theme) => ({
     tabs: {
         display: 'flex',
         flexDirection:'row',
-        border: '0.5px solid #CCCCCC',
         borderRadius: theme.spacing(0.5),
         alignSelf:'baseline',
     },
     tab: {
         flex: 1,
         padding: theme.spacing(0.8),
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
-      //  borderRadius: theme.spacing(1),
-        borderRight: '0.5px solid #CCCCCC'
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
+
     }
 }))
 
@@ -55,12 +55,17 @@ const TabItem = (props) => {
             props.handleItemClick()
         }
     }
+
+    var primary = theme.palette.primary.main
     return (
         <div className = {classes.tab} 
-            style= {{backgroundColor: props.isSelected? 'white':grey[100]}}
-            onClick = {handleClick} >
-            <Typography variant = 'caption' 
-                style= {{ color: props.isSelected?'#46178f':'#333333', fontWeight: 'bold', fontSize: 13}}>
+            onClick = {handleClick} 
+            style = {{
+                border:'solid 2px #000000',
+                backgroundColor: props.isSelected ? primary: 'rgba(0,0,0,0)'
+            }}>
+            <Typography variant = 'label' 
+                style= {{ color: '#000000', fontWeight: 'bold'}}>
                     {props.title}
             </Typography>
         </div>
@@ -82,7 +87,9 @@ export const Tabs = (props) => {
             {
                 tabs.map((item, index) => (
                     <div className = {classes.tabContainer}   key = {''+index}>
-                        <TabItem title ={item} handleItemClick = {() => handleItemClick(index)}
+                        <TabItem 
+                            title ={item} 
+                            handleItemClick = {() => handleItemClick(index)}
                             isSelected = {selectedIndex == index}/>
                     </div>
                 ))

@@ -1,7 +1,9 @@
 import { Add } from '@mui/icons-material'
-import { Link } from '@mui/material'
+import { Link, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import Button from '../../../../component/Button'
 import Icon from '../../../../component/Icon'
 import { theme } from '../../../../theme'
 
@@ -10,44 +12,49 @@ const useStyles = makeStyles((theme) => ({
         flex: 1, 
         display: 'flex',
         flexDirection: 'column',
-        paddingTop: theme.spacing(5)
-    },
-    itemContainer: {
-        paddingBottom: theme.spacing(1),
-        paddingRight: theme.spacing(1),
-        backgroundColor: 'white'
+        height: '100%',
+        backgroundColor: 'white',
+        paddingTop: theme.spacing(5),
+        padding: theme.spacing(2)
     },
     item: {
         display: 'flex',
+        width: '100%',
+        marginBottom: theme.spacing(2),
+        display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
-        padding: theme.spacing(1),
-        paddingLeft: theme.spacing(3),
+        justifyContent: 'center'
 
     }
 }))
 
 const MenuItem = (props) => {
+    const navigate = useNavigate()
     const classes = useStyles()
     const {menu, isSelected} = props
     const {title, link, icon} = menu
     const handleClick = () => {
-        if (props.onItemClick != undefined) {
-            props.onItemClick()
-        }
+        return navigate(link, {replace: false})
     }
     return (
-        <div className = {classes.item} style = {{
-            backgroundColor: isSelected? '#F2F2F2':'white'
-        }}
-            onClick = {handleClick}
-        >
-
-            <Icon name = {icon} style = {{color: isSelected? '#46178F':'gray', fontSize: 20}} />
-            <Link href={link} sx = {{ml: theme.spacing(1), color: isSelected? '#46178F':'#333333', fontWeight: 'bold'}}
-                underline = 'none'>
-                {title}
-            </Link>
+        <div className = {classes.item} 
+            onClick = {handleClick}>
+            {
+                isSelected ? 
+                <Button
+                    style = {{width: '100%'}}
+                    variant = 'primary'
+                    label = {title}
+                    size = 'small'/>
+                : 
+                <Typography variant = 'btnLabel' sx = {{
+                    '&:hover': {
+                        cursor: 'pointer'
+                    }
+                }}>
+                    {title}
+                </Typography>
+            }
         </div>
     )
 }

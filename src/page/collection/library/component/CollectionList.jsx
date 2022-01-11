@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'column'
     },
     item: {
-        marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing(4),
         display:'flex',
         flexDirection:'column'
     },
@@ -52,12 +52,9 @@ const CollectionList = (props) => {
             {
                 collections.length == 0 ? 
                 <div className = {classes.emptyContainer}>
-                    <img src = 'https://static.thenounproject.com/png/203873-200.png'
-                        className= {classes.emptyImg}/>
-                    <Typography variant = 'subtitle1' 
+                    <Typography variant = 'bigLabel' 
                         sx = {{maxWidth: theme.spacing(50), mt: theme.spacing(3), textAlign: 'center'}}>
-                        You don't have yet any collections.Create your first collection by linking
-                        kahoots.
+                        You don't have yet any collections. Create one?
                     </Typography>
                 </div>
                 :

@@ -29,7 +29,9 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '255px 10px 225px 10px/10px 225px 10px 255px',
     },
     linkRow: {
-        alignSelf: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         marginTop: theme.spacing(1)
     },
     divider: {
@@ -44,10 +46,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(1)
-    },
-    checkboxRegisterInfor: {
-        display: 'flex',
-        flexDirection: 'row'
     }
 }))
 
@@ -124,18 +122,19 @@ const SignupPage = () => {
                     />
 
                 <Button 
-                    disabled = {email == '' && password == ''}
-                    variant =  {email == '' && password == '' ? 'warning' : 'primary'}
+                    disabled = {email == '' || password == ''}
+                    variant =  {email == '' || password == '' ? 'warning' : 'primary'}
                     label = 'Sign up'
                     style = {{marginTop: theme.spacing(5)}}
                     onClick = {handleSignup}/>
 
                 <div className = {classes.linkRow}>
-                    <Typography variant = 'label' >
-                        Already have an account?
-                    </Typography>
-                    <Link href = '/auth/login' sx = {{ml: theme.spacing(1), color: theme.palette.success.main}} >
-                        Log in
+                    <Link href = '/auth/login' sx = {{ml: theme.spacing(1), color: theme.palette.success.main}}>
+                        Login
+                    </Link>
+                    <Link href = '/auth/forgot-password' 
+                        sx = {{ml: theme.spacing(1), color: theme.palette.success.main}}>
+                        Reset your password
                     </Link>
                 </div>
 

@@ -9,10 +9,11 @@ import { profileDetailSuccess } from '../../../context/user/actions'
 import { UserContext } from '../../../context/user/context'
 import CollectionList from './component/CollectionList'
 import ProfileHeader from './component/ProfileHeader'
+import HeaderBar from '../../../component/HeaderBar'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
-        backgroundColor: '#f2f2f2'
+        backgroundColor: theme.palette.secondary.main
     }
 }))
 
@@ -21,7 +22,6 @@ const ProfilePage = (props) => {
     const {id} = useParams()
 
     const {user, dispatch} = useContext(UserContext)
-    const collectionDispatch =  useContext(CollectionContext).dispatch
 
     const {token} = useContext(AuthContext)
     useEffect(() => {
@@ -49,6 +49,7 @@ const ProfilePage = (props) => {
 
     return (
         <div className = {classes.container}>
+            <HeaderBar/>
             <ProfileHeader user = {user}/>
             <CollectionList/>
         </div>

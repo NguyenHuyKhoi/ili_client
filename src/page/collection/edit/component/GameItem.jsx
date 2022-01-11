@@ -1,11 +1,13 @@
 import { MoreVert, Star } from '@mui/icons-material'
-import { Button, Typography } from '@mui/material'
+import {Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Button from '../../../../component/Button'
 import { addGameToCollection, removeGameToCollection } from '../../../../context/collection/actions'
 import { CollectionContext } from '../../../../context/collection/context'
+import { theme } from '../../../../theme'
 import { createUrl } from '../../../../util/helper'
 
 const useStyles = makeStyles((theme) => ({
@@ -14,14 +16,15 @@ const useStyles = makeStyles((theme) => ({
         display:'flex',
         flexDirection:'row',
         backgroundColor:'white',
-        padding: theme.spacing(0.5)
+        padding: theme.spacing(1),
+        borderRadius: theme.spacing(0.6)
     },
     left: {
         position: 'relative'
     },
     img: {
-        height: '100%',
-        width: 160,
+        height: theme.spacing(12),
+        aspectRatio: 1.6
     },
     right: {
         flex: 1,
@@ -40,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f2f2f2',
+        backgroundColor: theme.palette.background.main,
         padding: theme.spacing(0.6),
         paddingLeft: theme.spacing(1.5)
     },
@@ -51,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0.6),
         borderRadius: theme.spacing(0.5),
         backgroundColor: 'black',
-        opacity: 0.5,
+        opacity: 0.8,
         zIndex: 99
     }
 }))
@@ -71,7 +74,7 @@ export const GameItem = (props) => {
         }
     }
     return (
-        <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}>
+        <div className = {classes.container}>
             <div className = {classes.left}>
                 <img className = {classes.img} 
                     src = {createUrl(image)}/>
@@ -83,25 +86,20 @@ export const GameItem = (props) => {
             </div>
             <div className = {classes.right}>
                 <div className = {classes.rightTop}>
-                    <Typography variant = 'subtitle1' sx = {{color: 'black', fontWeight: 'bold', flex: 1}}> 
+                    <Typography variant = 'btnLabel' sx = {{color: 'black',flex: 1}}> 
                         {title}
                     </Typography>
                     <div >
                         <Button 
-                            variant='contained' 
+                            variant = {isAdded ? 'primary': 'warning'}
                             size = 'small'
-                            color = {isAdded ? 'neutral':'info'}
-                            sx = {{color: isAdded ? '#333333' : 'white', fontWeight: 'bold', textTransform: 'none'}}
-                            onClick = {handleSelect}>
-                            {
-                                isAdded? 'Added' : 'Add'
-                            }
-                        </Button>
+                            onClick = {handleSelect}
+                            label = { isAdded? 'Added' : 'Add'}/>
                     </div>
                    
                 </div>
                 <div className = {classes.rightBottom}>
-                    <Typography variant = 'subtitle1' sx = {{color: 'black', flex: 1}}>
+                    <Typography variant = 'label' sx = {{color: '#000', flex: 1}}>
                         {owner.username}
                     </Typography>
                 </div>

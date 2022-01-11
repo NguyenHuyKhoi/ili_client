@@ -1,7 +1,8 @@
-import { Button, Modal, Typography } from '@mui/material';
+import { Modal, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { makeStyles } from '@mui/styles';
 import React, {useContext} from 'react';
+import Button from '../../../../component/Button';
 import { CollectionContext } from '../../../../context/collection/context';
 import { GameContext } from '../../../../context/game/other/context';
 import { theme } from "../../../../theme";
@@ -13,39 +14,25 @@ const useStyles = makeStyles((theme) => ({
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
 		width: '40vw',
-		backgroundColor: 'white',
-		borderRadius: theme.spacing(1),
+		backgroundColor: theme.palette.secondary.main,
+		// borderRadius: theme.spacing(1),
 		display: 'flex',
 		flexDirection: 'column',
+		border: 'solid 2px #000000',
+        borderRadius: '255px 5px 225px 5px/5px 225px 5px 255px',
 
     },
 	header: {
-		padding: theme.spacing(3),
-		borderTopLeftRadius: theme.spacing(1),
-		borderTopRightRadius: theme.spacing(1),
-		backgroundColor: 'white',
+		paddingTop: theme.spacing(1),
 		display: 'flex',
 		flexDirection: 'column'
 	},
 	body: {
 		display: 'flex',
-		padding: theme.spacing(3),
+		margin: theme.spacing(2),
 		flexDirection: 'column',
-		backgroundColor: grey[200],
 		overflow: 'auto',
 		maxHeight: '50vh'
-	},
-	question: {
-		marginBottom: theme.spacing(2),
-	},
-	footer: {
-		padding: theme.spacing(2),
-		borderBottomLeftRadius: theme.spacing(1),
-		borderBottomRightRadius: theme.spacing(1),
-		backgroundColor: 'white',
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'center'
 	}
 }))
 
@@ -76,27 +63,28 @@ const AddGamesModal = (props) => {
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
 				<div className = {classes.header}>
-					<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
+					<Typography variant = 'header' sx = {{ color: '#000', alignSelf: 'center'}}>
 						Choose Games
 					</Typography>
 				</div>
 				<div className= {classes.body}>
 					{
 						allGames.map((game, index) => (
-							<GameItem game = {game}
-								key = {''+ index}
-								isAdded = {inAddedGames(game._id)}
-								/>
+							<div style = {{marginBottom: theme.spacing(2)}}>
+								<GameItem game = {game}
+									key = {''+ index}
+									isAdded = {inAddedGames(game._id)}
+									/>
+							</div>
 						))
 					}
 				</div>
-				<div className = {classes.footer}>
-					<Button variant="contained" color="success" 
-						sx = {{ml: theme.spacing(2), fontWeight: 'bold', textTransform: 'none'}}
-						onClick = {handleClose}>
-						Done
-					</Button>
-				</div>
+
+				<Button 
+					variant="primary"
+					onClick = {handleClose}
+					style = {{width: theme.spacing(20), alignSelf: 'center', margin: theme.spacing(3	)}}
+					label = 'Done'/>
 			</div>
 		</Modal>
 	);

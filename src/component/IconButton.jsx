@@ -3,14 +3,13 @@ import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { theme } from '../theme'
+import { Icon } from './Icon'
+import logout_icon from '../asset/image/logout_icon.png'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
-        minWidth: theme.spacing(10),
         border: 'solid 2px #000000',
         borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
-        justifyContent: 'center',
-        alignItems: 'center',
         '&:hover': {
             cursor: 'pointer'
         }
@@ -18,12 +17,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const Button = (props) => {
+const IconButton = (props) => {
     const classes = useStyles()
-    var {label, variant, style, disabled, size} = props
+    var {icon, variant, style, disabled, size} = props
     
     if (!variant) variant = 'default'
     if (!size) size = 'medium'
+    console.log("Icon :", icon)
+
     return (
         <div className = {classes.container}
             disabled = {disabled || false}
@@ -32,19 +33,15 @@ const Button = (props) => {
             }}
             style = {{
                 backgroundColor: theme.palette[variant].main,
-                padding: size == 'small' ? theme.spacing(0.4) 
+                padding: size == 'small' ? theme.spacing(0.6) 
                         : size == 'medium' ? theme.spacing(1) 
                         : theme.spacing(1.5),
                 ...style,
             }}>
-            <Typography variant = 'btnLabel' className = {classes.label}>
-                {
-                    label
-                }
-            </Typography>
+            <Icon name = {icon} style = {{color: '#000'}}/>
         </div>
 
     )
 }
 
-export default Button
+export default IconButton

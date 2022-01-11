@@ -42,7 +42,9 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     linkRow: {
-        alignSelf: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         marginTop: theme.spacing(1)
     },
     btn: {
@@ -142,30 +144,21 @@ const LoginPage = () => {
                     style = {{marginTop: theme.spacing(2)}}
                     />
 
-                <div className = {classes.forgotPassword}>
-                    <Typography variant = 'label' >
-                        Forgot password?
-                    </Typography>
-                    <Link href = '/auth/forgot-password' 
-                        sx = {{ml: theme.spacing(1), color: theme.palette.success.main}}>
-                        Reset your password
-                    </Link>
-                </div>
-
                 <Button 
-                    disabled = {email == '' && password == ''}
-                    variant =  {email == '' && password == '' ? 'warning' : 'primary'}
+                    disabled = {email == '' || password == ''}
+                    variant =  {email == '' || password == '' ? 'warning' : 'primary'}
                     label = 'Login'
                     style = {{marginTop: theme.spacing(5)}}
                     onClick = {handleLogin}/>
               
 
                 <div className = {classes.linkRow}>
-                    <Typography variant = 'label' >
-                        Don't have an account?
-                    </Typography>
                     <Link href = '/auth/signup' sx = {{ml: theme.spacing(1), color: theme.palette.success.main}}>
                         Sign up
+                    </Link>
+                    <Link href = '/auth/forgot-password' 
+                        sx = {{ml: theme.spacing(1), color: theme.palette.success.main}}>
+                        Reset your password
                     </Link>
                 </div>
 

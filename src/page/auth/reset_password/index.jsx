@@ -130,8 +130,8 @@ const ResetPasswordPage = (props) => {
                             style = {{marginTop: theme.spacing(3)}}
                             />
                         <Button 
-                            disabled = {password == '' && repeatPassword == ''}
-                            variant =  {password == '' && repeatPassword == '' ? 'warning' : 'primary'}
+                            disabled = {password == '' || repeatPassword == ''}
+                            variant =  {password == '' || repeatPassword == '' ? 'warning' : 'primary'}
                             label = 'Reset password'
                             style = {{marginTop: theme.spacing(5)}}
                             onClick = {handleSubmit}/>

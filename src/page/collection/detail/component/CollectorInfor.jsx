@@ -9,21 +9,18 @@ const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1, 
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
     img: {
         widows: '100%',
-        height: 360,
-        borderRadius: theme.spacing(1.5)
+        height: theme.spacing(30)
     },
     body: {
         flex:1, 
         display: 'flex',
         flexDirection: 'column',
         padding: theme.spacing(2),
-        borderRadius: theme.spacing(1.5),
         marginTop: theme.spacing(2),
-        backgroundColor: 'white'
     }
 }))
 
@@ -36,11 +33,11 @@ const CollectorInfor = (props) => {
         <div className = {classes.container}>
             <img className = {classes.img} src = {createUrl(cover)}/>
             <div className = {classes.body} >
-                <Typography variant= 'h6' sx = {{color: '#333333', fontWeight: 'bold'}}>
-                    {title}
+                <Typography variant= 'bigLabel' sx = {{color: '#000'}}>
+                    {title} 
                 </Typography>
 
-                <Typography variant= 'subtitle2' sx = {{color: '#5f5f5f', fontWeight: 'bold', my: theme.spacing(1)}}>
+                <Typography variant= 'label' sx = {{color: '#000', my: theme.spacing(1)}}>
                     {description == '' || description == null ? 'No description...' : description}
                 </Typography>
                 <OwnerInfor owner = {owner} />

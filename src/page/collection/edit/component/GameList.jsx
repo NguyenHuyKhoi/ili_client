@@ -9,10 +9,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection:'column',
     },
-    list: {
-        display:'flex',
-        flexDirection:'column'
-    },
     item: {
         marginBottom: theme.spacing(2),
         display:'flex',
@@ -25,7 +21,6 @@ const GameList = (props) => {
     const {games} = props
     return (
         <div className = {classes.container}>
-            <div className = {classes.list} >
             {
                 games.map((game, index) => (
                     <div className = {classes.item}   key = {''+index}>
@@ -33,7 +28,6 @@ const GameList = (props) => {
                     </div>
                 ))
             }
-            </div>
         </div>
     )
 }

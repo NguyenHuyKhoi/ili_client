@@ -1,5 +1,5 @@
 import { MoreVert, Star } from '@mui/icons-material'
-import { Avatar, Button, Link, Typography } from '@mui/material'
+import {Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React, {useContext} from 'react'
@@ -8,13 +8,17 @@ import { selectGame } from '../../../context/game/other/actions'
 import { GameContext } from '../../../context/game/other/context'
 import { theme } from '../../../theme'
 import {createUrl} from '../../../util/helper'
+
+import Button from '../../../component/Button'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
         display:'flex',
         flexDirection:'row',
-        backgroundColor:'white',
-        padding: theme.spacing(0.5)
+        padding: theme.spacing(0.5),
+        '&:hover': {
+            cursor: 'pointer'
+        }
     },
     left: {
         position: 'relative'
@@ -32,14 +36,13 @@ const useStyles = makeStyles((theme) => ({
         flex:1,
         display: 'flex',
         flexDirection: 'row',
-        backgroundColor: 'white',
         padding: theme.spacing(1.5)
     },
     rightBottom: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: grey[100],
+        backgroundColor: theme.palette.neutral.main,
         padding: theme.spacing(0.6),
         paddingLeft: theme.spacing(2)
     },
@@ -61,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(0.6),
         paddingRight: theme.spacing(0.6),
         borderRadius: theme.spacing(0.5),
-        backgroundColor: 'red',
+        backgroundColor: theme.palette.error.main,
         opacity: 0.8,
         zIndex: 99
     },
@@ -95,7 +98,7 @@ export const GameRowItem = (props) => {
         navigate('/match/host/setting', {replace: false})
     }
     return (
-        <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}
+        <div className = {classes.container} style={{backgroundColor: '#fff'}}
             onClick={handleViewDetail}>
             <div className = {classes.left}>
                 <img className = {classes.img} 
@@ -110,22 +113,27 @@ export const GameRowItem = (props) => {
             </div>
             <div className = {classes.right}>
                 <div className = {classes.rightTop}>
-                    <Typography variant = 'subtitle1' sx = {{color: '#333333', fontWeight: 'bold', flex: 1}}> 
+                    <Typography variant = 'btnLabel' sx = {{color: '#000', flex: 1}}> 
                         {title}
                     </Typography>
-                    <Star sx = {{color: '#C79200'}} />
                 </div>
                 <div className = {classes.rightBottom}>
-                    <Avatar src = {createUrl(owner.avatar)} sx={{ width: 24, height: 24 }}  />
-                    <Typography variant = 'subtitle1' sx = {{color: '#7D7D7D', flex: 1, ml: theme.spacing(1)}}>
+                    <Typography variant = 'label' sx = {{color: '#000', flex: 1}}>
                         {owner.username}
                     </Typography>
-                    <Button variant = 'contained' size = 'small' color = 'primary' 
-                        sx = {{ml: theme.spacing(2), fontWeight: 'bold', textTransform: 'none'}}
-                        onClick = {handleEdit}>Edit </Button>
-                    <Button variant = 'contained' size = 'small' color = 'success' 
-                        sx = {{ml: theme.spacing(2), fontWeight: 'bold', textTransform: 'none'  }}
-                        onClick = {handlePlay}>Play </Button>
+                    <Button 
+                        variant = 'success' 
+                        size = 'small' 
+                        style = {{marginLeft: theme.spacing(2)}}
+                        label = 'Edit'
+                        onClick = {handleEdit}/>
+
+                  <Button 
+                        variant = 'primary' 
+                        size = 'small' 
+                        style = {{marginLeft: theme.spacing(2)}}
+                        label = 'Play'
+                        onClick = {handlePlay}/>
                 </div>
             </div>
         </div>

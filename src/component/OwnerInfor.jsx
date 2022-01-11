@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
     },
     infor: {
         display: 'flex',
-        flexDirection: 'column',
-        marginLeft: theme.spacing(1)
+        flexDirection: 'row',
+        alignItems: 'center',
     }
 }))
 
@@ -28,15 +28,19 @@ export const OwnerInfor = (props) => {
         navigate('/profiles/' + id , {replace: false})
     }
     return (
-        <div className = {classes.container} onClick={handleViewProfile}>
-            <Avatar alt="Remy Sharp" src={createUrl(avatar)} sx = {{width: theme.spacing(4), height: theme.spacing(4)}}/>
+        <div className = {classes.container} >
             <div className ={classes.infor}>
-                <Typography variant = 'caption' sx = {{color: '#333333', fontWeight: 'bold'}}>
-                    {username}
+                <Typography variant = 'label' sx = {{color: '#000'}}>
+                    {'Owner:'}
                 </Typography>
-                <Typography variant = 'caption' sx = {{color: '#5f5f5f'}}>
-                    Update 1 hour ago
-                </Typography>
+                <div onClick={handleViewProfile}>
+                    <Typography variant = 'btnLabel' sx = {{color: '#000', fontWeight: 'bold', ml: theme.spacing(2),
+                        '&:hover': {
+                            cursor: 'pointer'
+                        }}}>
+                        {username}
+                    </Typography>
+                </div>
             </div>
         </div>
     )

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     item: {
         display: 'flex',
         flexDirection: 'row',
-        padding: theme.spacing(1.2),
+        padding: theme.spacing(0.7),
         alignItems: 'center',
         marginLeft: theme.spacing(1.5)
     }
@@ -37,20 +37,23 @@ export const TabItem = (props) => {
         navigate(link, {replace: true})
     }
 
+
+    var primary = theme.palette.primary.main
+    var warning = theme.palette.warning.main
     return (
         <div className = {classes.item}
             onClick = {handleClick}
             style ={{
                 borderBottom: isSelected ?
-                    '3px solid #46178f' : null
+                    `3px solid ${primary}` : null
             }}>
             {/* <HomeOutlined sx = {{
                 color: isSelected ? '#46178f':'gray'
             }}/> */}
-            <Icon name = {icon} style = {{ color: isSelected ? '#46178f':'gray'}}/>
-            <Typography variant = 'subtitle1' 
+            <Icon name = {icon} style = {{ color: isSelected ? primary : '#000'}}/>
+            <Typography variant = 'btnLabel' 
                 sx = {{ml: theme.spacing(1.5),
-                    color: isSelected ? '#46178f':'#333333'}}>
+                    color: isSelected ? primary : '#000'}}>
                 {label}
             </Typography>
         </div> 
@@ -58,7 +61,6 @@ export const TabItem = (props) => {
 }
 
 const Tabbar = (props) => {
-    const navigate = useNavigate()
     const classes = useStyles()
     const {selectedIndex, tabs} = props
 

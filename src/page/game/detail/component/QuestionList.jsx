@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
         padding: theme.spacing(2),
-        backgroundColor: '#f2f2f2',
+        backgroundColor: theme.palette.background.main,
         height: '100vh',
         display: 'flex',
         flexDirection:'column',
@@ -46,11 +46,14 @@ const QuestionList = (props) => {
     return (
         <div className = {classes.container}>
             <div className = {classes.header}>
-                <Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}}>
+                <Typography variant = 'btnLabel' sx = {{color: '#000'}}>
                     {`Question(${questions ? questions.length : 0})`}
                 </Typography>
                 <div onClick = {handleShowAllChange}>
-                    <Typography  variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333', textDecoration: 'underline'}}>
+                    <Typography  variant = 'btnLabel' sx = {{ color: '#000', textDecoration: 'underline',
+                        '&:hover': {
+                            cursor: 'pointer'
+                        }}}>
                         {
                             isShowAll?
                             'Hide Answers'

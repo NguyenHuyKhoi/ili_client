@@ -1,10 +1,9 @@
-import { Avatar, Button, Link, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import logo from '../../../../asset/image/logo.png'
+import Button from '../../../../component/Button'
 import OwnerInfor from '../../../../component/OwnerInfor'
-import { startEditGame } from '../../../../context/game/creator/actions'
 import { theme } from '../../../../theme'
 import { createUrl } from '../../../../util/helper'
 
@@ -50,23 +49,26 @@ const GameInfor = (props) => {
         <div className = {classes.container}>
             <img className = {classes.gameImg} src = {createUrl(cover)}/>
             <div className = {classes.body} >
-                <Typography variant = 'h5' sx = {{fontWeight: 'bold', color: 'black'}}>
+                <Typography variant = 'bigLabel' sx = {{ color: 'black', mt: theme.spacing(2)}}>
                     {title}
                 </Typography>
-                <Typography variant = 'subtitle2' sx = {{my: theme.spacing(2)}}>
+                <Typography variant = 'label' sx = {{my: theme.spacing(2)}}>
                     {description == '' || description == null? 'No description...' : description}
                 </Typography>
                 <div className = {classes.btnBar} >
-                    <Button variant="contained" color="success"
+                    <Button 
+                        variant="success"
+                        size = 'small'
+                        onClick={handleEdit}
+                        label = 'Edit'
+                        />
+                    <Button 
+                        variant="primary" 
+                        size = 'small'
+                        color="success"
+                        style = {{marginLeft: theme.spacing(2)}}
                         onClick={handlePlay}
-                        sx = {{color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
-                        Play
-                    </Button>
-                    <Button variant="contained" color="primary" 
-                        sx = {{mx: theme.spacing(2),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
-                        onClick={handleEdit}>
-                        Edit
-                    </Button>
+                        label = 'Play'/>
                 </div>
                 <div style= {{marginTop: theme.spacing(2)}}>
                     <OwnerInfor owner = {owner}/>

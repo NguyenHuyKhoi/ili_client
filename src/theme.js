@@ -7,7 +7,10 @@ export const theme = createTheme({
           main: '#f2d55d',
         },
         secondary: {
-          main: '#FDF4CB'
+          main: '#f6e9bd'
+        },
+        background: {
+          main: '#f2f2f2'
         },
         error: {
           main: '#ec7555'
@@ -33,6 +36,9 @@ export const theme = createTheme({
       label: {
         fontSize: 16, 
       },
+      caption: {
+        fontSize: 14, 
+      },
       btnLabel: {
         fontSize: 20
       },
@@ -42,6 +48,9 @@ export const theme = createTheme({
       button: {
         fontStyle: 'italic',
       },
+      bigLabel: {
+        fontSize: 26
+      }
     },
     components: {
       MuiCssBaseline: {

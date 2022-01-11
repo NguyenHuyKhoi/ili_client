@@ -1,4 +1,4 @@
-import { AppBar, Button, Toolbar, Typography } from '@mui/material'
+import { AppBar, Toolbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -6,16 +6,17 @@ import { CollectionContext } from '../../../../context/collection/context'
 import { GameCreatorContext } from '../../../../context/game/creator/context'
 import { theme } from '../../../../theme'
 import logo from '../../../../asset/image/logo.png'
+import Button from '../../../../component/Button'
 const useStyles = makeStyles((theme) => ({
     toolbar: {
         display: 'flex',
         alignItems:'center',
         justifyContent:'space-between',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        height: theme.spacing(8)
     },
     logo: {
-        width: 100,
-        height:30
+        height: theme.spacing(6)
     },
     settingBox: {
         display: 'flex',
@@ -23,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent:'space-between',
         flexDirection:'row',
         marginLeft: theme.spacing(2),
-        border: '1px solid #f2f2f2',
+        border: '1px solid #000',
         borderRadius: theme.spacing(0.4),   
-        padding: theme.spacing(0.6),
+        padding: theme.spacing(0.2),
         paddingLeft: theme.spacing(1.5),
         alignItems: 'center'
     },
@@ -40,7 +41,7 @@ const Topbar = (props) => {
     const {collection} = useContext(CollectionContext)
     const {title} = collection
     return (
-        <AppBar position = 'fixed' sx = {{height: 60}}>
+        <AppBar position = 'fixed'>
             <Toolbar className = {classes.toolbar}>
                 <div onClick = {() => navigate('/', {replace: false})}>
                     <img src = {logo} className = {classes.logo}/>
@@ -53,7 +54,7 @@ const Topbar = (props) => {
                     }}
                 
                 >
-                    <Typography variant='subtitle1' sx = {{color: '#333333', fontWeight: 'bold'}}> 
+                    <Typography variant='label' sx = {{color: '#000', fontWeight: 'bold'}}> 
                         {
                             title == '' || title == null ?
                             'Enter name ...'
@@ -63,26 +64,29 @@ const Topbar = (props) => {
                      
                     </Typography>
                     <Button 
-                        variant="contained" size = "small" color = "primary" 
-                        sx = {{ marginLeft: theme.spacing(3), color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
-                        Setting
-                        </Button>
+                        variant="primary"
+                        size = 'small'
+                        style = {{ marginLeft: theme.spacing(3)}}
+                        label = 'Setting'/>
                 </div>
                 <div style = {{flex:1}}/> 
-                <Button variant="outlined" color = "neutral"  
-                    sx = {{ marginLeft: theme.spacing(3),color: '#333333',borderColor: '#333333' ,fontWeight: 'bold', textTransform: 'none'}}
+                <Button 
+                    variant="warning" 
+                    size = 'small'
+                    style = {{ marginLeft: theme.spacing(3)}}
                     onClick = {() => {
                         navigate(-1)
                     }}
-                    >Exit</Button>
-                <Button variant="contained" color = "success" 
-                    sx = {{ marginLeft: theme.spacing(3),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
+                    label = 'Exit'
+                    />
+                <Button
+                    variant="success" 
+                    size = 'small'
+                    style = {{ marginLeft: theme.spacing(3)}}
                     onClick = {() => {
                         if (props.onSave) props.onSave()
                     }}
-                    >
-                    Save
-                </Button>
+                    label = 'Save'/>
             </Toolbar>
         </AppBar>
     )

@@ -1,5 +1,5 @@
 import { validateUrl } from "../validator"
-import no_image from '../../asset/image/no_image_available.jpg'
+import no_image from '../../asset/image/background2.jpg'
 export const createUrl = (data) => {
     //console.log("Create url with :",data)
     if (data == undefined || data == null) {

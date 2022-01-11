@@ -1,7 +1,10 @@
-import { Button, Typography } from '@mui/material'
+import {Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
+import Button from '../../../../component/Button'
+import { theme } from '../../../../theme'
 import { createUrl } from '../../../../util/helper'
+
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -9,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
     },
     banner: {
         width: '100%',
-        height: 200,
+        height: theme.spacing(30),
+        objectFit: 'cover'
     },
     body: {
         display: 'flex',
@@ -29,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: theme.spacing(8),
         top: theme.spacing(-8),
         left: theme.spacing(10),
-        padding: 1,
-        backgroundColor: 'white'
+        padding: 2,
+        backgroundColor: theme.palette.primary.main
     },
     inforLeft: {
         flex: 1,
@@ -58,10 +62,10 @@ const InforItem = (props) => {
     const {label, value} = props 
     return (
         <div className = {classes.inforItem}>
-            <Typography variant = 'subtitle2' sx = {{color: '#5f5f5f'}} >
+            <Typography variant = 'label' sx = {{color: '#5f5f5f'}} >
                 {label}
             </Typography>
-            <Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}} > 
+            <Typography variant = 'bigLabel' sx = {{fontWeight: 'bold', color: '#333333'}} > 
                 {value}
             </Typography>
         </div>
@@ -72,29 +76,37 @@ const ProfileHeader = (props) => {
     const classes = useStyles()
     const {user} = props
 
-    const {username, avatar, banner} = user
+    var {name, avatar, banner} = user
+    name = 'User name'
+
+    const handleFollow = () => {
+
+    }
     return (
         <div className = {classes.container}>
             <img className = {classes.banner} 
                 src = {createUrl(banner)}/>
             <div className = {classes.body}>
-                <img className = {classes.avatar} alt="Remy Sharp" 
-                    src={createUrl(avatar)}/>
+                <img className = {classes.avatar}
+                    src={createUrl(banner)}/>
                 <div className = {classes.inforLeft}>
-                    <Typography variant = 'h5' sx = {{fontWeight: 'semi-bold', color: '#333333'}}>  
-                        {username}
+                    <Typography variant = 'header' sx = {{fontWeight: 'bold', color: '#333333'}}>  
+                        {name}
                     </Typography>
-                    <Typography variant = 'h6'> . </Typography>
                 </div>
                 <div className = {classes.inforRight}>
                     <InforItem label = {'Games'} value = {120} />
                     <InforItem label = {'Collections'} value = {12} />
                     <InforItem label = {'Matches'} value = {12}/>
                 </div>
-                <Button size = 'large' variant = 'contained' color = 'primary'
-                    sx = {{fontWeight: 'bold', textTransform: 'none', color: 'white', width: 160}}>
-                    Follow
-                </Button>
+
+                <Button 
+                    size = 'medium'
+                    label = 'FOLLOW'
+                    variant = 'secondary'
+                    style = {{width: theme.spacing(25)}}
+                    onClick = {handleFollow}/>
+              
 
             </div>
         </div>

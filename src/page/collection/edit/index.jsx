@@ -1,10 +1,11 @@
 import { Add } from '@mui/icons-material'
-import { Button, Grid, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Button from '../../../component/Button'
 import { AuthContext } from '../../../context/auth/context'
 import { saveLocalEditedCollection } from '../../../context/collection/actions'
 import { CollectionContext } from '../../../context/collection/context'
@@ -20,7 +21,7 @@ import Topbar from './component/Topbar'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
-        backgroundColor:'#f2f2f2',
+        backgroundColor: theme.palette.background.main,
         height: '100vh'
     },
     body: {
@@ -30,19 +31,16 @@ const useStyles = makeStyles((theme) => ({
     },
     header: {
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: theme.spacing(2),
-        backgroundColor: 'white',
+        padding: theme.spacing(3)
     },
     collectionsContainer: {
-        backgroundColor: '#f2f2f2',
         padding: theme.spacing(2),
-        boxShadow: "1px 4px 6px #5f5f5f"
     },
     emptyDiv: {
         height: 120,
-        border: '1px dashed #5f5f5f',
+        border: '1px dashed #000',
         display: 'flex', 
         justifyContent: 'center', 
         alignItems: 'center',
@@ -104,7 +102,7 @@ const CollectionEditPage = () => {
                 onDone = {handleSave}
             />
             <SuccessModal 
-                open = {modal.state == 'success'}
+                open = {true}
                 onClose = {() => setModal({})}
                 onDone = {() => {navigate(-1)}}
             />
@@ -113,7 +111,7 @@ const CollectionEditPage = () => {
                 onClose = {() => setModal({})}
                 onDone = {handleSave}
             />
-            <Grid container sx = {{mt: theme.spacing(8), p: theme.spacing(3)}} columnSpacing={2}>
+            <Grid container sx = {{mt: theme.spacing(8)}} columnSpacing={2}>
                 <Grid item sm={3} >
                     <CollectorInfor onSetting = {() =>setModal({state: 'setting'})}/>
                 </Grid>
@@ -121,30 +119,23 @@ const CollectionEditPage = () => {
                 <Grid item sm={9}>
                     <div className= {classes.body}>
                         <div className= {classes.header} >
-                            <Typography variant= 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}}>
-                                Collection Content
-                            </Typography>
-
-                            <Typography variant= 'subtitle2' sx = {{ color: '#5f5f5f', mt: theme.spacing(1)}}>
-                                Create a series of games.
-                            </Typography>
-                            <div style = {{marginTop: theme.spacing(1)}}>
-                                <Button     
-                                    sx = {{color: 'white', fontWeight: 'bold', textTransform: 'none'}}
-                                    variant= 'contained' 
-                                    onClick = {() => setModal({state: 'add_games'})}>
-                                    Add game
-                                </Button>
-                            </div>
+                            <div/>
+                            <Button   
+                                variant = 'primary'  
+                                label = 'Add games'
+                                style = {{width: theme.spacing(22)}}
+                                onClick = {() => setModal({state: 'add_games'})}/>
                             
                         </div>
                         <div className= {classes.collectionsContainer}>
                             {
                                 games.length == 0? 
                                 <div className= {classes.emptyDiv} onClick = {() => setModal({state: 'add_games'})}>
-                                    <Add sx = {{color: '#333333', fontSize: 30, mr: theme.spacing(1)}}/>
-                                    <Typography variant='subtitle1' sx = {{color: '#333333'}}>
-                                        Add a game
+                                    <Typography variant='bigLabel' sx = {{color: '#000', 
+                                            '&:hover': {
+                                                cursor: 'pointer'
+                                            }}}>
+                                        Add a game? Click me!
                                     </Typography>
                                 </div>
                                 :

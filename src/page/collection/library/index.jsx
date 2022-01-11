@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from '@mui/material'
+import {  Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
@@ -9,6 +9,7 @@ import { CollectionContext } from '../../../context/collection/context'
 import SideMenu from '../../game/library/component/SideMenu'
 import CreateModal from './component/CreateModal'
 import CollectionList from './component/CollectionList'
+import Button from '../../../component/Button'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,14 +19,14 @@ const useStyles = makeStyles((theme) => ({
     body: {
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#F2F2F2'
+        backgroundColor: theme.palette.background.main
     },
     header: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: theme.spacing(4),
-        padding: theme.spacing(2)
+        paddingTop: theme.spacing(3),
+        paddingRight: theme.spacing(3   )
     }
 }))
 
@@ -78,13 +79,11 @@ const CollectionLibraryPage = () => {
                 <Grid item sm={10}>
                     <div className= {classes.body}>
                         <div className= {classes.header} >
-                            <Typography variant= 'h6' sx = {{fontWeight: 'bold', color: '#333333'}}>
-                                Collections
-                            </Typography>
-                            <Button variant= 'contained' onClick = {() => setModal({state: 'create'})}
-                                sx = {{color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
-                                Create
-                            </Button>
+                            <div/>
+                            <Button 
+                                variant= 'primary' 
+                                onClick = {() => setModal({state: 'create'})}
+                                label = {'Create one'}/>
                         </div>
                         <CollectionList collections = {collections}/>
                     </div>

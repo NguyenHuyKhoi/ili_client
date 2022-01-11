@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
         flex:1,
         display:'flex',
         flexDirection:'column',
-        backgroundColor:'gray'
     },
     header: {
         display: 'flex',
@@ -26,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         flex: 1, 
         display: 'flex',
         flexDirection: 'column',
-        padding: theme.spacing(1),
+        padding: theme.spacing(2),
         backgroundColor: 'white',
     },  
     time_limit: {
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: theme.spacing(0.6),
         borderRadius: theme.spacing(0.5),
         backgroundColor: 'black',
-        opacity: 0.4,
+        opacity: 0.8,
         zIndex: 99
     },
     answers: {
@@ -72,20 +71,21 @@ const Answer = (props) => {
     console.log("ANswer ", answer, correct)
     return (
         <div className = {classes.answer} >
-            <Icon name = {icon} 
+            <Icon 
+                name = {icon} 
                 style = {{
-                    backgroundColor: color,fontSize: 20, color: 'white', 
-                    p: theme.spacing(0.8), borderRadius: theme.spacing(0.4)}}/>
-            <Typography sx = {{flex: 1, mx: theme.spacing(3)}} variant = 'h6'>
+                    backgroundColor: color,fontSize: 32, color: 'white', 
+                    p: theme.spacing(1), borderRadius: theme.spacing(0.4)}}/>
+            <Typography sx = {{flex: 1, mx: theme.spacing(3)}} variant = 'btnLabel'>
                 {
                     answer
                 }
             </Typography>
             {
                 correct ? 
-                <Check  sx = {{ color: 'green'}}/>
+                <Check  sx = {{ color: theme.palette.success.main}}/>
                 :
-                <Close sx = {{ color: '#E21B3C'}}/>
+                <Close sx = {{ color:  theme.palette.error.main}}/>
             }
         </div>
     )
@@ -109,14 +109,15 @@ const QuestionRowItem = (props) => {
         }
     }, [isShowAll])
     return (
-        <div className = {classes.container} style={{ border: selected ? '1.5px solid #1260BE': 'none'}}>
+        <div className = {classes.container} 
+            style={{ border: selected ? `3px solid ${theme.palette.success.main}`: 'none'}}>
             <div className = {classes.header} onClick = {handleShowChange}>
               
                 <div className = {classes.infor}>
-                    <Typography variant = 'subtitle1'>
+                    <Typography variant = 'label'>
                         {`${index + 1} - Quiz`}
                     </Typography>
-                    <Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}}>
+                    <Typography variant = 'bigLabel' sx = {{ color: '#000'}}>
                         {title}
                     </Typography>
                 </div>

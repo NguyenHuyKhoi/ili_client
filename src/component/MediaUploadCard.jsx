@@ -1,8 +1,9 @@
-import { Button, Typography } from '@mui/material'
+import {Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, {useRef} from 'react'
 import { theme } from '../theme'
+import Button from './Button'
 import { createUrl } from '../util/helper'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -25,11 +26,13 @@ const useStyles = makeStyles((theme) => ({
 
 const MediaUploadCard = (props) => {
     const classes = useStyles()
-    const {image} = props
+    const {image, label} = props
+    const inputFile = useRef(null) 
     //console.log('src :', src)
     const handleSelectImage = (e) => {
         if (e.target.files.length > 0) {
             let file = e.target.files[0]
+            console.log("Select file: ", file)
             if (props.onSelectImage) {
                 props.onSelectImage(file)
             }
@@ -47,39 +50,38 @@ const MediaUploadCard = (props) => {
             {
                 image == undefined? 
                 <>
-                <Button variant='contained' size = 'large' color="primary" aria-label="upload picture"
-                component="label"
-                sx = {{color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
-                    Upload
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange= {handleSelectImage}
-                        hidden
-                    />
-                </Button>
-                <Typography variant='h6' sx = {{color: '#757575', mt: theme.spacing(3)}} >
-                    Upload a image
+                <Button 
+                    variant='primary' 
+                    size = 'small'
+                    component="label"
+                    label = 'Select image'
+                    onClick = {() => inputFile.current.click()}/>
+                <input
+                    ref={inputFile}
+                    type="file"
+                    accept="image/*"
+                    onChange= {handleSelectImage}
+                    hidden
+                        
+                />
+                <Typography variant='bigLabel' sx = {{color: '#000', mt: theme.spacing(3)}} >
+                    {label}
                 </Typography>
                 </>
                 :
                 <>
                     <img src = {createUrl(image)} className = {classes.img}/>
                     <Button 
-                        variant = 'contained'
+                        variant = 'primary'
                         onClick = {handleRemoveImage}
                         size = 'small'
-                        sx = {{
-                            color: '#333333',
-                            backgroundColor: 'white',
-                            fontWeight: 'bold',
-                            textTransform: 'none',
+                        style = {{
+                            color: '#000',
                             position: 'absolute', 
                             bottom: 10,
                             right: 10
-                        }}>
-                        Remove
-                    </Button>
+                        }}
+                        label = 'Remove'/>
                 </>
             }
          

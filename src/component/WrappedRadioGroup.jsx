@@ -16,15 +16,15 @@ const WrappedRadioGroup = (props) => {
     }
     return (
         <FormControl fullWidth>
-           <Typography variant = 'subtitle2' 
-                sx= {{fontWeight: 'bold', color: '#333333', mt: theme.spacing(2)}} >
+           <Typography variant = 'btnLabel' 
+                sx= {{color: '#000', mt: theme.spacing(2), alignSelf: 'center'}} >
                 {title}
             </Typography>
             <RadioGroup
                 aria-label="gender"
                 value = {value}
                 name="radio-buttons-group"
-                sx = {{display: 'flex',flexDirection: 'row'}}
+                sx = {{display: 'flex',flexDirection: 'row', justifyContent: 'space-around'}}
                 onChange={(e) => handleChange(e.target.value)}
             >
                 {

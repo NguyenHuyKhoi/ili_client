@@ -5,11 +5,11 @@ import HeaderBar from '../../../component/HeaderBar'
 import GameList from './component/GameList'
 import SideMenu from './component/SideMenu'
 
-
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
-        height: '100%'
+        height: '100%',
+        backgroundColor: '#f2f2f2'
     }
 }))
 
