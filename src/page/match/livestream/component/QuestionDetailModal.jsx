@@ -6,6 +6,7 @@ import youtube_icon from '../../../../asset/image/youtube_icon.png';
 import { MatchPlayContext } from '../../../../context/match/play/context';
 import { theme } from "../../../../theme";
 import QuestionRowItem from '../../../game/detail/component/QuestionRowItem';
+import { STREAM_ACCOUNT_TYPES_ID } from './SettingModal';
 
 
 /* global gapi */
@@ -52,25 +53,7 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: theme.spacing(1)
 	}
 }))
-const STREAM_ACCOUNT_TYPES_ID = {
-	YOUTUBE_BROAD_CAST: 0,
-	FB_LIVESTREAM_PROPFILE: 1,
-	FB_LIVESTREAM_GROUP: 2
-}
 
-const STREAM_ACCOUNT_TYPES = [
-	{
-		logo: youtube_icon,
-		title: 'Youtube broadcast',
-		id: STREAM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST
-
-	},
-	{
-		logo: facebook_icon,
-		title: 'Fb livestream profile',
-		id: STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROPFILE
-	}
-]
 
 const QuestionDetailModal = (props) => {
 	const classes = useStyles()

@@ -29,7 +29,6 @@ const reducer = (state, action) => {
             return newState
         }
         case 'UPDATE_LIVESTREAM_STAGE': {
-            console.log("Update livestreamStage", livestreamStage)
             return {
                 ...state,
                 livestreamStage

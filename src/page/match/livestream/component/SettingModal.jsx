@@ -7,6 +7,7 @@ import youtube_icon from '../../../../asset/image/youtube_icon.png';
 import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
 import { theme } from "../../../../theme";
 import YoutubeHelper from '../../../../util/platform/youtube';
+import FacebookHelper from '../../../../util/platform/facebook';
 import AccountCard from './AccountCard';
 
 
@@ -56,8 +57,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 export const STREAM_ACCOUNT_TYPES_ID = {
 	YOUTUBE_BROAD_CAST: 0,
-	FB_LIVESTREAM_PROPFILE: 1,
-	FB_LIVESTREAM_GROUP: 2
+	FB_LIVESTREAM_PROFILE: 1,
+	FB_LIVESTREAM_GROUP: 2,
+	FB_LIVESTREAM_PAGE: 3
 }
 
 const STREAM_ACCOUNT_TYPES = [
@@ -70,7 +72,7 @@ const STREAM_ACCOUNT_TYPES = [
 	{
 		logo: facebook_icon,
 		title: 'Fb livestream profile',
-		id: STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROPFILE
+		id: STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE
 	}
 ]
 
@@ -121,7 +123,18 @@ const SettingModal = (props) => {
 	}
 
 	const activeFBProfile = () => {
-		if (props.onAlert) props.onAlert('Not supported now')
+		FacebookHelper.auth()
+			.then((res) => {
+				let account = {
+					...res,
+					accountType: STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE
+				}
+				handleChange('account', account)
+				console.log("Auth Fb success: ", account)
+			})
+			.catch((err) => {
+				console.log("FB Auth error: ", err.error)
+			})
 	}
 
 	const selectAccountType = (type) => {
@@ -134,12 +147,13 @@ const SettingModal = (props) => {
 				case STREAM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST:
 					activeYT()
 					break
-				case STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROPFILE:
+				case STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE:
 					activeFBProfile()
 					break
 			}
 		}
 	}
+
 	return (
 		<Modal
 			open={open}
