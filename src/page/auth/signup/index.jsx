@@ -1,32 +1,36 @@
-    import { Alert, Button, Checkbox, Divider, Link, Snackbar, TextField, Typography } from '@mui/material'
+    import { Alert, Checkbox, Link, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
+import background from '../../../asset/image/background.jpg'
+import Button from '../../../component/Button'
+import TextField from '../../../component/TextField'
 import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
 import { validateEmail } from '../../../util/validator'
-import { LinkedLoginButton } from '../component/LinkedLoginButton'
+
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh',
-        backgroundColor: '#f2f2f2',
+        backgroundImage: `url(${background})`,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
     },
     form: {
-        width: 360,
+        width: 500,
         maxHeight: '80vh',
-        backgroundColor: 'white',
+        backgroundColor: theme.palette.secondary.main,
         borderRadius: theme.spacing(0.3),
         display: 'flex',
         flexDirection: 'column',
-        padding: theme.spacing(3)
+        padding: theme.spacing(3),
+        border: 'solid 2px #000000',
+        borderRadius: '255px 10px 225px 10px/10px 225px 10px 255px',
     },
     linkRow: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
+        alignSelf: 'center',
+        marginTop: theme.spacing(1)
     },
     divider: {
         display: 'flex',
@@ -100,50 +104,37 @@ const SignupPage = () => {
                 </Alert>
             </Snackbar>
             <div className = {classes.form}>
-                <Typography variant = 'h5' sx = {{alignSelf: 'center', fontWeight: 'bold'}}>
-                    Create an account
+                <Typography variant = 'header' sx = {{alignSelf: 'center', fontWeight: 'bold'}}>
+                    Join with us
                 </Typography>
-                <TextField id="outlined-basic" label="Email" variant="outlined" 
-                    value = {email}
-                    onChange = {(e) => handleChange('email', e.target.value)}
-                    sx = {{mt: theme.spacing(2)}}/>
+
                 <TextField 
-                    id="outlined-password-input"
-                    label="Password" variant="outlined" 
-                    type="password" 
+                    placeholder = 'Enter email...'
+                    value = {email}
+                    onChange = {(value) => handleChange('email', value)}
+                    style = {{marginTop: theme.spacing(3)}}
+                    />
+
+                <TextField 
+                    placeholder = 'Enter password...'
+                    type="password"  
                     value = {password}
-                    onChange = {(e) => handleChange('password', e.target.value)}
-                    sx = {{my: theme.spacing(2)}}/>
+                    onChange = {(value) => handleChange('password', value)}
+                    style = {{marginTop: theme.spacing(2)}}
+                    />
+
                 <Button 
-                    variant = 'contained' 
-                    onClick = {handleSignup}
-                    color = {email == '' && password == '' ? 'neutral' : 'success'}
                     disabled = {email == '' && password == ''}
-                    sx = {{my: theme.spacing(3)}}>
-                    <Link href = '/auth/login' underline = 'none' sx = {{color: 'white'}}>
-                        Sign up
-                    </Link>
-                </Button>
-                
-                <div className = {classes.checkboxRegisterInfor}>
-                    <Checkbox defaultChecked />
-                    <Typography variant = 'caption'>
-                    I wish to receive information, offers, recommendations, and updates from Ili!
-                    </Typography>
-                </div>
+                    variant =  {email == '' && password == '' ? 'warning' : 'primary'}
+                    label = 'Sign up'
+                    style = {{marginTop: theme.spacing(5)}}
+                    onClick = {handleSignup}/>
 
-                <div className = {classes.divider}>
-                    <Typography variant = 'subtitle1' sx = {{alignSelf: 'center'}}>
-                        or
-                    </Typography>
-                </div>
-              
-
-                <div className = {classes.linkRow} style = {{alignSelf: 'center'}}>
-                    <Typography variant = ' ' >
+                <div className = {classes.linkRow}>
+                    <Typography variant = 'label' >
                         Already have an account?
                     </Typography>
-                    <Link href = '/auth/login' sx = {{ml: theme.spacing(1)}} >
+                    <Link href = '/auth/login' sx = {{ml: theme.spacing(1), color: theme.palette.success.main}} >
                         Log in
                     </Link>
                 </div>

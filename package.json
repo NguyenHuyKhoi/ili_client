@@ -52,5 +52,8 @@
   "resolutions": {
     "styled-components": "^5"
   },
-  "proxy": "http://localhost:8800/api/"
+  "proxy": "http://localhost:8800/api/",
+  "devDependencies": {
+    "file-loader": "^6.2.0"
+  }
 }

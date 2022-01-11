@@ -1,38 +1,49 @@
 
-import { Alert, Button, Divider, Link, Snackbar, TextField, Typography } from '@mui/material'
+import { Alert, Divider, Link, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
+import Button from '../../../component/Button'
+import TextField from '../../../component/TextField'
 import { loginSuccess } from '../../../context/auth/actions'
 import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
 import { validateEmail } from '../../../util/validator'
 import { LinkedLoginButton } from '../component/LinkedLoginButton'
+
+import background from '../../../asset/image/background.jpg'
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh',
-        backgroundColor: '#f2f2f2',
+        backgroundImage: `url(${background})`,
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     form: {
-        width: 360,
+        width: 500,
         maxHeight: '80vh',
-        backgroundColor: 'white',
+        backgroundColor: theme.palette.secondary.main,
         borderRadius: theme.spacing(0.3),
         display: 'flex',
         flexDirection: 'column',
-        padding: theme.spacing(3)
+        padding: theme.spacing(3),
+        border: 'solid 2px #000000',
+        borderRadius: '255px 10px 225px 10px/10px 225px 10px 255px',
     },
     forgotPassword: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        marginTop: theme.spacing(2)
     },
     divider: {
         display: 'flex',
         flexDirection: 'column',
+    },
+    linkRow: {
+        alignSelf: 'center',
+        marginTop: theme.spacing(1)
     },
     btn: {
         marginBottom: theme.spacing(1)
@@ -113,44 +124,47 @@ const LoginPage = () => {
                 </Alert>
             </Snackbar>
             <div className = {classes.form}>
-                <Typography variant = 'h5' sx = {{alignSelf: 'center', fontWeight: 'bold'}}>
+                <Typography variant = 'header' sx = {{alignSelf: 'center', fontWeight: 'bold'}}>
                     Login
                 </Typography>
-                <TextField id="outlined-basic" label="Username or email" variant="outlined" 
-                    value = {email}
-                    onChange = {(e) => handleChange('email', e.target.value)}
-                    sx = {{mt: theme.spacing(2)}}/>
                 <TextField 
-                    id="outlined-password-input"
-                    label="Password" variant="outlined" 
+                    placeholder = 'Enter email...'
+                    value = {email}
+                    onChange = {(value) => handleChange('email', value)}
+                    style = {{marginTop: theme.spacing(3)}}
+                    />
+
+                <TextField 
+                    placeholder = 'Enter password...'
                     type="password"  
                     value = {password}
-                    onChange = {(e) => handleChange('password', e.target.value)}
-                    sx = {{my: theme.spacing(2)}}/>
+                    onChange = {(value) => handleChange('password', value)}
+                    style = {{marginTop: theme.spacing(2)}}
+                    />
+
                 <div className = {classes.forgotPassword}>
-                    <Typography variant = 'caption' >
+                    <Typography variant = 'label' >
                         Forgot password?
                     </Typography>
-                    <Link href = '/auth/forgot-password' sx = {{ml: theme.spacing(1)}}>
+                    <Link href = '/auth/forgot-password' 
+                        sx = {{ml: theme.spacing(1), color: theme.palette.success.main}}>
                         Reset your password
                     </Link>
                 </div>
+
                 <Button 
-                    variant = 'contained' 
-                    color = {email == '' && password == '' ? 'neutral' : 'success'}
                     disabled = {email == '' && password == ''}
-                    sx = {{my: theme.spacing(3)}}
-                    onClick = {handleLogin}
-                    >
-                    Login
-                </Button>
+                    variant =  {email == '' && password == '' ? 'warning' : 'primary'}
+                    label = 'Login'
+                    style = {{marginTop: theme.spacing(5)}}
+                    onClick = {handleLogin}/>
               
 
-                <div className = {classes.linkRow} style = {{alignSelf: 'center'}}>
-                    <Typography variant = 'caption' >
+                <div className = {classes.linkRow}>
+                    <Typography variant = 'label' >
                         Don't have an account?
                     </Typography>
-                    <Link href = '/auth/signup' sx = {{ml: theme.spacing(1)}}>
+                    <Link href = '/auth/signup' sx = {{ml: theme.spacing(1), color: theme.palette.success.main}}>
                         Sign up
                     </Link>
                 </div>

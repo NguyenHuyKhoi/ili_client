@@ -1,3 +1,4 @@
+import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { useContext } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
@@ -45,6 +46,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
+       <CssBaseline />
       <Router>
         <Routes>
           <Route exact path="/" element={user ? <HomePage/> : <HomeGuestPage/>}/>
