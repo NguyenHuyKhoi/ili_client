@@ -6,16 +6,19 @@ import { updateQuestion } from '../../../../context/game/creator/actions';
 import { GameCreatorContext } from '../../../../context/game/creator/context';
 import { createUrl } from '../../../../util/helper';
 import Answers from './Answers';
+import TextField from '../../../../component/TextField'
+import TextArea from '../../../../component/TextArea'
+import { theme } from '../../../../theme';
 const useStyles = makeStyles((theme) => ({
     container: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(5),
         display: 'flex',
         flex:1,
-        height: '85vh',
+        height: '92vh',
         flexDirection: 'column',
-        justifyContent: 'space-evenly',
-        backgroundColor: '#f2f2f1',
-        alignItems:'center',
+        justifyContent: 'space-between',
+        backgroundColor: theme.palette.background.main,
+        alignItems:'center'
     },
     titleBox: {
         width: '100%',
@@ -28,13 +31,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: theme.spacing(0.5)
 
     },
-    titleInput: {
-        fontSize: 30,
-        border: 'none',
-        backgroundColor: 'rgba(0,0,0,0)',
-        textAlign: 'center',
-        flex: 1
-    },
+
     uploadImg: {
         width: 420,
         height: 280
@@ -54,19 +51,23 @@ const QuestionBuilder = () => {
     }
     return ( 
         <div className = {classes.container}>
-            <div className = {classes.titleBox} >
-                <input 
-                    type = 'text' 
-                    style = {{fontSize: 25, color: '#757575'}}
-                    placeholder = 'Enter question here' 
-                    className = {classes.titleInput}
-                    value={title == null ? '':title}
-                    onChange={e => handleChange('title',e.target.value)}/>
-            </div>
+            <TextField 
+                placeholder = 'Enter question ...' 
+                style = {{ 
+                    backgroundColor: 'white', textAlign: 'center',
+                    height: theme.spacing(7),
+                    width: '90%', fontSize: 30,
+                    paddingLeft: theme.spacing(10),
+                    paddingRight: theme.spacing(10)
+                }}
+                value={title == null ? '':title}
+                onChange={ (value)=> handleChange('title', value)}/>
+
             <div className = {classes.uploadImg}>
                 <MediaUploadCard 
                     onSelectImage = {(image) => handleChange('image', image)}
                     onRemoveImage = {() => handleChange('image', null)}
+                    label = 'Upload a hint'
                     image = {image}/>
             </div>
             <Answers 

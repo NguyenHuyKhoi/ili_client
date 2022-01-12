@@ -62,11 +62,9 @@ const AddGamesModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<div className = {classes.header}>
-					<Typography variant = 'header' sx = {{ color: '#000', alignSelf: 'center'}}>
-						Choose Games
-					</Typography>
-				</div>
+				<Typography variant = 'header' sx = {{ color: '#000', alignSelf: 'center', pt: theme.spacing(3)}}>
+					Choose Games
+				</Typography>
 				<div className= {classes.body}>
 					{
 						allGames.map((game, index) => (

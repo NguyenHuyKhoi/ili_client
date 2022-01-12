@@ -10,16 +10,18 @@ import SideMenu from '../../game/library/component/SideMenu'
 import CreateModal from './component/CreateModal'
 import CollectionList from './component/CollectionList'
 import Button from '../../../component/Button'
+import { theme } from '../../../theme'
 
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: 'white'
     },
     body: {
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: theme.palette.background.main
+
     },
     header: {
         display: 'flex',
@@ -76,7 +78,9 @@ const CollectionLibraryPage = () => {
                 <Grid item sm={2} >
                     <SideMenu selectedIndex = {1}/>
                 </Grid>
-                <Grid item sm={10}>
+                <Grid item sm={10} sx = {{
+                    backgroundColor: theme.palette.background.main, height: '92vh'
+                }}>
                     <div className= {classes.body}>
                         <div className= {classes.header} >
                             <div/>
@@ -85,7 +89,8 @@ const CollectionLibraryPage = () => {
                                 onClick = {() => setModal({state: 'create'})}
                                 label = {'Create one'}/>
                         </div>
-                        <CollectionList collections = {collections}/>
+                        <CollectionList collections = {collections}
+                            onClickEmpty = {() => setModal({state: 'create'})}/>
                     </div>
                 
                 </Grid>

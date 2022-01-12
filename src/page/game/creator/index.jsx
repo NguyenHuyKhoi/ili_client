@@ -103,13 +103,14 @@ const GameCreatorPage = (props) => {
                 onExit = {handleExit}
                 />
             <SuccessModal 
-                open = { modal.state == 'success' }     
+               open = { modal.state == 'success' }     
                 onClose = {() => setModal({})}
                 onDone = {handleDoneCreate}/>
 
             <SettingModal 
                 setting = {game}
                 open = {modal.state == 'setting'}     
+
                 onClose = {() => setModal({})}
                 onCancel = {() => setModal({})}
                 onDone = {(setting) => {
@@ -136,13 +137,13 @@ const GameCreatorPage = (props) => {
                 }}/>
 
             <Grid container sx = {{pt: theme.spacing(7), flex: 1}}>
-                <Grid item sm={1.5} >
+                <Grid item sm={1.7} >
                     <QuestionList/>
                 </Grid>
                 <Grid item sm={8.3}>
                     <QuestionBuilder/>
                 </Grid>
-                <Grid item sm={2.2}>
+                <Grid item sm={2}>
                     <QuestionConfig onClickDelete = {() => setModal({state: 'delete_question'})}
                         onClickDuplicate = {() => dispatch(duplicateQuestion(questionIndex))}/>
                 </Grid>

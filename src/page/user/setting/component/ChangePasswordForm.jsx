@@ -1,9 +1,11 @@
-import { Alert, Button, Grid, Snackbar, TextField, Typography } from '@mui/material'
+import { Alert, Grid, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../../../context/auth/context'
 import { theme } from '../../../../theme'
+import TextField from '../../../../component/TextField'
+import Button from '../../../../component/Button'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -12,7 +14,10 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'flex-start',
 		padding: theme.spacing(2),
 		borderRadius: theme.spacing(0.5),
-		backgroundColor: 'white',
+		backgroundColor: theme.palette.secondary.main,
+		border: 'solid 2px #000000',
+        borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
+		alignItems: 'center'
     }
 }))
 
@@ -96,37 +101,44 @@ const ChangePasswordForm = (props) => {
                     {alert.msg}
                 </Alert>
             </Snackbar>
-			<Typography variant = 'subtitle1'>
+			<Typography variant = 'bigLabel' sx = {{color: '#000'}}>
 				Change password
 			</Typography>
-			<Grid container columnSpacing = {2} rowSpacing = {2} sx = {{my: theme.spacing(2)}} >
+			<Grid container columnSpacing = {2} rowSpacing = {2} sx = {{mt: theme.spacing(2), mb: theme.spacing(4)}}>
 				<Grid item xs = {6} >
-					<TextField id="outlined-basic" label="Old Password" variant="outlined" sx = {{width: '100%'}} 
+					<TextField 
+						placeholder="Old password..." 
+						style = {{width: '100%'}} 
 						value={old}
-						onChange = {(e) => handleChange('old', e.target.value)}
+						onChange = {(value) => handleChange('old', value)}
 					/>
 				</Grid>
 				<Grid item xs = {6} >
 					<div/>
 				</Grid>
 				<Grid item xs = {6} >
-					<TextField id="outlined-basic" label="New Password" variant="outlined" sx = {{width: '100%'}}
+					<TextField 
+						placeholder="New password..." 
+						style = {{width: '100%'}} 
 						value={neww}
-						onChange = {(e) => handleChange('neww', e.target.value)}
+						onChange = {(value) => handleChange('newww', value)}
 					/>
 				</Grid>
 				<Grid item xs = {6} >
-					<TextField id="outlined-basic" label="Repeat New Password" variant="outlined" sx = {{width: '100%'}}
+					<TextField 
+						placeholder="Repeat new password..." 
+						style = {{width: '100%'}} 
 						value={repeat}
-						onChange = {(e) => handleChange('repeat', e.target.value)}
+						onChange = {(value) => handleChange('repeat', value)}
 					/>
 				</Grid>
 
 			</Grid>
-			<Button variant = 'contained' 
-				onClick = {handleSubmit}>
-				Save
-			</Button>
+			<Button 
+				variant = 'success' 
+				label = 'Save' 
+				style = {{width: theme.spacing(20)}}
+				onClick = {handleSubmit}/>
 		</div>
   );
 }

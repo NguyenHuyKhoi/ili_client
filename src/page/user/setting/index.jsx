@@ -15,7 +15,7 @@ import UserInforForm from './component/UserInforForm'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
-        backgroundColor: grey[200],
+        backgroundColor: theme.palette.background.main,
         height: '100vh',
         overflow: 'auto'
     },
@@ -39,31 +39,15 @@ const SettingPage = () => {
         <div className = {classes.container}>
             <HeaderBar/>
             <div className = {classes.body}>
-                <Typography variant = 'h4' sx = {{fontWeight: 'bold', mb: theme.spacing(3)}}>
-                    Settings
-                </Typography>
-                <Tabs tabs = {['Edit Profile','Privacy', 'Change Password']} onClickTab = {handleTabChange}/>
-                {
-                    tabIndex == 0 ?
-                        <Grid container sx = {{mt: theme.spacing(4)}} >
-                            <Grid item xs = {6} >
-                                <UserInforForm/>
-                            </Grid>
-                        </Grid>
-                    : tabIndex == 1 ?
-                        <Grid container sx = {{mt: theme.spacing(4)}} >
-                            <Grid item xs = {6} >
-                                <NotificationSettings/>
-                            </Grid>
-                        </Grid>
-                    : tabIndex == 2 ?
-                        <Grid container sx = {{mt: theme.spacing(4)}} >
-                            <Grid item xs = {6} >
-                                <ChangePasswordForm/>
-                            </Grid>
-                        </Grid>
-                    : null
-                }
+                <Grid container 
+                    columnSpacing = {10}>
+                    <Grid item xs = {6} >
+                        <UserInforForm/>
+                    </Grid>
+                    <Grid item xs = {6} >
+                        <ChangePasswordForm/>
+                    </Grid>
+                </Grid>
             </div>
          
         </div>

@@ -24,17 +24,17 @@ const useStyles = makeStyles((theme) => ({
         height:7
     },
     img: {
-        height:25,
-        width:45,
+        height:30,
+        aspectRatio: 1.6,
         alignSelf:'center',
         marginTop: theme.spacing(1)
     },
     time: {
         position: 'absolute',
-        width: 20,
-        height: 20,
-        borderRadius: 11,
-        border: '1px solid #b2b2b2',
+        width: 26,
+        height: 26,
+        borderRadius: 13,
+        border: '1px solid #000',
         display: 'flex',
         justifyContent: 'center', 
         alignItems: 'center',
@@ -52,7 +52,7 @@ const QuestionMiniItem = (props) => {
     const {title, image, correct_answers} = question
     const limitTitle = title != null? title.substring(0, 20) + '...' : 'Question'
     return (
-        <div className = {classes.container} style={{backgroundColor: props.selected ? '#ffffff':'#f2f2f2'}}>
+        <div className = {classes.container} style={{backgroundColor: props.selected ? '#fff': theme.palette.background.main}}>
             <Typography variant='caption' sx = {{alignSelf:'center'}}>
                 {limitTitle}
             </Typography>
@@ -60,7 +60,7 @@ const QuestionMiniItem = (props) => {
                 className = {classes.img}/>
 
             <div className= {classes.time} >
-                <Typography variant='caption' sx = {{color: '#b2b2b2', fontSize: 10}}>
+                <Typography variant='caption' sx = {{color: '#000'}}>
                     20
                 </Typography>
             </div>
@@ -70,7 +70,7 @@ const QuestionMiniItem = (props) => {
                     Array.from(Array(4)).map((_, index) => (
                         <Grid item xs = {6} sx = {{p: theme.spacing(0.2)}}   key = {''+index}>
                             <div className = {classes.answer} 
-                                style = {{backgroundColor: (correct_answers.indexOf(index) != -1) ? '#59B32C' : 'white'}}/>
+                                style = {{backgroundColor: (correct_answers.indexOf(index) != -1) ? theme.palette.success.main : 'white'}}/>
                         </Grid>
                     ))
                 }

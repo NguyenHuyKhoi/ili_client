@@ -1,8 +1,10 @@
-import { Alert, Button, Grid, Snackbar, TextField, Typography } from '@mui/material'
+import { Alert, Grid, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
+import Button from '../../../../component/Button'
 import MediaUploadCard from '../../../../component/MediaUploadCard'
+import TextField from '../../../../component/TextField'
 import { updateUserInfor } from '../../../../context/auth/actions'
 import { AuthContext } from '../../../../context/auth/context'
 import { UserContext } from '../../../../context/user/context'
@@ -16,7 +18,10 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'flex-start',
 		padding: theme.spacing(2),
 		borderRadius: theme.spacing(0.5),
-		backgroundColor: 'white',
+		backgroundColor: theme.palette.secondary.main,
+		border: 'solid 2px #000000',
+        borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
+		alignItems: 'center'
     },
 	avatar: {
 		width: '100%',
@@ -26,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
 	inputs: {
 		display: 'flex',
 		flexDirection: 'column'
-	},
-	inputContainer: {
-		padding: theme.spacing(1)
 	}
 }))
 
@@ -86,45 +88,55 @@ const UserInforForm = (props) => {
                     {alert.msg}
                 </Alert>
             </Snackbar>
-			<Typography variant = 'subtitle1'>
-				User Information
+			<Typography variant = 'bigLabel' sx = {{color: '#000'}}>
+				Profile
 			</Typography>
 			<MediaUploadCard 
 				onSelectImage = {file => handleChange('banner', file)}
 				onRemoveImage = {() => handleChange('banner', null)}
+				style = {{height: theme.spacing(20), aspectRatio: 1.6, marginTop: theme.spacing(2)}}
+				label = 'Upload a banner'
 				image = {banner}/>
-			<Grid container columnSpacing = {2} rowSpacing = {2} sx = {{my: theme.spacing(2)}} >
-				<Grid item xs = {5} >
+			<Grid container columnSpacing = {2} rowSpacing = {2} sx = {{my: theme.spacing(1)}} >
+				<Grid item xs = {5} sx = {{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
 					<MediaUploadCard 
 						onSelectImage = {file => handleChange('avatar', file)}
 						onRemoveImage = {() => handleChange('avatar', null)}
+						labelVariant = {'btnLabel'}
+						style = {{height: theme.spacing(22), width: theme.spacing(22), alignSelf: 'center'}}
+						label = 'Upload an avatar'
 						image = {avatar}/>
 				</Grid>
 				<Grid item xs = {7} >
 					<div className = {classes.inputs}>
-						<div className = {classes.inputContainer}>
-							<TextField id="outlined-basic" label="User name" variant="outlined" sx = {{width: '100%'}}
-								value = {username}
-								onChange={e => handleChange('username', e.target.value)}/>
-						</div>
-						<div className = {classes.inputContainer}>
-							<TextField id="outlined-basic" label="Name" variant="outlined" sx = {{width: '100%'}}
-								value = {name}
-								onChange={e => handleChange('name', e.target.value)}/>
-						</div>
-						<div className = {classes.inputContainer}>
-							<TextField id="outlined-basic" label="Email" variant="outlined" sx = {{width: '100%'}}
-								disabled = {true}
-								value = {email}/>
-						</div>
+						<TextField 
+							placeholder="User name..." 
+							style = {{width: '100%'}} 
+							value={username}
+							onChange = {(value) => handleChange('username', value)}
+						/>
+						<TextField 
+							placeholder="Name..." 
+							style = {{width: '100%', marginTop: theme.spacing(2)}} 
+							value={name}
+							onChange = {(value) => handleChange('name', value)}
+						/>
+						<TextField 
+							style = {{width: '100%', marginTop: theme.spacing(2)}} 
+							value={email}
+							disabled
+							onChange = {(value) => handleChange('email', value)}
+						/>
 					</div>
 				</Grid>
 
 			</Grid>
-			<Button variant = 'contained' 
-				onClick = {handleSubmit}>
-				Save
-			</Button>
+			<Button 
+				variant = 'success' 
+				size = 'small'
+				onClick = {handleSubmit}
+				label = 'Save'
+				style = {{width: theme.spacing(20), marginTop: theme.spacing(3)}}/>
 		</div>
   );
 }

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TextField = (props) => {
     const classes = useStyles()
-    var {label, variant, style, disabled, placeholder, type} = props
+    var {label, value,variant, style, disabled, placeholder, type} = props
     
     if (!variant) variant = 'default'
     return (
@@ -24,6 +24,7 @@ const TextField = (props) => {
             className = {classes.container}
             disabled = {disabled || false}
             placeholder = {placeholder || ''}
+            value = {value}
             type = {type ? type: 'text'}
             onChange={e => {
                 if (props.onChange) props.onChange(e.target.value)
@@ -31,7 +32,7 @@ const TextField = (props) => {
             style = {{
                 fontSize: 20,
                 fontFamily: 'Setofont',
-                backgroundColor: theme.palette[variant].main,
+                backgroundColor: disabled ? theme.palette.background.main : theme.palette[variant].main,
                 padding: theme.spacing(1.5),
                 ...style,
             }}>

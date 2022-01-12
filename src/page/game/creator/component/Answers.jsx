@@ -4,6 +4,7 @@ import { Grid, Tooltip } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import Icon from '../../../../component/Icon';
+import TextField from '../../../../component/TextField';
 import {theme} from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -40,24 +41,24 @@ const useStyles = makeStyles((theme) => ({
 
 export const answerStyles = [
     {
-        color: '#D01937',
+        color: theme.palette.primary.main,
         icon: 'Triangle',
-        placeholder: 'Add answer 1'
+        placeholder: 'Add ...'
     },
     {
-        color: '#1260BE',
+        color: theme.palette.info.main,
         icon: 'Rhombus',
-        placeholder: 'Add answer 2'
+        placeholder: 'Add ...'
     },
     {
-        color: '#C79200',
+        color: theme.palette.success.main,
         icon: 'CircleRounded',
-        placeholder: 'Add answer 3'
+        placeholder: 'Add ...'
     },
     {
-        color: '#237E0B',
+        color: theme.palette.error.main,
         icon: 'Square',
-        placeholder: 'Add answer 4'
+        placeholder: 'Add ...'
     }
 ]
 
@@ -65,8 +66,7 @@ const Answer = (props) => {
     const classes = useStyles()
     const {answer, isCorrect, style} = props
     const {color, icon, placeholder} = style
-    const handleAnswerChange = (e) => {
-        var value = e.target.value
+    const handleAnswerChange = (value) => {
         if (props.onChange) {
             props.onChange(value)
         }
@@ -79,29 +79,31 @@ const Answer = (props) => {
             props.onChangeCorrect(!isCorrect)
         }
     }
-    console.log("Placehold: ", placeholder)
+    console.log("Placehold: ", answer)
     return (
         <div className = {classes.answer} style={{backgroundColor: answer == null || answer == '' ?'white':color}}>
             <div className = {classes.shapeContainer}
                 style={{backgroundColor: color}} >
-                <Icon name = {icon} style= {{ color: 'white', fontSize: 30}} />
-                {/* <CropDinSharpIcon sx = {{backgroundColor: 'white', color: 'white'}} /> */}
+                <Icon name = {icon} style= {{ 
+                    color: isCorrect ? 'white' : theme.palette.background.main , fontSize: 30}} />
             </div>
-            <input 
+            <TextField 
                 style = {{
-                    color: answer == '' ? '#838383' : 'white',
+                    backgroundColor: 'rgba(0,0,0,0)',
+                    border: 'none',
+                    textAlign: 'left',
                     marginLeft: theme.spacing(2),
-                    fontSize: 16
+                    fontSize: 24,
+                    flex: 1
                 }}
                 placeholder= {placeholder}
-                type = 'text' 
                 className = {classes.titleInput} 
                 value = {answer == null ? '' : answer}
                 onChange = {handleAnswerChange}/>
             <div onClick = {handleCorrectChange}>
             {
                 !isCorrect?
-                <CircleOutlined sx = {{color: 'white', fontSize: 60}}/>
+                <CircleOutlined sx = {{color: theme.palette.background.main, fontSize: 60}}/>
                 :
                 <CheckCircleOutlineOutlined sx = {{color: 'white', fontSize: 60}}/>
             }

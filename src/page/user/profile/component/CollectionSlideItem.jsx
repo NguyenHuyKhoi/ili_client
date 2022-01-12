@@ -1,6 +1,8 @@
 import { Grid, Link, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
+import EmptyBox from '../../../../component/EmptyBox'
+import { theme } from '../../../../theme'
 import GameCellItem from '../../../game/component/GameCellItem'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -14,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'space-between'
     },
-    games: {
+    list: {
         display:'flex',
         flexDirection:'column',
         marginTop: theme.spacing(1.5)
@@ -29,26 +31,34 @@ const CollectionSlideItem = (props) => {
         <div className = {classes.container}>
             
             <div className = {classes.header} > 
-                <Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}}>
-                    {title}
+                <Typography variant = 'btnLabel' sx = {{color: '#000'}}>
+                    {`${title} ( ${games.length} games )` }
                 </Typography>
-                <Link underline = 'hover' href = '/collection/detail'  sx = {{fontSize: 16, fontWeight: 'bold', color: '#333333'}}>
+                <Link underline = 'hover' href = '/collection/detail'  
+                    sx = {{fontSize: 20, color: '#000'}}>
                     See all
                 </Link>
             </div>
-            <div className={classes.games}>
-                <Grid container sx = {{flex: 1}} columnSpacing = {2} rowSpacing = {2}>
-                    {
+            {
+                games.length == 0? 
+                    <EmptyBox
+                        style = {{width: '85%', alignSelf: 'center', marginTop: theme.spacing(3)}}
+                        label = 'Collections has no games'/>
+                     :
+                    <div className={classes.list}>
+                     <Grid container sx = {{flex: 1}} columnSpacing = {4}>
+                         {
+                             games.slice(0, Math.min(games.length, 4)).map((game, index) => (
+                                 <Grid item xs = {3}  key = {''+index}>
+                                     <GameCellItem disableProfileLink = {true}
+                                         game = {game}/>
+                                 </Grid>
+                             ))
+                         }
+                     </Grid>
+                 </div>
+            }
 
-                        games.map((game, index) => (
-                            <Grid item xs = {3}   key = {''+index}>
-                                <GameCellItem disableProfileLink = {true}
-                                    game = {game}/>
-                            </Grid>
-                        ))
-                    }
-                </Grid>
-            </div>
         </div>
     )
 }

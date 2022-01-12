@@ -3,6 +3,7 @@ import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
+import EmptyBox from '../../../../component/EmptyBox'
 import { AuthContext } from '../../../../context/auth/context'
 import { getGamesSuccess } from '../../../../context/game/other/actions'
 import { GameContext } from '../../../../context/game/other/context'
@@ -98,7 +99,7 @@ export const Tabs = (props) => {
     )
 }
 
-const GameList = () => {
+const GameList = (props) => {
     const classes = useStyles()
     const {token} = useContext(AuthContext)
     const {games, dispatch} = useContext(GameContext)
@@ -125,15 +126,26 @@ const GameList = () => {
             <div className = {classes.tabsContainer}>
                 <Tabs tabs = {['Recent', 'Draft', 'Favorites']}/>
             </div>
-            <div className = {classes.games} >
             {
-                games.map((item, index) => (
-                    <div className = {classes.gameContainer}   key = {''+index}>
-                        <GameRowItem game = {item}/>
+                games.length == 0 ?
+                <EmptyBox
+                    style= {{width: '100%', marginTop: theme.spacing(5)}}
+                    label = " You don't have yet any collections. Create one?"
+                    onClick = {() => {
+                        if (props.onClickEmpty) props.onClickEmpty()
+                    }}/>
+                :
+                <div className = {classes.games} >
+                    {
+                        games.map((item, index) => (
+                            <div className = {classes.gameContainer}   key = {''+index}>
+                                <GameRowItem game = {item}/>
+                            </div>
+                        ))
+                    }
                     </div>
-                ))
             }
-            </div>
+            
         </div>
     )
 }

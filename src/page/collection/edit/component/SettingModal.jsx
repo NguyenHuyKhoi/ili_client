@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		border: 'solid 2px #000000',
-        borderRadius: '255px 5px 225px 5px/5px 225px 5px 255px',
+        borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
 
     },
 	leftCol: {
@@ -134,7 +134,7 @@ const SettingModal = (props) => {
 									onSelectImage = {file => handleChange('cover', file)}
 									onRemoveImage = {() => handleChange('cover', null)}
 									label = 'Upload a cover'
-									src = {createUrl(cover)}/>
+									image = {cover}/>
 							</div>
 						</div>
 					</Grid>

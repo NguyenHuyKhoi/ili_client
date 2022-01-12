@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
         display:'flex',
         flexDirection:'column',
         borderRadius: theme.spacing(1),
-        boxShadow: '1px 3px 6px #5f5f5f'
+        boxShadow: '1px 3px 6px #5f5f5f',
+        overflow: 'hidden'
     },
     body: {
         flex: 1, 
@@ -22,12 +23,10 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         padding: theme.spacing(1),
         backgroundColor: 'white',
-        borderBottomLeftRadius: theme.spacing(1),
-        borderBottomRightRadius: theme.spacing(1)
     },
     header: {
         position: 'relative',
-        height: 220
+        height: theme.spacing(20),
     },
     img: {
         width: '100%',
@@ -40,17 +39,14 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0.6),
         borderRadius: theme.spacing(0.5),
         backgroundColor: 'black',
-        opacity: 0.4,
+        opacity: 0.6,
         zIndex: 99
     },
     infor: {
         display: 'flex',
         flexDirection: 'column',
-        height: 70,
         flex: 1,
-        marginLeft: theme.spacing(1.5),
-        marginRight: theme.spacing(2),
-
+        marginLeft: theme.spacing(1)
     },
 }))
 
@@ -68,9 +64,10 @@ export const GameCellItem = (props) => {
 
     const handleViewProfile = (e) => {
         e.stopPropagation()
-        console.log("Game owner :", game.owner)
         navigate('/profiles/'+ game.owner.id, {replace: false})
     }
+    console.log("Game owner :", game.owner)
+    const limitTitle = title != null? title.substring(0, 20) + (title.length < 20? '' :'...') : 'Collection'
     return (
         <div className = {classes.container} onClick = {handleSelect} >
             <div className = {classes.header} >
@@ -82,20 +79,20 @@ export const GameCellItem = (props) => {
             </div>
          
             <div className = {classes.body}>
-                <Avatar alt="Remy Sharp" src={createUrl(owner.avatar)} sx = {{width: 30, height: 30, mt: theme.spacing(1) }} />
                 <div className = {classes.infor}>
-                    <Typography variant = 'subtitle1' sx = {{color: '#333333', fontWeight: 'bold'}}>
-                        {title}
+                    <Typography variant = {'btnLabel'} sx = {{color: '#000'}}>
+                        {limitTitle}
                     </Typography>
                     {
                         disableProfileLink ? 
-                        <Typography variant= 'caption'>
+                        <Typography variant= 'label' sx = {{color: '#000'}}>
                             {
                                 owner.username
                             }
                         </Typography>
                         :
-                        <Link href = ''  underline='hover' onClick={handleViewProfile} sx = {{color: '#5f5f5f'}}>
+                        <Link href = ''  underline='hover' onClick={handleViewProfile} 
+                            sx = {{color: '#000', fontSize: 20}}>
                             {
                                 owner.username
                             }
@@ -103,7 +100,6 @@ export const GameCellItem = (props) => {
                     }
                  
                 </div>  
-                <MoreVert />
             </div>
         </div>
     )

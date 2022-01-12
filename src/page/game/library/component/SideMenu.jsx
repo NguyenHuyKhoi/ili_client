@@ -12,8 +12,7 @@ const useStyles = makeStyles((theme) => ({
         flex: 1, 
         display: 'flex',
         flexDirection: 'column',
-        height: '100%',
-        backgroundColor: 'white',
+        overflow: 'hidden',
         paddingTop: theme.spacing(5),
         padding: theme.spacing(2)
     },

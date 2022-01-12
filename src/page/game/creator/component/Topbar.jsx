@@ -1,38 +1,36 @@
-import { AppBar, Button, Toolbar, Typography } from '@mui/material'
+import { AppBar, Toolbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { GameCreatorContext } from '../../../../context/game/creator/context'
 import { theme } from '../../../../theme'
 import logo from '../../../../asset/image/logo.png'
+import Button from '../../../../component/Button'
 import { useNavigate } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     toolbar: {
         display: 'flex',
         alignItems:'center',
         justifyContent:'space-between',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        height: theme.spacing(8)
     },
     logo: {
-        width: 80,
-        height:30
+        height: theme.spacing(6)
     },
     settingBox: {
         display: 'flex',
         width: theme.spacing(40),
-        height: 25,
         justifyContent:'space-between',
         flexDirection:'row',
         marginLeft: theme.spacing(2),
-        border: '1px solid #f2f2f2',
-        padding: theme.spacing(1),
-        alignItems: 'center',
-        borderRadius: theme.spacing(1)
+        border: '1px solid #000',
+        borderRadius: theme.spacing(0.4),   
+        padding: theme.spacing(0.2),
+        paddingLeft: theme.spacing(1.5),
+        alignItems: 'center'
     },
     title: {
-        color: 'gray'
-    },
-    button: {
-        marginLeft: theme.spacing(3)
+        color: '#000'
     }
 }))
 
@@ -55,7 +53,7 @@ const Topbar = (props) => {
                     }}
                 
                 >
-                    <Typography variant='subtitle1' className = {classes.title}> 
+                    <Typography variant='label' className = {classes.title}> 
                         {
                             title == '' || title == null ?
                             'Enter name ...'
@@ -65,28 +63,28 @@ const Topbar = (props) => {
                      
                     </Typography>
                     <Button 
-                        variant="contained" size = "small" 
-                        color = "neutral" 
-                        sx = {{ marginLeft: theme.spacing(3),color: '#333333', fontWeight: 'bold', textTransform: 'none'}}>Setting</Button>
+                        variant="success" 
+                        size = "small" 
+                        style = {{ marginLeft: theme.spacing(3)}}
+                        label = 'Setting'/>
                 </div>
                 <div style = {{flex:1}}/> 
                 <Button 
-                    variant="contained" 
-                    color = "neutral"  
-                    sx = {{ marginLeft: theme.spacing(3),color: '#333333', fontWeight: 'bold', textTransform: 'none'}}
+                    variant="warning" 
+                    size = 'small'
+                    label = 'Edit'
                     onClick = {() => {
                         if (props.onExit) props.onExit()
                     }}
-                    >Exit</Button>
-                <Button variant="contained" 
-                    color = "primary"  
-                    sx = {{ marginLeft: theme.spacing(3),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
+                    />
+                <Button 
+                    variant="success" 
+                    size = 'small'
+                    style = {{ marginLeft: theme.spacing(5)}}
                     onClick = {() => {
                         if (props.onSave) props.onSave()
                     }}
-                    >
-                    Save
-                </Button>
+                    label = 'Save'/>
             </Toolbar>
         </AppBar>
     )

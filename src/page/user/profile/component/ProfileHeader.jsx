@@ -1,7 +1,9 @@
 import {Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, {useContext} from 'react'
+import { useNavigate } from 'react-router-dom'
 import Button from '../../../../component/Button'
+import { AuthContext } from '../../../../context/auth/context'
 import { theme } from '../../../../theme'
 import { createUrl } from '../../../../util/helper'
 
@@ -12,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
     banner: {
         width: '100%',
-        height: theme.spacing(30),
+        height: theme.spacing(25),
         objectFit: 'cover'
     },
     body: {
@@ -73,14 +75,20 @@ const InforItem = (props) => {
 }
 
 const ProfileHeader = (props) => {
+    const navigate = useNavigate()
     const classes = useStyles()
     const {user} = props
 
+    const me = useContext(AuthContext).user
     var {name, avatar, banner} = user
     name = 'User name'
 
     const handleFollow = () => {
 
+    }
+
+    const handleGoSetting = () => {
+        return navigate('/user/setting', {replace: false})
     }
     return (
         <div className = {classes.container}>
@@ -102,10 +110,10 @@ const ProfileHeader = (props) => {
 
                 <Button 
                     size = 'medium'
-                    label = 'FOLLOW'
+                    label = {user._id == me._id ? 'SETTING' : 'FOLLOW'}
                     variant = 'secondary'
                     style = {{width: theme.spacing(25)}}
-                    onClick = {handleFollow}/>
+                    onClick = {user._id == me._id ? handleGoSetting : handleFollow}/>
               
 
             </div>

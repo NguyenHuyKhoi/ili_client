@@ -16,18 +16,21 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'column',
         justifyContent:'center',
         alignItems:'center',
-        position: 'relative'
+        position: 'relative',
+        border: 'solid 2px #000000',
+        borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
     },
     img: {
         width: '100%',
-        maxHeight: '100%'
+        height: '100%'
     }
 }))
 
 const MediaUploadCard = (props) => {
     const classes = useStyles()
-    const {image, label} = props
+    const {image, label, style, labelVariant} = props
     const inputFile = useRef(null) 
+
     //console.log('src :', src)
     const handleSelectImage = (e) => {
         if (e.target.files.length > 0) {
@@ -46,7 +49,8 @@ const MediaUploadCard = (props) => {
     }
 
     return (
-        <div className = {classes.container}>
+        <div className = {classes.container}
+            style = {style != undefined ? style : {}}>
             {
                 image == undefined? 
                 <>
@@ -64,7 +68,7 @@ const MediaUploadCard = (props) => {
                     hidden
                         
                 />
-                <Typography variant='bigLabel' sx = {{color: '#000', mt: theme.spacing(3)}} >
+                <Typography variant={labelVariant ? labelVariant : 'bigLabel'} sx = {{color: '#000', mt: theme.spacing(1)}} >
                     {label}
                 </Typography>
                 </>

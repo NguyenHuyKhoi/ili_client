@@ -64,7 +64,7 @@ const GameList = (props) => {
                 :
                 <div className = {classes.list} >
 
-                    <Typography variant = 'label' sx = {{fontWeight: 'bold', color: '#000', mb: theme.spacing(3)}}>
+                    <Typography variant = 'btnLabel' sx = {{color: '#000', mb: theme.spacing(1)}}>
                         {`Game(${games ? games.length : 0})`}
                     </Typography>
                 {

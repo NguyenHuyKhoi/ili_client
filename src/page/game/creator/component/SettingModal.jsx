@@ -1,9 +1,12 @@
-import { TextareaAutosize } from '@mui/base';
-import { Button, FormControlLabel, Grid, MenuItem, Modal, Radio, RadioGroup, Select, TextField, Typography } from '@mui/material';
+
+import { FormControlLabel, Grid, MenuItem, Modal, Radio, RadioGroup, Select, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useState, useEffect} from 'react';
+import Button from '../../../../component/Button';
 import DropdownSelect from '../../../../component/DropdownSelect';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
+import TextArea from '../../../../component/TextArea';
+import TextField from '../../../../component/TextField';
 import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
 import { theme } from "../../../../theme";
 import { createUrl } from '../../../../util/helper';
@@ -15,11 +18,13 @@ const useStyles = makeStyles((theme) => ({
 		transform: 'translate(-50%, -50%)',
 		width: '50vw',
 		maxHeight: '80vh',
-		backgroundColor: 'white',
+		backgroundColor: theme.palette.secondary.main,
 		borderRadius: theme.spacing(1),
 		padding: theme.spacing(4),
 		display: 'flex',
 		flexDirection: 'column',
+		border: 'solid 2px #000000',
+        borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
 
     },
 	leftCol: {
@@ -90,58 +95,34 @@ const SettingModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
-					Ili Summary
+				<Typography variant = 'header' sx = {{color: '#000', alignSelf: 'center'}}>
+					Setting
 				</Typography>
 				<Grid container columnSpacing = {5} rowSpacing = {2} 
 					sx = {{mt: theme.spacing(4)}}>
 					<Grid item xs = {7}>
 						<div className = {classes.leftCol}>
-							<Typography variant = 'subtitle2' 
-								sx= {{fontWeight: 'bold', color: '#333333', mb: theme.spacing(1)}} >
-								Title(*)
-							</Typography>	
 							<TextField 
 								placeholder='Enter game title ...'	
-								id="outlined-basic" 
-								label="" 
 								size='small'
 								value = {title ? title : ''} 
-								variant="outlined"
-								onChange = {(e) => handleChange('title', e.target.value)} />
-							<Typography variant = 'subtitle2' 
-								sx = {{ mt: theme.spacing(2), fontWeight: 'bold', color: '#333333', mb: theme.spacing(1)}}>
-								Description
-							</Typography>
-							<TextareaAutosize
-								aria-label="empty textarea"
+								onChange = {(value) => handleChange('title', value)} />
+
+							<TextArea
 								value = {description ? description : ''}
-								onChange={(e) => handleChange('description', e.target.value)}
+								onChange={(value) => handleChange('description', value)}
 								placeholder="Describe your game..."
-								style={{ width: '100%', height: 150	,m: theme.spacing(0.5), resize: 'none' }}
+								style={{ width: '100%', height: 150	,marginTop: theme.spacing(2), resize: 'none' }}
 							/>
-							<div style = {{marginTop: theme.spacing(2)}} >
-								<DropdownSelect title = 'Language'
-									list = {[
-										{label: 'English', value: 'en'},
-										{label: 'Vietnamese', value: 'vn'}
-									]}
-									value = {language}
-									onChange = {(value)=>handleChange('language',value)}/>
-							</div>
 						</div>
 					</Grid>
 					<Grid item xs = {5}>
 						<div className = {classes.rightCol}>
-
-							<Typography variant = 'subtitle2' 
-								sx= {{fontWeight: 'bold', color: '#333333', mb: theme.spacing(1)}} >
-								Cover image
-							</Typography>
 							<div className = {classes.uploadImg}>
 								<MediaUploadCard 
 									onSelectImage = {file => handleChange('image', file)}
 									onRemoveImage = {() => handleChange('image', null)}
+									label = 'Upload a cover'
 									image = {image}/>
 							</div>
 						
@@ -158,16 +139,16 @@ const SettingModal = (props) => {
 					</Grid>
 				</Grid>
 				<div className = {classes.footer}>
-					<Button variant="contained" color="neutral"
-						sx = {{color: '#333333', fontWeight: 'bold', textTransform: 'none'}}
-						onClick = {handleCancel}>
-						Cancel
-					</Button>
-					<Button variant="contained" color="success" 
-						sx = {{ml: theme.spacing(2),color: '#333333', fontWeight: 'bold', textTransform: 'none'}}
-						onClick = {handleDone}>
-						Done
-					</Button>
+					<Button 
+						variant="warning" 
+						style = {{width: theme.spacing(16)}}
+						onClick = {handleCancel}
+						label = 'Cancel'/>
+					<Button 
+						variant="success" 
+						style = {{marginLeft: theme.spacing(5), width: theme.spacing(16)}}
+						onClick = {handleDone}
+						label = 'Done'/>
 				</div>
 			</div>
 		</Modal>

@@ -16,7 +16,8 @@ const DropdownSelect = (props) => {
     console.log("Color: ", color)
     return (
         <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">
+            <InputLabel id="demo-simple-select-label"
+                sx = {{fontSize: 20, color: '#000'}}>
                 {
                     title
                 }
@@ -29,11 +30,14 @@ const DropdownSelect = (props) => {
                 size = 'small'
                 label="Age"
                 onChange={handleChange}
+                style = {{fontSize: 24}}
             >
                 {
                     list != undefined &&
                     list.map((item, index) => (
-                        <MenuItem value={item.value}  key = {''+index} style = {{fontColor: color ? color : '#000'}}>
+                        <MenuItem 
+                            value={item.value}  key = {''+index} 
+                            style = {{fontColor: color ? color : '#000', fontSize: 24}}>
                             {item.label }
                         </MenuItem>
                     ))

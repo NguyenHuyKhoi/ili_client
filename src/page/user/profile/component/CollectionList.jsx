@@ -13,17 +13,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection:'column',
     },
-    filter: {
-        padding: theme.spacing(2),
-        paddingLeft: theme.spacing(10),
-        paddingRight: theme.spacing(10),
-        backgroundColor: 'white',
-        marginTop: theme.spacing(4)
-    },
+
     item: {
-        padding: theme.spacing(2),
-        paddingLeft: theme.spacing(10),
-        paddingRight: theme.spacing(10)
+        paddingTop: theme.spacing(5)
     }
 }))
 
@@ -35,19 +27,13 @@ const CollectionList = () => {
     let nonEmptyCollections = collections.filter((item) => item.games.length > 0)
     return (
         <div className = {classes.container}>
-            <div className= {classes.filter}>
-                <CollectionFilter collections = {nonEmptyCollections}/>
-            </div>
-
-            <div className = {classes.list} >
-                {
-                    nonEmptyCollections.map((item, index) => (
-                        <div className = {classes.item}   key = {''+index}>
-                            <CollectionSlideItem collection = {item}/>
-                        </div>
-                    ))
-                }
-            </div>
+            {
+                nonEmptyCollections.map((item, index) => (
+                    <div className = {classes.item}   key = {''+index}>
+                        <CollectionSlideItem collection = {item}/>
+                    </div>
+                ))
+            }
         </div>
     )
 }

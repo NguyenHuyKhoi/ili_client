@@ -10,10 +10,14 @@ import { UserContext } from '../../../context/user/context'
 import CollectionList from './component/CollectionList'
 import ProfileHeader from './component/ProfileHeader'
 import HeaderBar from '../../../component/HeaderBar'
+import ProfileBody from './component/ProfileBody'
+import { getGamesSuccess } from '../../../context/game/other/actions'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
-        backgroundColor: theme.palette.secondary.main
+        backgroundColor: theme.palette.background.main,
+        height: '100vh',
+        overflow: 'scroll'
     }
 }))
 
@@ -39,8 +43,14 @@ const ProfilePage = (props) => {
                 'x-access-token': token
             }
         })   
+
+        axios.get('game/library/' + id, {
+            headers: {
+                'x-access-token': token
+            }
+        })  
         .then ((res) => {
-            dispatch(getCollectionsSuccess(res.data))
+            dispatch(getGamesSuccess(res.data))
         }) 
         return () => {
             
@@ -51,7 +61,7 @@ const ProfilePage = (props) => {
         <div className = {classes.container}>
             <HeaderBar/>
             <ProfileHeader user = {user}/>
-            <CollectionList/>
+            <ProfileBody/>
         </div>
     )
 }

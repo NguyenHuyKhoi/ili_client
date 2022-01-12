@@ -18,6 +18,7 @@ import GameList from './component/GameList'
 import SettingModal from './component/SettingModal'
 import SuccessModal from './component/SuccessModal'
 import Topbar from './component/Topbar'
+import EmptyBox from '../../../component/EmptyBox'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -102,7 +103,7 @@ const CollectionEditPage = () => {
                 onDone = {handleSave}
             />
             <SuccessModal 
-                open = {true}
+                open = {modal.state == 'success'}
                 onClose = {() => setModal({})}
                 onDone = {() => {navigate(-1)}}
             />
@@ -127,22 +128,18 @@ const CollectionEditPage = () => {
                                 onClick = {() => setModal({state: 'add_games'})}/>
                             
                         </div>
-                        <div className= {classes.collectionsContainer}>
-                            {
-                                games.length == 0? 
-                                <div className= {classes.emptyDiv} onClick = {() => setModal({state: 'add_games'})}>
-                                    <Typography variant='bigLabel' sx = {{color: '#000', 
-                                            '&:hover': {
-                                                cursor: 'pointer'
-                                            }}}>
-                                        Add a game? Click me!
-                                    </Typography>
-                                </div>
+                        {
+                               games.length == 0? 
+                                <EmptyBox 
+                                    style = {{width: '80%', alignSelf: 'center', marginTop: theme.spacing(2)}}
+                                    label = 'Add a game? Click me!'
+                                    onClick = {() => setModal({state: 'add_games'})}/>
                                 :
-                                <GameList games = {games} />
-                            }
-                        </div>
-                      
+                                <div className= {classes.collectionsContainer}>
+                                      <GameList games = {games} />
+                                </div>
+                        }
+
                     </div>
                 </Grid>
             </Grid>

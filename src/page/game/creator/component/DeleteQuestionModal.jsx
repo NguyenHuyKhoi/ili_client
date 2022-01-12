@@ -1,6 +1,7 @@
-import { Button, Modal, Typography } from '@mui/material';
+import {  Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
+import Button from '../../../../component/Button';
 import { theme } from "../../../../theme";
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -9,11 +10,15 @@ const useStyles = makeStyles((theme) => ({
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
 		width: '30vw',
-		backgroundColor: 'white',
+		backgroundColor: theme.palette.secondary.main,
 		borderRadius: theme.spacing(1),
 		padding: theme.spacing(2),
 		display: 'flex',
 		flexDirection: 'column',
+		border: 'solid 2px #000000',
+        borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
+		padding: theme.spacing(3),
+		alignItems: 'center'
 
     },
 	footer: {
@@ -42,49 +47,46 @@ const DeleteQuestionModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
+			<Typography variant = 'header' sx = {{color: '#000', alignSelf: 'center'}}>
 					{
 						canDelete ?
-						'Delete Quiz Question'
+						'Delete?'
 						:
-						'Can\'t not delete only question in your kahoot'
+						'Can not delete!'
 					}
 					
 				</Typography>
-				<Typography variant = 'subtitle1' sx = {{ color: '#5F5F5F', my: theme.spacing(4)}}>
+				<Typography variant = 'btnLabel' sx = {{ color: '#000', my: theme.spacing(1)}}>
 					{
 						canDelete ?
-						'Are you sure you want to delete this question? This action can\'t be undone.'
+						'This action can\'t be undone.'
 						:
-						'To make a game engaging, we recommend adding at least a question.'
+						'This is only question.'
 					}
 					
 				</Typography>
 				<div className = {classes.footer}>
 					{
 						canDelete &&
-						<Button variant="contained" 	
-							sx = {{color: '#333333', fontWeight: 'bold', textTransform: 'none'}}
+						<Button 
+							variant="warning" 	
 							color="neutral"
-							onClick = {handleClose}>
-							Cancel
-						</Button>
+							size = 'small'
+							style = {{width: theme.spacing(16)}}
+							onClick = {handleClose}
+							label = 'Cancel'/>
 					}
 				
-					<Button variant="contained" color="success" 
-						sx = {{ml: theme.spacing(2),fontWeight: 'bold', textTransform: 'none', color: 'white'}}
+					<Button 
+						variant="success" 
+						size = 'small'
+						style = {{marginLeft: theme.spacing(5), width: theme.spacing(16)}}
 						onClick = {
 							() => {
 								if (props.onDone) props.onDone()
 							}
-						}>
-						{
-							canDelete? 
-							'Delete'
-							:
-							'Ok'
 						}
-					</Button>
+						label = {canDelete? 'Delete' : 'Ok'}/>
 				</div>
 			</div>
 		</Modal>

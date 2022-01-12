@@ -4,6 +4,7 @@ import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import EmptyBox from '../../../../component/EmptyBox'
 import { theme } from '../../../../theme'
 import CollectionRowItem from '../../component/CollectionRowItem'
 const useStyles = makeStyles((theme) => ({
@@ -51,12 +52,12 @@ const CollectionList = (props) => {
             <div className = {classes.list} >
             {
                 collections.length == 0 ? 
-                <div className = {classes.emptyContainer}>
-                    <Typography variant = 'bigLabel' 
-                        sx = {{maxWidth: theme.spacing(50), mt: theme.spacing(3), textAlign: 'center'}}>
-                        You don't have yet any collections. Create one?
-                    </Typography>
-                </div>
+                <EmptyBox
+                    style= {{width: '100%', marginTop: theme.spacing(5)}}
+                    label = " You don't have yet any collections. Create one?"
+                    onClick = {() => {
+                        if (props.onClickEmpty) props.onClickEmpty()
+                    }}/>
                 :
                 collections.map((item, index) => (
                     <div className = {classes.item}   key = {''+index}>

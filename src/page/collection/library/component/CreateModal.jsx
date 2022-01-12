@@ -1,11 +1,14 @@
-import { TextareaAutosize } from '@mui/base';
-import { Button, Grid, Modal, TextField, Typography } from '@mui/material';
+
+import {Grid, Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
 import { theme } from "../../../../theme";
 import { createUrl } from '../../../../util/helper';
+import TextField from '../../../../component/TextField';
+import TextArea from '../../../../component/TextArea';
+import Button from '../../../../component/Button';
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -14,11 +17,13 @@ const useStyles = makeStyles((theme) => ({
 		transform: 'translate(-50%, -50%)',
 		width: '50vw',
 		maxHeight: '80vh',
-		backgroundColor: 'white',
+		backgroundColor: theme.palette.secondary.main,
 		borderRadius: theme.spacing(1),
 		padding: theme.spacing(2),
 		display: 'flex',
 		flexDirection: 'column',
+		border: 'solid 2px #000000',
+        borderRadius: '255px 5px 225px 5px/5px 225px 5px 255px',
 
     },
 	leftCol: {
@@ -76,30 +81,27 @@ const CollectionCreateModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
-					Create new collection
+				<Typography variant = 'header' sx = {{color: '#000', alignSelf: 'center'}}>
+					New collection
 				</Typography>
 				<Grid container columnSpacing = {5} rowSpacing = {2} 
 					sx = {{mt: theme.spacing(2)}}>
 					<Grid item xs = {7}>
 						<div className = {classes.leftCol}>
-							<Typography variant = 'subtitle2' 
-								sx= {{fontWeight: 'bold', color: '#333333'}} >
-								Title (*)
-							</Typography>
-							<TextField id="outlined-basic" label="" value = {title} variant="outlined"
-								onChange = {(e) => handleChange('title', e.target.value)} />
-							<Typography variant = 'subtitle2' 
-								sx = {{ mt: theme.spacing(2), fontWeight: 'bold', color: '#333333'}}>
-								Description
-							</Typography>
-							<TextareaAutosize
-								aria-label="empty textarea"
+						
+							<TextField
+								placeholder='Enter  title ...'	
+								value = {title}
+								size = 'small'
+								onChange = {(value) => handleChange('title', value)} />
+							
+							<TextArea
 								value = {description}
-								onChange={(e) => handleChange('description', e.target.value)}
-								placeholder="Describe your game..."
-								style={{ width: '100%', height: 120,m: theme.spacing(0.5) ,resize: 'none'}}
+								onChange={(value) => handleChange('description', value)}
+								placeholder="Enter some description..."
+								style={{ width: '100%', height: 120,marginTop: theme.spacing(3), resize: 'none' }}
 							/>
+
 							<WrappedRadioGroup title = 'Visibility' 
 								list = {[
 									{label: 'Public', value: 'public'},
@@ -111,32 +113,29 @@ const CollectionCreateModal = (props) => {
 					</Grid>
 					<Grid item xs = {5}>
 						<div className = {classes.rightCol}>
-							<Typography variant = 'subtitle2' 
-								sx= {{fontWeight: 'bold', color: '#333333'}} >
-								Cover image
-							</Typography>
 							<div className = {classes.uploadImg}>
 								<MediaUploadCard 
 									onSelectImage = {file => handleChange('cover', file)}
 									onRemoveImage = {() => handleChange('cover', null)}
+									label = 'Upload a cover'
 									image = {cover}/>
 							</div>
 						</div>
 					</Grid>
 				</Grid>
 				<div className = {classes.footer}>
-					<Button variant="contained" color="neutral"
+					<Button 
+						variant="warning" 
 						onClick = {handleClose}
-						sx = {{color: '#333333', fontWeight: 'bold', textTransform: 'none'}}>
-						Cancel
-					</Button>
-					<Button variant="contained" color="success" 
-						sx = {{ml: theme.spacing(2),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
+						style = {{width: theme.spacing(16)}}
+						label = 'Cancel'/>
+					<Button 
+						variant="success"
+						style = {{marginLeft: theme.spacing(5), width: theme.spacing(16)}}
 						onClick = {() => {
 							if (props.onDone) props.onDone(collection)
-						}}>
-						Create
-					</Button>
+						}}
+						label = 'Create'/>
 				</div>
 			</div>
 		</Modal>

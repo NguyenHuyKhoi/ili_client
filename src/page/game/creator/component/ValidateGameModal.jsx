@@ -1,8 +1,9 @@
 import { Error } from '@mui/icons-material';
-import { Button, Modal, Typography } from '@mui/material';
+import { Modal, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
+import Button from '../../../../component/Button';
 import { theme } from "../../../../theme";
 import ValidateQuestionItem from './ValidateQuestionItem';
 const useStyles = makeStyles((theme) => ({
@@ -11,36 +12,25 @@ const useStyles = makeStyles((theme) => ({
 		top: '50%',
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
-		width: '40vw',
-		backgroundColor: '#rgba(0,0,0,0)',
+		width: '50vw',
+		backgroundColor: theme.palette.secondary.main,
 		display: 'flex',
 		flexDirection: 'column',
-
+		border: 'solid 2px #000000',
+        borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
     },
-	header: {
-		padding: theme.spacing(3),
-		borderTopLeftRadius: theme.spacing(1),
-		borderTopRightRadius: theme.spacing(1),
-		backgroundColor: 'white',
-		display: 'flex',
-		flexDirection: 'column'
-	},
 	body: {
 		display: 'flex',
-		padding: theme.spacing(2),
+		margin: theme.spacing(5),
 		flexDirection: 'column',
-		backgroundColor: '#F2F2F2',
 		overflow: 'auto',
-		maxHeight: '50vh'
+		maxHeight: '60vh'
 	},
 	question: {
-		marginBottom: theme.spacing(2),
+		marginBottom: theme.spacing(3),
 	},
 	footer: {
-		padding: theme.spacing(3),
-		borderBottomLeftRadius: theme.spacing(1),
-		borderBottomRightRadius: theme.spacing(1),
-		backgroundColor: 'white',
+		paddingBottom: theme.spacing(3),
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'center'
@@ -67,14 +57,9 @@ const ValidateGameModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<div className = {classes.header}>
-					<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
-						This kahoot can't be played
-					</Typography>
-					<Typography variant = 'subtitl1' sx = {{mt: theme.spacing(2), color: '#5F5F5F'}}>
-						All questions need to be completed before you can start playing.
-					</Typography>
-				</div>
+				<Typography variant = 'bigLabel' sx = {{color: '#000', alignSelf: 'center', pt: theme.spacing(3)}}>
+					Fix them!!!
+				</Typography>
 				<div className= {classes.body}>
 					{
 						questions.map((item, index) => (
@@ -87,24 +72,28 @@ const ValidateGameModal = (props) => {
 								}
 								
 								}
-									question = {item}/>
+									question = {item}
+									index = {index}/>
 							</div>
 						))
 					}
 				</div>
 				<div className = {classes.footer}>
-					<Button variant="contained" color="neutral"
-						sx = {{color: '#333333', fontWeight: 'bold', textTransform: 'none'}}
-						onClick = {handleClose}>
-						Back to Edit
-					</Button>
-					<Button variant="contained" color="success" 
-						sx = {{ml: theme.spacing(2),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
+					<Button 
+						variant="warning"
 						onClick = {() => {
 							if (props.onSaveDraft) props.onSaveDraft()
-						}}>
-						Keep as draft
-					</Button>
+						}}
+						label = 'Save draft'
+						style = {{width: theme.spacing(16)}}
+						size = 'small'/>
+					
+					<Button 
+						variant = "success" 
+						style = {{marginLeft: theme.spacing(5), width: theme.spacing(16)}}
+						onClick = {handleClose}
+						size = 'small'
+						label = 'Fix'/>
 				</div>
 			</div>
 		</Modal>

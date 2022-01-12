@@ -1,33 +1,34 @@
-import { Button, Divider } from '@mui/material'
+import {Divider } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
+import Button from '../../../../component/Button'
 import DropdownSelect from '../../../../component/DropdownSelect'
 import { updateQuestion } from '../../../../context/game/creator/actions'
 import { GameCreatorContext } from '../../../../context/game/creator/context'
+import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
-        padding: theme.spacing(2),
         flex:1,
-        height: '85vh',
+        height: '92vh',
         backgroundColor: 'white',
         display: 'flex',
         flexDirection:'column',
         boxShadow: `1px 3px 1px #f0f0f0`,
+        paddingTop: theme.spacing(5)
     },
     inputs: {
         flex:1, 
         flexDirection:'column',
+        padding: theme.spacing(2)
     },
     input: {
         marginBottom: theme.spacing(5)
     },
     bottom: {
-        padding: theme.spacing(3),
-        backgroundColor:'white',
+        padding: theme.spacing(2),
         display: 'flex',
-        flexDirection: 'row',
-        alignItems:'center',
-        justifyContent:'space-between'
+        flexDirection: 'column',
+        backgroundColor: theme.palette.secondary.main
     }
 }))
 
@@ -57,11 +58,11 @@ const QuestionConfig = (props) => {
             <div className = {classes.inputs} >
                 <div className = {classes.input}>
                     <DropdownSelect 
-                        title = 'Time limit'
+                        title = 'Time'
                         list = {[
-                            {label: '10', value: 10},
-                            {label: '20', value: 20},
-                            {label: '30', value: 30}
+                            {label: '10s', value: 10},
+                            {label: '20s', value: 20},
+                            {label: '30s', value: 30}
                         ]}
                         value = {time_limit}
                         onChange = {(value)=>handleChange('time_limit',value)}/>
@@ -80,13 +81,17 @@ const QuestionConfig = (props) => {
             <Divider />
             <div className = {classes.bottom} >
                 <Button 
-                    onClick= {handleDeleteQuestion}
-                    sx = {{color: '#333333', borderColor: 'rgba(0,0,0,0)', fontWeight: 'bold', textTransform: 'none'}}>
-                    Delete
-                </Button>
-                <Button variant = 'outlined'   
-                    sx = {{color: '#333333', borderColor: '#333333', fontWeight: 'bold', textTransform: 'none'}}
-                    onClick = {handleDuplicateQuestion}>Duplicate</Button>
+                    variant = 'primary' 
+                    size = 'small' 
+                    style = {{ width: theme.spacing(20), alignSelf: 'center'}}
+                    onClick = {handleDuplicateQuestion}
+                    label = 'Duplicate'/>
+                <Button 
+                    variant = 'warning'  
+                    size = 'small' 
+                    style = {{marginTop: theme.spacing(2), width: theme.spacing(20), alignSelf: 'center'}}
+                    label = 'Delete'
+                    onClick = {handleDeleteQuestion}/>
             </div>
         </div>
     )

@@ -1,8 +1,9 @@
 import { Error } from '@mui/icons-material';
-import { Button, Modal, Typography } from '@mui/material';
+import { Modal, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
+import Button from '../../../../component/Button';
 import { theme } from "../../../../theme";
 import { createUrl } from '../../../../util/helper';
 const useStyles = makeStyles((theme) => ({
@@ -50,8 +51,8 @@ const ErrorNote = (props) => {
 	const {defective} = props
 	return (
 		<div className= {classes.note}>
-			<Error sx = {{color: '#46178F'}}/>
-			<Typography variant = 'subtitle2' sx = {{ml: theme.spacing(1), color: '#5F5F5F'}}>
+			<Error sx = {{color: theme.palette.error.main}}/>
+			<Typography variant = 'label' sx = {{ml: theme.spacing(1), color: '#000'}}>
 				{defective}
 			</Typography>
 		</div>
@@ -60,7 +61,7 @@ const ErrorNote = (props) => {
 
 const ValidateQuestionItem = (props) => {
 	const classes = useStyles()
-	const {question} = props
+	const {question, index} = props
 	const {title, image, defectives} = question
 	const handleClick = () => {
 		if (props.onClick) {
@@ -72,27 +73,22 @@ const ValidateQuestionItem = (props) => {
 			<div className= {classes.header}>
 				<img src = {createUrl(image)}
 					className= {classes.img}/>
-				<div className = {classes.infor}>
-					<Typography variant = 'subtitle2' sx = {{color: '#5F5F5F'}}>
-						1 - Quiz
-					</Typography> 
-					<Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}}>
-						{
+				<Typography variant = 'btnLabel' sx = {{color: '#000',alignSelf: 'center', flex: 1, marginLeft: theme.spacing(1), marginRight: theme.spacing(2)}}>
+					{
+						(index + 1) + '. '+ 
+						(
 							title == null || title == '' ?
 							'Untitled'
 							:
 							title
-						}
-					</Typography>
-				</div>
-				<div >
-					<Button 	
-						size = 'small'
-						variant = 'contained' onClick = {handleClick}
-						sx = {{color: 'white', fontWeight: 'bold', textTransform: 'none'}}>
-						Fix
-					</Button>
-				</div>
+						)
+					}
+				</Typography>
+				<Button 	
+					size = 'small'
+					variant = 'primary' onClick = {handleClick}
+					style = {{alignSelf: 'center'}}
+					label = 'Fix'/>
 				
 			</div>
 			<div className = {classes.notes}>

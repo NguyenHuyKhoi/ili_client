@@ -80,7 +80,7 @@ const HeaderBarAuth = (props) => {
     }
     
     const handleGoProfile = () => {
-            return navigate(`/profiles/:${user._id}`, {replace: false})
+            return navigate(`/profiles/${user._id}`, {replace: false})
     }
 
 

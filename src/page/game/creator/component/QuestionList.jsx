@@ -1,7 +1,8 @@
-import { Button, Divider, Grid, Typography } from '@mui/material'
+import { Divider, Grid, Typography } from '@mui/material'
 import { blue, grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
+import Button from '../../../../component/Button'
 import { addQuestion, selectQuestion } from '../../../../context/game/creator/actions'
 import { GameCreatorContext } from '../../../../context/game/creator/context'
 import { theme } from '../../../../theme'
@@ -17,18 +18,21 @@ const useStyles = makeStyles((theme) => ({
     list: {
         display:'flex',
         flexDirection:'column',
-        maxHeight: '72vh',
-        overflow: 'auto'
+        maxHeight: '75vh',
+        overflow: 'auto',
+        paddingTop: theme.spacing(2)
     },
     item: {
         padding: theme.spacing(1.5),
+        paddingTop: theme.spacing(0.6),
         display:'flex',
         flexDirection:'column'
     },
     bottom: {
         padding: theme.spacing(2),
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        backgroundColor: theme.palette.secondary.main
     }
 }))
 
@@ -50,13 +54,13 @@ const QuestionList = (props) => {
                     <div className = {classes.item} onClick = {()=>handleSelected(index)} 
                         key = {''+index}
                         style={{
-                            backgroundColor: questionIndex == index ? '#eaf4fc':'white'
+                            backgroundColor: questionIndex == index ? theme.palette.secondary.main:'white'
                         }}>
                         <Typography 
-                            variant='subtitle2' 
-                            sx = {{mb: theme.spacing(0.2), fontWeight: 'bold', color: '#6E6E6E'}}>
+                            variant='label' 
+                            sx = {{mb: theme.spacing(0.2), color: '#000'}}>
                             {
-                                (index + 1) + ' quiz'
+                               'Quiz ' + (index + 1)
                             }
                         </Typography>
                         <QuestionMiniItem selected = {questionIndex == index} question = {item}/>
@@ -67,15 +71,16 @@ const QuestionList = (props) => {
             <Divider />
             <div className = {classes.bottom} >
                 <Button 
-                    variant = 'contained' 
-                    color = 'primary' 
+                    variant = 'primary' 
                     size = 'small' 
-                    sx = {{py: theme.spacing(1.2),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
-                    onClick = {handleAddQuestion}>Add Question</Button>
-                <Button variant = 'contained'  color = 'neutral' size = 'small' 
-                    sx = {{mt: theme.spacing(2), py: theme.spacing(1.2),color: '#333333', fontWeight: 'bold', textTransform: 'none' }}>
-                    Import Excel
-                </Button>
+                    style = {{ width: theme.spacing(20), alignSelf: 'center'}}
+                    onClick = {handleAddQuestion}
+                    label = 'New question'/>
+                <Button 
+                    variant = 'success'  
+                    size = 'small' 
+                    style = {{marginTop: theme.spacing(2), width: theme.spacing(20), alignSelf: 'center'}}
+                    label = 'Import excel'/>
             </div>
         </div>
     )
