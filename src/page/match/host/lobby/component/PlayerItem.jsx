@@ -75,7 +75,7 @@ export const PlayerItem = (props) => {
                     borderTop: `solid 2px #000`,
                     backgroundColor: isMe ? theme.palette.success.main : 'rgba(0,0,0,0)',
                     '&:hover': {
-                        textDecoration: 'line-through'
+                        textDecoration: disable ? 'none' : 'line-through'
                     }}}>
                 {username}
             </Typography>

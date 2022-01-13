@@ -36,7 +36,8 @@ const input_type = {
         title: 'Enter pincode',
         desc: 'That is a 3-digit number.',
         placeholder: '...',
-        btnLabel: 'Enter'
+        btnLabel: 'Enter',
+        type: 'number'
     },
     enter_name: {
         title: 'Enter nickname',

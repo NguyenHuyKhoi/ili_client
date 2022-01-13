@@ -46,7 +46,7 @@ const HeaderBarGuest = (props) => {
                 size = 'small'
                 label = 'Log in'
                 style = {{marginRight: theme.spacing(3)}}
-                onClick = {() => navigate('/auth/signup', {replace: false})}
+                onClick = {() => navigate('/auth/login', {replace: false})}
             />
         </div>
     )

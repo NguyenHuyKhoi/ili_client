@@ -36,7 +36,7 @@ const MatchPlayerStadiumPage = () => {
     const [earnScore, setEarnScore] = useState(0)
     const [time, setTime] = useState(0)
     const [timeTotal, setTimeTotal] = useState(question.time_limit)
-    const [stage, setStage] = useState({type:'scoreboard'})
+    const [stage, setStage] = useState({type:'on_question'})
     const {questionIndex, pinCode, players} = match
 
     useEffect(() => {

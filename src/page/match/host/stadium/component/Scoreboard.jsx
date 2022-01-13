@@ -54,7 +54,7 @@ const Scoreboard = (props) => {
                 <div className = {classes.players}>
                     {
                         players.map((player, index) => (
-                            <div style = {{marginLeft: theme.spacing(2)}} key = {'' + index}>
+                            <div style = {{margin: theme.spacing(1.5)}} key = {'' + index}>
                                 <PlayerItem  
                                     isMe = {(player._id == socket.id)}
                                     showScore = {true}

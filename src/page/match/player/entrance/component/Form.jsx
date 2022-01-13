@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const Form = (props) => {
     const classes = useStyles()
     const {input_type, value} = props
-    const {title, desc, placeholder, btnLabel} = input_type
+    const {title, desc, placeholder, btnLabel, type} = input_type
     const handleChange = (value) => {
         if (props.onChange) {
             props.onChange(value)
@@ -48,6 +48,7 @@ const Form = (props) => {
                 placeholder = {placeholder}
                 value = {value}
                 onChange = {handleChange} 
+                type = {type}
                 style = {{
                     borderColor: props.showAlert? 'red':'gray',
                     backgroundColor: props.showAlert? red[100]:'white',

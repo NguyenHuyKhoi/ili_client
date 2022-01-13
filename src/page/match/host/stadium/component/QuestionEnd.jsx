@@ -48,7 +48,6 @@ const QuestionEnd = (props) => {
     const classes = useStyles()
     var {question, time, answer_counts} = props
 
-     answer_counts = [2,3,4,1]
     const {title, image, answers, correct_answers} = question
     const total_count = answer_counts.reduce((res, count) => res += count, 0)
     return (

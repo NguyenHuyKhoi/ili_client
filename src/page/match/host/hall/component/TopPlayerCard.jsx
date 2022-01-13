@@ -6,40 +6,89 @@ import React from 'react'
 import Icon from '../../../../../component/Icon'
 import { theme } from '../../../../../theme'
 import {createUrl} from '../../../../../util/helper'
+import no_image from '../../../../../asset/image/logo.png'
+var avatar_size = 16
+var medal_size = 8
+
+const medal_colors = [
+    {
+        color_1:'#FBC740',
+        color_2:'#FEFF75'
+    },
+    {
+        color_1: '#A8A9AD',
+        color_2: '#D2D3D5'
+    },
+    {
+        color_1: '#BFA865',
+        color_2: '#ECCD7B'
+    }
+]
 const useStyles = makeStyles((theme) => ({
     container: {
-        width: '100%',
         display: 'flex',
-        flexDirection:'row',
+        flexDirection:'column',
         alignItems: 'center',
-        borderBottom: '2px solid #f2f2f2',
-        justifyContent: 'space-between',
-        padding: theme.spacing(2)
+        position: 'relative'
+    },
+    avatar: {
+        objectFit: 'cover',
+    },
+    rank: {
+        position: 'absolute',
+        left: 0,
+        right: 0, 
+        margin: 'auto',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 }))
 
 const TopPlayerCard = (props) => {
     const classes = useStyles()
-    const { player, highlight} = props 
-    const {name, score} = player
+    const { player, highlight, index, style, isBig} = props 
+
+    var {username, avatar, score} = player ? player : {username: ' --- ', avatar: null, score: ' --- '}
+
+    const medal_color = medal_colors[index]
+
+    var factor = 1
+    if (isBig) factor = 1.5
     return (
         <div className = {classes.container} 
-            style = {{
-                borderRadius: highlight ? theme.spacing(1) : 0,
-                backgroundColor: highlight ? 'white' : 'rgba(0,0,0,0)'
-            }}
-            onClick = {() => {
-            }}>
-            <Typography variant = 'h5' sx = {{
-                mx: theme.spacing(1),
-                color: highlight ? '#333333' :  'white', 
-                fontWeight: 'bold'}}>
-                {name}
+            onClick = {() => { }}
+            style= {style ? style : {}}
+            >
+            <img src = {avatar != null? createUrl(avatar) : no_image}
+                className = {classes.avatar}
+                style = {{  
+                    border: `4px solid ${medal_color.color_2}`,
+                    width: theme.spacing(avatar_size* factor),
+                    height: theme.spacing(avatar_size* factor),
+                    borderRadius: theme.spacing(avatar_size/2* factor)}}/>
+            <div className = {classes.rank}
+                style = {{
+                    top: theme.spacing(avatar_size * factor  - factor * medal_size / 2),
+                    width: theme.spacing(medal_size * factor),
+                    height: theme.spacing(medal_size * factor),
+                    borderRadius: theme.spacing(medal_size/2 * factor),
+                    backgroundColor: medal_color.color_1,
+                    border: `10px solid ${medal_color.color_2}`
+                }} >
+                <Typography variant = 'header' 
+                    sx = {{color: medal_color.color_2, fontWeight: 'bold'}}>
+                    {index + 1}
+                </Typography>
+            </div>
+            <Typography 
+                variant = 'header' 
+                sx = {{mt: theme.spacing(5 * factor), color: medal_color.color_2, fontWeight: 'bold', fontSize: 36}}>
+                {username}
             </Typography>
-            <Typography variant = 'h5' sx = {{
-                mx: theme.spacing(1),
-                color: highlight ? '#333333' :  'white', 
-                fontWeight: 'bold'}}>
+            <Typography 
+                variant = 'header' 
+                sx = {{  color: medal_color.color_1}}>
                 {score}
             </Typography>   
         </div>
