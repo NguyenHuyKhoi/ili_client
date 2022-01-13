@@ -56,18 +56,6 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3)
     }
 }))
-export const LoginWithButton = () => {
-    const classes = useStyles()
-    return (
-        <div className = {classes.loginWithBtn}>
-            <img className = {classes.logoWithBtnImg}
-                src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png'/>
-            <Typography variant = 'subtitle1'>
-                Continue with Google
-            </Typography>
-        </div>
-    )
-}
 
 const LoginPage = () => {
     const classes = useStyles()

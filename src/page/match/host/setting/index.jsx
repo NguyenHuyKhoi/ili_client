@@ -10,14 +10,15 @@ import { SocketContext } from '../../../../context/socket/context'
 import Header from './component/Header'
 import MatchModes, { MODE_MATCH } from './component/MatchModes'
 import MatchSetting from './component/MatchSetting'
-
+import backgroundImg from '../../../../asset/image/background.jpg'
+import { theme } from '../../../../theme'
 
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#46178f',
+        backgroundColor: theme.palette.secondary.main,
         height: '100vh',
         overflow: 'auto'
     },
@@ -30,8 +31,10 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flex: 1,
         padding: theme.spacing(1.5),
-        backgroundColor: 'white',
+        backgroundColor: theme.palette.success.main,
         borderRadius: theme.spacing(1),
+        border: 'solid 2px #000000',
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
@@ -52,7 +55,7 @@ export const MATCH_SETTINGS = [
             {value: 60, label: '  60 seconds'},
             {value: 120, label: '  120 seconds'},
         ],
-        title: 'Start Time after',
+        title: 'Delay start match on',
     },
     {
         key: 'showQuestionEndTime',
@@ -80,7 +83,7 @@ export const MATCH_SETTINGS = [
             {value: 60, label: '  60 seconds'},
             {value: 120, label: '  120 seconds'},
         ],
-        title: 'End match after',
+        title: 'Delay end match on',
     },
 ]
 
@@ -94,6 +97,7 @@ const MatchHostSettingPage = () => {
     const [alert, setAlert] = useState({})
 
     useEffect(() => {
+        
         dispatch(resetMatch({
             host: {
                 userId: user._id,
@@ -141,6 +145,13 @@ const MatchHostSettingPage = () => {
                 })
                 break;
             case MODE_MATCH.LIVESTREAM:
+                dispatch(updateMatch({
+                    ...match, 
+                    livestream:  {
+                        title: 'Livestream',
+                        description: 'Created by ILI'
+                    }
+                }))
                 dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
                 navigate('/match/livestream', {replace: false})
                 break
@@ -159,12 +170,10 @@ const MatchHostSettingPage = () => {
             </Snackbar>
             <Header/>
             <div className = {classes.body}>
-                <div className= {classes.bodyHeader} >
-                    <div className = {classes.title}>
-                        <Typography variant = 'h5' sx = {{color: 'black', fontWeight: 'bold'}}>
-                            {title}
-                        </Typography>
-                    </div>
+                <div className = {classes.title}>
+                    <Typography variant = 'bigLabel' sx = {{color: '#fff', fontWeight: 'bold'}}>
+                        {title}
+                    </Typography>
                 </div>
                
                 <MatchModes onSelectMode = {(mode) => handleStart(mode)}/>

@@ -1,21 +1,16 @@
-import { HomeOutlined, Logout, NotificationsOutlined } from '@mui/icons-material'
-import { Avatar, Popover, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import logo from '../asset/image/logo.png'
 import { logoutSuccess } from '../context/auth/actions'
 import { AuthContext } from '../context/auth/context'
 import { startCreateGame } from '../context/game/creator/actions'
 import { GameCreatorContext } from '../context/game/creator/context'
 import { theme } from '../theme'
-import { DropdownMenu } from './DropdownMenu'
-import Tabbar from './Tabbar'
-import {createUrl} from '../util/helper'
-import HeaderTabs from './Tabbar'
-import logo from '../asset/image/logo.png'
 import Button from './Button'
 import IconButton from './IconButton'
+import Tabbar from './Tabbar'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -61,7 +56,8 @@ const tabs = [
 const HeaderBarAuth = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {dispatch} = useContext(GameCreatorContext)
+    const gameCreatorDispatch = useContext(GameCreatorContext).dispatch
+    const authDispatch = useContext(AuthContext).dispatch
     const {user, token} = useContext(AuthContext)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const {selectedIndex} = props 
@@ -75,7 +71,8 @@ const HeaderBarAuth = (props) => {
                 }
             })
         .then((res) => {
-            dispatch(logoutSuccess())
+            console.log("Logout success")
+            authDispatch(logoutSuccess())
         })   
     }
     
@@ -85,8 +82,12 @@ const HeaderBarAuth = (props) => {
 
 
     const handleCreate = () => {
-        dispatch(startCreateGame())
+        gameCreatorDispatch(startCreateGame())
         navigate('/game/creator',{replace: true})
+    }
+
+    const handleJoin = () => {
+        navigate('/match/player/entrance',{replace: true})
     }
     return (
         <div className = {classes.container}>
@@ -97,9 +98,16 @@ const HeaderBarAuth = (props) => {
             <Tabbar tabs = {tabs} selectedIndex = {selectedIndex}/>
             <Button 
                 size = 'small'
-                variant = 'success'
+                variant = 'primary'
                 label = 'Create Game'
                 onClick = {handleCreate}/>
+
+            <Button 
+                size = 'small'
+                variant = 'success'
+                style = {{marginLeft: theme.spacing(3)}}
+                label = 'Join Game'
+                onClick = {handleJoin}/>
             <IconButton 
                 icon = 'Person'
                 size = 'small'

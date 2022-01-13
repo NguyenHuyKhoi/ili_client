@@ -136,7 +136,7 @@ const PlayerDetailModal = (props) => {
 					onClose = {handleClose} 
 					onRight = {() => setIndex(index + 1)}
 					onLeft = {() => setIndex(index - 1)}
-					title = {player.name} 
+					title = {player.username} 
 					index = {index + 1} 
 					total = {players.length}/>
 				<Divider/>

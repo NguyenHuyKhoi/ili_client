@@ -13,15 +13,15 @@ const useStyles = makeStyles((theme) => ({
         flex: 1,
         height: '100%',
         display: 'flex',
-        backgroundColor: '#46178f',
+        backgroundColor: theme.palette.secondary.main,
         flexDirection: 'column'
     },
     title: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
-        padding: theme.spacing(3)
+        backgroundColor: theme.palette.background.main,
+        padding: theme.spacing(2)
     },
     center: {
         flex: 1,
@@ -39,18 +39,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'flex-end'
     },
-    countdown: {
-        width: theme.spacing(20),
-        borderRadius:  theme.spacing(0.8),
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#eaf1fa',
-        position: 'absolute',
-        right: theme.spacing(2),
-        top: theme.spacing(2),
-    },
     answers: {
         padding: theme.spacing(1),
     }
@@ -58,13 +46,15 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestionEnd = (props) => {
     const classes = useStyles()
-    let {question, time, answer_counts} = props
-    const {title, image, answers, time_limit, correct_answers} = question
+    var {question, time, answer_counts} = props
+
+     answer_counts = [2,3,4,1]
+    const {title, image, answers, correct_answers} = question
     const total_count = answer_counts.reduce((res, count) => res += count, 0)
     return (
         <div className = {classes.container}>
             <div className = {classes.title} >
-                <Typography variant = 'h5' sx = {{fontWeight: 600, color: '#333333'}}>
+                <Typography variant = 'header' sx = {{color: '#000'}}>
                     {title}
                 </Typography>
             </div>
@@ -83,15 +73,6 @@ const QuestionEnd = (props) => {
                             </div>
                         ))
                     }
-                </div>
-              
-                <div className = {classes.countdown}>
-                    <Typography variant = 'h3' sx = {{color: '#333333', fontWeight: 'bold'}}>
-                        {time}
-                    </Typography>
-                    <Typography variant = 'h5' sx = {{color: '#333333', fontWeight: 'bold'}}>
-                        Get ready
-                    </Typography>
                 </div>
              
             </div>

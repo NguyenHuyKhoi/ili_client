@@ -1,35 +1,32 @@
-import { Button } from '@mui/material'
+import { Typography } from '@mui/material'
 import { red } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
+import Button from '../../../../../component/Button'
+import TextField from '../../../../../component/TextField'
 import { theme } from '../../../../../theme'
 
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
+        width: 500,
         flexDirection: 'column',
-        padding: theme.spacing(2),
-        backgroundColor: 'white',
+        padding: theme.spacing(3),
+        backgroundColor: theme.palette.secondary.main,
         borderRadius: theme.spacing(0.5),
-    },
-    inputContainer: {
-        paddingBottom: theme.spacing(1.5),
-        paddingTop: theme.spacing(1.5),
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 20,
-        fontWeight: 'bold',
-        textAlign: 'center'
+        border: 'solid 2px #000000',
+        borderRadius: '255px 10px 225px 10px/10px 225px 10px 255px',
     }
 }))
 
 
 const Form = (props) => {
     const classes = useStyles()
-    const handleChange = (e) => {
+    const {input_type, value} = props
+    const {title, desc, placeholder, btnLabel} = input_type
+    const handleChange = (value) => {
         if (props.onChange) {
-            props.onChange(e.target.value)
+            props.onChange(value)
         }
     }
 
@@ -40,19 +37,30 @@ const Form = (props) => {
     }
     return (
         <div className = {classes.container}>
-            <input className = {classes.inputContainer} onChange = {handleChange} 
-                value = {props.value}
+            <Typography variant = 'header' sx = {{alignSelf: 'center'}}>
+                {title}
+            </Typography>
+            <Typography variant = 'caption' sx = {{alignSelf: 'center'}}>
+                {desc}
+            </Typography>
+            <TextField 
+                fontSize = {50}
+                placeholder = {placeholder}
+                value = {value}
+                onChange = {handleChange} 
                 style = {{
                     borderColor: props.showAlert? 'red':'gray',
-                    backgroundColor: props.showAlert? red[100]:'white'
-                    
+                    backgroundColor: props.showAlert? red[100]:'white',
+                    marginTop: theme.spacing(3)
                 }}
-                placeholder = {props.placeholder}/>
-            <Button variant = 'contained' sx = {{mt: theme.spacing(1),py: theme.spacing(),px: theme.spacing(15), backgroundColor: 'black'}}
-                onClick = {handleSubmit}>
-                {props.btnTitle}
-            </Button>
-       </div>
+                />
+            <Button 
+                disabled = {value == '' }
+                variant =  {value == '' ? 'warning' : 'primary'}
+                label = {btnLabel}
+                style = {{marginTop: theme.spacing(2)}}
+                onClick = {handleSubmit}/>
+    </div>
     )
 }
 

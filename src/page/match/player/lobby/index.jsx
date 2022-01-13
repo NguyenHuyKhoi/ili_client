@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#46178f'
+        overflowY: 'hidden',
+        backgroundColor: theme.palette.secondary.main
     },
     body: {
         flex: 1
@@ -36,7 +37,6 @@ const MatchPlayerLobbyPage = () => {
         })
         socket.on('match:sync', (data) => {
             let {match} = data
-            console.log("Receive match on sync: ", match)
             dispatch(updateMatch(match))
         })
         socket.on('match:onQuestion', (data) => {
@@ -50,7 +50,7 @@ const MatchPlayerLobbyPage = () => {
             console.log("Player is removed: ", player)
             setAlert({
                 type: 'warning',
-                msg: 'Player ' + player.name + ' has leave game.'
+                msg: 'Player ' + player.username + ' has leave game.'
             })
         })
         socket.on('match:kickPlayerDone', (data) => {
@@ -63,7 +63,7 @@ const MatchPlayerLobbyPage = () => {
             else {
                 setAlert({
                     type: 'warning',
-                    msg: 'Player ' + player.name + ' has kicked out game.'
+                    msg: 'Player ' + player.username + ' has kicked out game.'
                 })
             }
            

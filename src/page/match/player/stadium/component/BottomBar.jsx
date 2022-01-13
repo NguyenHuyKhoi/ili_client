@@ -6,19 +6,21 @@ const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        backgroundColor: 'white',
-        padding: theme.spacing(1)
+        backgroundColor: theme.palette.success.main,
+        alignItems: 'center',
+        padding: theme.spacing(1),
+        border: 'solid 2px #000000',
+        borderRadius: '255px 5px 225px 5px/5px 225px 5px 255px',
     },
-    scoreContainer: {
-        width: theme.spacing(15),
+    score: {
+        width: theme.spacing(16),
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: theme.spacing(1),
-        paddingLeft: theme.spacing(3),
-        paddingRight: theme.spacing(3),
-        backgroundColor: 'rgba(0,0,0,0.9)',
-        borderRadius: theme.spacing(0.5)
+        padding: theme.spacing(0.2),
+        backgroundColor: theme.palette.secondary.main,
+        border: 'solid 2px #000000',
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
     }
 }))
 
@@ -26,14 +28,14 @@ const useStyles = makeStyles((theme) => ({
 const BottomBar = (props) => {
     const classes = useStyles()
     const {player} = props 
-    const {name, score} = player
+    const {username, score} = player
     return (
         <div className = {classes.container}>
-            <Typography variant = 'h6' sx = {{flex: 1, color: 'black'}}> 
-                {name}
+            <Typography variant = 'header' sx = {{flex: 1, color: '#000'}}> 
+                {username}
              </Typography>
-            <div className = {classes.scoreContainer} >
-                <Typography variant = 'h6' sx = {{fontWeight: 'bold', color: 'white'}}>
+            <div className = {classes.score} >
+                <Typography variant = 'header' sx = {{color: '#000'}}>
                     {score}
                 </Typography>
             </div>

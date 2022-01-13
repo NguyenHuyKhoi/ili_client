@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
         backgroundColor: 'red',
-        borderRadius: theme.spacing(0.5),
+        border: 'solid 2px #000000',
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
         boxShadow: `1px 3px 1px #f0f0f0`,
         '&:hover': {
             cursor: 'pointer'
@@ -25,30 +26,30 @@ const useStyles = makeStyles((theme) => ({
 
 const Answer = (props) => {
     const classes = useStyles()
-    const {answer, isCorrect, isSelected, style} = props 
+    var {answer, isCorrect, isSelected, style} = props 
     const {color, icon} = style
     return (
         <div className = {classes.container} 
-            style={{backgroundColor: color, opacity: isCorrect == false || isSelected == false ? 0.5 : 1}}
+            style={{backgroundColor: color, opacity: isCorrect == false || isSelected == false ? 0.3 : 1}}
             onClick = {() => {
                 if (props.onClick) props.onClick()
             }}>
-            <Icon name = {icon} style = {{fontSize: 30, color: 'white'}}/>
-            <Typography variant = 'h5' sx = {{flex: 1, ml: theme.spacing(2), fontWeight: 'bold', color: 'white'}}>
+            <Icon name = {icon} style = {{fontSize: 40, color: theme.palette.background.main}}/>
+            <Typography variant = 'header' sx = {{flex: 1, ml: theme.spacing(2),color: '#000'}}>
                 {answer}
             </Typography>
             {
                 isCorrect != undefined && 
                 (
                     isCorrect ?
-                    <Check sx = {{color: 'white', fontSize: 40}}/>
+                    <Check sx = {{color: '#000', fontSize: 40}}/>
                     : 
-                    <Close sx = {{color: 'white', fontSize: 40}}/>
+                    <Close sx = {{color: '#000', fontSize: 40}}/>
                 )
             }
             {
                 isSelected == true && 
-                <Check sx = {{color: 'white', fontSize: 40}}/>
+                <Check sx = {{color: '#000', fontSize: 40}}/>
             }
         </div>
     )

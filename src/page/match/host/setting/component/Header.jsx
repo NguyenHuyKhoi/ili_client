@@ -3,61 +3,40 @@ import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { theme } from '../../../../../theme'
-
+import logo from '../../../../../asset/image/logo.png'
+import { useNavigate } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: theme.spacing(1.5)
+        padding: theme.spacing(1)
     },
-    langContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: 'white',
-        padding: theme.spacing(1),
-        borderRadius: theme.spacing(3),
-        alignSelf: 'flex-start'
-    },
-
-    btns:{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-
-    },
-    btnIcon: {
-        width: theme.spacing(4),
-        height: theme.spacing(4),
-        borderRadius: theme.spacing(2),
-        backgroundColor: 'white',
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+    logo: {
+        height: theme.spacing(5),
+        aspectRatio: 1,
+        '&:hover': {
+            cursor: 'pointer'
+        }
     }
 
 }))
 const Header = (props) => {
+    const navigate = useNavigate()
     const classes = useStyles()
+    const handleGoHome = () => {
+        return navigate('/', {replace: false})
+    }
     return (
         <div className = {classes.container}>   
-            <div className = {classes.langContainer}>
-                <Language   sx = {{color: 'black', fontSize: 20}} />
-                <Typography variant = 'subtitle1' sx  ={{ml: theme.spacing(1),fontWeight: 'bold', color: 'black'}}>EN</Typography>
-            </div>
-            <Typography variant = 'h3'  
-                sx  ={{ color: 'white', fontWeight: 'bold'}}> 
-                Ili
+            <img src = {logo} className = {classes.logo}
+                onClick = {handleGoHome}/>
+            <Typography variant = 'bigHeader'  
+                sx  ={{ color: theme.palette.success.main, fontWeight: 'bold'}}> 
+                Create new match
             </Typography>
-            <div className = {classes.btns}>
-                <div className = {classes.btnIcon}>
-                    <Fullscreen sx = {{color: 'black', fontSize: 20}} />
-                </div>
-            </div>
+            <div/>
         </div>
     )
 }

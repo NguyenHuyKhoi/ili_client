@@ -6,16 +6,22 @@ const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        backgroundColor: 'white',
+        backgroundColor: theme.palette.success.main,
         alignItems: 'center',
-        padding: theme.spacing(1)
-    },
-    scoreContainer: {
         padding: theme.spacing(1),
-        paddingLeft: theme.spacing(3),
-        paddingRight: theme.spacing(3),
-        backgroundColor: 'rgba(0,0,0,0.9)',
-        borderRadius: theme.spacing(0.5)
+        border: 'solid 2px #000000',
+        borderRadius: '255px 5px 225px 5px/5px 225px 5px 255px',
+    },
+    pinCode: {  
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: theme.spacing(0.2),
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
+        backgroundColor: theme.palette.secondary.main,
+        border: 'solid 2px #000000',
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
     }
 }))
 
@@ -25,12 +31,12 @@ const BottomBar = (props) => {
     const {pinCode} = props
     return (
         <div className = {classes.container}>
-            <Typography variant = 'h6' sx = {{flex: 1, color: 'black', fontWeight: 'bold'}}>
-                You are Host
-            </Typography>
-            <div className = {classes.scoreContainer} >
-                <Typography variant = 'h6' sx = {{fontWeight: 'bold', color: 'white'}}>
-                    {`Game pin: ` + pinCode}
+            <Typography variant = 'header' sx = {{flex: 1, color: '#000'}}> 
+                {'You are host'}
+             </Typography>
+            <div className = {classes.pinCode} >
+                <Typography variant = 'header' sx = {{color: '#000'}}>
+                    {`Pincode: ${pinCode}`}
                 </Typography>
             </div>
        </div>

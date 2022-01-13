@@ -73,7 +73,7 @@ const Header = () => {
 						</Typography>
 						<Divider/>
 						<Typography variant = 'subtitle2' sx = {{p: theme.spacing(1.5), color: '#5f5f5f'}}>
-							Host by {host.name}
+							Host by {host.username}
 						</Typography>
 					</div>
 				</Grid>

@@ -11,16 +11,18 @@ import {answerStyles} from '../../../../game/creator/component/Answers'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
+        height: '100%',
         display: 'flex',
-        backgroundColor: '#46178f',
-        flexDirection: 'column',
+        backgroundColor: theme.palette.secondary.main,
+        flexDirection: 'column'
     },
-    title: {
+    header: {
+        padding: theme.spacing(2),
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'white',
-        padding: theme.spacing(3)
+
+        backgroundColor: theme.palette.background.main,
     },
     center: {
         flex: 1,
@@ -31,20 +33,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         paddingTop: theme.spacing(7),
         paddingBottom: theme.spacing(7)
-    },
-    timer: {
-        width: theme.spacing(14),
-        height:  theme.spacing(14),
-        borderRadius:  theme.spacing(7),
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#eaf1fa',
-        position: 'absolute',
-        left: theme.spacing(2),
-        top: 0,
-        bottom: 0,
-        margin: 'auto'
     },
     img: {
         aspectRatio: 1.6,
@@ -60,7 +48,7 @@ const Question = (props) => {
     const classes = useStyles()
     const [selected, setSelected] = useState(null)
     const {socket} = useContext(SocketContext)
-    const {question, time} = props
+    const {question, time, question_index, question_total, answer_counts} = props
     const {title, image, answers, time_limit} = question
     const handleAnswer = (index) => {
         if (selected != null) return 
@@ -68,20 +56,23 @@ const Question = (props) => {
         if (props.onAnswer) props.onAnswer(index)
 
     }
+
+    var answerTotal = answer_counts.reduce((res, item) => res += item, 0)
     return (
         <div className = {classes.container}>
-            <div className = {classes.title} >
-                <Typography variant = 'h5' sx = {{fontWeight: 600, color: '#333333'}}>
+             <div className = {classes.header} >
+                <Typography variant = 'btnLabel' sx = {{color: '#000', width: theme.spacing(20), textAlign: 'left'}}>
+                    {`${question_index + 1}/${question_total}`}
+                </Typography>
+                <Typography variant = 'header' sx = {{color: '#000', flex: 1, textAlign: 'center'}}>
                     {title}
+                </Typography>
+                <Typography variant = 'btnLabel' sx = {{color: '#000', width: theme.spacing(20), textAlign: 'right'}}>
+                    {`Answers: ${answerTotal}`}
                 </Typography>
             </div>
             <Divider/>
             <div className = {classes.center}>
-                <div className = {classes.timer} >
-                    <Typography variant = 'h3' sx = {{fontWeight: 'bold', color: '#333333'}}>
-                        {time}
-                    </Typography>
-                </div>
                 {
                     image != null ?
                     <img className = {classes.img} src = {createUrl(image)}/>

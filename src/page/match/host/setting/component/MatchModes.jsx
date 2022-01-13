@@ -1,4 +1,4 @@
-import { Button, Switch, Typography } from '@mui/material'
+import {Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { theme } from '../../../../../theme'
@@ -6,38 +6,37 @@ import { Grid } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import classic_mode from '../../../../../asset/image/classis_mode.png'
 import youtube_mode from '../../../../../asset/image/youtube_mode.png'
+import Button from '../../../../../component/Button'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        marginTop: theme.spacing(10)
+        marginTop: theme.spacing(15)
     },
     item: {
-        height: theme.spacing(20),
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
-        borderRadius: theme.spacing(1),
+        maxHeight: theme.spacing(28),   
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         position: 'relative',
-        padding: theme.spacing(2),
-        paddingTop: theme.spacing(6)
+        padding: theme.spacing(3),
+        paddingTop: theme.spacing(5),
+        border: 'solid 2px #000000',
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px'
     },
     logo: {
         width: theme.spacing(10),
         height: theme.spacing(10),
         borderRadius: theme.spacing(5),
+        padding: theme.spacing(0.4),
         position: 'absolute',
         top: theme.spacing(-5),
         left: 0,
         right: 0,
-        backgroundColor: 'white',
+        backgroundColor: theme.palette.success.main,
         margin: 'auto'
-    },
-    infor: {
-        flex: 1, 
-        flexDirection: 'column'
-    },
+    }
 }))
 
 export const MODE_MATCH = {
@@ -55,7 +54,7 @@ const modes = [
     },
     {
         title: 'Livestream',
-        desc: 'Stream your game on Youtube, Facebook and viewer can play in chatbox.',
+        desc: 'Stream on Youtube, Facebook and play in chatbox.',
         link: '/match/livestream',
         icon: youtube_mode,
         mode: MODE_MATCH.LIVESTREAM
@@ -71,28 +70,25 @@ const ModeItem = (props) => {
         <div className = {classes.item}>
             <img src = {icon}
                 className = {classes.logo}/>
-            <div className = {classes.infor}>
-                <Typography variant = 'h6' 
-                    sx = {{
-                        color: 'white', fontWeight: 'bold', alignSelf: 'center', textAlign: 'center'}}>
-                    {title}
-                </Typography>
-                <Typography variant = 'subtitle1' 
-                    sx = {{
-                        color: 'white', alignSelf: 'center', textAlign: 'center', my: theme.spacing(1), 
-                            px: theme.spacing(6)}}>
-                    {desc}
-                </Typography>
-            </div>
+            <Typography variant = 'bigLabel' 
+                sx = {{ color: 'white', alignSelf: 'center'}}>
+                {title}
+            </Typography>
+            <Typography variant = 'btnLabel' 
+                sx = {{
+                    color: 'white', my: theme.spacing(0.5), textAlign: 'center'}}>
+                {desc}
+            </Typography>
       
 
-            <Button variant = 'contained' color = 'success'  
+            <Button 
+                variant = 'success' 
+                size = 'small'
                 onClick = {() => {
                     if (props.onSelect) props.onSelect()
                 }}
-                sx = {{color: 'white', fontWeight: 'bold', textTransform: 'none', width: '90%'}}>
-                Play
-            </Button>
+                style = {{color: 'white', width: '90%', marginTop: theme.spacing(2)}}
+                label = 'Choose'/>
         </div>
     )
 }

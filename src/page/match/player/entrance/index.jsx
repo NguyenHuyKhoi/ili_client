@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom'
 import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
+import { AuthContext } from '../../../../context/auth/context'
 import Form from './component/Form'
+import background from '../../../../asset/image/background.jpg'
 import logo from '../../../../asset/image/logo.png'
-import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -16,14 +17,40 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#46178F'
+        backgroundImage: `url(${background})`,
+    },
+    logo: {
+        position: 'absolute',
+        top: theme.spacing(2),
+        left: theme.spacing(2),
+        height: theme.spacing(5),
+        aspectRatio: 1,
+        '&:hover': {
+            cursor: 'pointer'
+        }
     }
 }))
+
+const input_type = {
+    enter_pin: {
+        title: 'Enter pincode',
+        desc: 'That is a 3-digit number.',
+        placeholder: '...',
+        btnLabel: 'Enter'
+    },
+    enter_name: {
+        title: 'Enter nickname',
+        desc: 'Can use your username',
+        placeholder: '...',
+        btnLabel: 'Join'
+    }
+}
 
 
 const MatchPlayerEntrancePage = () => {
     const navigate = useNavigate()
     const classes = useStyles()
+    const {user} = useContext(AuthContext)
     const {match, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
     const [input, setInput] = useState({value: '', type: 'enter_pin'})
@@ -49,14 +76,23 @@ const MatchPlayerEntrancePage = () => {
                     return 
                 }
                 console.log("Client send request to join match:", socket.id)
-                socket.emit('match:join', value, (match) => {
+                let player = user != null ?
+                    {
+                        userId: user._id, 
+                        avatar: user.avatar
+                    }
+                    :
+                    {
+                        
+                    }
+                socket.emit('match:join', value, player, ((match) => {
                     if (match) {
                         dispatch(updateMatch(match))
                         setAlert({
                             type: 'success',
                             msg: 'pinCode is correct'
                         })
-                        setInput({type: 'enter_name',value: ''})
+                        setInput({type: 'enter_name',value: user != null ? user.username : ''})
                     }
                     else {
                         setAlert({
@@ -64,7 +100,7 @@ const MatchPlayerEntrancePage = () => {
                             msg: 'pinCode is wrong or match is locked.'
                         })
                     }
-                })
+                }))
                 break
             case 'enter_name': 
                 if (value == '') {
@@ -75,7 +111,7 @@ const MatchPlayerEntrancePage = () => {
                     return 
                 }
                 console.log("Enter name: ", value)
-                socket.emit('match:updatePlayer', pinCode, { name: value}, (response) => {
+                socket.emit('match:updatePlayer', pinCode, { username: value}, (response) => {
                     if (response) {
                         navigate('/match/player/lobby', {replace: false})
                     }
@@ -83,27 +119,20 @@ const MatchPlayerEntrancePage = () => {
                 break
         }
     }
+
+    const handleGoHome = () => {
+        return navigate('/', {replace: false})
+    }
     return (
         <div className = {classes.container}>
-            <div onClick = {() => navigate('/', {replace: false})}>
-                {/* <img src = {logo} className = {classes.logo}/> */}
-                <Typography variant='h2' sx = {{color: 'white', fontWeight: 'bold', mb: theme.spacing(3)}}>
-                    Ili
-                </Typography>
-            </div>
-            <Form onSubmit = {handleSubmit} onChange = {(value) => setInput({...input, value})} 
+            <img src = {logo} className = {classes.logo}
+                onClick ={handleGoHome}/>
+            <Form 
+                onSubmit = {handleSubmit} 
+                onChange = {(value) => setInput({...input, value})} 
                 showAlert = {alert.type == 'error'}
                 value = {value}
-                btnTitle = {
-                    type == 'enter_pin'?'Enter':
-                    type == 'enter_name'?'Ok, go':
-                            ''
-                } 
-                placeholder = {
-                    type == 'enter_pin'?'Game pin':
-                    type == 'enter_name'?'Nickname':
-                        ''
-                }/>
+                input_type = {input_type[type]}/>
             <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
 
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>

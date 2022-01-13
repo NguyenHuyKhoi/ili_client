@@ -1,5 +1,6 @@
 import { Alert, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import { textAlign } from '@mui/system'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../../context/auth/context'
@@ -15,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#46178f'
+        backgroundColor: theme.palette.secondary.main,
+        overflowY: 'hidden',
     },
     body: {
         flex: 1
@@ -55,7 +57,7 @@ const MatchHostLobbyPage = () => {
             console.log("Player is removed: ", player)
             setAlert({
                 type: 'warning',
-                msg: 'Player ' + player.name + ' has leave game.'
+                msg: 'Player ' + player.username + ' has leave game.'
             })
         })
         socket.on('match:kickPlayerDone', (data) => {
@@ -63,7 +65,7 @@ const MatchHostLobbyPage = () => {
             console.log("Player is Kicked: ", player)
             setAlert({
                 type: 'warning',
-                msg: 'Player ' + player.name + ' has kicked out game.'
+                msg: 'Player ' + player.username + ' has kicked out game.'
             })
         })
 
@@ -87,10 +89,10 @@ const MatchHostLobbyPage = () => {
                         }
                     </Alert>
             </Snackbar>
-            <JoinMethodModal 
+            {/* <JoinMethodModal 
                 open = {modal.state == 'join_method'}
                 onClose = {() => setModal({})}
-            />
+            /> */}
             <Header onSelectQR = { () => setModal({state: 'join_method'})}
                 showQR = {modal.state != 'join_method'}/>
             <div className = {classes.body}>

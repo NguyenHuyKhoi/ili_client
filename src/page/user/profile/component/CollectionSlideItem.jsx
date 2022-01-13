@@ -34,7 +34,7 @@ const CollectionSlideItem = (props) => {
                 <Typography variant = 'btnLabel' sx = {{color: '#000'}}>
                     {`${title} ( ${games.length} games )` }
                 </Typography>
-                <Link underline = 'hover' href = '/collection/detail'  
+                <Link underline = 'hover' href = {'/collection/detail/' + collection._id}
                     sx = {{fontSize: 20, color: '#000'}}>
                     See all
                 </Link>

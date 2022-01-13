@@ -10,44 +10,34 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: 'white',
-        padding: theme.spacing(1)
+        backgroundColor: theme.palette.secondary.main,
+        padding: theme.spacing(1.5),
+        paddingLeft: theme.spacing(16),
+        paddingRight: theme.spacing(16)
     },
-    btns:{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
+    dot: {
+        height: theme.spacing(1.5),
+        flex: 1,
+        maxWidth: theme.spacing(20),
+        marginLeft: theme.spacing(1.6),
+        border: 'solid 2px #000000',
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
 
-    },
-    btnIcon: {
-        width: theme.spacing(4),
-        height: theme.spacing(4),
-        borderRadius: theme.spacing(2),
-        backgroundColor: 'rgba(0,0,0,0.8)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        '&:hover': {
-            cursor: 'pointer'
-        }
-    },
+    }
 }))
 const Header = (props) => {
     const classes = useStyles()
-    const {questionIndex, question_total} = props
+    const {timeTotal, time} = props
+    console.log("Time : ", time, timeTotal)
     return (
         <div className = {classes.container}>
-            <Typography variant = 'h6' sx = {{color: '#333333', fontWeight: 'bold'}}> 
-                {`${questionIndex}/${question_total}`}
-            </Typography>
-            <div className = {classes.btns}>
-                <div className = {classes.btnIcon}>
-                    <Fullscreen sx = {{color: 'white', fontSize: 25}} />
-                </div>
-                <div className = {classes.btnIcon} style = {{marginLeft: theme.spacing(2)}}>
-                    <MusicNote sx = {{color: 'white', fontSize: 25}}/>
-                </div>
-            </div>
+            {
+                Array.from(Array(timeTotal)).map((item, index) => (
+                    <div className = {classes.dot}  
+                        key = {'' + index}
+                        style = {{backgroundColor: index < time ? theme.palette.success.main : theme.palette.warning.main}} />
+                ))
+            }
         </div>
     )
 }

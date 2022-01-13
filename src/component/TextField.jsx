@@ -16,9 +16,13 @@ const useStyles = makeStyles((theme) => ({
 
 const TextField = (props) => {
     const classes = useStyles()
-    var {label, value,variant, style, disabled, placeholder, type} = props
+    var {label, value,variant, style, disabled, placeholder, type, size, fontSize} = props
     
     if (!variant) variant = 'default'
+    if (!size) size = 'medium'
+    var fontSize = fontSize ? fontSize : size == 'small' ? 16
+        : size == 'medium' ? 20
+        : 24
     return (
         <input 
             className = {classes.container}
@@ -30,7 +34,7 @@ const TextField = (props) => {
                 if (props.onChange) props.onChange(e.target.value)
             }}
             style = {{
-                fontSize: 20,
+                fontSize,
                 fontFamily: 'Setofont',
                 backgroundColor: disabled ? theme.palette.background.main : theme.palette[variant].main,
                 padding: theme.spacing(1.5),

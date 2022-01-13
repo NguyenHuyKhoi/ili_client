@@ -10,18 +10,19 @@ const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        marginTop: theme.spacing(10)
+        marginTop: theme.spacing(16),
     },
     itemContainer: {
-        marginBottom: theme.spacing(0.5)
+        marginBottom: theme.spacing(1)
     },
     item: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.2)',
-        borderRadius: theme.spacing(1),
-        padding: theme.spacing(1.5),
+        padding: theme.spacing(1),
+        border: 'solid 2px #000000',
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
     },
     infor: {
         display: 'flex',
@@ -36,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: theme.spacing(1),
         backgroundColor: 'white',
         marginBottom: theme.spacing(2),
+        backgroundColor: theme.palette.success.main,
+        border: 'solid 2px #000000',
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
         '&:hover': {
             cursor: 'pointer'
         }
@@ -57,12 +61,12 @@ const OptionItem = (props) => {
     return (
         <div className = {classes.item}>
             <div className = {classes.infor}>
-                <Typography variant = 'h6' sx = {{color: 'white', fontWeight: 'bold'}}>
+                <Typography variant = 'btnLabel' sx = {{color: 'white'}}>
                     {title}
                 </Typography>
                 {
                     description &&
-                    <Typography variant = 'subtitle2' sx = {{color: 'white'}}>
+                    <Typography variant = 'label' sx = {{color: 'white'}}>
                         {description}
                     </Typography>
                 }
@@ -71,6 +75,7 @@ const OptionItem = (props) => {
             <div className = {classes.options} >
                 <DropdownSelect 
                     title = ''
+                    size = 'small'
                     list = {values}
                     value = {value}
                     color = {'white'}
@@ -83,14 +88,13 @@ const OptionItem = (props) => {
 
 const MatchSetting = () => {
     const classes = useStyles()
-    const [showOptions, setShowOptions] = useState(false)
+    const [showOptions, setShowOptions] = useState(true)
     const {dispatch, match} = useContext(MatchPlayContext)
     const handleShowOptions = () => {
         setShowOptions(!showOptions)
     }
 
     const handleChange = (key, value) => {
-        console.log("Update match: ", key, value)
         dispatch(updateMatch({
             ...match,
             [key]: value
@@ -99,7 +103,7 @@ const MatchSetting = () => {
     return (
         <div className = {classes.container}>
             <div className = {classes.header} onClick = {handleShowOptions}>
-                <Typography variant = 'h6' sx = {{color: 'black', fontWeight: 'bold', flex: 1}}>
+                <Typography variant = 'bigLabel' sx = {{color: 'white', flex: 1}}>
                     Setting
                 </Typography>
                 {

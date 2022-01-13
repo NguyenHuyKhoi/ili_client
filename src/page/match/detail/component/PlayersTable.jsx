@@ -19,7 +19,7 @@ const getRows = (players, match) => {
     let answerNum = correctNum + incorrectNum
 		return {
 			id: index,
-			name: player.name,
+			name: player.username,
 			rank: player.rank,
 			correctPercent: answerNum == 0? '0 %' : Math.round( 100 * correctNum / answerNum) + ' %',
       unanswers: unanswerNum,

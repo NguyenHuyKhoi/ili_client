@@ -10,10 +10,7 @@ export const LIVESTREAM_STAGE = {
 
 export const sample_match = {
     game: {},
-    livestream: {
-        title: 'Livestream',
-        description: 'Created by ILI'
-    },
+    livestream: null,
     delayStartTime: 0,
     showQuestionEndTime: 20,
     showLeaderboardTime: 10,

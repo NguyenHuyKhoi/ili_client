@@ -27,37 +27,40 @@ const MatchHostStadiumPage = () => {
     const navigate = useNavigate()
     const {question, match, answer_counts, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
-    const [stage, setStage] = useState({type: 'on_question'})
+    const [stage, setStage] = useState({type: 'scoreboard'})
     const [time, setTime] = useState(0)
+    const [timeTotal, setTimeTotal] = useState(question.time_limit)
     const {questionIndex, pinCode, players} = match
 
+
     useEffect(() => {
+        setTimeTotal(question.time_limit)
         socket.on('match:onCountdown', (data) => {
             let {time} = data
             console.log("Receive emit on countdown: ",  time)
             setTime(time)
         })
-        socket.on('match:onTimeup', (data) => {
-            let {time} = data
-            console.log("On timeup: ", time)
-            setTime(time)
-        })
 
         socket.on('match:onEndQuestion', (data) => {
-            let {match} = data
-            console.log("On end question")
+            let {match, timeTotal} = data
+            console.log("Set time total:", timeTotal)
+            setTimeTotal(timeTotal)
             dispatch(updateMatch(match))
             setStage({type: 'end_question'})
         })
 
         socket.on('match:onQuestion', (data) => {
-            let {match} = data
+            let {match, timeTotal} = data
+            console.log("Set time total:", timeTotal)
+            setTimeTotal(timeTotal)
             dispatch(updateMatch(match))
             setStage({type: 'on_question'})
         })
 
         socket.on('match:scoreboard', (data) => {
-            let {match} = data
+            let {match, timeTotal} = data
+            console.log("Set time total:", timeTotal)
+            setTimeTotal(timeTotal)
             dispatch(updateMatch(match))
             setStage({type: 'scoreboard'})
         })
@@ -74,16 +77,24 @@ const MatchHostStadiumPage = () => {
     return (
         <div className = {classes.container}>
             <Header
-                 questionIndex = {questionIndex + 1}
-                 question_total = {match.game.questions.length}/>
-            <Divider/>
+                time = {time}
+                timeTotal = {timeTotal}/>
             <div className = {classes.questionContainer}>
                 {
                     stage.type == 'end_question' ?
-                    <QuestionEnd question = {question} time = {time} answer_counts = {answer_counts}/> 
+                    <QuestionEnd 
+                        question = {question} 
+                        time = {time} 
+                        answer_counts = {answer_counts}
+                        /> 
                     :
                     stage.type == 'on_question' ?
-                    <Question question = {question} time = {time} answer_counts = {answer_counts}/>
+                    <Question 
+                        question = {question} 
+                        time = {time} 
+                        answer_counts = {answer_counts}
+                        question_index = {questionIndex}
+                        question_total = {match.game.questions.length}/>
                     :
                     stage.type == 'scoreboard' ?
                     <Scoreboard players = {players} time = {time}/>

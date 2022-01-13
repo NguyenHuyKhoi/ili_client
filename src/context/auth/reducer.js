@@ -17,6 +17,7 @@ const reducer = (state, action) => {
             }
         }
         case 'LOGOUT_SUCCESS':
+            console.log("Set user to null")
             return {
                 ...state,
                 user: null,

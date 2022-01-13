@@ -50,6 +50,9 @@ export const theme = createTheme({
       },
       bigLabel: {
         fontSize: 26
+      },
+      bigHeader: {
+        fontSize: 50
       }
     },
     components: {

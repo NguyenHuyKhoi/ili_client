@@ -130,7 +130,7 @@ const GameList = (props) => {
                 games.length == 0 ?
                 <EmptyBox
                     style= {{width: '100%', marginTop: theme.spacing(5)}}
-                    label = " You don't have yet any collections. Create one?"
+                    label = " You don't have yet any games. Create one?"
                     onClick = {() => {
                         if (props.onClickEmpty) props.onClickEmpty()
                     }}/>

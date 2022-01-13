@@ -24,7 +24,7 @@ const getRows = (players, stage) => {
     let answer = answers.find((answer) => answer._id == player._id)
 		return {
 			id: index,
-			playerName: player.name,
+			playerName: player.username,
 			answer: answer ? chars[answer.answerIndex] + '. ' + question.answers[answer.answerIndex] : 'No answer',
       isCorrect: answer && answer.isCorrect ? 'Correct': 'Incorrect',
       answerTime: answer ? answer.answerTime : '--',

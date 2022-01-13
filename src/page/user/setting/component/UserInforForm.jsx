@@ -30,7 +30,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	inputs: {
 		display: 'flex',
-		flexDirection: 'column'
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'space-around'
 	}
 }))
 
@@ -42,7 +44,7 @@ const UserInforForm = (props) => {
 
 	const [inputs, setInputs] = useState({...user})
     const [alert, setAlert] = useState({})
-	const {username, name, banner, avatar, email} = inputs
+	const {username, banner, avatar, email} = inputs
 
 	useEffect(() => {
 		setInputs({...user})
@@ -107,19 +109,13 @@ const UserInforForm = (props) => {
 						label = 'Upload an avatar'
 						image = {avatar}/>
 				</Grid>
-				<Grid item xs = {7} >
+				<Grid item xs = {7} sx = {{display: 'flex'}}>
 					<div className = {classes.inputs}>
 						<TextField 
 							placeholder="User name..." 
 							style = {{width: '100%'}} 
 							value={username}
 							onChange = {(value) => handleChange('username', value)}
-						/>
-						<TextField 
-							placeholder="Name..." 
-							style = {{width: '100%', marginTop: theme.spacing(2)}} 
-							value={name}
-							onChange = {(value) => handleChange('name', value)}
 						/>
 						<TextField 
 							style = {{width: '100%', marginTop: theme.spacing(2)}} 

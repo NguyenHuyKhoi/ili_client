@@ -80,8 +80,7 @@ const ProfileHeader = (props) => {
     const {user} = props
 
     const me = useContext(AuthContext).user
-    var {name, avatar, banner} = user
-    name = 'User name'
+    var {avatar, banner, username} = user
 
     const handleFollow = () => {
 
@@ -90,6 +89,8 @@ const ProfileHeader = (props) => {
     const handleGoSetting = () => {
         return navigate('/user/setting', {replace: false})
     }
+    
+    const isMe = me != null && me._id == user._id
     return (
         <div className = {classes.container}>
             <img className = {classes.banner} 
@@ -98,8 +99,8 @@ const ProfileHeader = (props) => {
                 <img className = {classes.avatar}
                     src={createUrl(banner)}/>
                 <div className = {classes.inforLeft}>
-                    <Typography variant = 'header' sx = {{fontWeight: 'bold', color: '#333333'}}>  
-                        {name}
+                    <Typography variant = 'header' sx = {{fontWeight: 'bold', color: '#000'}}>  
+                        {username}
                     </Typography>
                 </div>
                 <div className = {classes.inforRight}>
@@ -110,10 +111,10 @@ const ProfileHeader = (props) => {
 
                 <Button 
                     size = 'medium'
-                    label = {user._id == me._id ? 'SETTING' : 'FOLLOW'}
+                    label = {isMe ? 'SETTING' : 'FOLLOW'}
                     variant = 'secondary'
                     style = {{width: theme.spacing(25)}}
-                    onClick = {user._id == me._id ? handleGoSetting : handleFollow}/>
+                    onClick = {isMe ? handleGoSetting : handleFollow}/>
               
 
             </div>

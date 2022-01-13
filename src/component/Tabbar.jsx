@@ -1,15 +1,8 @@
-import { HomeOutlined, Logout, NotificationsOutlined } from '@mui/icons-material'
-import { Avatar, Button, Popover, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import axios from 'axios'
-import React, { useContext } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { logoutSuccess } from '../context/auth/actions'
-import { AuthContext } from '../context/auth/context'
-import { startCreateGame } from '../context/game/creator/actions'
-import { GameCreatorContext } from '../context/game/creator/context'
 import { theme } from '../theme'
-import { DropdownMenu } from './DropdownMenu'
 import { Icon } from './Icon'
 const useStyles = makeStyles((theme) => ({
     container: {

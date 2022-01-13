@@ -11,16 +11,17 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(15),
         display: 'flex',
         flexDirection:'column',
-        borderRadius: theme.spacing(1)
+        border: 'solid 2px #000000',
+        borderRadius: '255px 10px 225px 10px/10px 225px 10px 255px',
+        overflow: 'hidden'
     },
     countDiv: {
     },
     body: {
-
         display: 'flex',
         flexDirection: 'row',
         alignItems : 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         padding: theme.spacing(0.5),
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
@@ -46,17 +47,17 @@ const AnswerCount = (props) => {
                     backgroundColor: color,
                     margin: percent > 0 ? theme.spacing(0.2) : 0,
                     opacity: 1, 
-                    height: theme.spacing(25 * (percent))}}/>
+                    height: theme.spacing(40 * (percent))}}/>
             <div className = {classes.body} >
-                <Icon name = {icon} style = {{fontSize: 25, color: 'white'}}/>
-                <Typography variant = 'h5' sx = {{mx: theme.spacing(1),color: 'white'}}>
+                <Icon name = {icon} style = {{fontSize: 30, color: theme.palette.background.main}}/>
+                <Typography variant = 'header' sx = {{mx: theme.spacing(1),color: '#000'}}>
                     {count}
                 </Typography>
                 {
                     isCorrect != undefined && 
                     (
                         isCorrect && 
-                        <Check sx = {{color: 'white', fontSize: 25}}/>
+                        <Check sx = {{color: '#000', fontSize: 30}}/>
                     )
                 }
             </div>   
