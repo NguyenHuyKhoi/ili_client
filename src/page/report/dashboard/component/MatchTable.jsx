@@ -51,7 +51,7 @@ const MatchTable = () => {
 		if (indexes.length == 0 ) return 
 		let match = matches[indexes[0]]
 		dispatch(selectMatch(match))
-		navigate('/match/detail/'+match._id, {replace: false})
+		navigate('/match/detail/'+match._id, {replace: true})
 	}
 	return (
 		<div style={{ height: 400, width: '100%', backgroundColor: 'white' }}>

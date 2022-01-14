@@ -1,17 +1,15 @@
 import { Alert, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../../context/auth/context'
 import { GameContext } from '../../../../context/game/other/context'
-import { resetMatch, updateLivestreamStage, updateMatch } from '../../../../context/match/play/actions'
-import { LIVESTREAM_STAGE, MatchPlayContext } from '../../../../context/match/play/context'
+import { updateLivestreamStage, updateMatch } from '../../../../context/match/play/actions'
+import { LIVESTREAM_STAGE, MatchPlayContext, sample_match } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import Header from './component/Header'
 import MatchModes, { MODE_MATCH } from './component/MatchModes'
 import MatchSetting from './component/MatchSetting'
-import backgroundImg from '../../../../asset/image/background.jpg'
-import { theme } from '../../../../theme'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -98,7 +96,8 @@ const MatchHostSettingPage = () => {
 
     useEffect(() => {
         
-        dispatch(resetMatch({
+        dispatch(updateMatch({
+            ...JSON.parse(JSON.stringify(sample_match)),
             host: {
                 userId: user._id,
                 name: user.username
@@ -146,14 +145,14 @@ const MatchHostSettingPage = () => {
                 break;
             case MODE_MATCH.LIVESTREAM:
                 dispatch(updateMatch({
-                    ...match, 
+                    ...JSON.parse(JSON.stringify(match)), 
                     livestream:  {
                         title: 'Livestream',
                         description: 'Created by ILI'
                     }
                 }))
                 dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
-                navigate('/match/livestream', {replace: false})
+                navigate('/match/livestream', {replace: true})
                 break
         }
 

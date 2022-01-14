@@ -87,7 +87,7 @@ const ProfileHeader = (props) => {
     }
 
     const handleGoSetting = () => {
-        return navigate('/user/setting', {replace: false})
+        return navigate('/user/setting', {replace: true})
     }
     
     const isMe = me != null && me._id == user._id

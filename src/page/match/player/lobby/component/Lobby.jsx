@@ -99,8 +99,8 @@ const Lobby = (props) => {
         console.log("User request to leave")
         socket.emit('match:leave', pinCode, (response) => {
             if (response) {
-                dispatch(resetMatch({}))
-                navigate('/match/player/entrance', {replace: false})
+                dispatch(resetMatch())
+                navigate('/match/player/entrance', {replace: true})
             }
         })
     }

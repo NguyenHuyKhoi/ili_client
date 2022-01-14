@@ -72,7 +72,7 @@ const CollectionEditPage = () => {
     }, [])
 
     const handleSaveToServer = () => {
-        let temp = {...collection}
+        let temp = JSON.parse(JSON.stringify(collection))
         temp.games = collection.games.map((item) => item._id)
 
         axios.put('collection/'+collection._id, temp, {

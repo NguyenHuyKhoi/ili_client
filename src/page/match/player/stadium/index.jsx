@@ -88,7 +88,7 @@ const MatchPlayerStadiumPage = () => {
         socket.on('match:onSummary', (data) => {
             let {match} = data
             dispatch(updateMatch(match))
-            navigate('/match/player/hall', {replace: false})
+            navigate('/match/player/hall', {replace: true})
         })
         return () => {
             

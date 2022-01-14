@@ -1,9 +1,12 @@
-    import { Alert, Checkbox, Link, Snackbar, Typography } from '@mui/material'
+import { Alert,Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import background from '../../../asset/image/background.jpg'
 import Button from '../../../component/Button'
+import GoHomeBtn from '../../../component/GoHomeBtn'
+import Link from '../../../component/Link'
 import TextField from '../../../component/TextField'
 import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
@@ -50,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SignupPage = () => {
+    const navigate = useNavigate()
     const classes = useStyles()
     const {dispatch} = useContext(AuthContext)
     const [inputs, setInputs] = useState({email: "", password: ""})
@@ -101,6 +105,7 @@ const SignupPage = () => {
                     }
                 </Alert>
             </Snackbar>
+            <GoHomeBtn/>
             <div className = {classes.form}>
                 <Typography variant = 'header' sx = {{alignSelf: 'center', fontWeight: 'bold'}}>
                     Join with us
@@ -129,13 +134,10 @@ const SignupPage = () => {
                     onClick = {handleSignup}/>
 
                 <div className = {classes.linkRow}>
-                    <Link href = '/auth/login' sx = {{ml: theme.spacing(1), color: theme.palette.success.main}}>
-                        Login
-                    </Link>
-                    <Link href = '/auth/forgot-password' 
-                        sx = {{ml: theme.spacing(1), color: theme.palette.success.main}}>
-                        Reset your password
-                    </Link>
+                    <Link label = 'Login' link = '/login'
+                            style = {{marginLeft: theme.spacing(1)}}/>
+                    <Link label = 'Reset password' link = '/forgot-password'
+                            style = {{ marginRight: theme.spacing(1)}}/>
                 </div>
 
             </div>

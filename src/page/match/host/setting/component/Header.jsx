@@ -26,7 +26,7 @@ const Header = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const handleGoHome = () => {
-        return navigate('/', {replace: false})
+        return navigate('/', {replace: true})
     }
     return (
         <div className = {classes.container}>   

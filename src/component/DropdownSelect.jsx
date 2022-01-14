@@ -15,7 +15,6 @@ const DropdownSelect = (props) => {
     }
 
     if (size == undefined) size = 'medium'
-    console.log("Color: ", color)
 
     var fontSize = size == 'small'? 16 :
         size == 'medium' ? 20 :

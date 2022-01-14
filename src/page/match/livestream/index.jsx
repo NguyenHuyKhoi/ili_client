@@ -63,7 +63,7 @@ const MatchLivestreamPage = () => {
                 handleEndLive()
                 break;
             case LIVESTREAM_STAGE.COMPLETE:
-                navigate('', {replace: false})
+                navigate('', {replace: true})
                 break;
         }
     }
@@ -372,7 +372,7 @@ const MatchLivestreamPage = () => {
                 onDone = {(setting) => {
                     setModal({})
                     dispatch(updateMatch({
-                        ...match,
+                        ...JSON.parse(JSON.stringify(match)), 
                         livestream: setting
                     }))
                 }}/>

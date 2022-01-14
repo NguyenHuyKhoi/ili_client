@@ -50,7 +50,7 @@ const MatchHostLobbyPage = () => {
             let {match} = data
             console.log("Receive emit On Question: ", match)
             dispatch(updateMatch(match))
-            navigate('/match/host/stadium', {replace: false})
+            navigate('/match/host/stadium', {replace: true})
         })
         socket.on('match:playerLeave', (data) => {
             let {player} = data

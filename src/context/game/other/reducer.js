@@ -1,4 +1,3 @@
-import { sample_game, sample_question } from "./context"
 
 const reducer = (state, action) => {
     const {games, game} = action.payload != undefined ? action.payload : {}

@@ -25,7 +25,7 @@ export const OwnerInfor = (props) => {
     const classes = useStyles()
     const handleViewProfile = (e) => {
         e.stopPropagation()
-        navigate('/profiles/' + id , {replace: false})
+        navigate('/profiles/' + id , {replace: true})
     }
     return (
         <div className = {classes.container} >

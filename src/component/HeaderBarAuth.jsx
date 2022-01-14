@@ -77,7 +77,7 @@ const HeaderBarAuth = (props) => {
     }
     
     const handleGoProfile = () => {
-            return navigate(`/profiles/${user._id}`, {replace: false})
+            return navigate(`/profiles/${user._id}`, {replace: true})
     }
 
 
@@ -91,7 +91,7 @@ const HeaderBarAuth = (props) => {
     }
     return (
         <div className = {classes.container}>
-            <div onClick = {() => navigate('/', {replace: false})}>
+            <div onClick = {() => navigate('/', {replace: true})}>
                 <img src = {logo} className = {classes.logo}/>
             </div>
             

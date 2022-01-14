@@ -42,7 +42,7 @@ const Topbar = (props) => {
     return (
         <AppBar position = 'fixed'>
             <Toolbar className = {classes.toolbar}>
-                <div onClick = {() => navigate('/', {replace: false})}>
+                <div onClick = {() => navigate('/', {replace: true})}>
                     <img src = {logo} className = {classes.logo}/>
                 </div>
                 <div className = {classes.settingBox} 

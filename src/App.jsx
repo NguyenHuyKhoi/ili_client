@@ -50,41 +50,41 @@ const App = () => {
       <Router>
         <Routes>
           <Route exact path="/" element={user ? <HomePage/> : <HomeGuestPage/>}/>
-          <Route exact path = '/auth/login' element = {!user ? <LoginPage/> : <Navigate to = '/'/>}/>
-          <Route exact path = '/auth/signup' element = {!user ? <SignupPage/> : <Navigate to = '/'/>}/>
-          <Route exact path = '/auth/forgot-password' element = {!user ? <ForgotPasswordPage/> : <Navigate to = '/'/>}/>
-          <Route exact path = '/auth/reset-password' element = {!user ? <ResetPasswordPage/> : <Navigate to = '/'/>}/>
+          <Route exact path = '/login' element = {!user ? <LoginPage/> : <Navigate to = '/'/>}/>
+          <Route exact path = '/signup' element = {!user ? <SignupPage/> : <Navigate to = '/'/>}/>
+          <Route exact path = '/forgot-password' element = {!user ? <ForgotPasswordPage/> : <Navigate to = '/'/>}/>
+          <Route exact path = '/reset-password' element = {!user ? <ResetPasswordPage/> : <Navigate to = '/'/>}/>
 
-          <Route exact path = '/collection/library' element = {user ? <CollectionLibraryPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/collection/edit/:id' element = {user ? <CollectionEditPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/collection/library' element = {user ? <CollectionLibraryPage/> : <Navigate to = '/login'/>}/>
+          <Route exact path = '/collection/edit/:id' element = {user ? <CollectionEditPage/> : <Navigate to = '/login'/>}/>
           <Route exact path = '/collection/detail/:id' element = {<CollectionDetailPage/> }/>
           
           <Route exact path = '/discover/suggestion' element = {<DiscoverPage/>}/>
           <Route exact path = '/discover/search' element = {<SearchPage/>}/>
           
-          <Route exact path = '/game/creator' element = {user ? <GameCreatorPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/game/creator' element = {user ? <GameCreatorPage/> : <Navigate to = '/login'/>}/>
           <Route exact path = '/game/detail/:id' element = {<GameDetailPage/>}/>
-          <Route exact path = '/game/library' element = {user ? <GameLibraryPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/game/library' element = {user ? <GameLibraryPage/> : <Navigate to = '/login'/>}/>
      
           
           <Route exact path = '/match/player/entrance' element = {<MatchPlayerEntrancePage/>}/>
           <Route exact path = '/match/player/lobby' element = {<MatchPlayerLobbyPage/>}/>
           <Route exact path = '/match/player/stadium' element = {<MatchPlayerStadiumPage/>}/>
           <Route exact path = '/match/player/hall' element = {<MatchPlayerHallPage/>}/>
-          <Route exact path = '/match/host/setting' element = {user ? <MatchHostSettingPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/match/host/lobby' element = { user ? <MatchHostLobbyPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/match/host/stadium' element = {user ? <MatchHostStadiumPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/match/host/hall' element = {user ? <MatchHostHallPage/> : <Navigate to = '/auth/login'/>}/>
-          <Route exact path = '/match/livestream' element = {user ? <MatchLivestreamPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/match/host/setting' element = {user ? <MatchHostSettingPage/> : <Navigate to = '/login'/>}/>
+          <Route exact path = '/match/host/lobby' element = { user ? <MatchHostLobbyPage/> : <Navigate to = '/login'/>}/>
+          <Route exact path = '/match/host/stadium' element = {user ? <MatchHostStadiumPage/> : <Navigate to = '/login'/>}/>
+          <Route exact path = '/match/host/hall' element = {user ? <MatchHostHallPage/> : <Navigate to = '/login'/>}/>
+          <Route exact path = '/match/livestream' element = {user ? <MatchLivestreamPage/> : <Navigate to = '/login'/>}/>
 
-          <Route exact path = '/match/detail/:id' element = {user ? <MatchDetailPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/match/detail/:id' element = {user ? <MatchDetailPage/> : <Navigate to = '/login'/>}/>
 
-          <Route exact path = '/group/list' element = {user ? <GroupListPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/group/list' element = {user ? <GroupListPage/> : <Navigate to = '/login'/>}/>
 
-          <Route exact path = '/report' element = {user ? <DashboardReportPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/report' element = {user ? <DashboardReportPage/> : <Navigate to = '/login'/>}/>
 
           <Route exact path = '/profiles/:id' element = {<ProfilePage/>}/>
-          <Route exact path = '/user/setting' element = {user ? <SettingPage/> : <Navigate to = '/auth/login'/>}/>
+          <Route exact path = '/user/setting' element = {user ? <SettingPage/> : <Navigate to = '/login'/>}/>
         </Routes>
       </Router>
     </ThemeProvider>

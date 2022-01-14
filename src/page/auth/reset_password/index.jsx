@@ -9,6 +9,7 @@ import Button from '../../../component/Button'
 import TextField from '../../../component/TextField'
 
 import background from '../../../asset/image/background.jpg'
+import GoHomeBtn from '../../../component/GoHomeBtn'
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh',
@@ -80,10 +81,11 @@ const ResetPasswordPage = (props) => {
     }
 
     const handleGoLogin = () => {
-        return navigate('/auth/login', {replace: false})
+        return navigate('/login', {replace: true})
     }
     return (
         <div className = {classes.container}>
+            <GoHomeBtn/>
             {
                 alert.type == undefined ?
                 <div className = {classes.form}>

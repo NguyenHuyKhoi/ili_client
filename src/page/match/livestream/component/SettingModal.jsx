@@ -79,7 +79,7 @@ const STREAM_ACCOUNT_TYPES = [
 const SettingModal = (props) => {
 	const classes = useStyles()
 	const {setting} = props
-	const [draftSetting, setDraftSetting] = useState({...setting})
+	const [draftSetting, setDraftSetting] = useState( ...JSON.parse(JSON.stringify(setting)))
 	const {title, description, account, lobbyTime} = draftSetting
 	
 	var {open} = props

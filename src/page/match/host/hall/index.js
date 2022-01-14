@@ -3,7 +3,6 @@ import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../../../component/Button'
-import { resetMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import { theme } from '../../../../theme'
@@ -74,7 +73,7 @@ const MatchHostHallPage = (props) => {
         }
     }, [])
     const handleNext = () => {
-        return navigate('/match/host/setting', {replace: false})
+        return navigate('/match/host/setting', {replace: true})
     }
     return (
         <div className = {classes.container}>

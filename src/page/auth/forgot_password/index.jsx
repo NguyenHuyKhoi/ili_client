@@ -1,5 +1,5 @@
 import { CheckCircleSharp } from '@mui/icons-material'
-import { Alert, Link, Snackbar, Typography } from '@mui/material'
+import { Alert, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useState } from 'react'
@@ -9,6 +9,8 @@ import background from '../../../asset/image/background.jpg'
 import Button from '../../../component/Button'
 import TextField from '../../../component/TextField'
 import { useNavigate } from 'react-router-dom'
+import Link from '../../../component/Link'
+import GoHomeBtn from '../../../component/GoHomeBtn'
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh',
@@ -87,10 +89,11 @@ const ForgotPasswordPage = () => {
     }
 
     const handleGoLogin = () => {
-        return navigate('/auth/login', {replace: false})
+        return navigate('/login', {replace: true})
     }
     return (
         <div className = {classes.container}>
+            <GoHomeBtn/>
             {
                 alert.type == 'success' ?
                 <div className = {classes.form}>
@@ -134,9 +137,9 @@ const ForgotPasswordPage = () => {
                             label = 'Send reset link'
                             style = {{marginTop: theme.spacing(5)}}
                             onClick = {handleSubmit}/>
-                        <Link href = '/auth/login' sx = {{alignSelf: 'center', color: theme.palette.success.main, mt: theme.spacing(1)}}>
-                            Back to login
-                        </Link>
+                        
+                        <Link label = 'Login' link = '/login'
+                            style = {{alignSelf: 'center', marginTop: theme.spacing(1)}}/>
                     
                     </div>
                 </>

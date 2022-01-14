@@ -71,19 +71,19 @@ export const GameRowItem = (props) => {
 
     const handleViewDetail = () => {
         handleSelect()
-        navigate('/game/detail/'+game._id, {replace: false})
+        navigate('/game/detail/'+game._id, {replace: true})
     }
 
     const handleEdit = (e) => {
         e.stopPropagation()
         handleSelect()
-        navigate('/game/creator', {replace: false})
+        navigate('/game/creator', {replace: true})
     }
 
     const handlePlay = (e) => {
         e.stopPropagation()
         handleSelect()
-        navigate('/match/host/setting', {replace: false})
+        navigate('/match/host/setting', {replace: true})
     }
     return (
         <div className = {classes.container} style={{backgroundColor: '#fff'}}

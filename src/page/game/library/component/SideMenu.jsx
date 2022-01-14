@@ -33,7 +33,7 @@ const MenuItem = (props) => {
     const {menu, isSelected} = props
     const {title, link, icon} = menu
     const handleClick = () => {
-        return navigate(link, {replace: false})
+        return navigate(link, {replace: true})
     }
     return (
         <div className = {classes.item} 

@@ -16,11 +16,12 @@ const useStyles = makeStyles((theme) => ({
 
 const TextArea = (props) => {
     const classes = useStyles()
-    var {label, variant, style, disabled, placeholder, type} = props
+    var {value, variant, style, disabled, placeholder, type} = props
     
     if (!variant) variant = 'default'
     return (
         <textarea 
+            value = {value}
             className = {classes.container}
             disabled = {disabled || false}
             placeholder = {placeholder || ''}

@@ -65,12 +65,12 @@ export const CollectionRowItem = (props) => {
     const {title, games, cover, owner} = collection
     const handleView = () => {
         dispatch(selectCollection(collection))
-        navigate('/collection/detail/' + collection._id, {replace: false})
+        navigate('/collection/detail/' + collection._id, {replace: true})
     }
 
     const handleEdit = (e) => {
         e.stopPropagation()
-        navigate('/collection/edit/' + collection._id, {replace: false})
+        navigate('/collection/edit/' + collection._id, {replace: true})
     }
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}

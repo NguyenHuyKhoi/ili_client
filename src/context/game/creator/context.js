@@ -21,26 +21,20 @@ export const sample_game = {
     cover: null,
     language: 'en',
     visibility: 'private',
+    subject: 'others',
     questionIndex: 0,
-    questions: [{...sample_question}]
+    questions: [JSON.parse(JSON.stringify(sample_question))]
 }
 
 const INITIAL_STATE = () => {
-    let state = {
-        mode: 'create'
-    }
+    let newState = JSON.parse(JSON.stringify(sample_game))
+    newState.state = 'create' 
     const saved = localStorage.getItem('game_creator')
     if (saved) {
-        return{
-            ...state,
-            ...JSON.parse(saved)
-        }
+        return JSON.parse(saved)
     }
     else {
-        return {
-            ...state,
-            ...sample_game
-        }
+        return newState
     }
 }
 

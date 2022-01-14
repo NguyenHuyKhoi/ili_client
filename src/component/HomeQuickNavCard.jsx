@@ -57,7 +57,7 @@ const HomeQuickNavCard = (props) => {
     
     const handleClick = () => {
         if (link != undefined) {
-            return navigate(link, {replace: false})
+            return navigate(link, {replace: true})
         }
     }
     return (

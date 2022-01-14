@@ -34,6 +34,10 @@ const validateGameSetting = (game) => {
 
 const reducer = (state, action) => {
     const {question, index, setting} = action.payload != undefined ? action.payload : {}
+
+    var questions 
+
+    var temp, temps
     switch (action.type) {
         case 'UPDATE_GAME_SETTING':
             return {
@@ -53,15 +57,21 @@ const reducer = (state, action) => {
             }
         
         case 'ADD_QUESTION':
-            state.questions.push(sample_question)
+            temp = JSON.parse(JSON.stringify(sample_question))
+            temps = JSON.parse(JSON.stringify(state.questions))
+            temps.push(temp)
             return {
-                ...state
+                ...state,
+                questions: temps
             }
         case 'DUPLICATE_QUESTION':
-            let q = {...state.questions[index]}
-            state.questions.splice(index, 0, q)
+
+            temp = JSON.parse(JSON.stringify(state.questions[index]))
+            temps = JSON.parse(JSON.stringify(state.questions))
+            temps.push(temp)
             return {
-                ...state
+                ...state,
+                questions: temps
             }
         case 'UPDATE_QUESTION':
             state.questions[index] = question
@@ -78,16 +88,18 @@ const reducer = (state, action) => {
             }
     
         case 'START_CREATE_GAME': {
+            console.log("Sample question:", sample_question)
             return {
-                ...sample_game,
+                ...JSON.parse(JSON.stringify(sample_game)),
                 mode: 'create',
                 questionIndex: 0
             }
         }
 
         case 'START_EDIT_GAME': {
+
             return {
-                ...action.payload.game,
+                ...JSON.parse(JSON.stringify(action.payload.game)),
                 mode: 'edit',
                 questionIndex: 0
             }

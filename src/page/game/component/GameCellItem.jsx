@@ -59,12 +59,12 @@ export const GameCellItem = (props) => {
     const {disableProfileLink} = props
     const handleSelect = () => {
         dispatch(selectGame(game))
-        navigate('/game/detail/'+game._id, {replace: false})
+        navigate('/game/detail/'+game._id, {replace: true})
     }
 
     const handleViewProfile = (e) => {
         e.stopPropagation()
-        navigate('/profiles/'+ game.owner.id, {replace: false})
+        navigate('/profiles/'+ game.owner.id, {replace: true})
     }
     console.log("Game owner :", game.owner)
     const limitTitle = title != null? title.substring(0, 20) + (title.length < 20? '' :'...') : 'Collection'

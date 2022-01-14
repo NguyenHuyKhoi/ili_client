@@ -31,7 +31,7 @@ const HeaderBarGuest = (props) => {
     
     return (
         <div className = {classes.container}>
-            <div onClick = {() => navigate('/', {replace: false})}>
+            <div onClick = {() => navigate('/', {replace: true})}>
                 <img src = {logo} className = {classes.logo}/>
             </div>
             <div className = {classes.center}/>
@@ -40,13 +40,13 @@ const HeaderBarGuest = (props) => {
                 variant = 'success'
                 label = 'Sign up'
                 style = {{marginRight: theme.spacing(3)}}
-                onClick = {() => navigate('/auth/signup', {replace: false})}
+                onClick = {() => navigate('/signup', {replace: true})}
             />
             <Button 
                 size = 'small'
                 label = 'Log in'
                 style = {{marginRight: theme.spacing(3)}}
-                onClick = {() => navigate('/auth/login', {replace: false})}
+                onClick = {() => navigate('/login', {replace: true})}
             />
         </div>
     )

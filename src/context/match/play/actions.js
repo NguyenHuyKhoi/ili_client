@@ -20,9 +20,6 @@ export const updateLivestreamStage = (livestreamStage) => ({
     }
 })
 
-export const resetMatch = (match) => ({
-    type: 'RESET_MATCH',
-    payload: {
-        match
-    }
+export const resetMatch = () => ({
+    type: 'RESET_MATCH'
 })

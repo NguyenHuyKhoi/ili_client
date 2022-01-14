@@ -41,10 +41,9 @@ const reducer = (state, action) => {
         }
 
         case 'RESET_MATCH': {
-            console.log("Reset match:", match)
             return {
                 ...state,
-                match: {...sample_match, ...match}
+                match: JSON.parse(JSON.stringify(sample_match))
             }
         }
         default: 

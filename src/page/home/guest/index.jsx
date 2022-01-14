@@ -36,14 +36,14 @@ const cards = [
         title: 'Join with us...',
         description: 'With becoming an user, you can create and play multi games with others.',
         btnLabel : 'Join',
-        link: '/auth/signup',
+        link: '/signup',
         image: card_img_0
     },
     {
         title: 'Just be a member...',
         description: 'Click here to quickly navigate to login in page.',
         btnLabel : 'Enter',
-        link: '/auth/login',
+        link: '/login',
         image: card_img_1
     },
     {

@@ -80,7 +80,6 @@ const Answer = (props) => {
             props.onChangeCorrect(!isCorrect)
         }
     }
-    console.log("Placehold: ", answer)
     return (
         <div className = {classes.answer} style={{backgroundColor: answer == null || answer == '' ?'white':color}}>
             <div className = {classes.shapeContainer}

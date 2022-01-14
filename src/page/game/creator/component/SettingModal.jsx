@@ -56,8 +56,7 @@ const useStyles = makeStyles((theme) => ({
 const SettingModal = (props) => {
 	const classes = useStyles()
 	const {setting} = props
-	console.log("Setting: ",setting)
-	const [draftSetting, setDraftSetting] = useState({...setting})
+	const [draftSetting, setDraftSetting] = useState(JSON.parse(JSON.stringify(setting)))
 	const {title, image, description, visibility, subject} = draftSetting
 	
 	var {open} = props
@@ -80,14 +79,14 @@ const SettingModal = (props) => {
 	}
 
 	const handleChange = (key, value) => {
+		console.log("handle change:", key, value)
 		setDraftSetting({
 			...draftSetting,
 			[key]: value
 		})
-	}
-	console.log("Image: ", image)
+	}	
 	return (
-		<Modal
+		<Modal	
 			open={open}
 			onClose={handleClose}
 			aria-labelledby="modal-modal-title"
@@ -103,7 +102,7 @@ const SettingModal = (props) => {
 						<div className = {classes.leftCol}>
 							<TextField 
 								placeholder='Enter game title ...'	
-								size='small'
+								size='big'
 								value = {title ? title : ''} 
 								onChange = {(value) => handleChange('title', value)} />
 

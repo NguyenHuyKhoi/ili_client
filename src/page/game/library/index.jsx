@@ -19,7 +19,7 @@ const GameLibraryPage = () => {
     const navigate = useNavigate()
 
     const handleGoCreate = () => {
-        navigate('/game/creator', {replace: false})
+        navigate('/game/creator', {replace: true})
     }
     return (
         <div className = {classes.container}>

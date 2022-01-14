@@ -1,5 +1,5 @@
 
-import { Alert, Divider, Link, Snackbar, Typography } from '@mui/material'
+import { Alert, Divider, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
@@ -10,8 +10,11 @@ import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
 import { validateEmail } from '../../../util/validator'
 import { LinkedLoginButton } from '../component/LinkedLoginButton'
-
+import logo from '../../../asset/image/logo.png'
 import background from '../../../asset/image/background.jpg'
+import GoHomeBtn from '../../../component/GoHomeBtn'
+import { useNavigate } from 'react-router-dom'
+import Link from '../../../component/Link'
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh',
@@ -58,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const LoginPage = () => {
+    const navigate = useNavigate()
     const classes = useStyles()
     const {dispatch} = useContext(AuthContext)
     const [inputs, setInputs] = useState({email: "", password: ""})
@@ -113,6 +117,7 @@ const LoginPage = () => {
                     {alert.msg}
                 </Alert>
             </Snackbar>
+            <GoHomeBtn/>
             <div className = {classes.form}>
                 <Typography variant = 'header' sx = {{alignSelf: 'center', fontWeight: 'bold'}}>
                     Login
@@ -141,13 +146,10 @@ const LoginPage = () => {
               
 
                 <div className = {classes.linkRow}>
-                    <Link href = '/auth/signup' sx = {{ml: theme.spacing(1), color: theme.palette.success.main}}>
-                        Sign up
-                    </Link>
-                    <Link href = '/auth/forgot-password' 
-                        sx = {{ml: theme.spacing(1), color: theme.palette.success.main}}>
-                        Reset your password
-                    </Link>
+                    <Link label = 'Signup' link = '/signup'
+                            style = {{marginLeft: theme.spacing(1)}}/>
+                    <Link label = 'Reset password' link = '/forgot-password'
+                            style = {{ marginRight: theme.spacing(1)}}/>
                 </div>
 
             </div>

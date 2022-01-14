@@ -43,7 +43,7 @@ const MatchPlayerLobbyPage = () => {
             let {match} = data
             console.log("receive emit onQuestion", match)
             dispatch(updateMatch(match))
-            navigate('/match/player/stadium', {replace: false})
+            navigate('/match/player/stadium', {replace: true})
         })
         socket.on('match:playerLeave', (data) => {
             let {player} = data
@@ -57,8 +57,8 @@ const MatchPlayerLobbyPage = () => {
             let {player} = data
             console.log("Player is Kicked: ", player)
             if (player._id == socket.id) {
-                dispatch(resetMatch({}))
-                navigate('/match/player/entrance', {replace: false})
+                dispatch(resetMatch())
+                navigate('/match/player/entrance', {replace: true})
             }
             else {
                 setAlert({

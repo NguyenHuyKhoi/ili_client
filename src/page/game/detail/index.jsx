@@ -23,12 +23,12 @@ const GameDetailPage = () => {
     console.log("Game : ", game)
     const handleEdit = () => {
         dispatch(startEditGame(game))
-        navigate('/game/creator', {replace: false})
+        navigate('/game/creator', {replace: true})
     }
 
     const handlePlay = () => {
         console.log("Play game")
-        navigate('/match/host/setting', {replace: false})
+        navigate('/match/host/setting', {replace: true})
     }
     return (
         <div className = {classes.container}>

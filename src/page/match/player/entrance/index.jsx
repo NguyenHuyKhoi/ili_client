@@ -114,7 +114,7 @@ const MatchPlayerEntrancePage = () => {
                 console.log("Enter name: ", value)
                 socket.emit('match:updatePlayer', pinCode, { username: value}, (response) => {
                     if (response) {
-                        navigate('/match/player/lobby', {replace: false})
+                        navigate('/match/player/lobby', {replace: true})
                     }
                 } )
                 break
@@ -122,7 +122,7 @@ const MatchPlayerEntrancePage = () => {
     }
 
     const handleGoHome = () => {
-        return navigate('/', {replace: false})
+        return navigate('/', {replace: true})
     }
     return (
         <div className = {classes.container}>

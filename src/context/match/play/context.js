@@ -19,17 +19,15 @@ export const sample_match = {
 
 const INITIAL_STATE = () => {
     let state = {
-        match: {...sample_match},
+        match: JSON.parse(JSON.stringify(sample_match)),
         question: {},
         answer_counts: [0,0,0,0],
         livestreamStage: LIVESTREAM_STAGE.NON_CREATED
     }
     const saved = localStorage.getItem('match_play_context')
     if (saved) {
-        return{
-            ...state,
-            ...JSON.parse(saved)
-        }
+        return JSON.parse(saved)
+        
     }
     else {
         return state
