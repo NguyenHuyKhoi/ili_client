@@ -1,13 +1,13 @@
 import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, {useState} from 'react';
-import { Tabs } from '../../../game/library/component/GameList';
 
 import waiting_template from '../../../../asset/image/game_template/waiting.png'
 import question_template from '../../../../asset/image/game_template/question.png'
 import question_end_template from '../../../../asset/image/game_template/question_end.png'
 import leader_board_template from '../../../../asset/image/game_template/leader_board.png'
 import complete_template from '../../../../asset/image/game_template/complete.png'
+import Tabbar from '../../../../component/Tabbar';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -55,7 +55,7 @@ const TemplateSlider = (props) => {
             <img src = {images[index]}
                 className = {classes.img}/>
             <div className = {classes.screens}>
-                <Tabs tabs = {['Lobby', 'Round', 'Round end', 'Leaderboard', 'Game end']}
+                <Tabbar tabs = {['Lobby', 'Round', 'Round end', 'Leaderboard', 'Game end']}
                     onClickTab = {setIndex}/>
             </div>
           

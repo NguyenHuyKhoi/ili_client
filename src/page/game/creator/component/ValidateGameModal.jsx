@@ -80,15 +80,6 @@ const ValidateGameModal = (props) => {
 				</div>
 				<div className = {classes.footer}>
 					<Button 
-						variant="warning"
-						onClick = {() => {
-							if (props.onSaveDraft) props.onSaveDraft()
-						}}
-						label = 'Save draft'
-						style = {{width: theme.spacing(16)}}
-						size = 'small'/>
-					
-					<Button 
 						variant = "success" 
 						style = {{marginLeft: theme.spacing(5), width: theme.spacing(16)}}
 						onClick = {handleClose}

@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DropdownSelect = (props) => {
     const classes = useStyles()
-    const {title, list, value, color, size} = props
+    var {title, list, value, color, size} = props
     const handleChange = (e) => {
         let value = e.target.value
         if (props.onChange) {

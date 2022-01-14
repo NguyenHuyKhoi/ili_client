@@ -2,12 +2,12 @@ import { Container, Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { Box } from '@mui/system'
 import React, { useState , useContext} from 'react'
-import { Tabs } from '../../game/library/component/GameList'
 import Header from './component/Header'
 import QuestionsTab from './component/QuestionsTab'
 import PlayersTab from './component/PlayersTab'
 import HeaderBar from '../../../component/HeaderBar'
 import { MatchContext } from '../../../context/match/other/context'
+import Tabbar from '../../../component/Tabbar'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +48,7 @@ const MatchDetailPage = () => {
             <HeaderBar selectedIndex = {3}/>
             <div className= {classes.header}>
                 <Header />
-                <Tabs tabs = {['Summary','Players', 'Questions', 'Feed back']} onClickTab = {handleTabChange}/>
+                <Tabbar tabs = {['Summary','Players', 'Questions', 'Feed back']} onClickTab = {handleTabChange}/>
             </div>
             <div className= {classes.body}>
                 {

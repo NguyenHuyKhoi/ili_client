@@ -55,19 +55,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'black',
         opacity: 0.5,
         zIndex: 99
-    },
-    draftTag: {
-        position: 'absolute',
-        top: theme.spacing(0.5),
-        left: theme.spacing(0.5),
-        padding: theme.spacing(0.4),
-        paddingLeft: theme.spacing(0.6),
-        paddingRight: theme.spacing(0.6),
-        borderRadius: theme.spacing(0.5),
-        backgroundColor: theme.palette.error.main,
-        opacity: 0.8,
-        zIndex: 99
-    },
+    }
 }))
 
 export const GameRowItem = (props) => {
@@ -106,9 +94,6 @@ export const GameRowItem = (props) => {
                 <div className = {classes.questionNums}>
                     <Typography variant = 'caption' 
                         sx = {{color: 'white', fontWeight: 'bold'}}> {questions.length} questions </Typography>
-                </div>
-                <div className = {classes.draftTag}>
-                    <Typography variant = 'caption' sx = {{color: 'white'}}> Draft </Typography>
                 </div>
             </div>
             <div className = {classes.right}>

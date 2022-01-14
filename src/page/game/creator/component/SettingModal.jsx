@@ -3,13 +3,12 @@ import { FormControlLabel, Grid, MenuItem, Modal, Radio, RadioGroup, Select, Typ
 import { makeStyles } from '@mui/styles';
 import React, { useState, useEffect} from 'react';
 import Button from '../../../../component/Button';
-import DropdownSelect from '../../../../component/DropdownSelect';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
 import TextArea from '../../../../component/TextArea';
 import TextField from '../../../../component/TextField';
 import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
 import { theme } from "../../../../theme";
-import { createUrl } from '../../../../util/helper';
+import DropdownSelect from '../../../../component/DropdownSelect'
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -59,7 +58,7 @@ const SettingModal = (props) => {
 	const {setting} = props
 	console.log("Setting: ",setting)
 	const [draftSetting, setDraftSetting] = useState({...setting})
-	const {title, image, description, language, visibility} = draftSetting
+	const {title, image, description, visibility, subject} = draftSetting
 	
 	var {open} = props
 	if (open == undefined) open = false
@@ -114,6 +113,21 @@ const SettingModal = (props) => {
 								placeholder="Describe your game..."
 								style={{ width: '100%', height: 150	,marginTop: theme.spacing(2), resize: 'none' }}
 							/>
+							<div style = {{width: '50%', marginTop: theme.spacing(3)}}>
+								<DropdownSelect title = 'Subject'
+									list = {[
+										{label: 'Science', value: 'science'},
+										{label: 'Music', value: 'music'},
+										{label: 'Cinema', value: 'cinema'},
+										{label: 'Sport', value: 'sport'},
+										{label: 'Arts', value: 'arts'},
+										{label: 'IQ', value: 'iq'},
+										{label: 'Others', value: 'others'},
+									]}
+									value = {subject}
+									onChange = {(value)=>handleChange('subject',value)}/>
+							</div>
+							
 						</div>
 					</Grid>
 					<Grid item xs = {5}>

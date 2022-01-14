@@ -33,71 +33,8 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(3),
         alignSelf:'baseline'
     },
-    tabs: {
-        display: 'flex',
-        flexDirection:'row',
-        borderRadius: theme.spacing(0.5),
-        alignSelf:'baseline',
-    },
-    tab: {
-        flex: 1,
-        padding: theme.spacing(0.8),
-        paddingLeft: theme.spacing(3),
-        paddingRight: theme.spacing(3),
-        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
-
-    }
 }))
 
-const TabItem = (props) => {
-    const classes = useStyles()
-    const handleClick = () => {
-        if (props.handleItemClick != undefined) {
-            props.handleItemClick()
-        }
-    }
-
-    var primary = theme.palette.primary.main
-    return (
-        <div className = {classes.tab} 
-            onClick = {handleClick} 
-            style = {{
-                border:'solid 2px #000000',
-                backgroundColor: props.isSelected ? primary: 'rgba(0,0,0,0)'
-            }}>
-            <Typography variant = 'label' 
-                style= {{ color: '#000000', fontWeight: 'bold'}}>
-                    {props.title}
-            </Typography>
-        </div>
-    )
-}
-export const Tabs = (props) => {
-    const classes = useStyles()
-    const [selectedIndex, setSelectedIndex] = useState(0)
-    let {tabs} = props
-    const handleItemClick = (index) => {
-        setSelectedIndex(index)
-        if (props.onClickTab) {
-            props.onClickTab(index)
-        }
-    }
-    if (tabs == undefined) tabs = []
-    return (
-        <div className = {classes.tabs}>
-            {
-                tabs.map((item, index) => (
-                    <div className = {classes.tabContainer}   key = {''+index}>
-                        <TabItem 
-                            title ={item} 
-                            handleItemClick = {() => handleItemClick(index)}
-                            isSelected = {selectedIndex == index}/>
-                    </div>
-                ))
-            }
-        </div>
-    )
-}
 
 const GameList = (props) => {
     const classes = useStyles()
@@ -123,9 +60,6 @@ const GameList = (props) => {
     }
     return (
         <div className = {classes.container}>
-            <div className = {classes.tabsContainer}>
-                <Tabs tabs = {['Recent', 'Draft', 'Favorites']}/>
-            </div>
             {
                 games.length == 0 ?
                 <EmptyBox

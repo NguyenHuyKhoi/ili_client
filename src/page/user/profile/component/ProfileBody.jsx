@@ -1,7 +1,7 @@
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useState } from 'react'
+import Tabbar from '../../../../component/Tabbar'
 import { AuthContext } from '../../../../context/auth/context'
-import { Tabs } from '../../../game/library/component/GameList'
 import CollectionList from './CollectionList'
 import GameList from './GameList'
 
@@ -29,7 +29,7 @@ const ProfileBody = () => {
     return (
         <div className = {classes.container}>
             <div className = {classes.tabsContainer}>
-                <Tabs tabs = {['Games', 'Collections']}
+                <Tabbar tabs = {['Games', 'Collections']}
                     onClickTab = {(index) => setSelectedIndex(index)}
                     />
             </div>

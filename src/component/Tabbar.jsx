@@ -7,68 +7,68 @@ import { Icon } from './Icon'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
-        flex: 1,
-        flexDirection: 'row',
-        marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2)
+        flexDirection:'row',
+        borderRadius: theme.spacing(0.5),
+        alignSelf:'baseline',
     },
     item: {
-        display: 'flex',
-        flexDirection: 'row',
-        padding: theme.spacing(0.7),
-        alignItems: 'center',
-        marginLeft: theme.spacing(1.5)
+        flex: 1,
+        padding: theme.spacing(0.8),
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
+
     }
 }))
 
-export const TabItem = (props) => {
+
+const TabItem = (props) => {
     const classes = useStyles()
-    const navigate = useNavigate()
-    const {isSelected, tab} = props
-    const {icon, label, link} = tab
     const handleClick = () => {
-        navigate(link, {replace: true})
+        if (props.handleItemClick != undefined) {
+            props.handleItemClick()
+        }
     }
 
-
     var primary = theme.palette.primary.main
-    var warning = theme.palette.warning.main
     return (
-        <div className = {classes.item}
-            onClick = {handleClick}
-            style ={{
-                borderBottom: isSelected ?
-                    `3px solid ${primary}` : null
+        <div className = {classes.item} 
+            onClick = {handleClick} 
+            style = {{
+                border:'solid 2px #000000',
+                backgroundColor: props.isSelected ? primary: 'rgba(0,0,0,0)'
             }}>
-            {/* <HomeOutlined sx = {{
-                color: isSelected ? '#46178f':'gray'
-            }}/> */}
-            <Icon name = {icon} style = {{ color: isSelected ? primary : '#000'}}/>
-            <Typography variant = 'btnLabel' 
-                sx = {{ml: theme.spacing(1.5),
-                    color: isSelected ? primary : '#000'}}>
-                {label}
+            <Typography variant = 'label' 
+                style= {{ color: '#000000', fontWeight: 'bold'}}>
+                    {props.title}
             </Typography>
-        </div> 
+        </div>
     )
 }
-
 const Tabbar = (props) => {
     const classes = useStyles()
-    const {selectedIndex, tabs} = props
-
-    console.log("Tabs: ", tabs)
+    const [selectedIndex, setSelectedIndex] = useState(0)
+    let {tabs} = props
+    const handleItemClick = (index) => {
+        setSelectedIndex(index)
+        if (props.onClickTab) {
+            props.onClickTab(index)
+        }
+    }
+    if (tabs == undefined) tabs = []
     return (
         <div className = {classes.container}>
             {
                 tabs.map((item, index) => (
-                    <TabItem isSelected = {selectedIndex == index}
-                        key = {''+index}
-                        tab = {item}/>
+                    <div className = {classes.tabContainer}   key = {''+index}>
+                        <TabItem 
+                            title ={item} 
+                            handleItemClick = {() => handleItemClick(index)}
+                            isSelected = {selectedIndex == index}/>
+                    </div>
                 ))
             }
         </div>
-
     )
 }
 

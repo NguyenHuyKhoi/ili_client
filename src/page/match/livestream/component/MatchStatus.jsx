@@ -1,11 +1,11 @@
 import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, {useState, useContext} from 'react';
-import { Tabs } from '../../../game/library/component/GameList';
 import {MatchPlayContext} from '../../../../context/match/play/context'
 import QuestionRowItem from './QuestionRowItem';
 import { viewQuestion } from '../../../../context/match/play/actions';
 import PlayerRowItem from './PlayerRowItem';
+import Tabbar from '../../../../component/Tabbar';
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -72,7 +72,7 @@ const MatchStatus = (props) => {
 	return (
         <div className = {classes.container}>
             <div className = {classes.tabs}>
-                <Tabs tabs = {['Rounds', 'Players']} onClickTab = {(i) => setIndex(i)}/>
+                <Tabbar tabs = {['Rounds', 'Players']} onClickTab = {(i) => setIndex(i)}/>
             </div>
 
             <div className = {classes.list}>

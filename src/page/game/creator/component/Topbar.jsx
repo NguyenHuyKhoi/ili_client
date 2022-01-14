@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
         justifyContent:'space-between',
         flexDirection:'row',
         marginLeft: theme.spacing(2),
-        border: '1px solid #000',
-        borderRadius: theme.spacing(0.4),   
         padding: theme.spacing(0.2),
         paddingLeft: theme.spacing(1.5),
-        alignItems: 'center'
+        alignItems: 'center',
+        border: 'solid 2px #000000',
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
     },
     title: {
         color: '#000'
@@ -69,14 +69,6 @@ const Topbar = (props) => {
                         label = 'Setting'/>
                 </div>
                 <div style = {{flex:1}}/> 
-                <Button 
-                    variant="warning" 
-                    size = 'small'
-                    label = 'Edit'
-                    onClick = {() => {
-                        if (props.onExit) props.onExit()
-                    }}
-                    />
                 <Button 
                     variant="success" 
                     size = 'small'

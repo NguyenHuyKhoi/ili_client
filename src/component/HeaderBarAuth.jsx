@@ -10,7 +10,7 @@ import { GameCreatorContext } from '../context/game/creator/context'
 import { theme } from '../theme'
 import Button from './Button'
 import IconButton from './IconButton'
-import Tabbar from './Tabbar'
+import HeaderTabbar from './HeaderTabbar'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -95,7 +95,7 @@ const HeaderBarAuth = (props) => {
                 <img src = {logo} className = {classes.logo}/>
             </div>
             
-            <Tabbar tabs = {tabs} selectedIndex = {selectedIndex}/>
+            <HeaderTabbar tabs = {tabs} selectedIndex = {selectedIndex}/>
             <Button 
                 size = 'small'
                 variant = 'primary'

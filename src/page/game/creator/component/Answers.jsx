@@ -13,13 +13,14 @@ const useStyles = makeStyles((theme) => ({
     answer: {
         backgroundColor: 'white ',
         flex:1,
-        borderRadius: theme.spacing(0.6),
         boxShadow: `1px 3px 1px #f0f0f0`,
         display:'flex',
         flexDirection: 'row',
         height: 90,
         alignItems:'center',
-        padding: theme.spacing(1)
+        padding: theme.spacing(1),
+        border: 'solid 2px #000000',
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
     },
     shapeContainer: {
         height: '100%',
