@@ -10,66 +10,42 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         backgroundColor: 'white',
         padding: theme.spacing(2),
-        height: '100vh',
-        flexDirection: 'column'
-    },
-    infors: {
-        display: 'flex',
+        height: '92vh',
         flexDirection: 'column',
-        borderRadius: theme.spacing(0.5)
-    },
-    descEmpty: {
-        height: 200,
-        backgroundColor: theme.palette.background.main,
-        margin: theme.spacing(1.5),
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+        overflow: 'hidden'
     }
 }))
-const InforsCard = (props) => {
+
+
+const CollectorInfor = (props) => {
     const classes = useStyles()
-    const {collection} = useContext(CollectionContext)
+    const {collection} = props 
     const {description} = collection
     return (
-        <div className= {classes.infors}>
+        <div className = {classes.container}>
             <Typography variant = 'bigLabel' sx = {{color: '#000', p: theme.spacing(1.5), alignSelf: 'center'}}>
                  Description
             </Typography>
             <Divider/>
-            {
-                description == null || description == '' ? 
-                    <Typography variant= 'btnLabel' sx = {{color: '#000', textAlign: 'center'}}>
-                        Please add a description of your collection.
-                    </Typography>
-                :
-                <Typography variant= 'btnLabel' sx = {{p: theme.spacing(1.5)}}>
+            <Typography variant= 'btnLabel' sx = {{pt: theme.spacing(2), alignSelf: 'center', flex: 1, color: '#000'}}>
                 {
+                    description == null || description == '' ? 
+                    'Please add a description of your collection.'
+                    :
                     description
                 }
-                </Typography>
-            }
-          
-            <Button 
-                variant = 'primary' 
-                size = 'small'
-                style = {{alignSelf: 'center',marginTop : theme.spacing(2), width: theme.spacing(20)}}
-                onClick = {() => {
-                    if (props.onSetting) props.onSetting()
-                }}
-                label = 'Edit'/>
-        </div>
-    )
-}
+            </Typography>
 
-const CollectorInfor = (props) => {
-    const classes = useStyles()
-    return (
-        <div className = {classes.container}>
-            <InforsCard 
-                onSetting = {() => {
-                    if (props.onSetting) props.onSetting()
-            }}/>
+          
+            <Button
+                variant="warning" 
+                size = 'small'
+                style = {{ marginLeft: theme.spacing(3), width: theme.spacing(15), alignSelf: 'center', marginTop: theme.spacing(5)}}
+                onClick = {() => {
+                    console.log("Click delete btn")
+                    if (props.onDelete) props.onDelete()
+                }}
+                label = 'Delete'/>
            
         </div>
     )

@@ -21,10 +21,11 @@ const useStyles = makeStyles((theme) => ({
     },
     games: {
         display:'flex',
-        flexDirection:'column'
+        flexDirection:'column',
+        marginTop: theme.spacing(5)
     },
     gameContainer: {
-        marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing(5),
         display:'flex',
         flexDirection:'column'
     },
@@ -40,19 +41,6 @@ const GameList = (props) => {
     const classes = useStyles()
     const {token} = useContext(AuthContext)
     const {games, dispatch} = useContext(GameContext)
-    useEffect(() => {
-        axios.get('game/library?status=complete', {
-            headers: {
-                'x-access-token': token
-            }
-        })    
-        .then ((res) => {
-            dispatch(getGamesSuccess(res.data))
-        })
-        return () => {
-            
-        }
-    }, [])
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [isShowAll, setIsShowAll] = useState(false)
     const handleShowAllChange = () => {

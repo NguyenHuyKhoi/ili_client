@@ -68,7 +68,7 @@ const AddGamesModal = (props) => {
 				<div className= {classes.body}>
 					{
 						allGames.map((game, index) => (
-							<div style = {{marginBottom: theme.spacing(2)}}>
+							<div style = {{marginBottom: theme.spacing(2)}} key = {'' + index}>
 								<GameItem game = {game}
 									key = {''+ index}
 									isAdded = {inAddedGames(game._id)}
@@ -79,7 +79,7 @@ const AddGamesModal = (props) => {
 				</div>
 
 				<Button 
-					variant="primary"
+					variant="success"
 					onClick = {handleClose}
 					style = {{width: theme.spacing(20), alignSelf: 'center', margin: theme.spacing(3	)}}
 					label = 'Done'/>

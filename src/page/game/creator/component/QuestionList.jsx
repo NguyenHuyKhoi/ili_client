@@ -60,7 +60,7 @@ const QuestionList = (props) => {
                             variant='label' 
                             sx = {{mb: theme.spacing(0.2), color: '#000'}}>
                             {
-                               'Quiz ' + (index + 1)
+                               'Quiz ' + (item.index + 1)
                             }
                         </Typography>
                         <QuestionMiniItem selected = {questionIndex == index} question = {item}/>

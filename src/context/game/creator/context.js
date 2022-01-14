@@ -2,6 +2,7 @@ import { createContext, useEffect, useReducer } from "react"
 import reducer from "./reducer"
 
 export const sample_question = {
+    index: 0,
     title: null,
     image: null,
     answers: [
@@ -19,7 +20,6 @@ export const sample_game = {
     title: null,
     description: null,
     cover: null,
-    language: 'en',
     visibility: 'private',
     subject: 'others',
     questionIndex: 0,

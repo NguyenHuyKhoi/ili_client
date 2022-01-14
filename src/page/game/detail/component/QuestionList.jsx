@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(2)
     },
     item: {
-        marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing(3),
         display:'flex',
         flexDirection:'column'
     },

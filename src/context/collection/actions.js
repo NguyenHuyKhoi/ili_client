@@ -13,8 +13,8 @@ export const selectCollection = (collection) => ({
     }
 })
 
-export const saveLocalEditedCollection = (collection) => ({
-    type: 'SAVE_LOCAL_EDITED_COLLECTION',
+export const saveCollectionSetting = (collection) => ({
+    type: 'SAVE_COLLECTION_SETTING',
     payload: {
         collection
     }

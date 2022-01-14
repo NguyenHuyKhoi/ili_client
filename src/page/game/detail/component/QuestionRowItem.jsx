@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
         flex:1,
         display:'flex',
         flexDirection:'column',
+        overflow: 'hidden'
     },
     header: {
         display: 'flex',
@@ -110,7 +111,11 @@ const QuestionRowItem = (props) => {
     }, [isShowAll])
     return (
         <div className = {classes.container} 
-            style={{ border: selected ? `3px solid ${theme.palette.success.main}`: 'none'}}>
+            style={{ 
+                border: selected ? `2px solid ${theme.palette.success.main}`: '1px solid #000',
+                borderRadius: '255px 10px 225px 10px/10px 225px 10px 255px',
+            
+            }}>
             <div className = {classes.header} onClick = {handleShowChange}>
               
                 <div className = {classes.infor}>

@@ -1,4 +1,4 @@
-import { Add, ExploreOutlined, GroupsOutlined, Home, TocOutlined, TrendingUpOutlined ,BarChartTwoTone,CircleRounded,DiamondSharp,ReportProblem, Square, TableRows, SnippetFolder, MilitaryTech, Help, QueryBuilder, Check, WatchLater, Person, DataUsage, Logout } from "@mui/icons-material"
+import { Add, ExploreOutlined, GroupsOutlined, Home, TocOutlined, TrendingUpOutlined ,BarChartTwoTone,CircleRounded,DiamondSharp,ReportProblem, Square, TableRows, SnippetFolder, MilitaryTech, Help, QueryBuilder, Check, WatchLater, Person, DataUsage, Logout, Edit, PlayArrow, CopyAll, Delete } from "@mui/icons-material"
 import React from 'react'
 import { makeStyles } from '@mui/styles'
 const useStyles = makeStyles((theme) => ({
@@ -49,6 +49,14 @@ export const Icon = (props) => {
             name == 'DataUsage' ? <DataUsage sx = {style} />
             :
             name == 'Logout' ? <Logout sx = {style} />
+            :
+            name == 'Edit' ? <Edit sx = {style} />
+            :
+            name == 'Play' ? <PlayArrow sx = {style} />
+            :
+            name == 'Clone' ? <CopyAll sx = {style} />
+            :
+            name == 'Delete' ? <Delete sx = {style} />
             : <Home/>
             
         }

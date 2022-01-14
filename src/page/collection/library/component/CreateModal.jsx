@@ -92,7 +92,7 @@ const CollectionCreateModal = (props) => {
 							<TextField
 								placeholder='Enter  title ...'	
 								value = {title}
-								size = 'small'
+								size = 'big'
 								onChange = {(value) => handleChange('title', value)} />
 							
 							<TextArea

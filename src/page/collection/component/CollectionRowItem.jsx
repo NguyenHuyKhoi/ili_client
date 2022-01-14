@@ -15,7 +15,10 @@ const useStyles = makeStyles((theme) => ({
         display:'flex',
         flexDirection:'row',
         backgroundColor:'white',
-        padding: theme.spacing(0.5)
+        padding: theme.spacing(0.5),
+        border: 'solid 1px #000000',
+        overflow: 'hidden',
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
     },
     left: {
         position: 'relative'
@@ -65,12 +68,12 @@ export const CollectionRowItem = (props) => {
     const {title, games, cover, owner} = collection
     const handleView = () => {
         dispatch(selectCollection(collection))
-        navigate('/collection/detail/' + collection._id, {replace: true})
+        navigate('/collection/detail/' + collection._id, {replace: false})
     }
 
     const handleEdit = (e) => {
         e.stopPropagation()
-        navigate('/collection/edit/' + collection._id, {replace: true})
+        navigate('/collection/edit/' + collection._id, {replace: false})
     }
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}

@@ -1,6 +1,6 @@
 import { sample_game, sample_question } from "./context"
 
-const validateQuestion = (question) => {
+export const validateQuestion = (question) => {
     let defs = []
     let {title, answers, correct_answers} = question
     // Check title is missing:
@@ -8,7 +8,7 @@ const validateQuestion = (question) => {
         defs.push('Question missing')
     } 
     // Check answers is missing
-    let emptyAnswers = answers.filter((item) => item == null).length
+    let emptyAnswers = answers.filter((item) => (item == null) || (item == '')).length
     if (emptyAnswers > 0) {
         defs.push(emptyAnswers + ' answers missing')
     }
@@ -21,8 +21,9 @@ const validateQuestion = (question) => {
     return defs
 }
 
-const validateGameSetting = (game) => {
+export const validateGameSetting = (game) => {
     const {title} = game
+    console.log("Check validate game:", title)
     // Check title is missing:
     if (title == null || title == '') {
         return false
@@ -40,13 +41,15 @@ const reducer = (state, action) => {
     var temp, temps
     switch (action.type) {
         case 'UPDATE_GAME_SETTING':
+            console.log("Update game setting:", setting)
             return {
                 ...state,
                 ...setting
             }
         case 'VALIDATE_GAME':
-            state.isValidated = validateGameSetting(state)
-            state.questions.forEach((item, index) => item.defectives = validateQuestion(item)) 
+            console.log("Validate game")
+
+            console.log("IS validated: ", state.isValidated)
             return {
                 ...state
             }
@@ -59,16 +62,19 @@ const reducer = (state, action) => {
         case 'ADD_QUESTION':
             temp = JSON.parse(JSON.stringify(sample_question))
             temps = JSON.parse(JSON.stringify(state.questions))
+            temp.index = temps.length
+            console.log("Index of new question: ", temp.index)
             temps.push(temp)
             return {
                 ...state,
                 questions: temps
             }
         case 'DUPLICATE_QUESTION':
-
             temp = JSON.parse(JSON.stringify(state.questions[index]))
             temps = JSON.parse(JSON.stringify(state.questions))
+            temp.index = temps.length
             temps.push(temp)
+            console.log("Index of dup question: ", temp.index)
             return {
                 ...state,
                 questions: temps
@@ -79,6 +85,11 @@ const reducer = (state, action) => {
                 ...state
             }
         case 'DELETE_QUESTION':
+            state.questions.forEach((item, i) => {
+                if (i>=index) {
+                    state.questions[i].index = i - 1
+                }
+            })
             state.questions.splice(index,1)
             if (index <= state.questionIndex) {
                 state.questionIndex = Math.max(0, state.questionIndex - 1)
@@ -97,7 +108,6 @@ const reducer = (state, action) => {
         }
 
         case 'START_EDIT_GAME': {
-
             return {
                 ...JSON.parse(JSON.stringify(action.payload.game)),
                 mode: 'edit',

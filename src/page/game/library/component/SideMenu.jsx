@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         overflow: 'hidden',
         paddingTop: theme.spacing(5),
-        padding: theme.spacing(2)
+        padding: theme.spacing(2),
+        
     },
     item: {
         display: 'flex',

@@ -37,21 +37,6 @@ const ProfilePage = (props) => {
         .then ((res) => {
             dispatch(profileDetailSuccess(res.data))
         })
-
-        axios.get('collection/library/' + id, {
-            headers: {
-                'x-access-token': token
-            }
-        })   
-
-        axios.get('game/library/' + id, {
-            headers: {
-                'x-access-token': token
-            }
-        })  
-        .then ((res) => {
-            dispatch(getGamesSuccess(res.data))
-        }) 
         return () => {
             
         }

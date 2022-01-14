@@ -45,7 +45,7 @@ const CollectionLibraryPage = () => {
     }, [])
 
     const getCollections = () => {
-        axios.get('collection/library/' + user._id, {
+        axios.get('collection/library', {
             headers: {
                 'x-access-token': token
             }

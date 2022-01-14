@@ -5,12 +5,14 @@ const reducer = (state, action) => {
         case 'GET_GAMES_SUCCESS': 
             return {
                 ...state,
-                games
+                games,
+                game: games.length > 0? games[0] : null
             }
         case 'SELECT_GAME': 
+            console.log("Reducer select game:", game)
             return {
                 ...state,
-                game
+                game: JSON.parse(JSON.stringify(game))
             }
         default: 
             return state

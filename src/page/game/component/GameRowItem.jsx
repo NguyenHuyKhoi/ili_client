@@ -10,11 +10,16 @@ import { theme } from '../../../theme'
 import {createUrl} from '../../../util/helper'
 
 import Button from '../../../component/Button'
+import { GameCreatorContext } from '../../../context/game/creator/context'
+import { startEditGame } from '../../../context/game/creator/actions'
+import ActiveDot from '../../../component/ActiveDot'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
         display:'flex',
         flexDirection:'row',
+        border: 'solid 1px #000000',
+        borderRadius: '255px 5px 225px 5px/5px 225px 5px 255px',
         padding: theme.spacing(0.5),
         '&:hover': {
             cursor: 'pointer'
@@ -36,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
         flex:1,
         display: 'flex',
         flexDirection: 'row',
+        alignItems: 'center',
         padding: theme.spacing(1.5)
     },
     rightBottom: {
@@ -61,29 +67,28 @@ const useStyles = makeStyles((theme) => ({
 export const GameRowItem = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {dispatch} = useContext(GameContext)
+    const gameDispatch = useContext(GameContext).dispatch
+    const gameCreatorDispatch = useContext(GameCreatorContext).dispatch
     const {game} = props
-    const {title, questions, owner, image} = game
-    const handleSelect = () => {
-        dispatch(selectGame(game))
-    }
+    const {title, questions, owner, image, visibility} = game
+
 
 
     const handleViewDetail = () => {
-        handleSelect()
-        navigate('/game/detail/'+game._id, {replace: true})
+        gameDispatch(selectGame(game))
+        navigate('/game/detail/'+game._id, {replace: false})
     }
 
     const handleEdit = (e) => {
         e.stopPropagation()
-        handleSelect()
-        navigate('/game/creator', {replace: true})
+        gameCreatorDispatch(startEditGame(game))
+        navigate('/game/creator', {replace: false})
     }
 
     const handlePlay = (e) => {
         e.stopPropagation()
-        handleSelect()
-        navigate('/match/host/setting', {replace: true})
+        gameDispatch(selectGame(game))
+        navigate('/match/host/setting', {replace: false})
     }
     return (
         <div className = {classes.container} style={{backgroundColor: '#fff'}}
@@ -101,6 +106,8 @@ export const GameRowItem = (props) => {
                     <Typography variant = 'btnLabel' sx = {{color: '#000', flex: 1}}> 
                         {title}
                     </Typography>
+
+                    <ActiveDot isActive = {visibility == 'public'} labels = {['public', 'private']}/>
                 </div>
                 <div className = {classes.rightBottom}>
                     <Typography variant = 'label' sx = {{color: '#000', flex: 1}}>

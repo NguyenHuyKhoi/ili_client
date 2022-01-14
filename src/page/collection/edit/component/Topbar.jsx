@@ -70,19 +70,11 @@ const Topbar = (props) => {
                         label = 'Setting'/>
                 </div>
                 <div style = {{flex:1}}/> 
-                <Button 
-                    variant="warning" 
-                    size = 'small'
-                    style = {{ marginLeft: theme.spacing(3)}}
-                    onClick = {() => {
-                        navigate(-1)
-                    }}
-                    label = 'Exit'
-                    />
+
                 <Button
                     variant="success" 
                     size = 'small'
-                    style = {{ marginLeft: theme.spacing(3)}}
+                    style = {{ marginLeft: theme.spacing(2)}}
                     onClick = {() => {
                         if (props.onSave) props.onSave()
                     }}

@@ -1,13 +1,13 @@
-import { Add } from '@mui/icons-material'
-import { Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
+import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../../component/Button'
+import EmptyBox from '../../../component/EmptyBox'
+import NotificationModal from '../../../component/NotificationModal'
 import { AuthContext } from '../../../context/auth/context'
-import { saveLocalEditedCollection } from '../../../context/collection/actions'
+import { saveCollectionSetting } from '../../../context/collection/actions'
 import { CollectionContext } from '../../../context/collection/context'
 import { getGamesSuccess } from '../../../context/game/other/actions'
 import { GameContext } from '../../../context/game/other/context'
@@ -16,14 +16,12 @@ import AddGamesModal from './component/AddGamesModal'
 import CollectorInfor from './component/CollectorInfor'
 import GameList from './component/GameList'
 import SettingModal from './component/SettingModal'
-import SuccessModal from './component/SuccessModal'
 import Topbar from './component/Topbar'
-import EmptyBox from '../../../component/EmptyBox'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
         backgroundColor: theme.palette.background.main,
-        height: '100vh'
+        overflowY: 'hidden'
     },
     body: {
         display: 'flex',
@@ -58,7 +56,7 @@ const CollectionEditPage = () => {
     const {games, owner} = collection
     const [modal, setModal] = useState({state: ''})
     useEffect(() => {
-        axios.get('game/library?status=complete', {
+        axios.get('game/library', {
             headers: {
                 'x-access-token': token
             }
@@ -85,9 +83,39 @@ const CollectionEditPage = () => {
         })
     }
 
-    const handleSave = (setting) => {
-        dispatch(saveLocalEditedCollection(setting))
+    const handleSaveSetting = (setting) => {
+        dispatch(saveCollectionSetting({
+            ...collection,
+            ...setting
+        }))
         setModal({})
+    }
+
+    const handleDelete = () => {
+        console.log("Hadnle delete collection")
+        axios.delete('collection/' + collection._id, {
+            headers: {
+                'x-access-token': token
+            }
+        })
+        .then((res) => {
+            setModal({
+                state: 'success',
+                title: 'Done !',
+                desc: 'This collection has been deleted',
+                btnLabel: 'OK'
+            })
+        })   
+        .catch((err) => {
+            console.log("Err: ", err)
+            setModal({
+                state: 'success',
+                title: 'Error !',
+                desc: 'Try again, later',
+                btnLabel: 'OK',
+                variant: 'error'
+            })
+        })
     }
     return (
         <div className = {classes.container}>
@@ -97,24 +125,35 @@ const CollectionEditPage = () => {
                 onSave = {handleSaveToServer}
                 onSetting = {() => setModal({state: 'setting'})}/>
             <SettingModal 
-                setting = {collection}
+                setting = {{
+                    title: collection.title,
+                    description: collection.description,
+                    cover: collection.cover,
+                    visibility: collection.visibility
+                }}
                 open = {modal.state == 'setting'}
                 onClose = {() => setModal({})}
-                onDone = {handleSave}
+                onDone = {handleSaveSetting}
             />
-            <SuccessModal 
-                open = {modal.state == 'success'}
+            <NotificationModal 
+                title = 'Done!'
+                btnLabel = 'Go Library'
+                desc = 'See results in library.'
+                open = { modal.state == 'success' }     
                 onClose = {() => setModal({})}
-                onDone = {() => {navigate(-1)}}
-            />
+                onDone = {() => {
+                    setModal({})
+                    return navigate('/collection/library', {replace: true})
+                }}/>
             <AddGamesModal 
                 open = {modal.state == 'add_games'}
                 onClose = {() => setModal({})}
-                onDone = {handleSave}
             />
             <Grid container sx = {{mt: theme.spacing(8)}} columnSpacing={2}>
                 <Grid item sm={3} >
-                    <CollectorInfor onSetting = {() =>setModal({state: 'setting'})}/>
+                    <CollectorInfor 
+                        collection = {collection}
+                        onDelete = {handleDelete}/>
                 </Grid>
 
                 <Grid item sm={9}>

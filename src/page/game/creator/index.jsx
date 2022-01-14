@@ -1,18 +1,19 @@
-import { Grid } from '@mui/material'
+import { Alert, Grid, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import NotificationModal from '../../../component/NotificationModal'
 import { AuthContext } from '../../../context/auth/context'
 import { deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, validateGame } from '../../../context/game/creator/actions'
 import { GameCreatorContext } from '../../../context/game/creator/context'
+import { validateGameSetting, validateQuestion } from '../../../context/game/creator/reducer'
 import { theme } from '../../../theme'
 import DeleteQuestionModal from './component/DeleteQuestionModal'
 import QuestionBuilder from './component/QuestionBuilder'
 import QuestionConfig from './component/QuestionConfig'
 import QuestionList from './component/QuestionList'
 import SettingModal from './component/SettingModal'
-import SuccessModal from './component/SuccessModal'
 import Topbar from './component/Topbar'
 import ValidateGameModal from './component/ValidateGameModal'
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +35,7 @@ const GameCreatorPage = (props) => {
     const [canDeleteQuestion, setCanDeleteQuestion] = useState(false)
     const [defectiveQuestions, setDefectiveQuestions] = useState([])
     const [modal, setModal] = useState({})
-
+    const [alert, setAlert] = useState({})
     useEffect(() => {
         setCanDeleteQuestion((questions.length > 1))
         return () => {
@@ -47,9 +48,18 @@ const GameCreatorPage = (props) => {
     }
 
     const handleSave = async () => {
-        await dispatch(validateGame())
+        var isValidated = validateGameSetting(game)
+        var qs = []
+        questions.forEach((item, index) => {
+            let cloned = JSON.parse(JSON.stringify(item))
+            let defects = validateQuestion(cloned)
+            if (defects.length > 0) {
+                cloned.defectives = defects
 
-        let qs = questions.filter((item, index) => item.defectives!= undefined && item.defectives.length > 0)
+                console.log("Defective questions:", cloned)
+                qs.push(cloned)
+            }
+        })
         setDefectiveQuestions(qs)
         if (qs.length > 0) {
             setModal({state: 'validate'})
@@ -61,22 +71,30 @@ const GameCreatorPage = (props) => {
             console.log("Token :", token)
             // Add index for question:
             game.questions.forEach((question, index) => game.questions[index].index = index + 1)
-            axios.post('game/', game, {
+            axios.post('game/create', game, {
                 headers: {
                     'x-access-token': token
                 }
             })   
             .then (() => {
                 setModal({state: 'success'})
+                console.log("Create game success")
+            })
+            .catch(() => {
+                setAlert({
+                    type: 'error',
+                    msg: 'Some thing wrong, try again later...'
+                })
             })
         }
         else if (mode == 'edit') {
-            axios.put('game/'+game._id, game, {
-               headers: {
-                   'x-access-token': token
-               }
-           })    
-           .then (() => {
+            console.log("Edit game success")
+            axios.post('game/edit/'+game._id, game, {
+            headers: {
+                'x-access-token': token
+            }
+        })    
+        .then(() => {
                 setModal({state: 'success'})
             })
         }
@@ -86,6 +104,7 @@ const GameCreatorPage = (props) => {
         navigate('/game/library')
     }
     const handleSelectFixQuestion = (index) => {
+        console.log("Handle select fix question:", index)
         setModal({})
         dispatch(selectQuestion(index))
     }
@@ -97,18 +116,33 @@ const GameCreatorPage = (props) => {
 
     return (
         <div className = {classes.container}>
+            <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+                anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
+                <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
+                    {alert.msg}
+                </Alert>
+            </Snackbar>
             <Topbar 
                 onSetting = {() => setModal({state: 'setting'})}
                 onSave = {handleSave}
                 onExit = {handleExit}
                 />
-            <SuccessModal 
-               open = { modal.state == 'success' }     
+            <NotificationModal 
+                title = 'Done!'
+                btnLabel = 'Go Library'
+                desc = 'See results in library.'
+                open = { modal.state == 'success' }     
                 onClose = {() => setModal({})}
                 onDone = {handleDoneCreate}/>
 
             <SettingModal 
-                setting = {game}
+                setting = {{
+                    title: game.title,
+                    description: game.description,
+                    cover: game.cover,
+                    visibility: game.visibility,
+                    subject: game.subject
+                }}
                 open = {modal.state == 'setting'}     
 
                 onClose = {() => setModal({})}

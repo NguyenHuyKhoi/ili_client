@@ -1,8 +1,8 @@
 import { Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
-import Button from '../../../../component/Button';
-import { theme } from "../../../../theme";
+import Button from './Button';
+import { theme } from "../theme";
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -14,17 +14,19 @@ const useStyles = makeStyles((theme) => ({
 		border: '2px solid #000',
 		display: 'flex',
 		flexDirection: 'column',
-		alignItems: 'center',
 		border: 'solid 2px #000000',
-        borderRadius: '255px 5px 225px 5px/5px 225px 5px 255px',
-		padding: theme.spacing(2),
+        borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
+		padding: theme.spacing(3),
+		alignItems: 'center'
+
     }
 }))
 
-const SuccessModal = (props) => {
+const NotificationModal = (props) => {
 	const classes = useStyles()
 
-	var {open} = props
+	var {open, title, desc, btnLabel, variant} = props
+	if (variant == undefined) variant = 'success'
 	if (open == undefined) open = false
 	const handleDone = () => {
 		if (props.onDone) {
@@ -45,20 +47,20 @@ const SuccessModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<Typography variant = 'header' sx = {{color: '#000'}}>
-					Save successfully
+				<Typography variant = 'header' sx = {{color: '#000', alignSelf: 'center'}}>
+					{title}
 				</Typography>
-				<Typography variant = 'label' sx = {{mt: theme.spacing(1)}}>
-					See results on library.
+				<Typography variant = 'btnLabel' sx = {{mt: theme.spacing(1)}}>
+					{desc}
 				</Typography>
 				<Button 
-					variant="success"
-					label = 'Done'
-					style = {{width: theme.spacing(15), marginTop: theme.spacing(3)}}
-					onClick = {handleDone}/>
+					variant = {variant}
+					style = {{width: theme.spacing(20), marginTop: theme.spacing(3)}}
+					onClick = {handleDone}
+					label = {btnLabel}/>
 			</div>
 		</Modal>
 	);
 }
 
-export default SuccessModal
+export default NotificationModal

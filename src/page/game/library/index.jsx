@@ -1,8 +1,12 @@
 import { Container, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import axios from 'axios'
+import React, {useContext, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import HeaderBar from '../../../component/HeaderBar'
+import { AuthContext } from '../../../context/auth/context'
+import { getGamesSuccess } from '../../../context/game/other/actions'
+import { GameContext } from '../../../context/game/other/context'
 import GameList from './component/GameList'
 import SideMenu from './component/SideMenu'
 
@@ -17,7 +21,25 @@ const useStyles = makeStyles((theme) => ({
 const GameLibraryPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
-
+    const {dispatch} = useContext(GameContext)
+    const {token} = useContext(AuthContext)
+    useEffect(() => {
+        axios.get('game/library', {
+            headers: {
+                'x-access-token': token
+            }
+        })    
+        .then ((res) => {
+            console.log("Get games library:", res.data)
+            dispatch(getGamesSuccess(res.data))
+        })
+        .catch((err) => {
+            console.log("Get games library err:", err.response)
+        })
+        return () => {
+            
+        }
+    }, [])
     const handleGoCreate = () => {
         navigate('/game/creator', {replace: true})
     }

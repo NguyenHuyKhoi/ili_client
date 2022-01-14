@@ -67,13 +67,13 @@ const ValidateGameModal = (props) => {
 							key = {''+index}>
 								<ValidateQuestionItem onClick = {() => {
 									if (props.onClickQuestion) {
-										props.onClickQuestion(index)
+										props.onClickQuestion(item.index)
 									}
 								}
 								
 								}
 									question = {item}
-									index = {index}/>
+									index = {item.index}/>
 							</div>
 						))
 					}

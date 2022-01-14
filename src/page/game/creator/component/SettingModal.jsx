@@ -57,7 +57,7 @@ const SettingModal = (props) => {
 	const classes = useStyles()
 	const {setting} = props
 	const [draftSetting, setDraftSetting] = useState(JSON.parse(JSON.stringify(setting)))
-	const {title, image, description, visibility, subject} = draftSetting
+	const {title, cover, description, visibility, subject} = draftSetting
 	
 	var {open} = props
 	if (open == undefined) open = false
@@ -133,10 +133,10 @@ const SettingModal = (props) => {
 						<div className = {classes.rightCol}>
 							<div className = {classes.uploadImg}>
 								<MediaUploadCard 
-									onSelectImage = {file => handleChange('image', file)}
-									onRemoveImage = {() => handleChange('image', null)}
+									onSelectImage = {file => handleChange('cover', file)}
+									onRemoveImage = {() => handleChange('cover', null)}
 									label = 'Upload a cover'
-									image = {image}/>
+									image = {cover}/>
 							</div>
 						
 							<WrappedRadioGroup title = 'Visibility' 
