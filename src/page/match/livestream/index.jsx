@@ -174,7 +174,7 @@ const MatchLivestreamPage = () => {
         }
             //console.log("Broadcast created, ready to stream:", res)
         try {
-            res = await axios.post('match/livestream/create', {...match, livestream: res}, {
+            res = await axios.post('match/livestream/create', {...match, livestream: res, mode: 'livestream'}, {
                 headers: {
                     'x-access-token': token
                 }

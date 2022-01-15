@@ -1,12 +1,13 @@
 import { makeStyles } from '@mui/styles';
 import { DataGrid } from '@mui/x-data-grid';
 import React from 'react';
+import { theme } from '../../../../theme';
 const useStyles = makeStyles((theme) => ({
 }))
 
 const columns = [
 	{ field: 'id', headerName: 'Id', hidden: true},
-	{ field: 'name', headerName: 'Nick name', flex: 3 },
+	{ field: 'username', headerName: 'Nick name', flex: 3 },
 	{ field: 'rank', headerName: 'Rank', type: 'number', flex: 1 },
 	{ field: 'correctPercent',headerName: 'Correct answers',type: 'number',flex: 1},
   { field: 'unanswers', headerName: 'Unanswers', type: 'number',flex: 1},
@@ -17,9 +18,10 @@ const getRows = (players, match) => {
 	return players.map((player, index) => {
     const {correctNum, incorrectNum, unanswerNum} = player
     let answerNum = correctNum + incorrectNum
+    console.log("Get player: ", player)
 		return {
 			id: index,
-			name: player.username,
+			username: player.username,
 			rank: player.rank,
 			correctPercent: answerNum == 0? '0 %' : Math.round( 100 * correctNum / answerNum) + ' %',
       unanswers: unanswerNum,
@@ -39,7 +41,7 @@ const PlayersTable = (props) => {
 
   console.log("layers: ", players)
   return (
-    <div style={{ height: 400, width: '100%', backgroundColor: 'white' }}>
+    <div style={{ height:  theme.spacing(50), width: '100%', backgroundColor: 'white' }}>
     <DataGrid
       rows={getRows(players)}
       columns={columns.filter((col) => col.hidden != true)}

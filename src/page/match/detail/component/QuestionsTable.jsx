@@ -1,6 +1,7 @@
 import { makeStyles } from '@mui/styles';
 import { DataGrid } from '@mui/x-data-grid';
 import React from 'react';
+import { theme } from '../../../../theme';
 
 const useStyles = makeStyles((theme) => ({
 }))
@@ -37,7 +38,7 @@ const QuestionsTable = (props) => {
   }
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: theme.spacing(50), width: '100%' , backgroundColor: 'white' }}>
       <DataGrid
         rows={getRows(progress)}
         columns={columns.filter((col) => col.hidden != true)}

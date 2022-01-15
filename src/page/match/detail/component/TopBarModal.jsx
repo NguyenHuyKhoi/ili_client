@@ -47,17 +47,17 @@ const TopBarModal = (props) => {
 		<div className = {classes.container}>
 			<div className = {classes.left}>
 				{leftLabel}
-				<Typography variant = 'subtitle1' sx = {{ml: theme.spacing(2), fontWeight: 'bold', color: '#333333'}}>
+				<Typography variant = 'bigLabel' sx = {{ml: theme.spacing(2), color: '#000'}}>
 					{title}
 				</Typography>
 			</div>
 			<div className = {classes.right}>
-				<Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}}>
+				<Typography variant = 'bigLabel' sx = {{ color: '#000'}}>
 					{`${index} of ${total}`}
 				</Typography>
 				<ChevronLeft 
 					sx = {{
-						color: index == 1 ? '#f2f2f2' : '#333333',
+						color: index == 1 ? '#f2f2f2' : '#000',
 						fontSize: 35,
 						ml: theme.spacing(1)
 					}}
@@ -65,13 +65,13 @@ const TopBarModal = (props) => {
 				/>
 				<ChevronRight
 					sx = {{
-						color: index == total ? '#f2f2f2' : '#333333',
+						color: index == total ? '#f2f2f2' : '#000',
 						fontSize: 35,
 						mr: theme.spacing(1)
 					}}
 					onClick = {handleRight}
 				/>
-				<Close onClick = {handleClose} sx = {{fontSize: 25, color: '#333333'}}/>
+				<Close onClick = {handleClose} sx = {{fontSize: 30, color: '#000'}}/>
 			</div>
 		</div>
 	)

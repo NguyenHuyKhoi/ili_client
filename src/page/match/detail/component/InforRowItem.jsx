@@ -22,11 +22,11 @@ export const InforRowItem = (props) => {
 	const {value, label, icon, color} = props
 	return (
 		<div className = {classes.container}>
-			<Typography variant = 'subtitle2' sx = {{flex: 1, color: '#5f5f5f'}}>
+			<Typography variant = 'btnLabel' sx = {{flex: 1, color: '#000'}}>
 				{label}
 			</Typography>
 			<Icon name = {icon} style = {{color: color}}/>
-			<Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333', width: theme.spacing(8), textAlign: 'center'}}>
+			<Typography variant = 'btnLabel' sx = {{fontWeight: 'bold', color: '#000', width: theme.spacing(8), textAlign: 'center'}}>
 				{value}
 			</Typography>
 		</div>

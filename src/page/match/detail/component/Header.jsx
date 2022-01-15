@@ -1,10 +1,15 @@
 import { MoreVert } from '@mui/icons-material';
 import { Divider, Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import  React, {useContext} from 'react';
+import  React, {useContext, useState, useEffect} from 'react';
 import { MatchContext } from '../../../../context/match/other/context';
+import { GameContext } from '../../../../context/game/other/context';
 import { theme } from '../../../../theme';
-
+import Link from '../../../../component/Link'
+import {selectGame} from '../../../../context/game/other/actions'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { AuthContext } from '../../../../context/auth/context';
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -34,47 +39,77 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
 	const classes = useStyles()
-
+	const navigate = useNavigate()
 	const {match} = useContext(MatchContext)
-	const {game, host, players, createAt } = match
+	const {user} = useContext(AuthContext)
+	const gameDispatch = useContext(GameContext).dispatch
+	const {game, host, players, startAt } = match
+
+	const [fullGame, setFullGame] = useState(null)
 	console.log("Match: ", match)
+
+	useEffect(() => {
+		axios.get('game/detail/' + game._id) 
+        .then ((res) => {
+			console.log("Get game detail ok :", res.data )
+			setFullGame(res.data)
+			
+        })   
+		.catch((err) => {
+			console.log("Get game detail error: ", err)
+		})
+		return () => {
+			
+		}
+	}, [])
+
+	const handleViewGame = () => {
+		console.log("Selct to vie game:", fullGame)
+		if (fullGame != null) {
+			gameDispatch(selectGame(fullGame))
+			return navigate('/game/detail/' + game._id, {replace: false})
+		}
+	}
+
+	var isMe = (user._id == match.host.userId)
 	return (
 		<div className = {classes.container}>
 			<Grid container>
 				<Grid item xs = {9}>
 					<div className = {classes.left}>
 						<div className = {classes.title}>
-							<Typography variant = 'subtitle1' sx = {{color: '#333333', fontWeight: 'bold'}}>
-								Report
+							<Typography variant = 'bigLabel' sx = {{color: '#000'}}>
+								{'Hosted by ' + (isMe ? ' Me ' : match.host.username)}
 							</Typography>
-							<Typography variant = 'h4' sx = {{color: '#333333', mt: theme.spacing(2)}}>
+							<Typography variant = 'bigHeader' sx = {{color: '#000'}}>
 								{game.title}
 							</Typography>
-						</div>
-						<div >
-							<div className = {classes.options}>
-								<Typography variant = 'subtitle1' sx = {{color: 'black'}}>
-									Report options
-								</Typography>
-								<MoreVert sx = {{color: 'black'}}/>
-							</div>
+							
 						</div>
 						
 					</div>
 				</Grid>
 				<Grid item xs = {3}>
 					<div className = {classes.right}>
-						<Typography variant = 'subtitle2' sx = {{p: theme.spacing(1.5), color: '#5f5f5f'}}>
-							Live
+						<Typography variant = 'btnLabel' sx = {{p: theme.spacing(1.5), color: '##000'}}>
+							{'Mode: classic'}
 						</Typography>
 						<Divider/>
-						<Typography variant = 'subtitle2' sx = {{p: theme.spacing(1.5), color: '#5f5f5f'}}>
-							{'November 18, 2021, 9:28 PM'}
+						<Typography variant = 'btnLabel' sx = {{p: theme.spacing(1.5), color: '#000'}}>
+							{startAt}
 						</Typography>
 						<Divider/>
-						<Typography variant = 'subtitle2' sx = {{p: theme.spacing(1.5), color: '#5f5f5f'}}>
-							Host by {host.username}
-						</Typography>
+						{
+							fullGame != null ?
+							<Link 
+								label = 'Game' 
+								onClick = {handleViewGame} 
+								variant = 'btnLabel'
+								style = {{padding: theme.spacing(1.5)}}/>
+							: 
+							<div style = {{height: theme.spacing(5)}}/>
+						}
+					
 					</div>
 				</Grid>
 			</Grid>

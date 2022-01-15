@@ -14,6 +14,7 @@ import { MatchContext } from '../../../../context/match/other/context';
 
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { printDate } from '../../../../util/helper';
+import { theme } from '../../../../theme';
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1
@@ -31,7 +32,6 @@ const columns = [
 
 const getRows = (matches) => {
 	return matches.map((match, index) => {
-		console.log("Fnishat: ", match.finishAt)
 		return {
 			id: index,
 			title: match.game.title,
@@ -51,15 +51,14 @@ const MatchTable = () => {
 		if (indexes.length == 0 ) return 
 		let match = matches[indexes[0]]
 		dispatch(selectMatch(match))
-		navigate('/match/detail/'+match._id, {replace: true})
+		navigate('/match/detail/'+match._id, {replace: false})
 	}
 	return (
-		<div style={{ height: 400, width: '100%', backgroundColor: 'white' }}>
+		<div style={{ height: theme.spacing(60), width: '100%', backgroundColor: 'white' }}>
 			<DataGrid
 				rows={getRows(matches)}
 				columns={columns.filter((col) => col.hidden != true)}
-				pageSize={5}
-				rowsPerPageOptions={[5]}
+				pageSize={Math.min(10, matches.length)}
 				onSelectionModelChange={handleSelectRows}
 				// checkboxSelection
 			/>

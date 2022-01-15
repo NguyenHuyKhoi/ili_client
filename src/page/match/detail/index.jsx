@@ -13,11 +13,12 @@ import Tabbar from '../../../component/Tabbar'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
+        height: '100vh',
+        backgroundColor: theme.palette.background.main,
     },
     header: {
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#f2f2f2',
         paddingLeft: theme.spacing(10),
         paddingRight: theme.spacing(10),
         paddingTop: theme.spacing(2)
@@ -25,9 +26,7 @@ const useStyles = makeStyles((theme) => ({
     body: {
         flex: 1, 
         display: 'flex',
-        height: '70vh',
         flexDirection: 'column',
-        backgroundColor: 'white',
         paddingLeft: theme.spacing(10),
         paddingRight: theme.spacing(10),
         paddingTop: theme.spacing(2)

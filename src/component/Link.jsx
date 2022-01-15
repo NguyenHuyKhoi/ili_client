@@ -22,15 +22,19 @@ const useStyles = makeStyles((theme) => ({
 const Link = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
-    var {label, link, style} = props
+    var {label, link, style, variant} = props
 
+    if (variant == undefined) variant = 'label'
     return (
         <div 
             onClick = {() => {
-                if (link == undefined) return
+                if (link == undefined) {
+                    if (props.onClick) props.onClick()
+                    return 
+                }
                 return navigate(link, {replace: false}) }}
             style = {style ? style : {}} >
-            <Typography variant = 'label' 
+            <Typography variant = {variant}
                 sx = {{
                 
                     color: theme.palette.success.main,

@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
 	container: {
 		display: 'flex',
 		flexDirection: 'column',
-		backgroundColor: '#f5f5f5',
+		backgroundColor: theme.palette.background.main,
 		padding: theme.spacing(2)
 	},
 	left: {
@@ -67,8 +67,8 @@ const InforItem = (props) => {
 	const {value, label, icon} = props
 	return (
 		<div className = {classes.infor} >
-			<Icon name = {icon} style = {{fontSize: 25, color: '#777777'}}/>
-			<Typography variant = 'subtitle1' sx = {{ml: theme.spacing(1), color: '#5f5f5f'}}>
+			<Icon name = {icon} style = {{fontSize: 25, color: '#000'}}/>
+			<Typography variant = 'btnLabel' sx = {{ml: theme.spacing(1), color: '#000'}}>
 				{label + ': ' + value}
 			</Typography>
 		</div>
@@ -90,19 +90,19 @@ const Answer = (props) => {
 					<Icon name = {icon} style = {{fontSize: 20, color: 'white'}}/>
 				}
 			</div>
-			<Typography variant = 'subtitle1' sx = {{flex: 1, mx: theme.spacing(1.5), color: '#5f5f5f'}}>
+			<Typography variant = 'btnLabel' sx = {{flex: 1, mx: theme.spacing(1.5), color: '#000'}}>
 				{answer}
 			</Typography>
 			{
 				isCorrect ? 
-				<Check sx = {{color: '#237E0B', fontSize: 30}}/> 
+				<Check sx = {{color: theme.palette.success.main, fontSize: 30}}/> 
 				:
-				<Close sx = {{color: '#D01937', fontSize: 30}}/>
+				<Close sx = {{color: theme.palette.error.main, fontSize: 30}}/>
 			}
 			<div className = {classes.progressContainer}>
 				<div className = {classes.progress} style = {{width: `${number/total*100}%`}}/>
 			</div>
-			<Typography variant = 'subtitle1' sx = {{color: '#5f5f5f'}} >
+			<Typography variant = 'btnLabel' sx = {{color: '#000'}} >
 				{number}
 			</Typography>
 		</div>

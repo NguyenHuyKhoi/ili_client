@@ -132,11 +132,11 @@ const MatchHostSettingPage = () => {
         switch (mode) {
             case MODE_MATCH.CLASSIC: 
                 console.log("Host send request to join match:", socket.id)
-                socket.emit('match:host', match, (res) => {
+                socket.emit('match:host', {...match, mode: 'classic'}, (res) => {
                     if (res) {
                         console.log("Created match:", res)
                         dispatch(updateMatch(res))
-                        navigate('/match/host/lobby')
+                        navigate('/match/host/lobby', {replace: true})
                     }
                     else {
                         console.log("Host game failured")
@@ -152,7 +152,7 @@ const MatchHostSettingPage = () => {
                     }
                 }))
                 dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
-                navigate('/match/livestream', {replace: true})
+                navigate('/match/livestream', {replace: false})
                 break
         }
 
