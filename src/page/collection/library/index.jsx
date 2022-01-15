@@ -6,11 +6,12 @@ import HeaderBar from '../../../component/HeaderBar'
 import { AuthContext } from '../../../context/auth/context'
 import { getCollectionsSuccess } from '../../../context/collection/actions'
 import { CollectionContext } from '../../../context/collection/context'
-import SideMenu from '../../game/library/component/SideMenu'
 import CreateModal from './component/CreateModal'
 import CollectionList from './component/CollectionList'
 import Button from '../../../component/Button'
 import { theme } from '../../../theme'
+import SideMenu from '../../../component/SideMenu'
+import { LIBRARY_MENUS } from '../../game/library'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -76,7 +77,10 @@ const CollectionLibraryPage = () => {
             <HeaderBar selectedIndex = {2}/>
             <Grid container>
                 <Grid item sm={2} >
-                    <SideMenu selectedIndex = {1}/>
+                    <SideMenu 
+                        selectedIndex = {1}
+                        menus = {LIBRARY_MENUS}
+                        onSelectItem = {() => {}}/>
                 </Grid>
                 <Grid item sm={10} sx = {{
                     backgroundColor: theme.palette.background.main, height: '92vh'

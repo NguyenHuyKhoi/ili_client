@@ -12,6 +12,7 @@ import ProfileHeader from './component/ProfileHeader'
 import HeaderBar from '../../../component/HeaderBar'
 import ProfileBody from './component/ProfileBody'
 import { getGamesSuccess } from '../../../context/game/other/actions'
+import { GameContext } from '../../../context/game/other/context'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -25,17 +26,48 @@ const ProfilePage = (props) => {
     const classes = useStyles()
     const {id} = useParams()
 
-    const {user, dispatch} = useContext(UserContext)
+    const {user} = useContext(UserContext)
+    const userDispatch = useContext(UserContext).dispatch
+    const gameDispatch = useContext(GameContext).dispatch
+    const collectionDispatch = useContext(CollectionContext).dispatch
 
     const {token} = useContext(AuthContext)
     useEffect(() => {
+        // Get user profile
         axios.get('user/'+ id, {
             headers: {
                 'x-access-token': token
             }
         })    
         .then ((res) => {
-            dispatch(profileDetailSuccess(res.data))
+            userDispatch(profileDetailSuccess(res.data))
+        })
+
+        // Get game profile
+        axios.get('game/search', { 
+            params: [{
+                userId: id
+            }]
+        })    
+        .then ((res) => {
+            console.log("Game game res: ", res)
+            gameDispatch(getGamesSuccess(res.data))
+        })
+        .catch ((err) => {
+            console.log("Get game error: ", err)
+        })
+
+        // Get collection profile
+        axios.get('collection/search', { 
+            params: {
+                userId: id
+            }
+        })    
+        .then ((res) => {
+            collectionDispatch(getCollectionsSuccess(res.data))
+        })
+        .catch ((err) => {
+            console.log("Get game error: ", err)
         })
         return () => {
             

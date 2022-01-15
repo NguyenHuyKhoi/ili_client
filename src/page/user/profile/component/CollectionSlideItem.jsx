@@ -50,7 +50,7 @@ const CollectionSlideItem = (props) => {
                          {
                              games.slice(0, Math.min(games.length, 4)).map((game, index) => (
                                  <Grid item xs = {3}  key = {''+index}>
-                                     <GameCellItem disableProfileLink = {true}
+                                     <GameCellItem 
                                          game = {game}/>
                                  </Grid>
                              ))

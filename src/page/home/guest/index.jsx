@@ -50,7 +50,7 @@ const cards = [
         title: 'Discover content...',
         description: 'You can view and enjoy shared contents in this platform .',
         btnLabel : 'Discover',
-        link: '/discover/search',
+        link: '/game/search',
         image: card_img_2
     },
     {

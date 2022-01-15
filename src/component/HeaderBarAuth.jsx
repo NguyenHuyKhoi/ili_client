@@ -38,7 +38,7 @@ const tabs = [
     },
     {
         label: 'Discover',
-        link: '/discover/suggestion',
+        link: '/game/search',
         icon: 'ExploreOutlined'
     },
     {
@@ -47,8 +47,8 @@ const tabs = [
         icon: 'TocOutlined'
     },
     {
-        label: 'Report',
-        link: '/report',
+        label: 'Match',
+        link: '/match/library',
         icon: 'BarChartOutlined'
     }
 ]

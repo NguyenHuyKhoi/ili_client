@@ -2,8 +2,8 @@ import { makeStyles } from '@mui/styles'
 import React, { useContext, useState } from 'react'
 import Tabbar from '../../../../component/Tabbar'
 import { AuthContext } from '../../../../context/auth/context'
+import GameList from '../../../game/search/component/GameList'
 import CollectionList from './CollectionList'
-import GameList from './GameList'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
     },
     body: {
         display:'flex',
-        flexDirection:'column'
+        flexDirection:'column',
+        marginTop: theme.spacing(5)
     },
 }))
 

@@ -28,7 +28,7 @@ const Link = (props) => {
         <div 
             onClick = {() => {
                 if (link == undefined) return
-                return navigate(link, {replace: true}) }}
+                return navigate(link, {replace: false}) }}
             style = {style ? style : {}} >
             <Typography variant = 'label' 
                 sx = {{

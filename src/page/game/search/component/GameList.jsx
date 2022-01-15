@@ -13,8 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
     list: {
         display:'flex',
-        flexDirection:'column',
-        marginTop: theme.spacing(5)
+        flexDirection:'column'
     }
 }))
 
@@ -27,16 +26,16 @@ const GameList = (props) => {
 
             {
                 games.length == 0? 
-                    <EmptyBox label = "This user don't share any games..."
+                    <EmptyBox label = "No any games..."
                         style = {{width: '85%', alignSelf: 'center', marginTop: theme.spacing(3)}}/>
                     :
                     <div className={classes.list}>
-                    <Grid container sx = {{flex: 1}} columnSpacing = {4}>
+                    <Grid container sx = {{flex: 1}} columnSpacing = {4} rowSpacing = {4}>
                         {
     
-                            games.slice(0, Math.min(games.length, 4)).map((game, index) => (
+                            games.map((game, index) => (
                                 <Grid item xs = {3}  key = {''+index}>
-                                    <GameCellItem disableProfileLink = {true}
+                                    <GameCellItem 
                                         game = {game}/>
                                 </Grid>
                             ))

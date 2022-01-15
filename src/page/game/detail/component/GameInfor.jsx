@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
 const GameInfor = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {game} = props
+
+    const {game, isMine} = props
     const {title, description, cover, owner, visibility} = game
     const handleEdit = () => {
         if (props.onEdit) {
@@ -59,6 +60,7 @@ const GameInfor = (props) => {
             props.onClone()
         }
     }
+
     return (
         <div className = {classes.container}>
             <img className = {classes.gameImg} src = {createUrl(cover)}/>
@@ -71,13 +73,26 @@ const GameInfor = (props) => {
                     {description == '' || description == null? 'No description...' : description}
                 </Typography>
                 <div className = {classes.btnBar} >
-                    <IconButton icon = 'Edit' variant = 'primary' onClick = {handleEdit}/>
+                    {
+                        isMine && 
+                        <IconButton icon = 'Edit' variant = 'primary' onClick = {handleEdit}/>
+                    }
                     <IconButton icon = 'Play' variant = 'success' onClick = {handlePlay}
                         style = {{marginLeft: theme.spacing(3)}}/>
-                    <IconButton icon = 'Clone' variant = 'primary' onClick = {handleClone}
-                        style = {{marginLeft: theme.spacing(3)}}/>
-                    <IconButton icon = 'Delete' variant = 'error' onClick = {handleDelete}
-                        style = {{marginLeft: theme.spacing(3)}}/>
+                    {
+                        isMine && 
+                        <IconButton icon = 'Clone' variant = 'primary' onClick = {handleClone}
+                            style = {{marginLeft: theme.spacing(3)}}/>
+                    }
+                    {
+                        isMine && 
+                        <IconButton icon = 'Delete' variant = 'error' onClick = {handleDelete}
+                            style = {{marginLeft: theme.spacing(3)}}/>
+                    }
+                  
+
+                   
+                   
                 </div>
                 <div style= {{marginTop: theme.spacing(2)}}>
                     <OwnerInfor owner = {owner}/>

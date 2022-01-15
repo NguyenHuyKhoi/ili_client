@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 const GameDetailPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
-    const {token} = useContext(AuthContext)
+    const {token, user} = useContext(AuthContext)
     const {game} = useContext(GameContext)
     const {dispatch} = useContext(GameCreatorContext)
 
@@ -95,6 +95,8 @@ const GameDetailPage = () => {
     const handleDoneModal = () => {
         return navigate(-1)
     }
+
+    const isMine = game.owner != undefined && game.owner._id == user._id
     return (
         <div className = {classes.container}>
             <HeaderBar/>
@@ -113,7 +115,8 @@ const GameDetailPage = () => {
                         onEdit = {handleEdit}
                         onPlay = {handlePlay}
                         onClone = {handleClone}
-                        onDelete = {handleDelete}/>
+                        onDelete = {handleDelete}
+                        isMine = {isMine}/>
                 </Grid>
                 <Grid item xs={9} sx = {{overflow: 'auto', maxHeight: '90vh'}}>
                     <QuestionList game = {game}/>

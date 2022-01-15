@@ -1,11 +1,8 @@
-import { Add } from '@mui/icons-material'
-import { Link, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import Button from '../../../../component/Button'
-import Icon from '../../../../component/Icon'
-import { theme } from '../../../../theme'
+import Button from './Button'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -34,7 +31,14 @@ const MenuItem = (props) => {
     const {menu, isSelected} = props
     const {title, link, icon} = menu
     const handleClick = () => {
-        return navigate(link, {replace: true})
+        if (link) {
+            return navigate(link, {replace: true})
+        }
+        else {
+            if (props.onClick) {
+                props.onClick()
+            }
+        }
     }
     return (
         <div className = {classes.item} 
@@ -59,22 +63,10 @@ const MenuItem = (props) => {
     )
 }
 
-const menus = [
-    {
-        link: '/game/library',
-        title: 'Games',
-        icon: 'TableRows'
-    },
-    {
-        link: '/collection/library',
-        title: 'Collections',
-        icon: 'SnippetFolder'
-    },
-]
 
 const SideMenu = (props) => {
     const classes = useStyles()
-    const {selectedIndex} = props
+    const {selectedIndex, menus} = props
     return (
         <div className = {classes.container}>
             <div className = {classes.itemContainer}>
@@ -83,6 +75,9 @@ const SideMenu = (props) => {
                         <MenuItem
                             menu = {menu}
                             isSelected = {selectedIndex == index}
+                            onClick = {() => {
+                                if (props.onSelectItem) props.onSelectItem(index)
+                            }}
                             key = {"" + index}/>
                     ))
                 }

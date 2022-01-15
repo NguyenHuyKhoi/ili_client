@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const CollectorInfor = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {collection} = props
+    const {collection, isMine} = props
     const { cover, owner, title, description} = collection 
 
     const handleEdit = () => {
@@ -47,8 +47,13 @@ const CollectorInfor = (props) => {
                 <Typography variant= 'label' sx = {{color: '#000', my: theme.spacing(1)}}>
                     {description == '' || description == null ? 'No description...' : description}
                 </Typography>
+                
                 <div style = {{alignSelf: 'baseline', marginTop: theme.spacing(2), marginBottom: theme.spacing(2)}}>
-                    <IconButton icon = 'Edit' variant = 'primary' onClick = {handleEdit}/>
+                    {
+                        isMine &&
+                        <IconButton icon = 'Edit' variant = 'primary' onClick = {handleEdit}/>
+                    }
+                   
                 </div>
              
                 <OwnerInfor owner = {owner} />

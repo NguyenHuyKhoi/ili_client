@@ -13,7 +13,7 @@ import CollectionDetailPage from "./page/collection/detail";
 import CollectionEditPage from "./page/collection/edit";
 import CollectionLibraryPage from "./page/collection/library";
 // Discover
-import SearchPage from "./page/discover/search";
+import SearchPage from "./page/game/search";
 import DiscoverPage from "./page/discover/suggestion";
 // Game
 import GameCreatorPage from "./page/game/creator";
@@ -35,11 +35,11 @@ import MatchPlayerHallPage from './page/match/player/hall';
 import MatchPlayerLobbyPage from './page/match/player/lobby';
 import MatchPlayerStadiumPage from './page/match/player/stadium';
 // Report
-import DashboardReportPage from "./page/report/dashboard";
 // User
 import ProfilePage from "./page/user/profile";
 import SettingPage from "./page/user/setting";
 import { theme } from "./theme";
+import MatchLibraryPage from './page/match/library';
 
 const App = () => {
   const {user} = useContext(AuthContext)
@@ -60,7 +60,7 @@ const App = () => {
           <Route exact path = '/collection/detail/:id' element = {<CollectionDetailPage/> }/>
           
           <Route exact path = '/discover/suggestion' element = {<DiscoverPage/>}/>
-          <Route exact path = '/discover/search' element = {<SearchPage/>}/>
+          <Route exact path = '/game/search' element = {<SearchPage/>}/>
           
           <Route exact path = '/game/creator' element = {user ? <GameCreatorPage/> : <Navigate to = '/login'/>}/>
           <Route exact path = '/game/detail/:id' element = {<GameDetailPage/>}/>
@@ -81,7 +81,7 @@ const App = () => {
 
           <Route exact path = '/group/list' element = {user ? <GroupListPage/> : <Navigate to = '/login'/>}/>
 
-          <Route exact path = '/report' element = {user ? <DashboardReportPage/> : <Navigate to = '/login'/>}/>
+          <Route exact path = '/match/library' element = {user ? <MatchLibraryPage/> : <Navigate to = '/login'/>}/>
 
           <Route exact path = '/profiles/:id' element = {<ProfilePage/>}/>
           <Route exact path = '/user/setting' element = {user ? <SettingPage/> : <Navigate to = '/login'/>}/>

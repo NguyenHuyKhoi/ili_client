@@ -9,6 +9,7 @@ import TextField from '../../../../component/TextField';
 import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
 import { theme } from "../../../../theme";
 import DropdownSelect from '../../../../component/DropdownSelect'
+import { GAME_SUBJECTS } from '../../../../context/game/creator/context';
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -114,15 +115,7 @@ const SettingModal = (props) => {
 							/>
 							<div style = {{width: '50%', marginTop: theme.spacing(3)}}>
 								<DropdownSelect title = 'Subject'
-									list = {[
-										{label: 'Science', value: 'science'},
-										{label: 'Music', value: 'music'},
-										{label: 'Cinema', value: 'cinema'},
-										{label: 'Sport', value: 'sport'},
-										{label: 'Arts', value: 'arts'},
-										{label: 'IQ', value: 'iq'},
-										{label: 'Others', value: 'others'},
-									]}
+									list = {GAME_SUBJECTS}
 									value = {subject}
 									onChange = {(value)=>handleChange('subject',value)}/>
 							</div>

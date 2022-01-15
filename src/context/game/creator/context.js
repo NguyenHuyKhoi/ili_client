@@ -1,6 +1,14 @@
 import { createContext, useEffect, useReducer } from "react"
 import reducer from "./reducer"
-
+export const GAME_SUBJECTS = [
+    {label: 'Science', value: 'science'},
+    {label: 'Music', value: 'music'},
+    {label: 'Cinema', value: 'cinema'},
+    {label: 'Sport', value: 'sport'},
+    {label: 'Arts', value: 'arts'},
+    {label: 'IQ', value: 'iq'},
+    {label: 'Others', value: 'others'}
+]
 export const sample_question = {
     index: 0,
     title: null,

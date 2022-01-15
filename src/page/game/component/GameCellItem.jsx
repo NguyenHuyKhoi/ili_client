@@ -1,5 +1,5 @@
 import { MoreVert } from '@mui/icons-material'
-import { Avatar, Grid, Link, Typography } from '@mui/material'
+import { Avatar, Grid,  Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React, {useContext} from 'react'
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import {createUrl} from '../../../util/helper'
 import { selectGame } from '../../../context/game/other/actions'
 import { theme } from '../../../theme'
+import Link from '../../../component/Link'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -56,22 +57,18 @@ export const GameCellItem = (props) => {
     const {dispatch} = useContext(GameContext)
     const {title, image, owner, questions} = game
     const classes = useStyles()
-    const {disableProfileLink} = props
     const handleSelect = () => {
         dispatch(selectGame(game))
-        navigate('/game/detail/'+game._id, {replace: true})
+        navigate('/game/detail/'+game._id, {replace: false})
     }
 
-    const handleViewProfile = (e) => {
-        e.stopPropagation()
-        navigate('/profiles/'+ game.owner.id, {replace: true})
-    }
-    console.log("Game owner :", game.owner)
+
     const limitTitle = title != null? title.substring(0, 20) + (title.length < 20? '' :'...') : 'Collection'
     return (
-        <div className = {classes.container} onClick = {handleSelect} >
+        <div className = {classes.container} >
             <div className = {classes.header} >
-                <img className = {classes.img} src = {createUrl(image)}/>
+                <img className = {classes.img} src = {createUrl(image)}
+                    onClick = {handleSelect}/>
                 <div className= {classes.questionNums} >
                     <Typography variant = 'caption' 
                         sx = {{color: 'white', fontWeight: 'bold'}}> {questions.length} questions </Typography>
@@ -83,21 +80,7 @@ export const GameCellItem = (props) => {
                     <Typography variant = {'btnLabel'} sx = {{color: '#000'}}>
                         {limitTitle}
                     </Typography>
-                    {
-                        disableProfileLink ? 
-                        <Typography variant= 'label' sx = {{color: '#000'}}>
-                            {
-                                owner.username
-                            }
-                        </Typography>
-                        :
-                        <Link href = ''  underline='hover' onClick={handleViewProfile} 
-                            sx = {{color: '#000', fontSize: 20}}>
-                            {
-                                owner.username
-                            }
-                        </Link>
-                    }
+                    <Link label = {owner.username} link = {'/profiles/'+ game.owner._id}/>
                  
                 </div>  
             </div>

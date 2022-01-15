@@ -7,6 +7,8 @@ import { grey, blue } from '@mui/material/colors';
 import CollectionSlideItem from './CollectionSlideItem'
 import CollectionFilter from './CollectionFilter'
 import { CollectionContext } from '../../../../context/collection/context'
+import EmptyBox from '../../../../component/EmptyBox'
+import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -28,12 +30,17 @@ const CollectionList = () => {
     return (
         <div className = {classes.container}>
             {
-                nonEmptyCollections.map((item, index) => (
-                    <div className = {classes.item}   key = {''+index}>
-                        <CollectionSlideItem collection = {item}/>
-                    </div>
-                ))
+                nonEmptyCollections.length == 0? 
+                    <EmptyBox label = "This user don't has any collection..."
+                        style = {{width: '85%', alignSelf: 'center', marginTop: theme.spacing(3)}}/>
+                    :
+                    nonEmptyCollections.map((item, index) => (
+                        <div className = {classes.item}   key = {''+index}>
+                            <CollectionSlideItem collection = {item}/>
+                        </div>
+                    ))
             }
+
         </div>
     )
 }
