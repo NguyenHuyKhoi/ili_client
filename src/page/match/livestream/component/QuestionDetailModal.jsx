@@ -1,8 +1,9 @@
-import { Button, Modal, Typography } from '@mui/material';
+import { Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useContext } from 'react';
 import facebook_icon from '../../../../asset/image/facebook_icon.png';
 import youtube_icon from '../../../../asset/image/youtube_icon.png';
+import Button from '../../../../component/Button';
 import { MatchPlayContext } from '../../../../context/match/play/context';
 import { theme } from "../../../../theme";
 import QuestionRowItem from '../../../game/detail/component/QuestionRowItem';
@@ -75,7 +76,7 @@ const QuestionDetailModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
+				<Typography variant = 'header' sx = {{ color: '#000'}}>
 					Question
 				</Typography>
 				{
@@ -89,11 +90,12 @@ const QuestionDetailModal = (props) => {
 				}
 			
 				<div className = {classes.footer}>
-					<Button variant="contained" color="success" 
-						sx = {{ml: theme.spacing(2),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
-						onClick = {handleClose}>
-						Close
-					</Button>
+					<Button 
+						variant="success"
+						size = 'small'
+						style = {{width: theme.spacing(20)}}
+						onClick = {handleClose}
+						label = 'Close'/>
 				</div>
 			</div>
 		</Modal>

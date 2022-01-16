@@ -3,9 +3,12 @@ import { makeStyles } from '@mui/styles';
 import React, {useState, useContext} from 'react';
 import {MatchPlayContext} from '../../../../context/match/play/context'
 import QuestionRowItem from './QuestionRowItem';
-import { viewQuestion } from '../../../../context/match/play/actions';
+import { updateMatch, viewQuestion } from '../../../../context/match/play/actions';
 import PlayerRowItem from './PlayerRowItem';
 import Tabbar from '../../../../component/Tabbar';
+import { theme } from '../../../../theme';
+import axios from 'axios';
+import { AuthContext } from '../../../../context/auth/context';
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -55,10 +58,29 @@ const QuestionCard = (props) => {
 const MatchStatus = (props) => {
 	const classes = useStyles()
     const {dispatch, match} = useContext(MatchPlayContext)
+    const {token} = useContext(AuthContext)
     const {game, players} = match 
     const {questions} = game
     const [index, setIndex] = useState(0)
 
+    const handleUpdateMatch = () => {
+        if (match._id == undefined) {
+            console.log("Match not created ,emit")
+            return
+        }
+
+        axios.get('match/detail/' + match._id, {
+            headers: {
+                'x-access-token': token
+            }
+        })    
+        .then ((res) => {
+            dispatch(updateMatch(res.data))
+        })
+        .catch((err) => {
+            console.log('Get detail match error:', err)
+        })
+    }
 
     const handleSelectQuestion = (question) => {
         console.log("Handle select question")
@@ -69,10 +91,15 @@ const MatchStatus = (props) => {
     const handleSelectPlayer = (player) => {
         console.log("Handle select player")
     }
+
+    const handleSelectTab = (index) => {
+        setIndex(index)
+        handleUpdateMatch()
+    }
 	return (
         <div className = {classes.container}>
             <div className = {classes.tabs}>
-                <Tabbar tabs = {['Rounds', 'Players']} onClickTab = {(i) => setIndex(i)}/>
+                <Tabbar tabs = {['Rounds', 'Players']} onClickTab = {(index) => handleSelectTab(index)}/>
             </div>
 
             <div className = {classes.list}>
@@ -87,17 +114,22 @@ const MatchStatus = (props) => {
                         </div>
                     ))
                 }
-                 {
-                    index==1 && 
-                    // players != undefined &&
-                    [1,2,3].map((item, index) => (
-                        <div className = {classes.item} key = {'' + index}>
-                           <PlayerRowItem 
-                                player = {item} 
-                                index = {index}
-                                onSelect = {() => handleSelectPlayer(item)}/>
-                        </div>
-                    ))
+                {
+                    index==1 &&  players != undefined &&
+                        players.map((item, index) => (
+                            <div className = {classes.item} key = {'' + index}>
+                               <PlayerRowItem 
+                                    player = {item} 
+                                    index = {index}
+                                    onSelect = {() => handleSelectPlayer(item)}/>
+                            </div>
+                        ))
+                }
+                {
+                    index==1 &&  players == undefined &&
+                        <Typography variant = 'btnLabel' sx = {{color: '#000', textAlign: 'center', mt: theme.spacing(3)}}>
+                            Livestream is not started or none player join .
+                        </Typography>
                 }
             </div>  
           

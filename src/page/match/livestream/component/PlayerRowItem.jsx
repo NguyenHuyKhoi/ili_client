@@ -33,11 +33,11 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: theme.spacing(0.6),
         borderRadius: theme.spacing(0.5),
         backgroundColor: 'black',
-        opacity: 0.8,
+        opacity: 0.4,
         zIndex: 99
     },
     img: {
-        height: 60,
+        height: theme.spacing(10),
         aspectRatio: 1,
         borderRadius: 5,
         alignSelf:'center',
@@ -48,12 +48,7 @@ const useStyles = makeStyles((theme) => ({
 const PlayerRowItem = (props) => {
     const classes = useStyles()
     var {player, index} = props
-    player = {
-        name: 'username',
-        score: 1203,
-        rank: 1
-    }
-    const {name, score, rank } = player
+    const {username, avatar, score, rank } = player
 
     return (
         <div className = {classes.container} 
@@ -63,17 +58,17 @@ const PlayerRowItem = (props) => {
             }}>
             
             <div className = {classes.infor}>
-                <Typography variant = 'subtitle1'>
-                    {score}
+                <Typography variant = 'bigLabel' sx = {{color: '#000'}}>
+                    { score}
                 </Typography>
-                <Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}}>
-                    {name}
+                <Typography variant = 'btnLabel' sx = {{color: '#000'}}>
+                    { username}
                 </Typography>
             </div>
-            <img className = {classes.img} src = {'https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg'}/>
+            <img className = {classes.img} src = {createUrl(avatar)}/>
             <div className = {classes.rank}>
                 <Typography variant = 'caption' sx = {{color: 'white'}}>
-                    {rank}
+                    {'Rank: ' + rank}
                 </Typography>
             </div>
         </div>

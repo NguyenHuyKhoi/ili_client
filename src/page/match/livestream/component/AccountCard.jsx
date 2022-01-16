@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 		width: theme.spacing(1),
 		height: theme.spacing(1),
 		borderRadius: theme.spacing(0.5),
-		backgroundColor: '#81CF0C'
+		backgroundColor: theme.palette.success.main
 	}
 }))
 
@@ -45,14 +45,14 @@ const AccountCard = (props) => {
 	return (
 		<div className={classes.container} 
 			style = {{
-				border: isSelected ? '2px solid #81CF0C'  : '2px solid gray'
+				border: isSelected ? `2px solid ${theme.palette.success.main} ` : '2px solid gray'
 			}}
 			onClick = {() => {
 				if (props.onSelect) props.onSelect()
 			}}>
 			<img src = {logo} className= {classes.logo}/>
 			<div className = {classes.infor} >
-				<Typography variant = 'subtitle1' sx = {{fontWeight: 'bold'}}>
+				<Typography variant = 'label' sx = {{color: '#000'}}>
 					{title}
 				</Typography>
 				{

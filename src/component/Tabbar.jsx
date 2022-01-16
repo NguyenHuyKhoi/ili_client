@@ -39,7 +39,7 @@ const TabItem = (props) => {
                 backgroundColor: props.isSelected ? primary: 'rgba(0,0,0,0)'
             }}>
             <Typography variant = 'label' 
-                style= {{ color: '#000000', fontWeight: 'bold'}}>
+                style= {{ color: '#000000'}}>
                     {props.title}
             </Typography>
         </div>

@@ -1,4 +1,4 @@
-import { AppBar, Button, Toolbar, Typography } from '@mui/material'
+import { AppBar, Toolbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { GameCreatorContext } from '../../../../context/game/creator/context'
@@ -6,6 +6,7 @@ import { theme } from '../../../../theme'
 import logo from '../../../../asset/image/logo.png'
 import { useNavigate } from 'react-router-dom'
 import { LIVESTREAM_STAGE, MatchPlayContext } from '../../../../context/match/play/context'
+import Button from '../../../../component/Button'
 const useStyles = makeStyles((theme) => ({
     toolbar: {
         display: 'flex',
@@ -14,20 +15,19 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'white'
     },
     logo: {
-        width: 80,
-        height:30
+        height: theme.spacing(6),
+        aspectRatio:1
     },
     settingBox: {
         display: 'flex',
         width: theme.spacing(40),
-        height: 25,
         justifyContent:'space-between',
+        border: 'solid 1px #000000',
+        borderRadius: '255px 10px 225px 10px/10px 225px 10px 255px',
         flexDirection:'row',
         marginLeft: theme.spacing(2),
-        border: '1px solid #f2f2f2',
-        padding: theme.spacing(1),
+        padding: theme.spacing(0.4),
         alignItems: 'center',
-        borderRadius: theme.spacing(1)
     },
     title: {
         color: 'gray'
@@ -38,11 +38,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const BTN_STYLES = [
-    { color: 'primary',  label: 'Go live'},
-    { color: 'warning',  label: 'Preparing...'},
-    { color: 'warning',  label: 'Ready to live ...'},
-    { color: 'error',  label: 'End live'},
-    { color: 'success',  label: 'Exit'},
+    { variant: 'success',  label: 'Go live'},
+    { variant: 'primary',  label: 'Preparing...'},
+    { variant: 'primary',  label: 'Ready to live ...'},
+    { variant: 'error',  label: 'End live'},
+    { variant: 'success',  label: 'Exit'},
 ]
 
 const Topbar = (props) => {
@@ -76,23 +76,23 @@ const Topbar = (props) => {
                      
                     </Typography>
                     <Button 
-                        variant="contained" size = "small" 
-                        color = "neutral" 
-                        sx = {{ marginLeft: theme.spacing(3),color: '#333333', fontWeight: 'bold', textTransform: 'none'}}>Setting</Button>
+                        variant= "success" 
+                        size = "small" 
+                        style = {{ marginLeft: theme.spacing(3)}}
+                        label = 'Setting'/>
                 </div>
                 <div style = {{flex:1}}/> 
-                <Button variant="contained" 
-                    color = {btnStyle.color}
-                    sx = {{ 
-                        marginLeft: theme.spacing(3),color: 'white', fontWeight: 'bold',
+                <Button 
+                    variant = {btnStyle.variant}
+                    size = 'small'
+                    style = {{ 
+                        marginLeft: theme.spacing(3),
                         width: theme.spacing(25),
                     }}
                     onClick = {() => {
                         if (props.onClickBtn) props.onClickBtn()
                     }}
-                    >
-                   {btnStyle.label}
-                </Button>
+                   label = {btnStyle.label} />
             </Toolbar>
         </AppBar>
     )

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
         minWidth: theme.spacing(10),
         border: 'solid 2px #000000',
         borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
-        textAlign: 'center'
+        // textAlign: 'center'
     }
 }))
 

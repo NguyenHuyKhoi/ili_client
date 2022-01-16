@@ -1,5 +1,5 @@
 import { TextareaAutosize } from '@mui/base';
-import { Button, Grid, Modal, TextField, Typography } from '@mui/material';
+import {Grid, Modal, TextField, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import facebook_icon from '../../../../asset/image/facebook_icon.png';
@@ -9,7 +9,7 @@ import { theme } from "../../../../theme";
 import YoutubeHelper from '../../../../util/platform/youtube';
 import FacebookHelper from '../../../../util/platform/facebook';
 import AccountCard from './AccountCard';
-
+import Button from '../../../../component/Button'
 
 /* global gapi */
 /* global FB */
@@ -79,8 +79,8 @@ const STREAM_ACCOUNT_TYPES = [
 const SettingModal = (props) => {
 	const classes = useStyles()
 	const {setting} = props
-	const [draftSetting, setDraftSetting] = useState( ...JSON.parse(JSON.stringify(setting)))
-	const {title, description, account, lobbyTime} = draftSetting
+	const [draftSetting, setDraftSetting] = useState(setting == null ? {} : setting)
+	const {title, description, account} = draftSetting
 	
 	var {open} = props
 	if (open == undefined) open = false
@@ -97,14 +97,14 @@ const SettingModal = (props) => {
 	}
 
 	const handleCancel = () => {
-		setDraftSetting({...setting})
+		setDraftSetting(JSON.parse(JSON.stringify(setting)))
 		handleClose()
 	}
 
 	const handleChange = (key, value) => {
 		console.log("Set change: ", key ,value)
 		setDraftSetting({
-			...draftSetting,
+			...JSON.parse(JSON.stringify(draftSetting)),
 			[key]: value
 		})
 	}
@@ -162,17 +162,16 @@ const SettingModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<Typography variant = 'h5' sx = {{fontWeight: 'bold', color: '#333333'}}>
-					Ili Summary
+				<Typography variant = 'header' sx = {{color: '#000'}}>
+					Setting
 				</Typography>
 
 
-				<Grid container columnSpacing = {5} rowSpacing = {2} 
-					sx = {{mt: theme.spacing(4)}}>
+				<Grid container columnSpacing = {5} rowSpacing = {2}>
 					<Grid item xs = {12}>
 						<div className = {classes.leftCol}>
-							<Typography variant = 'subtitle2' 
-								sx= {{fontWeight: 'bold', color: '#333333'}} >
+							<Typography variant = 'label' 
+								sx= {{color: '#000'}} >
 								Select account to go live(*)
 							</Typography>	
 							<Grid container columnSpacing = {2} rowSpacing = {2} sx = {{mt: theme.spacing(1)}}>
@@ -190,8 +189,8 @@ const SettingModal = (props) => {
 									))
 								}
 							</Grid>
-							<Typography variant = 'subtitle2' 
-								sx= {{fontWeight: 'bold', color: '#333333', my: theme.spacing(1)}} >
+							<Typography variant = 'label' 
+								sx= {{color: '#000', my: theme.spacing(2)}} >
 								Title(*)
 							</Typography>	
 							<TextField 
@@ -202,8 +201,8 @@ const SettingModal = (props) => {
 								value = {title ? title : ''} 
 								variant="outlined"
 								onChange = {(e) => handleChange('title', e.target.value)} />
-							<Typography variant = 'subtitle2' 
-								sx = {{ mt: theme.spacing(2), fontWeight: 'bold', color: '#333333', mb: theme.spacing(1)}}>
+							<Typography variant = 'label' 
+								sx = {{ mt: theme.spacing(2),  color: '#000', mb: theme.spacing(1)}}>
 								Description
 							</Typography>
 							<TextareaAutosize
@@ -217,16 +216,19 @@ const SettingModal = (props) => {
 					</Grid>
 				</Grid>
 				<div className = {classes.footer}>
-					<Button variant="contained" color="neutral"
-						sx = {{color: '#333333', fontWeight: 'bold', textTransform: 'none'}}
-						onClick = {handleCancel}>
-						Cancel
-					</Button>
-					<Button variant="contained" color="success" 
-						sx = {{ml: theme.spacing(2),color: 'white', fontWeight: 'bold', textTransform: 'none'}}
-						onClick = {handleDone}>
-						Done
-					</Button>
+					<Button 
+						variant="warning" 
+						onClick = {handleCancel}
+						style = {{width: theme.spacing(15)}}
+						label = 'Cancel'
+						size = 'small'/>
+
+					<Button 
+						variant="success"
+						style = {{marginLeft: theme.spacing(5), width: theme.spacing(15)}}
+						onClick = {handleDone}
+						size = 'small'
+						label = 'Done'/>
 				</div>
 			</div>
 		</Modal>

@@ -41,6 +41,20 @@ const MatchLivestreamPage = () => {
     const [alert, setAlert] = useState({})
 
     const [fbUrl, setFbUrl] = useState('')
+
+    console.log("Livestream:", livestream)
+    useEffect(() => {
+        dispatch(updateMatch({
+            ...JSON.parse(JSON.stringify(match)), 
+            livestream:  {
+                title: 'Livestream',
+                description: 'Created by ILI'
+            }
+        }))
+        return () => {
+            
+        }
+    }, [])
     const handleClickBtn = () => {
         //console.log("Handle click btn")
         switch (livestreamStage) {
@@ -320,7 +334,6 @@ const MatchLivestreamPage = () => {
         }
     }
 
-
     const startMatchOnServer = (createdMatch) => {
         axios.post('match/livestream/start', {pinCode: createdMatch.pinCode}, {
             headers: {
@@ -352,6 +365,8 @@ const MatchLivestreamPage = () => {
                 return null
         }
     }
+
+
     return (
         <div className = {classes.container}>
             <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
