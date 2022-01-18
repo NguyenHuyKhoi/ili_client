@@ -1,16 +1,15 @@
 import { TextareaAutosize } from '@mui/base';
-import {Grid, Modal, TextField, Typography } from '@mui/material';
+import { Grid, Modal, TextField, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useState } from 'react';
-import facebook_icon from '../../../../asset/image/facebook_icon.png';
-import youtube_icon from '../../../../asset/image/youtube_icon.png';
-import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
+import React, { useState, useContext } from 'react';
+import Button from '../../../../component/Button';
 import { theme } from "../../../../theme";
-import YoutubeHelper from '../../../../util/platform/youtube';
-import FacebookHelper from '../../../../util/platform/facebook';
+import FacebookHelper from '../../../../context/platform/helper/facebook';
+import YoutubeHelper from '../../../../context/platform/helper/youtube';
 import AccountCard from './AccountCard';
-import Button from '../../../../component/Button'
-
+import {PLATFORM_ACCOUNT_TYPES_ID, PLATFORM_ACCOUNT_TYPES, PlatformContext} from '../../../../context/platform/context'
+import { activePlatform, selectPlatform } from '../../../../context/platform/actions';
+import { getPlatformHelper } from '../../../../context/platform/helper';
 /* global gapi */
 /* global FB */
 
@@ -55,26 +54,7 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: theme.spacing(1)
 	}
 }))
-export const STREAM_ACCOUNT_TYPES_ID = {
-	YOUTUBE_BROAD_CAST: 0,
-	FB_LIVESTREAM_PROFILE: 1,
-	FB_LIVESTREAM_GROUP: 2,
-	FB_LIVESTREAM_PAGE: 3
-}
 
-const STREAM_ACCOUNT_TYPES = [
-	{
-		logo: youtube_icon,
-		title: 'Youtube broadcast',
-		id: STREAM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST
-
-	},
-	{
-		logo: facebook_icon,
-		title: 'Fb livestream profile',
-		id: STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE
-	}
-]
 
 const SettingModal = (props) => {
 	const classes = useStyles()
@@ -82,6 +62,8 @@ const SettingModal = (props) => {
 	const [draftSetting, setDraftSetting] = useState(setting == null ? {} : setting)
 	const {title, description, account} = draftSetting
 	
+	const {platforms, dispatch, platform} = useContext(PlatformContext)
+	var platformHelper = null
 	var {open} = props
 	if (open == undefined) open = false
 
@@ -108,50 +90,29 @@ const SettingModal = (props) => {
 			[key]: value
 		})
 	}
-	 
-	const activeYT = () => {
-		YoutubeHelper.auth()
-			.then(() => {
-				console.log("Auth YT success")
-				handleChange('account', {
-					accountType: STREAM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST
-				})
+
+
+	const selectAccount = (account) => {
+		platformHelper = getPlatformHelper(account)
+		if (platformHelper == null) {
+			return
+		}
+		// if (account.id != PLATFORM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST
+		// 	&& account.active == true  ) {
+		// 	dispatch(selectPlatform(account))
+		// 	return
+		// }
+
+		platformHelper.auth()
+			.then((auth) => {
+				var res = JSON.parse(JSON.stringify({...account, ...auth, active: true}))
+				console.log('Platform is active and select now:', res)
+				//dispatch(activePlatform(res))
+				dispatch(selectPlatform(res))
 			})
 			.catch((err) => {
-				console.log("Youtube auth error")
+				console.log("Err auth:", err)
 			})
-	}
-
-	const activeFBProfile = () => {
-		FacebookHelper.auth()
-			.then((res) => {
-				let account = {
-					...res,
-					accountType: STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE
-				}
-				handleChange('account', account)
-				console.log("Auth Fb success: ", account)
-			})
-			.catch((err) => {
-				console.log("FB Auth error: ", err.error)
-			})
-	}
-
-	const selectAccountType = (type) => {
-		if (account != undefined && account.accountType == type.id) {
-			handleChange('account', undefined)
-		}
-		else {
-			// select account type
-			switch (type.id) {
-				case STREAM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST:
-					activeYT()
-					break
-				case STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE:
-					activeFBProfile()
-					break
-			}
-		}
 	}
 
 	return (
@@ -162,35 +123,34 @@ const SettingModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<Typography variant = 'header' sx = {{color: '#000'}}>
+				<Typography variant = 'header' sx = {{color: '#000', textAlign: 'center'}}>
 					Setting
 				</Typography>
 
 
-				<Grid container columnSpacing = {5} rowSpacing = {2}>
-					<Grid item xs = {12}>
+				<Grid container columnSpacing = {5} rowSpacing = {2} sx = {{mt: theme.spacing(3)}}>
+					<Grid item xs = {6}>
 						<div className = {classes.leftCol}>
 							<Typography variant = 'label' 
 								sx= {{color: '#000'}} >
 								Select account to go live(*)
 							</Typography>	
-							<Grid container columnSpacing = {2} rowSpacing = {2} sx = {{mt: theme.spacing(1)}}>
-								{
-									STREAM_ACCOUNT_TYPES.map((type, index) => (
-										<Grid item xs = {4} key = {'' + index}>
-											<AccountCard 
-												accountType = {type}
-												onSelect = {() => selectAccountType(type)}
-												isSelected = {
-													account != undefined &&
-													account.accountType === type.id
-												}/>
-										</Grid>
-									))
-								}
-							</Grid>
+							{
+								platforms.map((account, index) => (
+									<div key = {'' + index} style = {{marginTop: theme.spacing(2)}}>
+										<AccountCard 
+											account = {account}
+											select = {platform && platform.id == account.id}
+											onSelect = {() => selectAccount(account)}/>
+									</div>
+								))
+							}
+						</div>
+					</Grid>
+					<Grid item xs = {6}>
+						<div className = {classes.rightCol} >
 							<Typography variant = 'label' 
-								sx= {{color: '#000', my: theme.spacing(2)}} >
+								sx= {{color: '#000'}} >
 								Title(*)
 							</Typography>	
 							<TextField 

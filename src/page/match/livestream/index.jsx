@@ -3,17 +3,16 @@ import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../../context/auth/context'
+import { PlatformContext, PLATFORM_ACCOUNT_TYPES_ID } from '../../../context/platform/context'
 import { updateLivestreamStage, updateMatch } from '../../../context/match/play/actions'
 import { LIVESTREAM_STAGE, MatchPlayContext } from '../../../context/match/play/context'
-import FacebookHelper from '../../../util/platform/facebook'
-import YoutubeHelper from '../../../util/platform/youtube'
 import MatchStatus from './component/MatchStatus'
 import QuestionDetailModal from './component/QuestionDetailModal'
-import SettingModal, { STREAM_ACCOUNT_TYPES_ID } from './component/SettingModal'
+import SettingModal from './component/SettingModal'
 import TemplateSlider from './component/TemplateSlider'
 import Topbar from './component/Topbar'
-
+import { AuthContext } from '../../../context/auth/context'
+import { getPlatformHelper } from '../../../context/platform/helper'
 /* global gapi */
 /* global FB */
 
@@ -31,30 +30,29 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(8)
     }
 }))
+var platformHelper = null
 
 const MatchLivestreamPage = () => {
     const classes = useStyles()
     const {dispatch, match, livestream, livestreamStage} = useContext(MatchPlayContext)
     const navigate = useNavigate()
+    const {platform} = useContext(PlatformContext)
     const {user, token} = useContext(AuthContext)
     const [modal, setModal] = useState({})
     const [alert, setAlert] = useState({})
 
     const [fbUrl, setFbUrl] = useState('')
 
-    console.log("Livestream:", livestream)
     useEffect(() => {
-        dispatch(updateMatch({
-            ...JSON.parse(JSON.stringify(match)), 
-            livestream:  {
-                title: 'Livestream',
-                description: 'Created by ILI'
-            }
-        }))
-        return () => {
-            
+        if (platform != null) {
+            platformHelper = getPlatformHelper(platform)
+            console.log("Platform helper not null", (platformHelper != null && platformHelper != undefined))
         }
-    }, [])
+        return () => {
+        }
+    }, [platform])
+
+
     const handleClickBtn = () => {
         //console.log("Handle click btn")
         switch (livestreamStage) {
@@ -77,117 +75,77 @@ const MatchLivestreamPage = () => {
                 handleEndLive()
                 break;
             case LIVESTREAM_STAGE.COMPLETE:
-                navigate('', {replace: true})
-                break;
+                return navigate(-1)
         }
     }
-    const handleEndLiveFbProfile = async () => {
-        //console.log("End live YT")
-        await FacebookHelper.endLive(livestream)
-        axios.post('match/livestream/complete', {pinCode:match.pinCode} ,{
-            headers: {
-                'x-access-token': token
+    
+    const handleEndLive = async () => {
+        try {
+            if (platform == null) {
+                return
             }
+            await platformHelper.endLive(livestream, platform)
+            axios.post('match/livestream/complete', {pinCode:match.pinCode} ,{
+                headers: {
+                    'x-access-token': token
+                }
+                })
+                .then ((res) => {
+                    console.log('Update livestage to complete')
+                    dispatch(updateLivestreamStage(LIVESTREAM_STAGE.COMPLETE))
+                    setAlert({
+                        type: 'success',
+                        msg: 'End livestream successfully...'
+                    })
+                })
+                .catch((err) => {
+                    let error = err.response ? err.response.data : 'Server is failure complete'
+                    //console.log("Error :", error)
+                    dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
+                    setAlert({
+                        type: 'error',
+                        msg: 'End livestream failure, try again....'
+                    })
             })
-            .then ((res) => {
-                dispatch(updateLivestreamStage(LIVESTREAM_STAGE.COMPLETE))
-                setAlert({
-                    type: 'success',
-                    msg: 'End livestream successfully...'
-                })
-            })
-            .catch((err) => {
-                let error = err.response ? err.response.data : 'Server is failure complete'
-                //console.log("Error :", error)
-                dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
-                setAlert({
-                    type: 'error',
-                    msg: 'End livestream failure, try again....'
-                })
-        })
-    }
-
-    const handleEndLive = () => {
-        switch (livestream.account.accountType) {
-            case STREAM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST:
-                handleEndLiveYT()
-                break
-            case STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE:
-                handleEndLiveFbProfile()
-                break
-            default:
-                //console.log("Not supported now.")
-                setAlert({
-                    type: 'error',
-                    msg: 'Not supported now'
-                })
-                break
-                
         }
-    }
-
-    const handleEndLiveYT = async () => {
+        catch (err) {
+            console.log('End live:', err)
+        }
         //console.log("End live YT")
-        await YoutubeHelper.endLive(livestream)
-        axios.post('match/livestream/complete', {pinCode:match.pinCode} ,{
-            headers: {
-                'x-access-token': token
-            }
-            })
-            .then ((res) => {
-                dispatch(updateLivestreamStage(LIVESTREAM_STAGE.COMPLETE))
-                setAlert({
-                    type: 'success',
-                    msg: 'End livestream successfully...'
-                })
-            })
-            .catch((err) => {
-                let error = err.response ? err.response.data : 'Server is failure complete'
-                //console.log("Error :", error)
-                dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
-                setAlert({
-                    type: 'error',
-                    msg: 'End livestream failure, try again....'
-                })
-        })
+       
     }
 
-    const handleLive =  () => {
-        if (livestream.account == undefined) {
+    const validateSetting = () => {
+        if (platform == null) {
             setAlert({
                 type: 'error',
                 msg: 'Please choose an account to live'
             })
-            return
+            return false
         }
-        dispatch(updateLivestreamStage(LIVESTREAM_STAGE.CREATING))
-
-        switch (livestream.account.accountType) {
-            case STREAM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST:
-                handleLiveYT()
-                break
-            case STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE:
-                handleLiveFbProfile()
-                break
-            default:
-                //console.log("Not supported now.")
-                setAlert({
-                    type: 'error',
-                    msg: 'Not supported now'
-                })
-                
+        if (livestream.title == '' || livestream.title == null 
+        || livestream.description == '' || livestream.description == null) {
+            setAlert({
+                type: 'error',
+                msg: 'Set title and description for livestream'
+            })
+            return false
         }
     }
 
-    const handleLiveYT = async () => {
-        var res = await YoutubeHelper.goLive(livestream)
-        if (res == null) {
-            //console.log("Go live failured")
-            dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
-            return
-        }
-            //console.log("Broadcast created, ready to stream:", res)
+    const handleLive = async () => {
         try {
+            if (validateSetting() == false) {
+                return
+            }
+            dispatch(updateLivestreamStage(LIVESTREAM_STAGE.CREATING))
+            console.log("Prepare go live:", livestream, (platformHelper != null && platformHelper != undefined))
+            let res = await platformHelper.goLive(livestream, platform)
+    
+            if (res == null) {
+                dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
+                return
+            }
             res = await axios.post('match/livestream/create', {...match, livestream: res, mode: 'livestream'}, {
                 headers: {
                     'x-access-token': token
@@ -197,7 +155,7 @@ const MatchLivestreamPage = () => {
             dispatch(updateMatch(res.data))
             dispatch(updateLivestreamStage(LIVESTREAM_STAGE.READY))
             
-            listenBroadcastStatus(res.data)
+            listenLivestreamStatus(res.data)
             setAlert({
                 type: 'success',
                 msg: 'Create livestream succcessfully, waiting livestream on live...'
@@ -213,124 +171,31 @@ const MatchLivestreamPage = () => {
             })
            
         }
-      
     }
 
-    const handleLiveFbProfile = async () => {
-        var res = await FacebookHelper.goLiveProfile(livestream)
-        console.log("Create res livestream fb:", res)
-        if (res == null) {
-            console.log("Go live failured")
-            dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
-            return
-        }
+    const listenLivestreamStatus = (createdMatch) => {
         try {
-            res = await axios.post('match/livestream/create', {...match, livestream: res}, {
-                headers: {
-                    'x-access-token': token
-                }
-            })
-            dispatch(updateMatch(res.data))
-            dispatch(updateLivestreamStage(LIVESTREAM_STAGE.READY))
-            
-            console.log("Created Match On FB:", res.data)
-            listenBroadcastStatus(res.data)
-            setAlert({
-                type: 'success',
-                msg: 'Create livestream succcessfully, waiting livestream on live...'
-            })
-        }
-        catch(err) {
-            let error = err.response ? err.response.data : 'Server is failure create'
-            console.log("Error:", err)
-            dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
-            setAlert({
-                type: 'error',
-                msg: 'Create livestream failure, try again....'
-            })
-           
-        }
-    }
-    const listenFBStatus = (createdMatch, listened_status = 'LIVE') => {
-        let count = 0
-        let isStartedMatch = false
-        let _interval = setInterval(async() => {
-            count ++
-            if (count > 60) {
-                clearInterval(_interval)
+            if (platform == null) {
+                return
             }
-            try {
-                let res = await FacebookHelper.getLivestream(livestream)
-                if (res != null) {
-                    let {status, permalink_url} = res
-                    console.log("Livestream is live ", status)
-                    if (status == listened_status) {
-                        //clearInterval(_interval)
-                        if (!isStartedMatch) {
-                            isStartedMatch = true
-                            startMatchOnServer(createdMatch)
-                            dispatch(updateLivestreamStage(LIVESTREAM_STAGE.LIVE))
-                            setFbUrl(permalink_url)
-                        }
-                        else {
-                            console.log("Dont set livestream stage")
-                        }
-                     
-                    }
+            var {livestreamId} = createdMatch.livestream
+            platformHelper.listenStatus(livestreamId, platform)
+                .then((videoUrl) => {
+                    
+                    if (platform.id == PLATFORM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST) {
+                        startMatchOnServer(createdMatch)
+                        dispatch(updateLivestreamStage(LIVESTREAM_STAGE.LIVE))
+                    } 
                     else {
-                        console.log("Livestream is not live", status)
+                        setFbUrl('https://www.facebook.com' + videoUrl)
+                        dispatch(updateLivestreamStage(LIVESTREAM_STAGE.LIVE))
+                        startMatchOnServer(createdMatch)
                     }
-                }
-            }
-            catch (err) {
-                console.log("Get livestream fb error")
-            }
-           
-        }, 2000)
-    
-    }
-
-    const listenYTStatus = (createdMatch, listened_status = 'live') => {
-        let count = 0
-        let _interval = setInterval(async() => {
-            count ++
-            if (count > 30) {
-                clearInterval(_interval)
-            }
-            let {broadcastId} = createdMatch.livestream
-            let res = await YoutubeHelper.getBroadcast(broadcastId)
-            if (res != null) {
-                let status = res.status.lifeCycleStatus
-                if (status == listened_status) {
-                    console.log("Livestream is live ")
-                    clearInterval(_interval)
-                    startMatchOnServer(createdMatch)
-                    dispatch(updateLivestreamStage(LIVESTREAM_STAGE.LIVE))
-                }
-                else {
-                    console.log("Livestream is not live")
-                }
-            }
-        }, 1000)
-    
-    }
-
-    const listenBroadcastStatus =  (createdMatch) => {
-        let {account} = livestream 
-        if (account == undefined) return
-        switch (account.accountType) {
-            case (STREAM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST) : {
-                console.log("Listen Youtube status")
-                listenYTStatus(createdMatch)
-                break
-            }   
-            case (STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE) : {
-                console.log("Listen Youtube status")
-                listenFBStatus(createdMatch)
-                break
-            }   
-            default: 
-                break
+                   
+                })
+        }
+        catch (err) {
+            console.log("Error listen:", err);
         }
     }
 
@@ -351,19 +216,27 @@ const MatchLivestreamPage = () => {
     var showLivestream =  (livestreamStage == LIVESTREAM_STAGE.LIVE || livestreamStage == LIVESTREAM_STAGE.COMPLETE)
 
     const getVideoUrl = () => {
-        let {account} = livestream
-        if (account == undefined) {
+        if (platform == null) {
             return null 
         }
+        let videoUrl = null
         // console.log("Video FB Url: ",  `https://www.facebook.com/plugins/video.php?width=1280&href=https%3A%2F%2Fwww.facebook.com${encodeURIComponent(fbUrl)}`)
-        switch (account.accountType) {
-            case STREAM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST: 
-                return `https://www.youtube.com/embed/${livestream.broadcastId}?autoplay=1&mute=1`
-            case STREAM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE:
-                return `https://www.facebook.com/plugins/video.php?width=1280&href=https%3A%2F%2Fwww.facebook.com${encodeURIComponent(fbUrl)}`
+        switch (platform.id) {
+            case PLATFORM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST: 
+                videoUrl = `https://www.youtube.com/embed/${livestream.livestreamId}?autoplay=1&mute=1`
+                break 
+            case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE:
+                //videoUrl = `https://www.facebook.com/plugins/video.php?width=1280&href=https%3A%2F%2Fwww.facebook.com%2F${encodeURIComponent(fbUrl)}`
+               // videoUrl = `https://www.facebook.com/${fbUrl}`
+                break
             default: 
-                return null
+                break
         }
+        return videoUrl
+    }
+
+    const handleOpenLinkFB = async () => {
+
     }
 
 
@@ -397,6 +270,8 @@ const MatchLivestreamPage = () => {
                 onClose = {() => setModal({})}
             />
             <Topbar
+                onOpenLink = {handleOpenLinkFB}
+                fbUrl = {fbUrl}
                 onSetting = {() => setModal({state: 'setting'})}
                 onClickBtn = {handleClickBtn}
             />
@@ -404,7 +279,9 @@ const MatchLivestreamPage = () => {
                 <Grid container columnSpacing={3} sx = {{height: '100%'}}>
                     <Grid item xs = {9} >
                         {
-                            showLivestream ? 
+                            showLivestream 
+                            && platform 
+                            && platform.id == PLATFORM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST ? 
                             <div style= {{
                                 flex: 1,
                                 height: '100%',
@@ -413,17 +290,6 @@ const MatchLivestreamPage = () => {
                                 justifyContent: 'center',
                                 alignItems:"center"
                             }}>
-
-                                {/* <iframe 
-                                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
-                                    allowfullscreen="true" 
-                                    frameborder="0"
-                                    height="720" 
-                                    scrolling="no" 
-                                    src="https://www.facebook.com/plugins/video.php?width=1280&href=https%3A%2F%2Fwww.facebook.com%2F212638061068218%2Fvideos%2F608468110450899" 
-                                    style="border:none;overflow:hidden" 
-                                    width="1280">
-                                </iframe> */}
 
                                 <iframe src={getVideoUrl()}
                                     style = {{
@@ -436,6 +302,7 @@ const MatchLivestreamPage = () => {
                                     allowFullScreen
                                     title={livestream.title}
                                 />
+
                              </div>
                            
                             :

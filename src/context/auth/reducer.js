@@ -1,5 +1,7 @@
 const reducer = (state, action) => {
     const {user} = action.payload != undefined ? action.payload : {}
+
+    var temps 
     switch (action.type) {
         case 'LOGIN_SUCCESS':
             return {
@@ -22,6 +24,7 @@ const reducer = (state, action) => {
                 ...state,
                 user: null,
         }
+
         default: 
             return state
     }

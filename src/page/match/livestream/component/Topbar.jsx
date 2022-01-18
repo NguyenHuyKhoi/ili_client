@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography } from '@mui/material'
+import { AppBar, Link, Toolbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { GameCreatorContext } from '../../../../context/game/creator/context'
@@ -48,6 +48,7 @@ const BTN_STYLES = [
 const Topbar = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
+    const {fbUrl} = props
     const {dispatch, match, livestreamStage} = useContext(MatchPlayContext)
     const {title} = match
 
@@ -82,6 +83,22 @@ const Topbar = (props) => {
                         label = 'Setting'/>
                 </div>
                 <div style = {{flex:1}}/> 
+                {
+                    fbUrl && 
+                    <div onClick = {() => {
+                        if (props.onOpenLink) props.onOpenLink()
+                    }}>
+                        <Typography variant='label' sx = {{color: '#000', mx : theme.spacing(2)}}>
+                            View and set public video on : 
+                        <a href={fbUrl} 
+                            target="_blank" rel="noopener noreferrer" 
+                                    style = {{'&:hover': {
+                                        cursor: 'pointer'
+                                    }}}>Here</a>
+                        </Typography>
+                    </div>
+
+                }
                 <Button 
                     variant = {btnStyle.variant}
                     size = 'small'

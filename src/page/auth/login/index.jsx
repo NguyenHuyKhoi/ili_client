@@ -1,20 +1,18 @@
 
-import { Alert, Divider, Snackbar, Typography } from '@mui/material'
+import { Alert, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import background from '../../../asset/image/background.jpg'
 import Button from '../../../component/Button'
+import GoHomeBtn from '../../../component/GoHomeBtn'
+import Link from '../../../component/Link'
 import TextField from '../../../component/TextField'
 import { loginSuccess } from '../../../context/auth/actions'
 import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
 import { validateEmail } from '../../../util/validator'
-import { LinkedLoginButton } from '../component/LinkedLoginButton'
-import logo from '../../../asset/image/logo.png'
-import background from '../../../asset/image/background.jpg'
-import GoHomeBtn from '../../../component/GoHomeBtn'
-import { useNavigate } from 'react-router-dom'
-import Link from '../../../component/Link'
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh',

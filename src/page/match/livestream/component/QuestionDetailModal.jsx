@@ -1,14 +1,10 @@
 import { Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useContext } from 'react';
-import facebook_icon from '../../../../asset/image/facebook_icon.png';
-import youtube_icon from '../../../../asset/image/youtube_icon.png';
 import Button from '../../../../component/Button';
 import { MatchPlayContext } from '../../../../context/match/play/context';
 import { theme } from "../../../../theme";
 import QuestionRowItem from '../../../game/detail/component/QuestionRowItem';
-import { STREAM_ACCOUNT_TYPES_ID } from './SettingModal';
-
 
 /* global gapi */
 /* global FB */

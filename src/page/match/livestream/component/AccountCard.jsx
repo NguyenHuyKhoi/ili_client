@@ -6,9 +6,10 @@ import { theme } from '../../../../theme';
 const useStyles = makeStyles((theme) => ({
     container: {
 		display: 'flex',
+		flex: 1,
+		width: '100%',
 		flexDirection: 'row',
 		padding: theme.spacing(1),
-		border: '1px solid #392575',
 		borderRadius: theme.spacing(1),
 		'&:hover': {
 			cursor: 'pointer'
@@ -32,39 +33,58 @@ const useStyles = makeStyles((theme) => ({
 	activeDot: {
 		width: theme.spacing(1),
 		height: theme.spacing(1),
-		borderRadius: theme.spacing(0.5),
-		backgroundColor: theme.palette.success.main
+		borderRadius: theme.spacing(0.5)
 	}
 }))
 
+const STATES = [
+	{
+		color: theme.palette.error.main,
+		label: 'Not active',
+	},
+	{
+		color: theme.palette.primary.main,
+		label: 'Active',
+	},
+	{
+		color: theme.palette.success.main,
+		label: 'Selected',
+	},
+]
+
+
 const AccountCard = (props) => {
 	const classes = useStyles()
-	const {accountType, isSelected} = props 
-	const {title, logo} = accountType
-	console.log("Account Type: ", accountType, isSelected)
+	const {account, select} = props 
+	const {title, logo, id} = account
+
+	// const state = ! active ? STATES[0]
+	// 		: ! select ? STATES[1]
+	// 		: STATES[2]
+
+	const state = ! select ? STATES[0]
+			: STATES[1]
 	return (
 		<div className={classes.container} 
 			style = {{
-				border: isSelected ? `2px solid ${theme.palette.success.main} ` : '2px solid gray'
+				border:`2px solid ${state.color} `
 			}}
 			onClick = {() => {
 				if (props.onSelect) props.onSelect()
 			}}>
 			<img src = {logo} className= {classes.logo}/>
 			<div className = {classes.infor} >
-				<Typography variant = 'label' sx = {{color: '#000'}}>
+				<Typography variant = 'btnLabel' sx = {{color: '#000'}}>
 					{title}
 				</Typography>
-				{
-					isSelected &&
-					<div className = {classes.activeDiv}>
-						<div className = {classes.activeDot}/>
-						<Typography variant = 'captiion' sx = {{ml: theme.spacing(1)}}>
-							Actived
-						</Typography>
-					</div>
-				
-				}
+				<div className = {classes.activeDiv}>
+					<div className = {classes.activeDot} style = {{backgroundColor: state.color}}/>
+					<Typography variant = 'caption' sx = {{ml: theme.spacing(1)}}>
+						{
+							state.label
+						}
+					</Typography>
+				</div>
 
 			</div>
 		</div>
