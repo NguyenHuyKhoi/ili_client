@@ -17,8 +17,10 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
         borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
-
-    }
+        '&:hover': {
+            cursor: 'pointer'
+        }
+    }   
 }))
 
 

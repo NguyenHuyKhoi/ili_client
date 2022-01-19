@@ -47,7 +47,7 @@ const AnswerCount = (props) => {
                     backgroundColor: color,
                     margin: percent > 0 ? theme.spacing(0.2) : 0,
                     opacity: 1, 
-                    height: theme.spacing(40 * (percent))}}/>
+                    height: theme.spacing(25 * (percent))}}/>
             <div className = {classes.body} >
                 <Icon name = {icon} style = {{fontSize: 30, color: theme.palette.background.main}}/>
                 <Typography variant = 'header' sx = {{mx: theme.spacing(1),color: '#000'}}>

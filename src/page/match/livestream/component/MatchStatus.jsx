@@ -9,11 +9,18 @@ import Tabbar from '../../../../component/Tabbar';
 import { theme } from '../../../../theme';
 import axios from 'axios';
 import { AuthContext } from '../../../../context/auth/context';
+import { PlatformContext, PLATFORM_ACCOUNT_TYPES_ID } from '../../../../context/platform/context';
+import { useEffect } from 'react';
+import FacebookHelper from '../../../../context/platform/helper/facebook';
+import SocialRowItem from './SocialRowItem';
+import { selectSocial } from '../../../../context/platform/actions';
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
         display: 'flex',
-        height: '100%',
+        height: '90vh',
+    //    maxHeight: '560vh',
+        overflow: 'auto',
         flexDirection: 'column',
         backgroundColor: 'white',
         padding: theme.spacing(2)
@@ -41,27 +48,49 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 
-const QuestionCard = (props) => {
-    const classes = useStyles()
-    const {question} = props 
-    const {title, index} = question
-    console.log("Questions", question)
-	return (
-        <div className = {classes.question}>
-            <Typography variant = 'subtitle2'>
-                {index + '. ' + title}
-            </Typography>
-          
-        </div>
-	);
-}
 const MatchStatus = (props) => {
 	const classes = useStyles()
-    const {dispatch, match} = useContext(MatchPlayContext)
+    const {match} = useContext(MatchPlayContext)
+    const matchPlayDispatch = useContext(MatchPlayContext).dispatch
+    const platformDispatch = useContext(PlatformContext).dispatch
+    const {fbPages, fbGroups, ytChannels, platform, social} = useContext(PlatformContext)
+
     const {token} = useContext(AuthContext)
     const {game, players} = match 
     const {questions} = game
     const [index, setIndex] = useState(0)
+    const [tabs, setTabs] = useState(['Round', 'Player']);
+    const [socialList, setSocialList] = useState([]);
+
+    useEffect(() => {
+        const updateSocials = async () => {
+            var list = []
+            switch (platform.id) {
+                case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PAGE:
+                    setTabs(['Round','Player','Pages'])
+                    list = await FacebookHelper.getPages(platform)
+                    setSocialList(list)
+                    break
+                case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_GROUP:
+                    setTabs(['Round','Player','Groups'])
+                    list = await FacebookHelper.getGroups(platform)
+                    setSocialList(list)
+                    break
+                default:
+                    setTabs(['Round','Player'])
+                    setSocialList([])
+            }
+        }
+        if (platform != null) {
+            updateSocials()
+        }
+
+
+        return () => {
+        };
+    }, [platform]);
+    
+
 
     const handleUpdateMatch = () => {
         if (match._id == undefined) {
@@ -75,7 +104,7 @@ const MatchStatus = (props) => {
             }
         })    
         .then ((res) => {
-            dispatch(updateMatch(res.data))
+            matchPlayDispatch(updateMatch(res.data))
         })
         .catch((err) => {
             console.log('Get detail match error:', err)
@@ -84,7 +113,7 @@ const MatchStatus = (props) => {
 
     const handleSelectQuestion = (question) => {
         console.log("Handle select question")
-        dispatch(viewQuestion(question))
+        matchPlayDispatch(viewQuestion(question))
         if (props.onSelectQuestion) props.onSelectQuestion()
     }
 
@@ -96,10 +125,16 @@ const MatchStatus = (props) => {
         setIndex(index)
         handleUpdateMatch()
     }
+
+    const handleSelectSocial = (social) => {
+        console.log("Select social", social);
+        platformDispatch(selectSocial(social))
+    }
+    console.log("Select social: ", socialList.length);
 	return (
         <div className = {classes.container}>
             <div className = {classes.tabs}>
-                <Tabbar tabs = {['Rounds', 'Players']} onClickTab = {(index) => handleSelectTab(index)}/>
+                <Tabbar tabs = {tabs} onClickTab = {(index) => handleSelectTab(index)}/>
             </div>
 
             <div className = {classes.list}>
@@ -124,6 +159,24 @@ const MatchStatus = (props) => {
                                     onSelect = {() => handleSelectPlayer(item)}/>
                             </div>
                         ))
+                }
+                {
+                    index==2 && socialList.length > 0 &&
+                    socialList.map((item, index) => (
+                            <div className = {classes.item} key = {'' + index}>
+                               <SocialRowItem 
+                                    social = {item} 
+                                    index = {index}
+                                    isSelected = {social!= null && social.id == item.id}
+                                    onSelect = {() => handleSelectSocial(item)}/>
+                            </div>
+                        ))
+                }
+                {
+                    index==2 && socialList.length == 0 &&
+                    <Typography variant='btnLabel' sx = {{color: '#000', m: theme.spacing(2), textAlign: 'center'}}>
+                        {`You have not any ${tabs[2]}. Please create one or choose another account.`}
+                    </Typography>
                 }
                 {
                     index==1 &&  players == undefined &&

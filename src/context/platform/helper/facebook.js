@@ -5,35 +5,6 @@ const APP_SECRET = '6bbec2116f51aa47042ec52bf5438301'
 /* global FB */
 class FacebookHelper {
 
-    static goLiveProfile = async (livestream, account) => {
-        try {
-            console.log('Go live profile :', livestream, account)
-            const {title,description} = livestream
-            const {userID, accessToken} = account
-    
-            // Set timeout 30s for transition to live
-            // const currentTime = Math.floor((new Date()).getTime() / 1000)
-            // const scheduleTime =  currentTime + 300
-            // console.log("Schedule time:", currentTime, scheduleTime)
-            const url = `https://graph.facebook.com/${userID}/live_videos?status=LIVE_NOW&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}&access_token=${accessToken}`
-            console.log("URL live fb:", url)
-            let res = await axios.post(url)
-          
-            console.log("Create live fb success: ", res.data)
-            let {id, stream_url } = res.data
-            
-            livestream.livestreamId = id 
-            livestream.streamUrl = stream_url
-            
-            console.log("Stream URL: ", stream_url)
-            return livestream
-        }
-        catch (err) {
-            console.log("Error live fb:", err)
-            return null
-        }
-    }
-
     static transitionToLive = async (_id, account) => {
         try {
             console.log('Go live profile :', _id, account)
@@ -53,17 +24,55 @@ class FacebookHelper {
     }
 
 
-    static goLive = async (livestream, account) => {
-        console.log('Go live fb: ', livestream, account)
-        var res = null 
-        switch (account.id) {
-            case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE: 
-                res = await FacebookHelper.goLiveProfile(livestream, account)
-                break
-            default: 
-                break
+    static goLive = async (livestream, account, social = null) => {
+        try {
+            const {title,description} = livestream
+            const userID = account.userID
+            const userAccessToken = account.accessToken
+            const socialID = social != null ? social.id : ''
+            const socialAccessToken = social != null ? social.accessToken : ''
+
+            var edgeID = ''
+            var type = ''
+            var token = ''
+            switch (account.id) {
+                case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE: 
+                    edgeID = userID
+                    token = userAccessToken
+                    type = 'profile'
+                    break
+                case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_GROUP: 
+                    edgeID = socialID
+                    token = userAccessToken
+                    type = 'group'
+                    break
+                case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PAGE: 
+                    edgeID = socialID
+                    token = socialAccessToken
+                    type = 'page'
+                    break
+                default: 
+                    break
+            }
+
+            var url = `https://graph.facebook.com/${edgeID}/live_videos?status=LIVE_NOW&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}&access_token=${token}`
+            let res = await axios.post(url)
+          
+            console.log("Create live fb success: ", res.data)
+            let {id, stream_url } = res.data
+            
+            livestream.livestreamId = id 
+            livestream.streamUrl = stream_url
+            livestream.accessToken = token
+            livestream.platform = 'facebook'
+            console.log("Create stream fb", livestream)
+            return livestream
         }
-        return res
+        catch (err) {
+            console.log("Go live fail:", err);
+            return null
+        }
+       
     }
     static endLive = async (livestream, account) => {
         try {
@@ -140,14 +149,86 @@ class FacebookHelper {
     //     }
         
     // }
+    static getPermissions = (accountType) => {
+        switch (accountType) {
+            case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE:
+                return 'publish_video'
+            case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PAGE:
+                return 'pages_manage_posts,pages_read_engagement'
+            case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_GROUP:
+                return 'publish_video,publish_to_groups'
+            default:
+                return ''
+        }
+    }
 
+    static getPages = async (account) => {
+        try {
+            console.log('Get fb pages :', account)
+            const {userID, accessToken} = account
     
-    static auth =  () => {
+            const url = `https://graph.facebook.com/${userID}/accounts?access_token=${accessToken}&fields=picture,access_token,name,id`
+            console.log("Get fb pages urls", url)
+            let res = await axios.get(url)
+            const {data} = res.data
+            var list = data.map((item) => {
+                return {
+                    id: item.id,
+                    accessToken: item.access_token,
+                    name: item.name,
+                    avatar: item.picture ? item.picture.data.url : null,
+                    type: 'page'
+                }
+            })
+            console.log("Get fb pages List:", list);
+            return list
+        }
+        catch (err) {
+            console.log("Error get Fb pages:", err);
+            return null
+        }
+    }
+
+    static getGroups = async (account) => {
+        try {
+            console.log('Get fb groups :', account)
+            const {userID, accessToken} = account
+    
+            const url = `https://graph.facebook.com/${userID}/groups?access_token=${accessToken}&fields=picture,access_token,name,id&admin_only=true`
+            console.log("Get fb groups urls", url)
+            let res = await axios.get(url)
+            const {data} = res.data
+            var list = data.map((item) => {
+                return {
+                    id: item.id,
+                    accessToken: item.access_token,
+                    name: item.name,
+                    avatar: item.picture ? item.picture.data.url : null,
+                    type: 'group'
+                }
+            })
+            return list
+        }
+        catch (err) {
+            console.log("Error get Fb groups:", err);
+            return null
+        }
+    }
+    
+    static auth =  (accountType) => {
         return new Promise((resolve, reject) => {
+            let permissions = this.getPermissions(accountType)
+            if (permissions == '') {
+                reject({
+                    error: 'AccountType is invalid'
+                })
+                return
+            }
+
             FB.login(res => {
                 if (res.status == 'connected') {
                     let {accessToken, userID, expiresIn} =  res.authResponse
-                    console.log('Token fb expires in :', expiresIn)
+                    console.log('Auth fb success :', res.authResponse)
                     resolve({
                         userID,
                         accessToken,
@@ -162,20 +243,14 @@ class FacebookHelper {
                     //             accessToken: access_token,
                     //             expiresIn: expires_in
                     //         })
-                        
                     // })
-                    
-
-
-
-           
                 }
                 else {
                     reject({
                         error: 'User not connected'
                     })
                 }
-            },{scope: 'publish_video'});
+            },{scope: permissions});
         })
     }
 

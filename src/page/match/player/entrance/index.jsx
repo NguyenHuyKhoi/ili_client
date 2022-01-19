@@ -114,7 +114,7 @@ const MatchPlayerEntrancePage = () => {
                 console.log("Enter name: ", value)
                 socket.emit('match:updatePlayer', pinCode, { username: value}, (response) => {
                     if (response) {
-                        navigate('/match/player/lobby', {replace: true})
+                        return navigate('/match/player/lobby', {replace: true})
                     }
                 } )
                 break

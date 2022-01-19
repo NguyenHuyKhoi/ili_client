@@ -52,6 +52,7 @@ export const MATCH_SETTINGS = [
             {value: 30, label: '  30 seconds'},
             {value: 60, label: '  60 seconds'},
             {value: 120, label: '  120 seconds'},
+            {value: 300, label: '  300 seconds'},
         ],
         title: 'Delay start match on',
     },

@@ -11,7 +11,7 @@ export const LIVESTREAM_STAGE = {
 export const sample_match = {
     game: {},
     livestream: null,
-    delayStartTime: 120,
+    delayStartTime: 300,
     showQuestionEndTime: 20,
     showLeaderboardTime: 10,
     delayEndTime: 60,

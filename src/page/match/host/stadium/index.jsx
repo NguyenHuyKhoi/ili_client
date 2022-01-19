@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
         flex: 1,
         height: '100vh',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        overflow: 'auto'
     },
     questionContainer: {
         flex: 1

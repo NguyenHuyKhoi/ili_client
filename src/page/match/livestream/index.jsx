@@ -36,7 +36,7 @@ const MatchLivestreamPage = () => {
     const classes = useStyles()
     const {dispatch, match, livestream, livestreamStage} = useContext(MatchPlayContext)
     const navigate = useNavigate()
-    const {platform} = useContext(PlatformContext)
+    const {platform, social} = useContext(PlatformContext)
     const {user, token} = useContext(AuthContext)
     const [modal, setModal] = useState({})
     const [alert, setAlert] = useState({})
@@ -132,15 +132,37 @@ const MatchLivestreamPage = () => {
             return false
         }
     }
+    const isSelectSocialIfNeed = () => {
+        if (platform != null) {
+            if (platform.id == PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_GROUP 
+                || platform.id == PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PAGE) {
+                    if (social == null) {
+                        return false
+                    }
+                }
+        }
+        return true
+    }
 
     const handleLive = async () => {
+        // Check if platform is FB-Group or FB-Page
+        // => Must select page/group before go live
+
+
         try {
             if (validateSetting() == false) {
                 return
             }
+            if (!isSelectSocialIfNeed()) {
+                setAlert({
+                    type: 'error',
+                    msg: 'Please choose an page/group to go live'
+                })
+                return 
+            }
             dispatch(updateLivestreamStage(LIVESTREAM_STAGE.CREATING))
             console.log("Prepare go live:", livestream, (platformHelper != null && platformHelper != undefined))
-            let res = await platformHelper.goLive(livestream, platform)
+            let res = await platformHelper.goLive(livestream, platform, social)
     
             if (res == null) {
                 dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))

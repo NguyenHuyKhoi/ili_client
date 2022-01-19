@@ -1,15 +1,13 @@
 import { TextareaAutosize } from '@mui/base';
 import { Grid, Modal, TextField, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '../../../../component/Button';
-import { theme } from "../../../../theme";
-import FacebookHelper from '../../../../context/platform/helper/facebook';
-import YoutubeHelper from '../../../../context/platform/helper/youtube';
-import AccountCard from './AccountCard';
-import {PLATFORM_ACCOUNT_TYPES_ID, PLATFORM_ACCOUNT_TYPES, PlatformContext} from '../../../../context/platform/context'
-import { activePlatform, selectPlatform } from '../../../../context/platform/actions';
+import { selectPlatform } from '../../../../context/platform/actions';
+import { PlatformContext } from '../../../../context/platform/context';
 import { getPlatformHelper } from '../../../../context/platform/helper';
+import { theme } from "../../../../theme";
+import AccountCard from './AccountCard';
 /* global gapi */
 /* global FB */
 
@@ -103,11 +101,10 @@ const SettingModal = (props) => {
 		// 	return
 		// }
 
-		platformHelper.auth()
+		platformHelper.auth(account.id)
 			.then((auth) => {
 				var res = JSON.parse(JSON.stringify({...account, ...auth, active: true}))
 				console.log('Platform is active and select now:', res)
-				//dispatch(activePlatform(res))
 				dispatch(selectPlatform(res))
 			})
 			.catch((err) => {

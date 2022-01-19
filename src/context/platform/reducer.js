@@ -1,21 +1,21 @@
 const reducer = (state, action) => {
-    const { account} = action.payload != undefined ? action.payload : {}
+    const { account, pages, social} = action.payload != undefined ? action.payload : {}
 
     var temps, temp
     switch (action.type) {
-        case 'ACTIVE_PLATFORM':
-            temps = JSON.parse(JSON.stringify(state.platforms))
-            temps[account.id] = account
-
-            return {
-                ...state, 
-                platforms: temps
-            }
         case 'SELECT_PLATFORM':
             temp = JSON.parse(JSON.stringify(account))
             return {
                 ...state,
-                platform: temp
+                platform: temp,
+                social: null
+            }
+        case 'SELECT_SOCIAL':
+            temp = JSON.parse(JSON.stringify(social))
+            console.log("Select social reducer:", social);
+            return {
+                ...state,
+                social: temp
             }
         default: 
             return state

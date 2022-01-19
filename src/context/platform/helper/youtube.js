@@ -32,7 +32,7 @@ class YoutubeHelper {
                 },
                 })
             const data = res.result
-            console.log("Create broadcast ", data.id)
+            console.log("Create broadcast ", data)
             livestream.livestreamId = data.id
             livestream.liveChatId = data.snippet.liveChatId
             return livestream
@@ -106,7 +106,8 @@ class YoutubeHelper {
         if (livestream == null) return null 
 
         livestream = await this.bindBroadcastToStream(livestream)
-        livestream.access_token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true).access_token
+        //livestream.access_token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true).access_token
+        livestream.platform = 'youtube'
         console.log("Livestream after bind:", livestream)
         return livestream
     }
@@ -162,7 +163,7 @@ class YoutubeHelper {
     //     }
     // }
 
-    static auth = () => {
+    static auth = (accountType) => {
         return new Promise((resolve, reject) => {
             gapi.auth2.getAuthInstance()
             .signIn({ scope: 'https://www.googleapis.com/auth/youtube.force-ssl' })

@@ -61,9 +61,9 @@ const QuestionDetailModal = (props) => {
 		correctAnswerPercent = stage.answers.filter((answer) => answer.isCorrect).length 
 			/ answerPlayers * 100
 
-		avgAnswerTime = stage.answers.reduce((sumTime, answer) => {
+		avgAnswerTime = Math.floor(stage.answers.reduce((sumTime, answer) => {
 			return sumTime += (time_limit - answer.answerTime)
-		}, 0) / answerPlayers
+		}, 0) / answerPlayers)
 	} 
 
 

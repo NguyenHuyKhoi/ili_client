@@ -39,7 +39,11 @@ export const PLATFORM_ACCOUNT_TYPES = [
 
 const INITIAL_STATE = {
     platforms: JSON.parse(localStorage.getItem('platform_context') || JSON.stringify(PLATFORM_ACCOUNT_TYPES)),
-    platform: null
+    platform: null,
+    social: null,
+    fbPages: [],
+    fbGroups: [],
+    ytChannels: []
 }
 
 export const PlatformContext = createContext(reducer)
@@ -57,6 +61,7 @@ export const PlatformContextProvider = ({children}) => {
         value = {{
             platforms: state.platforms,
             platform: state.platform,
+            social: state.social,
             dispatch,
         }}>
         {

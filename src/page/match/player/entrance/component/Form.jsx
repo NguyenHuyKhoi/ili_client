@@ -50,6 +50,7 @@ const Form = (props) => {
                 onChange = {handleChange} 
                 type = {type}
                 style = {{
+                    textAlign: 'center',
                     borderColor: props.showAlert? 'red':'gray',
                     backgroundColor: props.showAlert? red[100]:'white',
                     marginTop: theme.spacing(3)
