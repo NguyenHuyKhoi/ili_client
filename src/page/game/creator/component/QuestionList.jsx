@@ -4,9 +4,11 @@ import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import Button from '../../../../component/Button'
 import { addQuestion, selectQuestion } from '../../../../context/game/creator/actions'
-import { GameCreatorContext } from '../../../../context/game/creator/context'
+import { GameCreatorContext, QUESTION_TYPES_ID } from '../../../../context/game/creator/context'
 import { theme } from '../../../../theme'
-import QuestionMiniItem from './QuestionMiniItem'
+import MultipleChoicesQuestionMiniItem from './MultipleChoicesQuestionMiniItem'
+import PicWordQuestionMiniItem from './PicWordQuestionMiniItem'
+import TFChoicesQuestionMiniItem from './TFChoicesQuestionMiniItem'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -44,8 +46,12 @@ const QuestionList = (props) => {
         dispatch(selectQuestion(index))
     }
     const handleAddQuestion = () => {
-        dispatch(addQuestion())
+        // dispatch(addQuestion())
+        if (props.onAdd) {
+            props.onAdd()
+        }
     }
+    console.log("Quétions", questions);
     return (
         <div className = {classes.container}>
             <div className = {classes.list} >
@@ -63,7 +69,13 @@ const QuestionList = (props) => {
                                'Quiz ' + (item.index + 1)
                             }
                         </Typography>
-                        <QuestionMiniItem selected = {questionIndex == index} question = {item}/>
+                        {
+                            item.typeId == QUESTION_TYPES_ID.MULTIPLE_CHOICE ? <MultipleChoicesQuestionMiniItem selected = {questionIndex == index} question = {item}/>
+                            : item.typeId == QUESTION_TYPES_ID.TF_CHOICE ? <TFChoicesQuestionMiniItem selected = {questionIndex == index} question = {item}/>
+                            : item.typeId == QUESTION_TYPES_ID.PIC_WORD ? <PicWordQuestionMiniItem  selected = {questionIndex == index} question = {item}/>
+                            : item.typeId == QUESTION_TYPES_ID.WORD_TABLE ? 'Word table'
+                            : null
+                        }
                     </div>
                 ))
             }

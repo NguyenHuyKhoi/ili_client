@@ -9,6 +9,7 @@ import Answers from './Answers';
 import TextField from '../../../../component/TextField'
 import TextArea from '../../../../component/TextArea'
 import { theme } from '../../../../theme';
+import { Grid } from '@mui/material';
 const useStyles = makeStyles((theme) => ({
     container: {
         padding: theme.spacing(5),
@@ -33,21 +34,27 @@ const useStyles = makeStyles((theme) => ({
     },
 
     uploadImg: {
-        width: 420,
-        height: 280
+        width: '100%',
+        aspectRatio: 1.6
     }
 }))
 
-const QuestionBuilder = () => {
+const PicWordQuestionBuilder = () => {
     const classes = useStyles()
     const {game, dispatch} = useContext(GameCreatorContext)
     const {questions, questionIndex} = game
     let question = questions[questionIndex]
     
-    const {title, image, answers, correct_answers} = question
+    const {title, images, correct_answer} = question
+    console.log("Question in builder:", question);
     const handleChange = (key, value) => {
         question[key] = value
         dispatch(updateQuestion(question, questionIndex))
+    }
+
+    const handleChangeImage = (index, value) => {
+        question.images[index] = value
+        handleChange('images', question.images)
     }
     return ( 
         <div className = {classes.container}>
@@ -63,20 +70,42 @@ const QuestionBuilder = () => {
                 value={title == null ? '':title}
                 onChange={ (value)=> handleChange('title', value)}/>
 
-            <div className = {classes.uploadImg}>
-                <MediaUploadCard 
-                    onSelectImage = {(image) => handleChange('image', image)}
-                    onRemoveImage = {() => handleChange('image', null)}
-                    label = 'Upload a hint'
-                    image = {image}/>
+            <div style = {{
+                width: theme.spacing(80),
+                aspectRatio: 1.6,
+                alignItems: 'center'
+            }}>
+                <Grid container columnSpacing={3} rowSpacing={3}>
+                {
+                    images.map((image, index) => (
+                        <Grid item xs = {6} >
+                             <div className = {classes.uploadImg}>
+                                <MediaUploadCard 
+                                    onSelectImage = {(image) => handleChangeImage(index, image)}
+                                    onRemoveImage = {() => handleChangeImage(index, null)}
+                                    label = 'Upload a hint'
+                                    image = {image}/>
+                            </div>
+                        </Grid>
+                    ))
+                }
+                </Grid>
             </div>
-            <Answers 
-                answers = {answers}
-                correct_answers = {correct_answers}
-                onAnswerCorrectChange = {(correct_answers) => handleChange('correct_answers', correct_answers)}
-                onAnswerChange = {(answers) => handleChange('answers',answers)}/>
+            
+            <TextField 
+                placeholder = 'Keyword ...' 
+                style = {{ 
+                    backgroundColor: 'white', textAlign: 'center',
+                    padding: theme.spacing(1),
+                    width: '50%', fontSize: 80,
+                    paddingLeft: theme.spacing(2),
+                    paddingRight: theme.spacing(2)
+                }}
+                value={correct_answer == null ? '':correct_answer}
+                onChange={ (value)=> handleChange('correct_answer', value)}/>
+        
         </div>
     )
 }
 
-export default QuestionBuilder
+export default PicWordQuestionBuilder

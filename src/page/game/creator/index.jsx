@@ -5,15 +5,18 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import NotificationModal from '../../../component/NotificationModal'
 import { AuthContext } from '../../../context/auth/context'
-import { deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, validateGame } from '../../../context/game/creator/actions'
-import { GameCreatorContext } from '../../../context/game/creator/context'
+import { addQuestion, deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, validateGame } from '../../../context/game/creator/actions'
+import { GameCreatorContext, QUESTION_TYPES_ID } from '../../../context/game/creator/context'
 import { validateGameSetting, validateQuestion } from '../../../context/game/creator/reducer'
 import { theme } from '../../../theme'
 import DeleteQuestionModal from './component/DeleteQuestionModal'
-import QuestionBuilder from './component/QuestionBuilder'
+import MultipleChoicesQuestionBuilder from './component/MultipleChoicesQuestionBuilder'
+import PicWordQuestionBuilder from './component/PicWordQuestionBuilder'
 import QuestionConfig from './component/QuestionConfig'
 import QuestionList from './component/QuestionList'
+import SelectQuestionTypeModal from './component/SelectQuestionTypeModal'
 import SettingModal from './component/SettingModal'
+import TFChoicesQuestionBuilder from './component/TFChoicesQuestionBuilder'
 import Topbar from './component/Topbar'
 import ValidateGameModal from './component/ValidateGameModal'
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +32,7 @@ const GameCreatorPage = (props) => {
     const classes = useStyles()
     const navigate = useNavigate()
     const {token} = useContext(AuthContext)
-    const {game, dispatch, mode} = useContext(GameCreatorContext)
+    const {game, dispatch, mode, questionType} = useContext(GameCreatorContext)
     const {questions, questionIndex, isValidated} = game
 
     const [canDeleteQuestion, setCanDeleteQuestion] = useState(false)
@@ -114,6 +117,16 @@ const GameCreatorPage = (props) => {
         navigate('/game/library', {replace: true})
     }
 
+    const handleSelectQuestionType = (id) => {
+        console.log("Select question type", id);
+        dispatch(addQuestion(id))
+        setModal({})
+    }
+
+    const handleClickAdd = () => {
+        setModal({state: 'select_type'})
+    }
+
     return (
         <div className = {classes.container}>
             <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
@@ -134,6 +147,11 @@ const GameCreatorPage = (props) => {
                 open = { modal.state == 'success' }     
                 onClose = {() => setModal({})}
                 onDone = {handleDoneCreate}/>
+
+            <SelectQuestionTypeModal 
+                open = { modal.state == 'select_type' }     
+                onClose = {() => setModal({})}
+                onSelectType = {handleSelectQuestionType}/>
 
             <SettingModal 
                 setting = {{
@@ -172,10 +190,16 @@ const GameCreatorPage = (props) => {
 
             <Grid container sx = {{pt: theme.spacing(7), flex: 1}}>
                 <Grid item sm={1.7} >
-                    <QuestionList/>
+                    <QuestionList onAdd = {handleClickAdd} />
                 </Grid>
                 <Grid item sm={8.3}>
-                    <QuestionBuilder/>
+                    {
+                        questionType == QUESTION_TYPES_ID.MULTIPLE_CHOICE ? <MultipleChoicesQuestionBuilder/>
+                        : questionType == QUESTION_TYPES_ID.TF_CHOICE ? <TFChoicesQuestionBuilder/>
+                        : questionType == QUESTION_TYPES_ID.PIC_WORD ? <PicWordQuestionBuilder/>
+                        : questionType == QUESTION_TYPES_ID.WORD_TABLE ? 'Word table'
+                        : 'Not type'
+                    }
                 </Grid>
                 <Grid item sm={2}>
                     <QuestionConfig onClickDelete = {() => setModal({state: 'delete_question'})}

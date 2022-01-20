@@ -82,8 +82,12 @@ const HeaderBarAuth = (props) => {
 
 
     const handleCreate = () => {
+        console.log("Click Create game");
         gameCreatorDispatch(startCreateGame())
-        navigate('/game/creator',{replace: true})
+        setTimeout(() => {
+            return navigate('/game/creator',{replace: true})
+        }, 1000)
+        
     }
 
     const handleJoin = () => {

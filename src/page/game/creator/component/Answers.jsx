@@ -65,7 +65,7 @@ export const answerStyles = [
 
 const Answer = (props) => {
     const classes = useStyles()
-    const {answer, isCorrect, style} = props
+    const {answer, isCorrect, style, isFixed} = props
     const {color, icon, placeholder} = style
     const handleAnswerChange = (value) => {
         if (props.onChange) {
@@ -96,6 +96,7 @@ const Answer = (props) => {
                     fontSize: 24,
                     flex: 1
                 }}
+                disabled = {isFixed}
                 placeholder= {placeholder}
                 className = {classes.titleInput} 
                 value = {answer == null ? '' : answer}
@@ -114,7 +115,7 @@ const Answer = (props) => {
 }
 const Answers = (props) => {
     const classes = useStyles()
-    let {answers, correct_answers} = props
+    let {answers, correct_answer, isFixed} = props
     const handleAnswerChange = (index, value) => {
         answers[index] = value
         if (props.onAnswerChange) {
@@ -123,11 +124,12 @@ const Answers = (props) => {
     }
     const handleAnswerCorrectChange = (index, isCorrect) => {
         // ONLY correct answers
-        correct_answers = isCorrect ? [index] : []
+        correct_answer = isCorrect ? index : null
         if (props.onAnswerCorrectChange) {
-            props.onAnswerCorrectChange(correct_answers)
+            props.onAnswerCorrectChange(correct_answer)
         }
     }
+    if (isFixed == undefined) isFixed = false
     return (
         <div className = {classes.container}>
             <Grid container rowSpacing={1.5} columnSpacing={{ xs: 1.5 }} sx = {{width:'100%',height:'100%'}}>
@@ -135,9 +137,10 @@ const Answers = (props) => {
                     <Grid item xs={6}   key = {''+index}>
                         <Answer 
                             answer = {item} 
+                            isFixed = {isFixed}
                             style= {answerStyles[index]}
-                            isCorrect = {(correct_answers.indexOf(index) != -1)}
-                            onChange = {(value) => handleAnswerChange(index, value)}
+                            isCorrect = {correct_answer != null && correct_answer == index}
+                            onChange = {(value) => {}}
                             onChangeCorrect = {(isCorrect)=> handleAnswerCorrectChange(index,isCorrect)}/>
                     </Grid>
                 ))}

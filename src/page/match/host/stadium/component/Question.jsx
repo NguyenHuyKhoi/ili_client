@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 const Question = (props) => {
     const classes = useStyles()
     const {question, time,answer_counts, question_index, question_total} = props
-    const {title, image, answers, time_limit, correct_answers} = question
+    const {title, image, answers, time_limit, correct_answer} = question
     const total_count = answer_counts.reduce((res, count) => res += count, 0)
 
     console.log(" image : ", image)

@@ -27,8 +27,11 @@ export const selectQuestion = (index) => ({
     }
 })
 
-export const addQuestion = () => ({
-    type: 'ADD_QUESTION'
+export const addQuestion = (type) => ({
+    type: 'ADD_QUESTION',
+    payload: {
+        type
+    }
 })
 
 

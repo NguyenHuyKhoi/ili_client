@@ -48,7 +48,7 @@ const QuestionEnd = (props) => {
     const classes = useStyles()
     var {question, time, answer_counts} = props
 
-    const {title, image, answers, correct_answers} = question
+    const {title, image, answers, correct_answer} = question
     const total_count = answer_counts.reduce((res, count) => res += count, 0)
     return (
         <div className = {classes.container}>
@@ -68,7 +68,7 @@ const QuestionEnd = (props) => {
                                     answer = {answer} 
                                     count = {answer_counts[index]}
                                     percent = {total_count == 0 ? 0 : answer_counts[index] / total_count}
-                                    isCorrect = {correct_answers.indexOf(index) != -1}/>
+                                    isCorrect = {correct_answer == index}/>
                             </div>
                         ))
                     }
@@ -84,7 +84,7 @@ const QuestionEnd = (props) => {
                                     style = {answerStyles[index]}
                                     answer = {item} 
                                     count = {answer_counts[index]}
-                                    isCorrect = {correct_answers.indexOf(index) != -1}/>
+                                    isCorrect = {correct_answer == index}/>
                             </Grid>
                         ))
                     }

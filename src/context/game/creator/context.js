@@ -1,5 +1,60 @@
 import { createContext, useEffect, useReducer } from "react"
 import reducer from "./reducer"
+export const QUESTION_TYPES_ID = {
+    MULTIPLE_CHOICE: 0,
+    TF_CHOICE: 1,
+    PIC_WORD: 2,
+    WORD_TABLE: 3
+}
+
+export const QUESTION_TYPES = [
+    {
+        type: 'Multiple Choice',
+        id: QUESTION_TYPES_ID.MULTIPLE_CHOICE,
+        sample: {
+            index: 0,
+            typeId: QUESTION_TYPES_ID.MULTIPLE_CHOICE,
+            title: null,
+            image: null,
+            answers: [
+                null,
+                null,
+                null,
+                null
+            ],
+            correct_answer: null,
+            time_limit: 20,
+            score: 1000
+        }
+    },
+    {
+        type: 'True/False',
+        id: QUESTION_TYPES_ID.TF_CHOICE,
+        sample: {
+            index: 0,
+            typeId: QUESTION_TYPES_ID.TF_CHOICE,
+            title: null,
+            image: null,
+            answers: ['True', 'False'],
+            correct_answer: null,
+            time_limit: 20,
+            score: 1000
+        }
+    },
+    {
+        type: '4 Pic 1 Word',
+        id: QUESTION_TYPES_ID.PIC_WORD,
+        sample: {
+            index: 0,
+            typeId: QUESTION_TYPES_ID.PIC_WORD,
+            title: null,
+            images: [null, null, null, null],
+            correct_answer: null,
+            time_limit: 20,
+            score: 1000
+        }
+    }
+]
 export const GAME_SUBJECTS = [
     {label: 'Science', value: 'science'},
     {label: 'Music', value: 'music'},
@@ -9,20 +64,6 @@ export const GAME_SUBJECTS = [
     {label: 'IQ', value: 'iq'},
     {label: 'Others', value: 'others'}
 ]
-export const sample_question = {
-    index: 0,
-    title: null,
-    image: null,
-    answers: [
-        null,
-        null,
-        null,
-        null
-    ],
-    correct_answers: [],
-    time_limit: 20,
-    score: 1000
-}
 
 export const sample_game = {
     title: null,
@@ -31,12 +72,13 @@ export const sample_game = {
     visibility: 'private',
     subject: 'others',
     questionIndex: 0,
-    questions: [JSON.parse(JSON.stringify(sample_question))]
+    questions: [JSON.parse(JSON.stringify(QUESTION_TYPES[0].sample))]
 }
 
 const INITIAL_STATE = () => {
     let newState = JSON.parse(JSON.stringify(sample_game))
     newState.state = 'create' 
+    newState.questionType = QUESTION_TYPES_ID.MULTIPLE_CHOICE
     const saved = localStorage.getItem('game_creator')
     if (saved) {
         return JSON.parse(saved)
@@ -61,6 +103,7 @@ export const GameCreatorContextProvider = ({children}) => {
         value = {{
             game: state,
             mode: state.mode,
+            questionType: state.questionType,
             dispatch
         }}>
         {

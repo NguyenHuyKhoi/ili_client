@@ -113,7 +113,7 @@ const QuestionDetailCard = (props) => {
 	const classes = useStyles() 
 	const {stage, players} = props 
 	const {question} = stage
-	const {title, image, answers, correct_answers, time_limit, score} = question
+	const {title, image, answers, correct_answer, time_limit, score} = question
 	return (
 		<div className = {classes.container}>
 			<Grid container >
@@ -131,7 +131,7 @@ const QuestionDetailCard = (props) => {
 									style = {answerStyles[index]}
 								 	key = {''+index} 
 									answer = {answer} 
-									isCorrect = {correct_answers.indexOf(index) != -1} 
+									isCorrect = {correct_answer == index} 
 									number = {stage.answers.filter((answer) => answer.answerIndex == index).length}
 									total = {players.length}
 									/>

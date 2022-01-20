@@ -96,7 +96,7 @@ const QuestionRowItem = (props) => {
     const {isShowAll, selected, disable} = props
     const [isShow, setIsShow] = useState(false)
     const {question, index} = props
-    const {title, image, answers, correct_answers, time_limit } = question
+    const {title, image, answers, correct_answer, time_limit } = question
     const handleShowChange = () => {
         if (disable) return
         setIsShow(!isShow)
@@ -142,7 +142,7 @@ const QuestionRowItem = (props) => {
                                 style = {answerStyles[index]}
                                 key = {''+index} 
                                 answer = {item} 
-                                correct = { correct_answers.indexOf(index) != -1 }/>
+                                correct = { correct_answer == index }/>
                         ))
                     }
                 </div>

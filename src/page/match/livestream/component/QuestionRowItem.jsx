@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 const QuestionRowItem = (props) => {
     const classes = useStyles()
     const {question, index} = props
-    const {title, image, answers, correct_answers, time_limit } = question
+    const {title, image, answers, correct_answer, time_limit } = question
 
     return (
         <div className = {classes.container} 

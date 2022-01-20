@@ -1,8 +1,8 @@
-import { sample_game, sample_question } from "./context"
+import { QUESTION_TYPES, QUESTION_TYPES_ID, sample_game } from "./context"
 
-export const validateQuestion = (question) => {
+export const validateMultipleQuestion = (question) => {
     let defs = []
-    let {title, answers, correct_answers} = question
+    let {title, answers, correct_answer} = question
     // Check title is missing:
     if (title == "" || title == null) {
         defs.push('Question missing')
@@ -14,11 +14,34 @@ export const validateQuestion = (question) => {
     }
 
     // Check correct answer is selected: 
-    if (correct_answers.length == 0) {
+    if (correct_answer != null) {
         defs.push('Correct answers not selected')
     }
     //console.log("Validate :", defs)
     return defs
+}
+
+export const validateTFQuestion = (question) => {
+    return []
+}
+export const validatePicWordQuestion = (question) => {
+    return []
+}
+
+export const validateWordTableQuestion = (question) => {
+    return []
+}
+export const validateQuestion = (question) => {
+    switch (question.typeId) {
+        case QUESTION_TYPES_ID.MULTIPLE_CHOICE:
+            return validateMultipleQuestion(question)
+        case QUESTION_TYPES_ID.TF_CHOICE:
+            return validateTFQuestion(question)     
+        case QUESTION_TYPES_ID.PIC_WORD:
+            return validatePicWordQuestion(question)
+        case QUESTION_TYPES_ID.WORD_TABLE:
+            return validateWordTableQuestion(question)   
+    }
 }
 
 export const validateGameSetting = (game) => {
@@ -34,7 +57,7 @@ export const validateGameSetting = (game) => {
 }
 
 const reducer = (state, action) => {
-    const {question, index, setting} = action.payload != undefined ? action.payload : {}
+    const {question, index, setting, type} = action.payload != undefined ? action.payload : {}
 
     var questions 
 
@@ -60,14 +83,16 @@ const reducer = (state, action) => {
             }
         
         case 'ADD_QUESTION':
-            temp = JSON.parse(JSON.stringify(sample_question))
+            temp = JSON.parse(JSON.stringify(QUESTION_TYPES[type].sample))
             temps = JSON.parse(JSON.stringify(state.questions))
             temp.index = temps.length
-            console.log("Index of new question: ", temp.index)
+            console.log("Add new question: ", temp)
             temps.push(temp)
             return {
                 ...state,
-                questions: temps
+                questions: temps,
+                questionType: type,
+                questionIndex: temps.length - 1
             }
         case 'DUPLICATE_QUESTION':
             temp = JSON.parse(JSON.stringify(state.questions[index]))
@@ -99,11 +124,12 @@ const reducer = (state, action) => {
             }
     
         case 'START_CREATE_GAME': {
-            console.log("Sample question:", sample_question)
+            console.log("Start create game with: ", QUESTION_TYPES_ID.MULTIPLE_CHOICE);
             return {
                 ...JSON.parse(JSON.stringify(sample_game)),
                 mode: 'create',
-                questionIndex: 0
+                questionIndex: 0,
+                questionType: QUESTION_TYPES_ID.MULTIPLE_CHOICE
             }
         }
 

@@ -21,13 +21,15 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'white',
         borderRadius: theme.spacing(0.5),
         border: '1px solid gray',
-        height:7
+        height: theme.spacing(2)
     },
     img: {
         height:30,
         aspectRatio: 1.6,
         alignSelf:'center',
-        marginTop: theme.spacing(1)
+        marginTop: theme.spacing(1),
+        borderRadius: theme.spacing(0.5),
+        border: '1px solid #000'
     },
     time: {
         position: 'absolute',
@@ -45,18 +47,20 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const QuestionMiniItem = (props) => {
+const TFChoicesQuestionMiniItem = (props) => {
     const classes = useStyles()
     const {question} = props
     //console.log("Question :", question)
-    const {title, image, correct_answers} = question
+    const {title, image, correct_answer} = question
     const limitTitle = title != null? title.substring(0, 20) + '...' : 'Question'
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? '#fff': theme.palette.background.main}}>
             <Typography variant='caption' sx = {{alignSelf:'center'}}>
                 {limitTitle}
             </Typography>
-            <img src = {createUrl(image)} 
+            <div style = {{
+                backgroundColor: image == null ? 'white': theme.palette.success.main,
+            }} 
                 className = {classes.img}/>
 
             <div className= {classes.time} >
@@ -67,10 +71,10 @@ const QuestionMiniItem = (props) => {
             <div className = {classes.answers}>
                 <Grid container sx = {{flex: 1}}>
                 {
-                    Array.from(Array(4)).map((_, index) => (
+                    Array.from(Array(2)).map((_, index) => (
                         <Grid item xs = {6} sx = {{p: theme.spacing(0.2)}}   key = {''+index}>
                             <div className = {classes.answer} 
-                                style = {{backgroundColor: (correct_answers.indexOf(index) != -1) ? theme.palette.success.main : 'white'}}/>
+                                style = {{backgroundColor: (correct_answer == index) ? theme.palette.success.main : 'white'}}/>
                         </Grid>
                     ))
                 }
@@ -81,4 +85,4 @@ const QuestionMiniItem = (props) => {
     )
 }
 
-export default QuestionMiniItem
+export default TFChoicesQuestionMiniItem
