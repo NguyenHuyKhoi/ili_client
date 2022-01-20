@@ -7,6 +7,11 @@ import { theme } from '../../../../../theme'
 import {createUrl} from '../../../../../util/helper'
 import Answer from './Answer'
 import {answerStyles} from '../../../../game/creator/component/Answers'
+import Button from '../../../../../component/Button'
+import TextField from '../../../../../component/TextField'
+import { WORD_TABLE_SIZE } from '../../../../../context/game/creator/context'
+import CharTable from './CharTable'
+import KeywordAnswerList from './KeywordAnswerList'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -26,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: theme.spacing(7)
     },
     header: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(1),
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -36,26 +43,30 @@ const useStyles = makeStyles((theme) => ({
         aspectRatio: 1.6,
         height: 240,
     },
-    answers: {
-        padding: theme.spacing(1),
+    answerContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: theme.spacing(2)
     }
 }))
 
 const WordTableQuestion = (props) => {
     const classes = useStyles()
-    const [selected, setSelected] = useState(null)
+    const [userAnswer, setuserAnswer] = useState('');
     const {data} = props
-    var {question, time,answer_counts, question_index, question_total, isPlayer} = data
-    const {title, image, answers, time_limit, correct_answer} = question
+    var {question, time,answer_counts, question_index, question_total, isPlayer, open_word_states , userAnswers} = data
+    const {title, image, answers, time_limit, correct_answer, char_table, correct_answers} = question
 
 
     var answerTotal = answer_counts.reduce((res, item) => res += item, 0)
 
-    const handleAnswer = (index) => {
+    const handleAnswer = () => {
         if (!isPlayer) return
-        if (selected != null) return 
-        setSelected(index)
-        if (props.onAnswer) props.onAnswer(index)
+        console.log("Send answer from input:", userAnswer);
+        if (props.onAnswer) props.onAnswer(userAnswer)
+        setuserAnswer('')
 
     }
     if (isPlayer == undefined) isPlayer = false 
@@ -74,31 +85,61 @@ const WordTableQuestion = (props) => {
             </div>
         
             <Divider/>
-            <div className = {classes.center}>
-                {
-                    image != null ?
-                    <img className = {classes.img} src = {createUrl(image)}/>
-                    :
-                    <div className = {classes.img} />
-                }
-             
-            </div>
-            <div className = {classes.answers} >
-                <Grid container columnSpacing = {1.5} rowSpacing = {1.5}>
+            <Grid container sx = {{flex: 1}}>
+                <Grid item xs = {6} sx = {{display: 'flex',flexDirection: 'column', justifyContent: 'center',alignItems:'center'}}>
+                    <CharTable 
+                        table = {char_table}
+                        showAll = {!isPlayer}
+                        correct_answers = {correct_answers}
+                        open_word_states = {open_word_states} />
                     {
-                        answers.map((item, index) => (
-                            <Grid item xs = {6}   key = {''+index}>
-                                <Answer 
-                                    style = {answerStyles[index]}
-                                    answer = {item} 
-                                    onClick = {() => handleAnswer(index)}
-                                    isSelected = {selected == null ? null : (selected == index)}
-                                    isCorrect = {null}/>
-                            </Grid>
-                        ))
+                        isPlayer && 
+                        <div style = {{
+                            flexDirection: 'row',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            padding: theme.spacing(3),
+                        }}>
+                            <Button 
+                                label = 'Clear'
+                                variant = 'warning'
+                                size = 'small'
+                                style = {{width: theme.spacing(16),marginRight: theme.spacing(3),alignSelf: 'center'}}
+                                onClick = {() => setuserAnswer('')}/>
+                            <TextField 
+                                style = {{ 
+                                    backgroundColor: 'white', 
+                                    textAlign: 'center',
+                                    alignSelf: 'center',
+                                    padding: theme.spacing(1),
+                                    width: theme.spacing(30), fontSize: 40,
+                                    paddingLeft: theme.spacing(2),
+                                    paddingRight: theme.spacing(2)
+                                }}
+                                value={userAnswer}
+                                onChange={ (value)=> setuserAnswer(value.toUpperCase())}/>
+                            <Button 
+                                label = 'Answer'
+                                variant = 'success'
+                                size = 'small'
+                                style = {{width: theme.spacing(16),marginLeft: theme.spacing(3),alignSelf: 'center'}}
+                                onClick = {handleAnswer}/>
+                            <div style = {{flex: 1}}>
+                            </div>
+                    
+                        </div>
                     }
+                
                 </Grid>
-            </div>
+                <Grid item xs = {6} sx = {{display: 'flex',flexDirection: 'column', justifyContent: 'center',alignItems:'center'}}>
+                    <KeywordAnswerList 
+                        correct_answers = {correct_answers}
+                        userAnswers = {userAnswers}
+                        showAll = {!isPlayer}/>
+                </Grid>
+            </Grid>
+          
        </div>
     )
 }

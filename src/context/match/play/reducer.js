@@ -67,7 +67,6 @@ const reducer = (state, action) => {
     switch (action.type) {
 
         case 'UPDATE_MATCH': {
-            console.log("Update match with payload: ", action)
             let question = {}
             let answer_counts = []
             const {progress} = match

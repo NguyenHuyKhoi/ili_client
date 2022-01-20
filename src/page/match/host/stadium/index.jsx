@@ -15,6 +15,7 @@ import QuestionEnd from './component/QuestionEnd'
 import Scoreboard from './component/Scoreboard'
 import TFChoiceQuestion from './component/TFChoiceQuestion'
 import WordTableQuestion from './component/WordTableQuestion'
+import WordTableQuestionEnd from './component/WordTableQuestionEnd'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -33,11 +34,12 @@ const MatchHostStadiumPage = () => {
     const navigate = useNavigate()
     const {question, match, answer_counts, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
-    const [stage, setStage] = useState({type: 'on_question'})
+    const [stage, setStage] = useState({type: 'end_question'})
     const [time, setTime] = useState(0)
     const [timeTotal, setTimeTotal] = useState(question.time_limit)
     const {questionIndex, pinCode, players} = match
 
+    console.log("match :", match);
 
     useEffect(() => {
         setTimeTotal(question.time_limit)
@@ -81,7 +83,27 @@ const MatchHostStadiumPage = () => {
         }
     }, [])
 
+    const renderQuestionEnd = () => {
+        var data = {
+            question,
+            time,
+            answer_counts
+        }
+        var stage = match.progress[match.progress.length - 1]
+        console.log("Render question end: ", stage.open_word_states);
+        switch (question.typeId) {
+            case  QUESTION_TYPES_ID.MULTIPLE_CHOICE :
+            case QUESTION_TYPES_ID.TF_CHOICE :
+            case QUESTION_TYPES_ID.PIC_WORD :
+                return  <QuestionEnd  data = {data} />
 
+            case QUESTION_TYPES_ID.WORD_TABLE :
+                return <WordTableQuestionEnd
+                    data = {{...data, open_word_states: stage.open_word_states, userAnswers: stage.answers}} />
+            default:
+                return null 
+        }
+    }
 
     const renderQuestion = () => {
         var data = {
@@ -91,6 +113,7 @@ const MatchHostStadiumPage = () => {
             question_index :questionIndex,
             question_total : match.game.questions.length
         }
+        var stage = match.progress[match.progress.length - 1]
         switch (question.typeId) {
             case  QUESTION_TYPES_ID.MULTIPLE_CHOICE :
                 return  <MultipleChoiceQuestion 
@@ -103,7 +126,7 @@ const MatchHostStadiumPage = () => {
                     data = {data} />
             case QUESTION_TYPES_ID.WORD_TABLE :
                 return <WordTableQuestion
-                    data = {data} />
+                    data = {{...data, open_word_states: stage.open_word_states, userAnswers: stage.answers}} />
             default:
                 return null 
         }
@@ -116,11 +139,7 @@ const MatchHostStadiumPage = () => {
             <div className = {classes.questionContainer}>
                 {
                     stage.type == 'end_question' ?
-                    <QuestionEnd 
-                        question = {question} 
-                        time = {time} 
-                        answer_counts = {answer_counts}
-                        /> 
+                    renderQuestionEnd()
                     :
                     stage.type == 'on_question' ?
                     renderQuestion()

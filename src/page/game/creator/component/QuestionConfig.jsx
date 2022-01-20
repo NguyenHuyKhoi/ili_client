@@ -60,9 +60,9 @@ const QuestionConfig = (props) => {
                     <DropdownSelect 
                         title = 'Time'
                         list = {[
-                            {label: '10s', value: 10},
-                            {label: '20s', value: 20},
-                            {label: '30s', value: 30}
+                            {label: '100s', value: 100},
+                            {label: '200s', value: 200},
+                            {label: '60s', value: 60}
                         ]}
                         value = {time_limit}
                         onChange = {(value)=>handleChange('time_limit',value)}/>

@@ -17,6 +17,8 @@ import WordTableQuestion from '../../host/stadium/component/WordTableQuestion'
 import PicWordQuestion from '../../host/stadium/component/PicWordQuestion'
 import TFChoiceQuestion from '../../host/stadium/component/TFChoiceQuestion'
 import MultipleChoiceQuestion from '../../host/stadium/component/MultipleChoiceQuestion'
+import QuestionEnd from '../../host/stadium/component/QuestionEnd'
+import WordTableQuestionEnd from '../../host/stadium/component/WordTableQuestionEnd'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -81,6 +83,14 @@ const MatchPlayerStadiumPage = () => {
             dispatch(updateMatch(match))
             setStage({type: 'on_question'})
         })
+        
+        socket.on('match:onEndQuestion', (data) => {
+            let {match, timeTotal} = data
+            console.log("Set time total:", timeTotal)
+            setTimeTotal(timeTotal)
+            dispatch(updateMatch(match))
+            setStage({type: 'end_question'})
+        })
 
         socket.on('match:scoreboard', (data) => {
             let {match, timeTotal} = data
@@ -101,8 +111,12 @@ const MatchPlayerStadiumPage = () => {
     }, [])
 
     const handleAnswer = (answer) => {
+        console.log("handle Send anser:", answer    );
         let me = findMe()
-        if (me._id == undefined) return 
+        if (me._id == undefined) {
+            console.log("Not found me");
+            return 
+        }
         let answerTime = question.time_limit - time
         console.log("Client send answer: ", answer, time);
         socket.emit('match:answer', pinCode, me, answer, answerTime)
@@ -117,8 +131,28 @@ const MatchPlayerStadiumPage = () => {
             }
         return player
     }
+    const renderQuestionEnd = () => {
+        var data = {
+            question,
+            time,
+            answer_counts
+        }
+        var stage = match.progress[match.progress.length - 1]
+        console.log("Render question end: ", stage.open_word_states);
+        switch (question.typeId) {
+            case  QUESTION_TYPES_ID.MULTIPLE_CHOICE :
+            case QUESTION_TYPES_ID.TF_CHOICE :
+            case QUESTION_TYPES_ID.PIC_WORD :
+                return  <QuestionEnd  data = {data} />
+
+            case QUESTION_TYPES_ID.WORD_TABLE :
+                return <WordTableQuestionEnd
+                data = {{...data, open_word_states: stage.open_word_states, userAnswers: stage.answers}} />
+            default:
+                return null 
+        }
+    }
     const renderQuestion = () => {
-        console.log("Answer count: ", answer_counts);
         var data = {
             question,
             time,
@@ -127,6 +161,7 @@ const MatchPlayerStadiumPage = () => {
             question_total : match.game.questions.length,
             isPlayer: true
         }
+        var stage = match.progress[match.progress.length - 1]
         switch (question.typeId) {
             case  QUESTION_TYPES_ID.MULTIPLE_CHOICE :
                 return  <MultipleChoiceQuestion 
@@ -142,7 +177,8 @@ const MatchPlayerStadiumPage = () => {
                     data = {data} />
             case QUESTION_TYPES_ID.WORD_TABLE :
                 return <WordTableQuestion
-                    data = {data}/>
+                    onAnswer = {handleAnswer}
+                    data = {{...data, open_word_states: stage.open_word_states, userAnswers: stage.answers}}/>
             default:
                 return null 
         }
@@ -166,7 +202,9 @@ const MatchPlayerStadiumPage = () => {
                 timeTotal = {timeTotal}/>
             {
                 stage.type == 'on_question' ?
-                renderQuestion()
+                    renderQuestion()
+                : stage.type == 'end_question' ?
+                    renderQuestionEnd()
                 : stage.type == 'not_answer'? 
                 <Timesup/>
                 : stage.type == 'correct_answer'?
@@ -175,6 +213,7 @@ const MatchPlayerStadiumPage = () => {
                 <Incorrect correct_answer = {getCorrectAnswer()}/>
                 : stage.type == 'scoreboard' ?
                 <Scoreboard time = {time} players = {players}/>
+                
                 : null
             }
             <BottomBar player = {findMe()}/>
