@@ -10,7 +10,10 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0.5),
         display:'flex',
         flexDirection:'column',
-        position: 'relative'
+        position: 'relative',
+        '&:hover': {
+            cursor: 'pointer'
+        }
     },
     answers: {
         flex:1,

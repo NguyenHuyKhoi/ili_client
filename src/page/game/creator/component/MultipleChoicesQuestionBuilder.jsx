@@ -38,16 +38,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const MultipleChoicesQuestionBuilder = () => {
+const MultipleChoicesQuestionBuilder = (props) => {
     const classes = useStyles()
-    const {game, dispatch} = useContext(GameCreatorContext)
-    const {questions, questionIndex} = game
-    let question = questions[questionIndex]
+    const {question} = props
     
     const {title, image, answers, correct_answer} = question
     const handleChange = (key, value) => {
         question[key] = value
-        dispatch(updateQuestion(question, questionIndex))
+        if (props.onChange) {
+            props.onChange(question)
+        }
     }
     return ( 
         <div className = {classes.container}>
@@ -61,7 +61,7 @@ const MultipleChoicesQuestionBuilder = () => {
                     paddingRight: theme.spacing(10)
                 }}
                 value={title == null ? '':title}
-                onChange={ (value)=> handleChange('title', value)}/>
+                onChange={(value)=> handleChange('title', value)}/>
 
             <div className = {classes.uploadImg}>
                 <MediaUploadCard 

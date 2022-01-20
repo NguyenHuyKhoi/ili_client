@@ -33,7 +33,9 @@ const TextField = (props) => {
             value = {value}
             type = {type ? type: 'text'}
             onChange={e => {
-                if (props.onChange) props.onChange(e.target.value)
+                if (props.onChange) {
+                    props.onChange(e.target.value)
+                }
             }}
             disabled = {disabled}
             style = {{

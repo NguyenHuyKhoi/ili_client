@@ -102,6 +102,7 @@ const SettingModal = (props) => {
 					<Grid item xs = {7}>
 						<div className = {classes.leftCol}>
 							<TextField 
+								style = {{textAlign: 'center'}}
 								placeholder='Enter game title ...'	
 								size='big'
 								value = {title ? title : ''} 

@@ -7,12 +7,15 @@ export const QUESTION_TYPES_ID = {
     WORD_TABLE: 3
 }
 
+export const WORD_TABLE_SIZE = 15
+
 export const QUESTION_TYPES = [
     {
         type: 'Multiple Choice',
         id: QUESTION_TYPES_ID.MULTIPLE_CHOICE,
         sample: {
             index: 0,
+            typeName: 'Multiple Choice',
             typeId: QUESTION_TYPES_ID.MULTIPLE_CHOICE,
             title: null,
             image: null,
@@ -32,6 +35,7 @@ export const QUESTION_TYPES = [
         id: QUESTION_TYPES_ID.TF_CHOICE,
         sample: {
             index: 0,
+            typeName: 'True/False',
             typeId: QUESTION_TYPES_ID.TF_CHOICE,
             title: null,
             image: null,
@@ -43,13 +47,29 @@ export const QUESTION_TYPES = [
     },
     {
         type: '4 Pic 1 Word',
+        
         id: QUESTION_TYPES_ID.PIC_WORD,
         sample: {
             index: 0,
+            typeName: '4 Pic 1 Word',
             typeId: QUESTION_TYPES_ID.PIC_WORD,
             title: null,
             images: [null, null, null, null],
             correct_answer: null,
+            time_limit: 20,
+            score: 1000
+        }
+    },
+    {
+        type: 'Word table',
+        id: QUESTION_TYPES_ID.WORD_TABLE,
+        sample: {
+            index: 0,
+            typeName: 'Word table',
+            typeId: QUESTION_TYPES_ID.WORD_TABLE,
+            title: null,
+            correct_answers: [],
+            char_table: new Array(WORD_TABLE_SIZE * WORD_TABLE_SIZE),
             time_limit: 20,
             score: 1000
         }
@@ -78,7 +98,6 @@ export const sample_game = {
 const INITIAL_STATE = () => {
     let newState = JSON.parse(JSON.stringify(sample_game))
     newState.state = 'create' 
-    newState.questionType = QUESTION_TYPES_ID.MULTIPLE_CHOICE
     const saved = localStorage.getItem('game_creator')
     if (saved) {
         return JSON.parse(saved)
@@ -103,7 +122,6 @@ export const GameCreatorContextProvider = ({children}) => {
         value = {{
             game: state,
             mode: state.mode,
-            questionType: state.questionType,
             dispatch
         }}>
         {

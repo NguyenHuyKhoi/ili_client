@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import NotificationModal from '../../../component/NotificationModal'
 import { AuthContext } from '../../../context/auth/context'
-import { addQuestion, deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, validateGame } from '../../../context/game/creator/actions'
+import { addQuestion, deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, updateQuestion, validateGame } from '../../../context/game/creator/actions'
 import { GameCreatorContext, QUESTION_TYPES_ID } from '../../../context/game/creator/context'
 import { validateGameSetting, validateQuestion } from '../../../context/game/creator/reducer'
 import { theme } from '../../../theme'
@@ -19,6 +19,7 @@ import SettingModal from './component/SettingModal'
 import TFChoicesQuestionBuilder from './component/TFChoicesQuestionBuilder'
 import Topbar from './component/Topbar'
 import ValidateGameModal from './component/ValidateGameModal'
+import WordTableQuestionBuilder from './component/WordTableQuestionBuilder'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -32,8 +33,10 @@ const GameCreatorPage = (props) => {
     const classes = useStyles()
     const navigate = useNavigate()
     const {token} = useContext(AuthContext)
-    const {game, dispatch, mode, questionType} = useContext(GameCreatorContext)
+    const {game, dispatch, mode} = useContext(GameCreatorContext)
     const {questions, questionIndex, isValidated} = game
+
+    var question = questions[questionIndex]
 
     const [canDeleteQuestion, setCanDeleteQuestion] = useState(false)
     const [defectiveQuestions, setDefectiveQuestions] = useState([])
@@ -71,9 +74,10 @@ const GameCreatorPage = (props) => {
             setModal({state: 'setting'})
         }
         else if (mode == 'create') {
-            console.log("Token :", token)
             // Add index for question:
             game.questions.forEach((question, index) => game.questions[index].index = index + 1)
+
+            console.log("Game questions: ", game.questions);
             axios.post('game/create', game, {
                 headers: {
                     'x-access-token': token
@@ -127,6 +131,33 @@ const GameCreatorPage = (props) => {
         setModal({state: 'select_type'})
     }
 
+    const handleUpdateQuestion = (ques) => {
+        dispatch(updateQuestion(question, questionIndex))
+    }
+
+    const renderBuilder = () => {
+
+        switch (question.typeId) {
+            case  QUESTION_TYPES_ID.MULTIPLE_CHOICE :
+                return  <MultipleChoicesQuestionBuilder 
+                    question = {question} 
+                    onChange = {handleUpdateQuestion}/>
+            case QUESTION_TYPES_ID.TF_CHOICE :
+                return <TFChoicesQuestionBuilder
+                    question = {question} 
+                    onChange = {handleUpdateQuestion}/>
+            case QUESTION_TYPES_ID.PIC_WORD :
+                return <PicWordQuestionBuilder
+                    question = {question} 
+                    onChange = {handleUpdateQuestion}/>
+            case QUESTION_TYPES_ID.WORD_TABLE :
+                return <WordTableQuestionBuilder
+                    question = {question} 
+                    onChange = {handleUpdateQuestion}/>
+            default:
+                return null 
+        }
+    }
     return (
         <div className = {classes.container}>
             <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
@@ -194,11 +225,7 @@ const GameCreatorPage = (props) => {
                 </Grid>
                 <Grid item sm={8.3}>
                     {
-                        questionType == QUESTION_TYPES_ID.MULTIPLE_CHOICE ? <MultipleChoicesQuestionBuilder/>
-                        : questionType == QUESTION_TYPES_ID.TF_CHOICE ? <TFChoicesQuestionBuilder/>
-                        : questionType == QUESTION_TYPES_ID.PIC_WORD ? <PicWordQuestionBuilder/>
-                        : questionType == QUESTION_TYPES_ID.WORD_TABLE ? 'Word table'
-                        : 'Not type'
+                        renderBuilder()
                     }
                 </Grid>
                 <Grid item sm={2}>

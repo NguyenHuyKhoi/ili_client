@@ -39,17 +39,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const PicWordQuestionBuilder = () => {
+const PicWordQuestionBuilder = (props) => {
     const classes = useStyles()
-    const {game, dispatch} = useContext(GameCreatorContext)
-    const {questions, questionIndex} = game
-    let question = questions[questionIndex]
+    const {question} = props
     
     const {title, images, correct_answer} = question
-    console.log("Question in builder:", question);
     const handleChange = (key, value) => {
         question[key] = value
-        dispatch(updateQuestion(question, questionIndex))
+        if (props.onChange) {
+            props.onChange(question)
+        }
     }
 
     const handleChangeImage = (index, value) => {
@@ -78,7 +77,7 @@ const PicWordQuestionBuilder = () => {
                 <Grid container columnSpacing={3} rowSpacing={3}>
                 {
                     images.map((image, index) => (
-                        <Grid item xs = {6} >
+                        <Grid item xs = {6} key = {'' + index}>
                              <div className = {classes.uploadImg}>
                                 <MediaUploadCard 
                                     onSelectImage = {(image) => handleChangeImage(index, image)}

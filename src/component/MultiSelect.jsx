@@ -52,9 +52,15 @@ const Item = (props) => {
 
 const MultiSelect = (props) => {
     const classes = useStyles()
-    const {selects} = props 
+    var {selects, disabled} = props 
+    if (disabled == undefined) disabled = false 
 
     const onSelectItem = (value) => {
+        if (disabled) return
+        if (props.onSelectItem) {
+            props.onSelectItem(value)
+            return
+        }
         var temp = JSON.parse(JSON.stringify(selects))
         if (temp.indexOf(value) == -1) {
             temp.push(value)
@@ -74,7 +80,7 @@ const MultiSelect = (props) => {
             style = {style ? style : {}}>
             <Typography variant = 'btnLabel'>
                 {
-                    label
+                    `${label} ( ${list.length} )`
                 }
             </Typography>
             <div className = {classes.list}>

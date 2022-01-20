@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection:'column',
         justifyContent:'center',
+        overflow: 'hidden',
         alignItems:'center',
         position: 'relative',
         border: 'solid 2px #000000',
@@ -37,7 +38,7 @@ const MediaUploadCard = (props) => {
             let file = e.target.files[0]
             console.log("Select file: ", file)
             if (props.onSelectImage) {
-                props.onSelectImage(file)
+                props.onSelectImage('https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/05/19/maxresdefault.jpg')
             }
         }
     }

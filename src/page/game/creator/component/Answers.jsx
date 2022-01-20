@@ -140,7 +140,7 @@ const Answers = (props) => {
                             isFixed = {isFixed}
                             style= {answerStyles[index]}
                             isCorrect = {correct_answer != null && correct_answer == index}
-                            onChange = {(value) => {}}
+                            onChange = {(value) => handleAnswerChange(index, value)}
                             onChangeCorrect = {(isCorrect)=> handleAnswerCorrectChange(index,isCorrect)}/>
                     </Grid>
                 ))}

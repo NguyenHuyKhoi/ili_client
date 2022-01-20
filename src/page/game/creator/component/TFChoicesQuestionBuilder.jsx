@@ -38,18 +38,18 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const TFChoicesQuestionBuilder = () => {
+const TFChoicesQuestionBuilder = (props) => {
     const classes = useStyles()
-    const {game, dispatch} = useContext(GameCreatorContext)
-    const {questions, questionIndex} = game
-    let question = questions[questionIndex]
+    const {question} = props
     
     const {title, image, answers, correct_answer} = question
 
     const handleChange = (key, value) => {
         question[key] = value
         console.log("Change correct:", key, value);
-        dispatch(updateQuestion(question, questionIndex))
+        if (props.onChange) {
+            props.onChange(question)
+        }
     }
     return ( 
         <div className = {classes.container}>

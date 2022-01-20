@@ -5,7 +5,7 @@ export const validateMultipleQuestion = (question) => {
     let {title, answers, correct_answer} = question
     // Check title is missing:
     if (title == "" || title == null) {
-        defs.push('Question missing')
+        defs.push('Title missing')
     } 
     // Check answers is missing
     let emptyAnswers = answers.filter((item) => (item == null) || (item == '')).length
@@ -14,7 +14,7 @@ export const validateMultipleQuestion = (question) => {
     }
 
     // Check correct answer is selected: 
-    if (correct_answer != null) {
+    if (correct_answer == null) {
         defs.push('Correct answers not selected')
     }
     //console.log("Validate :", defs)
@@ -22,15 +22,70 @@ export const validateMultipleQuestion = (question) => {
 }
 
 export const validateTFQuestion = (question) => {
-    return []
+    let defs = []
+    let {title, correct_answer} = question
+    // Check title is missing:
+    if (title == "" || title == null) {
+        defs.push('Title missing')
+    } 
+
+    // Check correct answer is selected: 
+    if (correct_answer == null) {
+        defs.push('Correct answers not selected')
+    }
+    //console.log("Validate :", defs)
+    return defs
 }
+
 export const validatePicWordQuestion = (question) => {
-    return []
+    let defs = []
+    let {title, images, correct_answer} = question
+    // Check title is missing:
+    if (title == "" || title == null) {
+        defs.push('Title missing')
+    } 
+
+    // Check answers is missing
+    let emptyImages = images.filter((item) => (item == null || item == undefined)).length
+    if (emptyImages == 4) {
+        defs.push('No hint image')
+    }
+
+    // Check correct answer is selected: 
+    if (correct_answer == null) {
+        defs.push('Correct answers not selected')
+    }
+    //console.log("Validate :", defs)
+    return defs
 }
 
 export const validateWordTableQuestion = (question) => {
-    return []
+    let defs = []
+    let {title, char_table, correct_answers} = question
+    // Check title is missing:
+    if (title == "" || title == null) {
+        defs.push('Title missing')
+    } 
+
+    // Check answers is missing
+    let emptyChars = char_table.filter((item) => (item == null || item == undefined)).length
+    if (emptyChars > 0) {
+        defs.push('Table is not filled')
+    }
+
+    // Check correct answer is selected: 
+    if (correct_answers.length ==0) {
+        defs.push('No keyword is selected')
+    }
+
+    // // Check correct answer is selected: 
+    // if (correct_answers.length < 5) {
+    //     defs.push('Please enter at least 5 keywords')
+    // }
+    //console.log("Validate :", defs)
+    return defs
 }
+
 export const validateQuestion = (question) => {
     switch (question.typeId) {
         case QUESTION_TYPES_ID.MULTIPLE_CHOICE:
@@ -91,7 +146,6 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 questions: temps,
-                questionType: type,
                 questionIndex: temps.length - 1
             }
         case 'DUPLICATE_QUESTION':
@@ -106,6 +160,7 @@ const reducer = (state, action) => {
             }
         case 'UPDATE_QUESTION':
             state.questions[index] = question
+
             return {
                 ...state
             }
@@ -128,8 +183,7 @@ const reducer = (state, action) => {
             return {
                 ...JSON.parse(JSON.stringify(sample_game)),
                 mode: 'create',
-                questionIndex: 0,
-                questionType: QUESTION_TYPES_ID.MULTIPLE_CHOICE
+                questionIndex: 0
             }
         }
 

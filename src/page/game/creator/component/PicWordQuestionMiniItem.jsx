@@ -10,7 +10,10 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0.5),
         display:'flex',
         flexDirection:'column',
-        position: 'relative'
+        position: 'relative',
+        '&:hover': {
+            cursor: 'pointer'
+        }
     },
     answers: {
         flex:1,
@@ -69,7 +72,7 @@ const PicWordQuestionMiniItem = (props) => {
                 <Grid container columnSpacing={0.5} rowSpacing={0.5}>
                 {
                     images.map((image, index) => (
-                        <Grid item xs = {6} >
+                        <Grid item xs = {6} key = {'' + index}>
                             <div style = {{
                                 backgroundColor: image == null ? 'white': theme.palette.success.main,
                                 width: '100%',

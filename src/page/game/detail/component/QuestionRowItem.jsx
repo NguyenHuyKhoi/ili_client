@@ -69,7 +69,6 @@ const Answer = (props) => {
     const classes = useStyles()
     const {answer, correct, style} = props
     const {icon, color} = style
-    console.log("ANswer ", answer, correct)
     return (
         <div className = {classes.answer} >
             <Icon 

@@ -9,6 +9,7 @@ import { theme } from '../../../../theme'
 import MultipleChoicesQuestionMiniItem from './MultipleChoicesQuestionMiniItem'
 import PicWordQuestionMiniItem from './PicWordQuestionMiniItem'
 import TFChoicesQuestionMiniItem from './TFChoicesQuestionMiniItem'
+import WordTableQuestionMiniItem from './WordTableQuestionMiniItem'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -43,15 +44,16 @@ const QuestionList = (props) => {
     const {game, dispatch} = useContext(GameCreatorContext)
     const {questionIndex, questions} = game
     const handleSelected = (index) => {
+        console.log("Select question to view:", index);
         dispatch(selectQuestion(index))
     }
+
     const handleAddQuestion = () => {
         // dispatch(addQuestion())
         if (props.onAdd) {
             props.onAdd()
         }
     }
-    console.log("Quétions", questions);
     return (
         <div className = {classes.container}>
             <div className = {classes.list} >
@@ -73,7 +75,7 @@ const QuestionList = (props) => {
                             item.typeId == QUESTION_TYPES_ID.MULTIPLE_CHOICE ? <MultipleChoicesQuestionMiniItem selected = {questionIndex == index} question = {item}/>
                             : item.typeId == QUESTION_TYPES_ID.TF_CHOICE ? <TFChoicesQuestionMiniItem selected = {questionIndex == index} question = {item}/>
                             : item.typeId == QUESTION_TYPES_ID.PIC_WORD ? <PicWordQuestionMiniItem  selected = {questionIndex == index} question = {item}/>
-                            : item.typeId == QUESTION_TYPES_ID.WORD_TABLE ? 'Word table'
+                            : item.typeId == QUESTION_TYPES_ID.WORD_TABLE ? <WordTableQuestionMiniItem  selected = {questionIndex == index} question = {item}/>
                             : null
                         }
                     </div>
