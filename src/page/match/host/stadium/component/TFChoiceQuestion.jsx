@@ -2,11 +2,10 @@ import { Square } from '@mui/icons-material'
 import { Divider, Grid, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, {useState, useContext} from 'react'
-import { SocketContext } from '../../../../../context/socket/context'
+import React, {useState} from 'react'
 import { theme } from '../../../../../theme'
-import {createUrl} from '../../../../../util/helper/index'
-import Answer from '../../../host/stadium/component/Answer'
+import {createUrl} from '../../../../../util/helper'
+import Answer from './Answer'
 import {answerStyles} from '../../../../game/creator/component/Answers'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -15,14 +14,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         backgroundColor: theme.palette.secondary.main,
         flexDirection: 'column'
-    },
-    header: {
-        padding: theme.spacing(2),
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-
-        backgroundColor: theme.palette.background.main,
     },
     center: {
         flex: 1,
@@ -34,33 +25,43 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: theme.spacing(7),
         paddingBottom: theme.spacing(7)
     },
+    header: {
+        padding: theme.spacing(2),
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: theme.palette.background.main,
+    },
     img: {
         aspectRatio: 1.6,
         height: 240,
     },
     answers: {
-        padding: theme.spacing(1)
+        padding: theme.spacing(1),
     }
 }))
 
-
-const Question = (props) => {
+const TFChoiceQuestion = (props) => {
     const classes = useStyles()
     const [selected, setSelected] = useState(null)
-    const {socket} = useContext(SocketContext)
-    const {question, time, question_index, question_total, answer_counts} = props
-    const {title, image, answers, time_limit} = question
+    const {data} = props
+    var {question, time,answer_counts, question_index, question_total, isPlayer} = data
+    const {title, image, answers, time_limit, correct_answer} = question
+
+
+    var answerTotal = answer_counts.reduce((res, item) => res += item.count, 0)
+
     const handleAnswer = (index) => {
-        if (selected != null) return 
+        if (!isPlayer) return
+       // if (selected != null) return 
         setSelected(index)
         if (props.onAnswer) props.onAnswer(index)
 
     }
-
-    var answerTotal = answer_counts.reduce((res, item) => res += item, 0)
+    if (isPlayer == undefined) isPlayer = false 
     return (
         <div className = {classes.container}>
-             <div className = {classes.header} >
+            <div className = {classes.header} >
                 <Typography variant = 'btnLabel' sx = {{color: '#000', width: theme.spacing(20), textAlign: 'left'}}>
                     {`${question_index + 1}/${question_total}`}
                 </Typography>
@@ -71,6 +72,7 @@ const Question = (props) => {
                     {`Answers: ${answerTotal}`}
                 </Typography>
             </div>
+        
             <Divider/>
             <div className = {classes.center}>
                 {
@@ -79,7 +81,7 @@ const Question = (props) => {
                     :
                     <div className = {classes.img} />
                 }
-
+             
             </div>
             <div className = {classes.answers} >
                 <Grid container columnSpacing = {1.5} rowSpacing = {1.5}>
@@ -90,8 +92,9 @@ const Question = (props) => {
                                     style = {answerStyles[index]}
                                     answer = {item} 
                                     onClick = {() => handleAnswer(index)}
-                                    isSelected = {selected == null ? null : (selected == index)}/>
-                            </Grid> 
+                                    isSelected = {selected == null ? null : (selected == index)}
+                                    isCorrect = {null}/>
+                            </Grid>
                         ))
                     }
                 </Grid>
@@ -100,4 +103,4 @@ const Question = (props) => {
     )
 }
 
-export default Question
+export default TFChoiceQuestion

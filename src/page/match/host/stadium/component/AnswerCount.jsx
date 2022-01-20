@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AnswerCount = (props) => {
     const classes = useStyles()
-    const { count, isCorrect, percent, style} = props 
+    const { count, isCorrect, percent, style, value} = props 
     const {color, icon} = style
     return (
         <div className = {classes.container} 
@@ -51,7 +51,7 @@ const AnswerCount = (props) => {
             <div className = {classes.body} >
                 <Icon name = {icon} style = {{fontSize: 30, color: theme.palette.background.main}}/>
                 <Typography variant = 'header' sx = {{mx: theme.spacing(1),color: '#000'}}>
-                    {count}
+                    {value}
                 </Typography>
                 {
                     isCorrect != undefined && 

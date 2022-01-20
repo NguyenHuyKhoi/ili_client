@@ -1,9 +1,10 @@
-import { Check, Close, Square, TitleOutlined } from '@mui/icons-material'
+import { Check, Close } from '@mui/icons-material'
 import { Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React, { useEffect, useState } from 'react'
 import Icon from '../../../../component/Icon'
+import MultiSelect from '../../../../component/MultiSelect'
+import { QUESTION_TYPES_ID } from '../../../../context/game/creator/context'
 import { theme } from '../../../../theme'
 import { createUrl } from '../../../../util/helper'
 import { answerStyles } from '../../creator/component/Answers'
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
         opacity: 0.8,
         zIndex: 99
     },
-    answers: {
+    body: {
         flex:1,
         flexDirection: 'column'
     },
@@ -55,6 +56,12 @@ const useStyles = makeStyles((theme) => ({
         height: 120,
         aspectRatio: 1.6,
         alignSelf:'center'
+    },
+    hintImage: {
+        height: 100,
+        aspectRatio: 1.6,
+        alignSelf:'center',
+        marginLeft: theme.spacing(5)
     },
     answer: {
         display: 'flex',
@@ -95,7 +102,7 @@ const QuestionRowItem = (props) => {
     const {isShowAll, selected, disable} = props
     const [isShow, setIsShow] = useState(false)
     const {question, index} = props
-    const {title, image, answers, correct_answer, time_limit } = question
+    const {title, image, answers, correct_answer, time_limit, typeName, typeId, images, correct_answers, char_table } = question
     const handleShowChange = () => {
         if (disable) return
         setIsShow(!isShow)
@@ -108,6 +115,7 @@ const QuestionRowItem = (props) => {
             
         }
     }, [isShowAll])
+
     return (
         <div className = {classes.container} 
             style={{ 
@@ -119,13 +127,25 @@ const QuestionRowItem = (props) => {
               
                 <div className = {classes.infor}>
                     <Typography variant = 'label'>
-                        {`${index + 1} - Quiz`}
+                        {`${index + 1} - ${typeName}`}
                     </Typography>
                     <Typography variant = 'bigLabel' sx = {{ color: '#000'}}>
                         {title}
                     </Typography>
                 </div>
-                <img className = {classes.img} src = {createUrl(image)}/>
+                {
+                    (typeId == QUESTION_TYPES_ID.MULTIPLE_CHOICE || typeId == QUESTION_TYPES_ID.TF_CHOICE) &&
+                    <img className = {classes.img} src = {createUrl(image)}/>
+                }
+                {
+                    typeId == QUESTION_TYPES_ID.WORD_TABLE &&
+                    <img className = {classes.img} src = {createUrl(null)}/>
+                }
+                {
+                    typeId == QUESTION_TYPES_ID.PIC_WORD  && images.length > 0 &&
+                    <img className = {classes.img} src = {createUrl(images[0])}/>
+                }
+
                 <div className = {classes.time_limit}>
                     <Typography variant = 'caption' sx = {{color: 'white'}}>
                         {time_limit + ' sec'}
@@ -133,16 +153,57 @@ const QuestionRowItem = (props) => {
                 </div>
             </div>
             {
-                (isShow || disable)  &&
-                <div className = {classes.answers}>
+                (isShow || disable)  && 
+                <div className = {classes.body}>
                     {
-                        answers.map((item, index) => (
-                            <Answer     
-                                style = {answerStyles[index]}
-                                key = {''+index} 
-                                answer = {item} 
-                                correct = { correct_answer == index }/>
-                        ))
+                        typeId == QUESTION_TYPES_ID.MULTIPLE_CHOICE || typeId == QUESTION_TYPES_ID.TF_CHOICE ?
+                            answers.map((item, index) => (
+                                <Answer     
+                                    style = {answerStyles[index]}
+                                    key = {''+index} 
+                                    answer = {item} 
+                                    correct = { correct_answer == index }/>
+                            ))
+                        : typeId == QUESTION_TYPES_ID.PIC_WORD ?
+                            <div style = {{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                backgroundColor: 'white',
+                                padding: theme.spacing(2),
+                                paddingLeft: theme.spacing(3)
+                            }}>
+                                <div style = {{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    flex: 1
+                                }}>
+                                    <Typography variant='label' sx = {{color: '#000'}}>
+                                        Keyword
+                                    </Typography>
+                                    <Typography variant='header' sx = {{color: '#000'}}>
+                                        {correct_answer}
+                                    </Typography>
+                                </div>
+                                {
+                                    images.map((image) => (
+                                        <img className = {classes.hintImage} src = {createUrl(image)}/>
+                                    ))
+                                }
+                            </div>
+                        : typeId == QUESTION_TYPES_ID.WORD_TABLE ? 
+                            <MultiSelect
+                                label = 'Keywords'
+                                selects = {correct_answers}
+                                disabled = {true}
+                                list = {correct_answers.map((item) => ({
+                                    label: item, 
+                                    value: item
+                                }))}
+                                onSelectItem = {(keyword) => {}}
+                                onChange = {(selects) => {}}
+                                style = {{ backgroundColor: 'white', padding: theme.spacing(2)}}/>
+                        : null
                     }
                 </div>
             }

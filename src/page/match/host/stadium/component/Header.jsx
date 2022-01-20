@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 const Header = (props) => {
     const classes = useStyles()
     const {timeTotal, time} = props
-    console.log("Time : ", time, timeTotal)
+    //console.log("Time : ", time, timeTotal)
     return (
         <div className = {classes.container}>
             {

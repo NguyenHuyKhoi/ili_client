@@ -49,7 +49,7 @@ const QuestionEnd = (props) => {
     var {question, time, answer_counts} = props
 
     const {title, image, answers, correct_answer} = question
-    const total_count = answer_counts.reduce((res, count) => res += count, 0)
+    const total_count = answer_counts.reduce((res, item) => res += item.count, 0)
     return (
         <div className = {classes.container}>
             <div className = {classes.title} >
@@ -61,14 +61,14 @@ const QuestionEnd = (props) => {
             <div className = {classes.center}>
                 <div className = {classes.answerCounts}>
                     {
-                        answers.map((answer, index) => (
+                        answer_counts.map((item, index) => (
                             <div style = {{marginLeft: theme.spacing(2)}} key = {'' + index}>
                                 <AnswerCount   
                                     style = {answerStyles[index]}
-                                    answer = {answer} 
-                                    count = {answer_counts[index]}
-                                    percent = {total_count == 0 ? 0 : answer_counts[index] / total_count}
-                                    isCorrect = {correct_answer == index}/>
+                                    value = {item.value}
+                                    count = {item.count}
+                                    percent = {total_count == 0 ? 0 : item.count / total_count}
+                                    isCorrect = {correct_answer == item.value}/>
                             </div>
                         ))
                     }
@@ -83,7 +83,7 @@ const QuestionEnd = (props) => {
                                 <Answer
                                     style = {answerStyles[index]}
                                     answer = {item} 
-                                    count = {answer_counts[index]}
+                                    count = {answer_counts[index].count}
                                     isCorrect = {correct_answer == index}/>
                             </Grid>
                         ))

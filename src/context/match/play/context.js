@@ -11,7 +11,7 @@ export const LIVESTREAM_STAGE = {
 export const sample_match = {
     game: {},
     livestream: null,
-    delayStartTime: 300,
+    delayStartTime: 0,
     showQuestionEndTime: 20,
     showLeaderboardTime: 10,
     delayEndTime: 60,
@@ -21,7 +21,7 @@ const INITIAL_STATE = () => {
     let state = {
         match: JSON.parse(JSON.stringify(sample_match)),
         question: {},
-        answer_counts: [0,0,0,0],
+        answer_counts: [],
         livestreamStage: LIVESTREAM_STAGE.NON_CREATED
     }
     const saved = localStorage.getItem('match_play_context')

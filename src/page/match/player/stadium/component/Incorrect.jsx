@@ -26,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 const Incorrect = (props) => {
+    const {correct_answer} = props
+    if (correct_answer == undefined) correct_answer = ''
     const classes = useStyles()
         return (
             <div className = {classes.container}>
@@ -45,7 +47,7 @@ const Incorrect = (props) => {
                 </div>
                 <div className = {classes.msg}>
                     <Typography variant = 'bigLabel' sx = {{color: '#000'}}>
-                        Try again on next question !
+                        {`Correct answer is :` + correct_answer}
                     </Typography>
                 </div>
             </div>

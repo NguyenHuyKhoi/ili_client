@@ -2,14 +2,19 @@ import { Divider } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { QUESTION_TYPES_ID } from '../../../../context/game/creator/context'
 import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import BottomBar from './component/BottomBar'
 import Header from './component/Header'
-import Question from './component/Question'
+import MultipleChoiceQuestion from './component/MultipleChoiceQuestion'
+import Question from './component/MultipleChoiceQuestion'
+import PicWordQuestion from './component/PicWordQuestion'
 import QuestionEnd from './component/QuestionEnd'
 import Scoreboard from './component/Scoreboard'
+import TFChoiceQuestion from './component/TFChoiceQuestion'
+import WordTableQuestion from './component/WordTableQuestion'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -38,7 +43,7 @@ const MatchHostStadiumPage = () => {
         setTimeTotal(question.time_limit)
         socket.on('match:onCountdown', (data) => {
             let {time} = data
-            console.log("Receive emit on countdown: ",  time)
+            //console.log("Receive emit on countdown: ",  time)
             setTime(time)
         })
 
@@ -75,6 +80,34 @@ const MatchHostStadiumPage = () => {
             
         }
     }, [])
+
+
+
+    const renderQuestion = () => {
+        var data = {
+            question,
+            time,
+            answer_counts,
+            question_index :questionIndex,
+            question_total : match.game.questions.length
+        }
+        switch (question.typeId) {
+            case  QUESTION_TYPES_ID.MULTIPLE_CHOICE :
+                return  <MultipleChoiceQuestion 
+                    data = {data} />
+            case QUESTION_TYPES_ID.TF_CHOICE :
+                return <TFChoiceQuestion
+                    data = {data}/>
+            case QUESTION_TYPES_ID.PIC_WORD :
+                return <PicWordQuestion
+                    data = {data} />
+            case QUESTION_TYPES_ID.WORD_TABLE :
+                return <WordTableQuestion
+                    data = {data} />
+            default:
+                return null 
+        }
+    }
     return (
         <div className = {classes.container}>
             <Header
@@ -90,12 +123,7 @@ const MatchHostStadiumPage = () => {
                         /> 
                     :
                     stage.type == 'on_question' ?
-                    <Question 
-                        question = {question} 
-                        time = {time} 
-                        answer_counts = {answer_counts}
-                        question_index = {questionIndex}
-                        question_total = {match.game.questions.length}/>
+                    renderQuestion()
                     :
                     stage.type == 'scoreboard' ?
                     <Scoreboard players = {players} time = {time}/>

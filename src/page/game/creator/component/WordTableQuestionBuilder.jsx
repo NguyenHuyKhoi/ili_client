@@ -1,17 +1,11 @@
-import { grey } from '@mui/material/colors';
-import { makeStyles } from '@mui/styles';
-import React, { useContext, useState } from 'react';
-import MediaUploadCard from '../../../../component/MediaUploadCard';
-import { updateQuestion } from '../../../../context/game/creator/actions';
-import { GameCreatorContext, WORD_TABLE_SIZE } from '../../../../context/game/creator/context';
-import { createUrl } from '../../../../util/helper';
-import Answers from './Answers';
-import TextField from '../../../../component/TextField'
-import TextArea from '../../../../component/TextArea'
-import { theme } from '../../../../theme';
 import { Grid, Typography } from '@mui/material';
-import MultiSelect from '../../../../component/MultiSelect';
+import { makeStyles } from '@mui/styles';
+import React, { useState } from 'react';
 import Button from '../../../../component/Button';
+import MultiSelect from '../../../../component/MultiSelect';
+import TextField from '../../../../component/TextField';
+import { WORD_TABLE_SIZE } from '../../../../context/game/creator/context';
+import { theme } from '../../../../theme';
 const useStyles = makeStyles((theme) => ({
     container: {
         padding: theme.spacing(5),
@@ -36,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     },
     charCell: {
         aspectRatio: 1,
-        backgroundColor: 'red',
     }
 }))
 

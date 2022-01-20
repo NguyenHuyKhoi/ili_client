@@ -2,7 +2,7 @@ import { Square } from '@mui/icons-material'
 import { Divider, Grid, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, {useState} from 'react'
 import { theme } from '../../../../../theme'
 import {createUrl} from '../../../../../util/helper'
 import Answer from './Answer'
@@ -41,15 +41,25 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Question = (props) => {
+const MultipleChoiceQuestion = (props) => {
     const classes = useStyles()
-    const {question, time,answer_counts, question_index, question_total} = props
+    const [selected, setSelected] = useState(null)
+    const {data} = props
+    var {question, time,answer_counts, question_index, question_total, isPlayer} = data
     const {title, image, answers, time_limit, correct_answer} = question
-    const total_count = answer_counts.reduce((res, count) => res += count, 0)
+    const total_count = answer_counts.reduce((res, item) => res += item.count, 0)
 
-    console.log(" image : ", image)
 
-    var answerTotal = answer_counts.reduce((res, item) => res += item, 0)
+    var answerTotal = answer_counts.reduce((res, item) => res += item.count, 0)
+
+    const handleAnswer = (index) => {
+        if (!isPlayer) return
+        //if (selected != null) return 
+        setSelected(index)
+        if (props.onAnswer) props.onAnswer(index)
+
+    }
+    if (isPlayer == undefined) isPlayer = false 
     return (
         <div className = {classes.container}>
             <div className = {classes.header} >
@@ -82,6 +92,8 @@ const Question = (props) => {
                                 <Answer 
                                     style = {answerStyles[index]}
                                     answer = {item} 
+                                    onClick = {() => handleAnswer(index)}
+                                    isSelected = {selected == null ? null : (selected == index)}
                                     isCorrect = {null}/>
                             </Grid>
                         ))
@@ -92,4 +104,4 @@ const Question = (props) => {
     )
 }
 
-export default Question
+export default MultipleChoiceQuestion

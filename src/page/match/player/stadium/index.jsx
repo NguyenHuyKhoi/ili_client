@@ -5,13 +5,18 @@ import Timesup from './component/Timesup'
 import BottomBar from './component/BottomBar'
 import Correct from './component/Correct'
 import Incorrect from './component/Incorrect'
-import Question from './component/Question'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import { updateMatch } from '../../../../context/match/play/actions'
 import { useNavigate } from 'react-router-dom'
 import Scoreboard from '../../host/stadium/component/Scoreboard'
 import Header from '../../host/stadium/component/Header'
+import Question from '../../host/stadium/component/MultipleChoiceQuestion'
+import { QUESTION_TYPES_ID } from '../../../../context/game/creator/context'
+import WordTableQuestion from '../../host/stadium/component/WordTableQuestion'
+import PicWordQuestion from '../../host/stadium/component/PicWordQuestion'
+import TFChoiceQuestion from '../../host/stadium/component/TFChoiceQuestion'
+import MultipleChoiceQuestion from '../../host/stadium/component/MultipleChoiceQuestion'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -42,7 +47,7 @@ const MatchPlayerStadiumPage = () => {
     useEffect(() => {
         socket.on('match:onCountdown', (data) => {
             let {time} = data
-            console.log("Receive emit on countdown: ",  time)
+            //console.log("Receive emit on countdown: ",  time)
             setTime(time)
         })
 
@@ -95,11 +100,12 @@ const MatchPlayerStadiumPage = () => {
         }
     }, [])
 
-    const handleAnswer = (index) => {
+    const handleAnswer = (answer) => {
         let me = findMe()
         if (me._id == undefined) return 
-        let answerTime = question.time_limt - time
-        socket.emit('match:answer', pinCode, me, index, answerTime)
+        let answerTime = question.time_limit - time
+        console.log("Client send answer: ", answer, time);
+        socket.emit('match:answer', pinCode, me, answer, answerTime)
     }
 
     const findMe = () => {
@@ -111,6 +117,48 @@ const MatchPlayerStadiumPage = () => {
             }
         return player
     }
+    const renderQuestion = () => {
+        console.log("Answer count: ", answer_counts);
+        var data = {
+            question,
+            time,
+            answer_counts,
+            question_index :questionIndex,
+            question_total : match.game.questions.length,
+            isPlayer: true
+        }
+        switch (question.typeId) {
+            case  QUESTION_TYPES_ID.MULTIPLE_CHOICE :
+                return  <MultipleChoiceQuestion 
+                    onAnswer = {handleAnswer}
+                    data = {data} />
+            case QUESTION_TYPES_ID.TF_CHOICE :
+                return <TFChoiceQuestion
+                    onAnswer = {handleAnswer}
+                    data = {data}/>
+            case QUESTION_TYPES_ID.PIC_WORD :
+                return <PicWordQuestion
+                    onAnswer = {handleAnswer}
+                    data = {data} />
+            case QUESTION_TYPES_ID.WORD_TABLE :
+                return <WordTableQuestion
+                    data = {data}/>
+            default:
+                return null 
+        }
+    }
+
+    const getCorrectAnswer = () => {
+        // For only nultichoi/TF/Picword
+        var correct_answer = question.correct_answer
+        if (question.typeId == QUESTION_TYPES_ID.MULTIPLE_CHOICE) {
+                return ['A','B','C','D'][correct_answer]
+            }
+        if (question.typeId == QUESTION_TYPES_ID.TF_CHOICE) {
+            return ['True', 'False'][correct_answer]
+        }
+        return correct_answer
+    }
     return (
         <div className = {classes.container}>
             <Header
@@ -118,21 +166,13 @@ const MatchPlayerStadiumPage = () => {
                 timeTotal = {timeTotal}/>
             {
                 stage.type == 'on_question' ?
-                <div className = {classes.questionContainer}>
-                    <Question 
-                        question = {question} 
-                        time = {time}
-                        onAnswer = {handleAnswer}
-                        answer_counts = {answer_counts}
-                        question_index = {questionIndex}
-                        question_total = {match.game.questions.length}/>
-                </div>
+                renderQuestion()
                 : stage.type == 'not_answer'? 
                 <Timesup/>
                 : stage.type == 'correct_answer'?
                 <Correct earnScore = {earnScore}/>
                 : stage.type == 'wrong_answer' ?
-                <Incorrect/>
+                <Incorrect correct_answer = {getCorrectAnswer()}/>
                 : stage.type == 'scoreboard' ?
                 <Scoreboard time = {time} players = {players}/>
                 : null
