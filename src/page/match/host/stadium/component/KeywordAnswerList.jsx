@@ -23,6 +23,8 @@ const KeywordAnswer = (props) => {
     const classes = useStyles()
     var {isShow, content, userAnswer} = props 
 
+    var hideAnswer = ''
+    Array.from(Array(content.length)).forEach(() => hideAnswer += '?')
     return (
         <div style = {{
             width: '100%',
@@ -49,7 +51,7 @@ const KeywordAnswer = (props) => {
                 {userAnswer ? userAnswer.username : ''}
             </Typography>
             <Typography variant = 'bigLabel' sx = {{color: '#000', mr: theme.spacing(2)}}>
-                {isShow || userAnswer ? content : ''}
+                {isShow || userAnswer ? content : hideAnswer}
             </Typography>
         </div>  
     )

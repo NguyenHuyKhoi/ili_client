@@ -59,7 +59,7 @@ const PicWordQuestion = (props) => {
     const handleAnswer = () => {
         if (userAnswer == '') return
         console.log("Answer:", userAnswer);
-        //setisAnswered(true)
+        setisAnswered(true)
         if (props.onAnswer) props.onAnswer(userAnswer)
     }
 

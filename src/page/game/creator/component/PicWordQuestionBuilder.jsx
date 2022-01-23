@@ -101,7 +101,7 @@ const PicWordQuestionBuilder = (props) => {
                     paddingRight: theme.spacing(2)
                 }}
                 value={correct_answer == null ? '':correct_answer}
-                onChange={ (value)=> handleChange('correct_answer', value)}/>
+                onChange={ (value)=> handleChange('correct_answer', value.toUpperCase())}/>
         
         </div>
     )

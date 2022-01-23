@@ -32,13 +32,21 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center'
     },
     img: {
-        width: '80%',
-        height: '65%',
+        width: '90%',
+        height: '80%',
         margin: 0
     },
     screens: {
         position: 'absolute',
         top: theme.spacing(2),
+        left: theme.spacing(7),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems:'center'
+    },
+    subscreens: {
+        position: 'absolute',
+        bottom: theme.spacing(2),
         left: theme.spacing(7),
         display: 'flex',
         flexDirection: 'column',
@@ -141,18 +149,17 @@ const TemplateSlider = (props) => {
                     tabs = {tabs.map((item) => item.label)}
                     selectedIndex = {index}
                     onClickTab = {handleSelectTab}/>
-                
-                {
-                    subtabs != null && subtabs != undefined && 
-                    <div style = {{marginTop: theme.spacing(2)}}>
-                        <Tabbar     
-                            size = 'small'
-                            tabs = {subtabs.map((item) => item.label)}
-                            selectedIndex = {subIndex}
-                            onClickTab = {handleSelectSubTab}/>
-                    </div>
-                }
             </div>
+            {
+                subtabs != null && subtabs != undefined && 
+                <div className = {classes.subscreens}>
+                    <Tabbar     
+                        size = 'small'
+                        tabs = {subtabs.map((item) => item.label)}
+                        selectedIndex = {subIndex}
+                        onClickTab = {handleSelectSubTab}/>
+                </div>
+            }
           
         </div>
 	);

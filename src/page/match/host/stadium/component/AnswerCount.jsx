@@ -8,7 +8,7 @@ import { theme } from '../../../../../theme'
 import {createUrl} from '../../../../../util/helper'
 const useStyles = makeStyles((theme) => ({
     container: {
-        width: theme.spacing(15),
+        width: theme.spacing(18),
         display: 'flex',
         flexDirection:'column',
         border: 'solid 2px #000000',
@@ -35,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
 const AnswerCount = (props) => {
     const classes = useStyles()
     const { count, isCorrect, percent, style, value} = props 
-    const {color, icon} = style
+    var {color, icon} = style
+
+    if (color == undefined) color = theme.palette.success.main
     return (
         <div className = {classes.container} 
             style={{backgroundColor: color}}
@@ -48,9 +50,15 @@ const AnswerCount = (props) => {
                     margin: percent > 0 ? theme.spacing(0.2) : 0,
                     opacity: 1, 
                     height: theme.spacing(25 * (percent))}}/>
-            <div className = {classes.body} >
+            <div className = {classes.body} > 
+            {/* {
+                icon &&
                 <Icon name = {icon} style = {{fontSize: 30, color: theme.palette.background.main}}/>
-                <Typography variant = 'header' sx = {{mx: theme.spacing(1),color: '#000'}}>
+            } */}
+                <Typography variant = 'btnLabel' sx = {{color: '#000'}}>
+                    {`(${count})`}
+                </Typography>
+                <Typography variant = 'btnLabel' sx = {{mx: theme.spacing(1),color: '#000', flex: 1, textAlign: 'center'}}>
                     {value}
                 </Typography>
                 {

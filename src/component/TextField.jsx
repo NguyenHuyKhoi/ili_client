@@ -25,6 +25,13 @@ const TextField = (props) => {
         : 24
 
     if (disabled == undefined) disabled = false
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+          if (props.onSubmit) {
+              props.onSubmit()
+          }
+        }
+      }
     return (
         <input 
             className = {classes.container}
@@ -37,6 +44,7 @@ const TextField = (props) => {
                     props.onChange(e.target.value)
                 }
             }}
+            onKeyDown={handleKeyDown}
             disabled = {disabled}
             style = {{
                 fontSize,

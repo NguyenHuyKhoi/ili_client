@@ -131,14 +131,17 @@ const MatchPlayerStadiumPage = () => {
             }
         return player
     }
+
     const renderQuestionEnd = () => {
+        console.log("render question end");
         var data = {
             question,
             time,
-            answer_counts
+            answer_counts,
+            question_index :questionIndex,
+            question_total : match.game.questions.length
         }
         var stage = match.progress[match.progress.length - 1]
-        console.log("Render question end: ", stage.open_word_states);
         switch (question.typeId) {
             case  QUESTION_TYPES_ID.MULTIPLE_CHOICE :
             case QUESTION_TYPES_ID.TF_CHOICE :
@@ -146,8 +149,9 @@ const MatchPlayerStadiumPage = () => {
                 return  <QuestionEnd  data = {data} />
 
             case QUESTION_TYPES_ID.WORD_TABLE :
+                console.log("render word table question end");
                 return <WordTableQuestionEnd
-                data = {{...data, open_word_states: stage.open_word_states, userAnswers: stage.answers}} />
+                    data = {{...data, open_word_states: stage.open_word_states, userAnswers: stage.answers}} />
             default:
                 return null 
         }

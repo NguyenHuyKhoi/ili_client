@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import { Alert, Grid, Snackbar, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import Button from '../../../../component/Button';
@@ -42,7 +42,7 @@ const WordTableQuestionBuilder = (props) => {
     const [keyword, setkeyword] = useState('');
     const [isFilled, setisFilled] = useState(false);
     const {question} = props
-    
+    const [alert, setAlert] = useState({});
     const {title, char_table, correct_answers} = question
     const handleChange = (key, value) => {
         question[key] = value
@@ -50,6 +50,7 @@ const WordTableQuestionBuilder = (props) => {
             props.onChange(question)
         }
     }
+    console.log("Char table length", char_table.length);
 
     const checkAndFill = (ox, oy, word, table, direction) => {
         console.log("Check and fill", ox, oy, word, direction, table);
@@ -90,7 +91,17 @@ const WordTableQuestionBuilder = (props) => {
         console.log("handle add answer :", word);
         if (word == '') return 
         if (correct_answers.indexOf(word) != -1) {
-            console.log("Exist word, return");
+            setAlert({
+                type: 'error',
+                msg: 'Keyword is added before...'
+            })
+            return
+        }
+        if (correct_answers.length >= 12) {
+            setAlert({
+                type: 'error',
+                msg: 'Maximum keywords number is 12...'
+            })
             return
         }
         var times = 50 
@@ -105,15 +116,27 @@ const WordTableQuestionBuilder = (props) => {
                 correct_answers.push(word)
                 handleChange('correct_answers', correct_answers)
                 setkeyword('')
+                setAlert({
+                    type: 'info',
+                    msg: 'Add keyword: ' + word
+                })
                 return
             }
             times = times - 1
         }
         setkeyword('')
+        setAlert({
+            type: 'error',
+            msg: 'Add keyword error, try again... ' 
+        })
         console.log("Add failure");
     }
 
     const handleRemoveAnswer = (word) => {
+        setAlert({
+            type: 'info',
+            msg: 'Remove keyword: ' + word
+        })
         for (var i = 0;i<WORD_TABLE_SIZE;i++) {
             for (var j = 0; j<WORD_TABLE_SIZE; j++) {
                 var index = i * WORD_TABLE_SIZE + j
@@ -135,7 +158,8 @@ const WordTableQuestionBuilder = (props) => {
     }
     
     const randomColor = () => {
-        var colors = ['#82DCE1','#eb6946', '#82AF9B','#EBDCC3','#557882','#FAC846','#BE6E82', '#506E00']
+        var colors = ['#82DCE1','#eb6946', '#82AF9B','#EBDCC3','#557882','#FAC846','#BE6E82', '#506E00',
+        '#3e7bbc', '#24486f', '#9f7272', '#ffcd9a']
         return colors[Math.floor(Math.random() * colors.length)]
     }
 
@@ -173,6 +197,12 @@ const WordTableQuestionBuilder = (props) => {
     
     return ( 
         <div className = {classes.container}>
+            <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+                anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
+                <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
+                    {alert.msg}
+                </Alert>
+            </Snackbar>
             <TextField 
                 placeholder = 'Enter question ...' 
                 style = {{ 
@@ -239,6 +269,7 @@ const WordTableQuestionBuilder = (props) => {
                                     paddingRight: theme.spacing(2)
                                 }}
                                 value={keyword}
+                                onSubmit = {() => handleAddAnswer(keyword)}
                                 onChange={ (value)=> setkeyword(value.toUpperCase())}/>
                             <Button 
                                 label = 'Add'

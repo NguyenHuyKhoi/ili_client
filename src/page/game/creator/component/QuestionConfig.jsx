@@ -4,7 +4,7 @@ import React, { useContext } from 'react'
 import Button from '../../../../component/Button'
 import DropdownSelect from '../../../../component/DropdownSelect'
 import { updateQuestion } from '../../../../context/game/creator/actions'
-import { GameCreatorContext } from '../../../../context/game/creator/context'
+import { GameCreatorContext, QUESTION_TYPES } from '../../../../context/game/creator/context'
 import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -53,27 +53,26 @@ const QuestionConfig = (props) => {
         dispatch(updateQuestion(question))
         
     }
+
+    var time_limits = QUESTION_TYPES.find((item) => item.id == question.typeId).time_limits
+    var scores = QUESTION_TYPES.find((item) => item.id == question.typeId).scores
     return (
         <div className = {classes.container}>
             <div className = {classes.inputs} >
                 <div className = {classes.input}>
                     <DropdownSelect 
                         title = 'Time'
-                        list = {[
-                            {label: '10s', value: 10},
-                            {label: '20s', value: 20},
-                            {label: '60s', value: 60}
-                        ]}
+                        list = {time_limits.map((item) => ({
+                            value: item, label: item + 's'
+                        }))}
                         value = {time_limit}
                         onChange = {(value)=>handleChange('time_limit',value)}/>
                 </div>
                 <div className = {classes.input}>
                     <DropdownSelect title = 'Score'
-                        list = {[
-                            {label: '1000', value: 1000},
-                            {label: '1200', value: 1200},
-                            {label: '1500', value: 1500}
-                        ]}
+                        list = {scores.map((item) => ({
+                            value: item, label: item + ' points'
+                        }))}
                         value = {score}
                         onChange = {(value)=>handleChange('score',value)}/>
                 </div>

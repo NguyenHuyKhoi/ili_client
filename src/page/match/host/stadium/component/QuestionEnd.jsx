@@ -63,7 +63,7 @@ const QuestionEnd = (props) => {
                 <div className = {classes.answerCounts}>
                     {
                         answer_counts.map((item, index) => (
-                            <div style = {{marginLeft: theme.spacing(2)}} key = {'' + index}>
+                            <div style = {{marginLeft: theme.spacing(5)}} key = {'' + index}>
                                 <AnswerCount   
                                     style = {answerStyles[index]}
                                     value = {item.value}

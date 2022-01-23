@@ -7,12 +7,14 @@ export const QUESTION_TYPES_ID = {
     WORD_TABLE: 3
 }
 
-export const WORD_TABLE_SIZE = 15
+export const WORD_TABLE_SIZE = 12
 
 export const QUESTION_TYPES = [
     {
         type: 'Multiple Choice',
         id: QUESTION_TYPES_ID.MULTIPLE_CHOICE,
+        time_limits: [10,20,30],
+        scores: [500, 1000, 1500],
         sample: {
             index: 0,
             typeName: 'Multiple Choice',
@@ -33,6 +35,8 @@ export const QUESTION_TYPES = [
     {
         type: 'True/False',
         id: QUESTION_TYPES_ID.TF_CHOICE,
+        time_limits: [10,20,30],
+        scores: [500, 1000, 1500],
         sample: {
             index: 0,
             typeName: 'True/False',
@@ -47,7 +51,8 @@ export const QUESTION_TYPES = [
     },
     {
         type: '4 Pic 1 Word',
-        
+        scores: [500, 1000, 1500],
+        time_limits: [10,20,30],
         id: QUESTION_TYPES_ID.PIC_WORD,
         sample: {
             index: 0,
@@ -57,12 +62,14 @@ export const QUESTION_TYPES = [
             images: [null, null, null, null],
             correct_answer: null,
             time_limit: 20,
-            score: 1000
+            score: 1000,
         }
     },
     {
         type: 'Word table',
         id: QUESTION_TYPES_ID.WORD_TABLE,
+        scores: [200, 300, 500],
+        time_limits: [60,120,300],
         sample: {
             index: 0,
             typeName: 'Word table',
@@ -70,8 +77,8 @@ export const QUESTION_TYPES = [
             title: null,
             correct_answers: [],
             char_table: new Array(WORD_TABLE_SIZE * WORD_TABLE_SIZE),
-            time_limit: 20,
-            score: 1000
+            time_limit: 60,
+            score: 500
         }
     }
 ]

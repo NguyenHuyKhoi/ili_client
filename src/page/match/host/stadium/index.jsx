@@ -87,14 +87,29 @@ const MatchHostStadiumPage = () => {
         var data = {
             question,
             time,
-            answer_counts
+            answer_counts,
+            question_index :questionIndex,
+            question_total : match.game.questions.length
         }
         var stage = match.progress[match.progress.length - 1]
         console.log("Render question end: ", stage.open_word_states);
         switch (question.typeId) {
-            case  QUESTION_TYPES_ID.MULTIPLE_CHOICE :
+            case QUESTION_TYPES_ID.MULTIPLE_CHOICE :
             case QUESTION_TYPES_ID.TF_CHOICE :
+                return  <QuestionEnd  data = {data} />
+
+
             case QUESTION_TYPES_ID.PIC_WORD :
+                var len = data.answer_counts.length
+                if (len < 4) {
+                    Array.from(Array(4- len)).forEach(() => {
+                        data.answer_counts.push({
+                            value: '...',
+                            count: 0
+                        })
+                    })
+                }
+                console.log("Data answr counts:", data.answer_counts);
                 return  <QuestionEnd  data = {data} />
 
             case QUESTION_TYPES_ID.WORD_TABLE :
