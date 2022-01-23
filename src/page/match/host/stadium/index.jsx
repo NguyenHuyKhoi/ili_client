@@ -34,7 +34,7 @@ const MatchHostStadiumPage = () => {
     const navigate = useNavigate()
     const {question, match, answer_counts, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
-    const [stage, setStage] = useState({type: 'end_question'})
+    const [stage, setStage] = useState({type: 'on_question'})
     const [time, setTime] = useState(0)
     const [timeTotal, setTimeTotal] = useState(question.time_limit)
     const {questionIndex, pinCode, players} = match

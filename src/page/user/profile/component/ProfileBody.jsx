@@ -30,7 +30,9 @@ const ProfileBody = () => {
     return (
         <div className = {classes.container}>
             <div className = {classes.tabsContainer}>
-                <Tabbar tabs = {['Games', 'Collections']}
+                <Tabbar 
+                    tabs = {['Games', 'Collections']}
+                    selectedIndex = {selectedIndex}
                     onClickTab = {(index) => setSelectedIndex(index)}
                     />
             </div>

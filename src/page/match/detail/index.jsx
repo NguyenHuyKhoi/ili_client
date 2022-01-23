@@ -47,7 +47,7 @@ const MatchDetailPage = () => {
             <HeaderBar selectedIndex = {3}/>
             <div className= {classes.header}>
                 <Header />
-                <Tabbar tabs = {['Summary','Players', 'Questions', 'Feed back']} onClickTab = {handleTabChange}/>
+                <Tabbar selectedIndex = {tabIndex} tabs = {['Summary','Players', 'Questions', 'Feed back']} onClickTab = {handleTabChange}/>
             </div>
             <div className= {classes.body}>
                 {

@@ -134,7 +134,10 @@ const MatchStatus = (props) => {
 	return (
         <div className = {classes.container}>
             <div className = {classes.tabs}>
-                <Tabbar tabs = {tabs} onClickTab = {(index) => handleSelectTab(index)}/>
+                <Tabbar 
+                    tabs = {tabs} 
+                    selectedIndex = {index}
+                    onClickTab = {(index) => handleSelectTab(index)}/>
             </div>
 
             <div className = {classes.list}>

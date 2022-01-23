@@ -49,10 +49,10 @@ const TabItem = (props) => {
 }
 const Tabbar = (props) => {
     const classes = useStyles()
-    const [selectedIndex, setSelectedIndex] = useState(0)
-    let {tabs} = props
+
+    let {tabs, selectedIndex} = props
     const handleItemClick = (index) => {
-        setSelectedIndex(index)
+
         if (props.onClickTab) {
             props.onClickTab(index)
         }
