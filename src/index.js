@@ -11,7 +11,7 @@ import { MatchPlayContextProvider } from './context/match/play/context';
 import { SocketContextProvider } from './context/socket/context';
 import { MatchContext, MatchContextProvider } from './context/match/other/context';
 import { PlatformContextProvider } from './context/platform/context';
-
+require('dotenv').config()
 axios.defaults.baseURL = 'http://localhost:8800/api/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 

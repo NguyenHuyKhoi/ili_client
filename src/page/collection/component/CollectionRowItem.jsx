@@ -24,8 +24,9 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative'
     },
     img: {
-        height: '100%',
+        aspectRatio: 1.6,
         width: 180,
+        objectFit: 'center'
     },
     right: {
         flex: 1,

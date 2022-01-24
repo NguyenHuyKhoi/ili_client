@@ -8,6 +8,7 @@ import TextField from '../../../../component/TextField'
 import { updateUserInfor } from '../../../../context/auth/actions'
 import { AuthContext } from '../../../../context/auth/context'
 import { UserContext } from '../../../../context/user/context'
+import FirebaseHelper, { IMAGE_CATEGORIES } from '../../../../firebase'
 import { theme } from '../../../../theme'
 import { createUrl } from '../../../../util/helper'
 const useStyles = makeStyles((theme) => ({
@@ -52,9 +53,19 @@ const UserInforForm = (props) => {
 		}
 	}, [user])
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault() 
-		axios.put('user/'+ user._id, inputs, {
+
+		//Upload image : banner, avatar
+		var {banner, avatar} = inputs 
+		var bannerUrl =  await FirebaseHelper.uploadImage(banner, IMAGE_CATEGORIES.PROFILE_BANNER) 
+		var avatarUrl = await FirebaseHelper.uploadImage(avatar, IMAGE_CATEGORIES.PROFILE_AVATAR) 
+	
+		axios.put('user/'+ user._id, {
+			...inputs,
+			banner: bannerUrl,
+			avatar: avatarUrl
+		}, {
             headers: {
                 'x-access-token': token
             }

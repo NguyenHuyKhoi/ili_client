@@ -77,14 +77,14 @@ const SettingModal = (props) => {
 	}
 
 	const handleCancel = () => {
-		setDraftSetting(JSON.parse(JSON.stringify(setting)))
+		setDraftSetting({...setting})
 		handleClose()
 	}
 
 	const handleChange = (key, value) => {
 		console.log("Set change: ", key ,value)
 		setDraftSetting({
-			...JSON.parse(JSON.stringify(draftSetting)),
+			...draftSetting,
 			[key]: value
 		})
 	}

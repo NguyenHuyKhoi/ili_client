@@ -7,7 +7,8 @@ import NotificationModal from '../../../component/NotificationModal'
 import { AuthContext } from '../../../context/auth/context'
 import { addQuestion, deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, updateQuestion, validateGame } from '../../../context/game/creator/actions'
 import { GameCreatorContext, QUESTION_TYPES_ID } from '../../../context/game/creator/context'
-import { validateGameSetting, validateQuestion } from '../../../context/game/creator/reducer'
+import { cloneQuestion, validateGameSetting, validateQuestion } from '../../../context/game/creator/reducer'
+import FirebaseHelper, { IMAGE_CATEGORIES } from '../../../firebase'
 import { theme } from '../../../theme'
 import DeleteQuestionModal from './component/DeleteQuestionModal'
 import MultipleChoicesQuestionBuilder from './component/MultipleChoicesQuestionBuilder'
@@ -53,11 +54,35 @@ const GameCreatorPage = (props) => {
         navigate('/game/library')
     }
 
+    const uploadQuestionImages = async (game) => {
+        // Lose all file-type properties
+        var res = JSON.parse(JSON.stringify(game))
+        await Promise.all(game.questions.map(async(question, questionIdx) => {
+            switch (question.typeId) {
+
+                case QUESTION_TYPES_ID.MULTIPLE_CHOICE: 
+                case QUESTION_TYPES_ID.TF_CHOICE: 
+                    res.questions[questionIdx].image = await FirebaseHelper.uploadImage(question.image, IMAGE_CATEGORIES.QUESTION_IMAGE)
+                    break;
+
+                case QUESTION_TYPES_ID.PIC_WORD:
+                    res.questions[questionIdx].images[0] = await FirebaseHelper.uploadImage(question.images[0], IMAGE_CATEGORIES.QUESTION_IMAGE)
+                    res.questions[questionIdx].images[1] = await FirebaseHelper.uploadImage(question.images[1], IMAGE_CATEGORIES.QUESTION_IMAGE)
+                    res.questions[questionIdx].images[2] = await FirebaseHelper.uploadImage(question.images[2], IMAGE_CATEGORIES.QUESTION_IMAGE)
+                    res.questions[questionIdx].images[3] = await FirebaseHelper.uploadImage(question.images[3], IMAGE_CATEGORIES.QUESTION_IMAGE)
+                   
+                    break; 
+                case QUESTION_TYPES_ID.WORD_TABLE: 
+                    break;
+            }
+        }))
+        return res
+    }
     const handleSave = async () => {
         var isValidated = validateGameSetting(game)
         var qs = []
         questions.forEach((item, index) => {
-            let cloned = JSON.parse(JSON.stringify(item))
+            let cloned = cloneQuestion(item)
             let defects = validateQuestion(cloned)
             if (defects.length > 0) {
                 cloned.defectives = defects
@@ -78,7 +103,16 @@ const GameCreatorPage = (props) => {
             game.questions.forEach((question, index) => game.questions[index].index = index + 1)
 
             console.log("Game questions: ", game.questions);
-            axios.post('game/create', game, {
+            var { cover} = game 
+            var coverUrl =  await FirebaseHelper.uploadImage(cover, IMAGE_CATEGORIES.GAME_COVER) 
+
+            var tempGame = await uploadQuestionImages(game)
+
+
+            axios.post('game/create', {
+                ...tempGame,
+                cover: coverUrl
+            }, {
                 headers: {
                     'x-access-token': token
                 }
@@ -96,7 +130,13 @@ const GameCreatorPage = (props) => {
         }
         else if (mode == 'edit') {
             console.log("Edit game success")
-            axios.post('game/edit/'+game._id, game, {
+            var { cover} = game 
+            var coverUrl =  await FirebaseHelper.uploadImage(cover, IMAGE_CATEGORIES.GAME_COVER) 
+            var tempGame = await uploadQuestionImages(game)
+            axios.post('game/edit/'+game._id, {
+                ...tempGame,
+                cover: coverUrl
+            }, {
             headers: {
                 'x-access-token': token
             }

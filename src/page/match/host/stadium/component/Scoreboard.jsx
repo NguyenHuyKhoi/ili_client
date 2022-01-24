@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: theme.spacing(7)
     },
     players: {
-        width: '50%',
+        width: '70%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',

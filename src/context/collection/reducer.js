@@ -17,10 +17,9 @@ const reducer = (state, action) => {
                 collection: JSON.parse(JSON.stringify(collection))
             }
         case 'SAVE_COLLECTION_SETTING': 
-            console.log("Save local")
             return {
                 ...state,
-                collection: JSON.parse(JSON.stringify(collection))
+                collection
             }
         case 'ADD_GAME_TO_COLLECTION':
             console.log("Add game to collections")

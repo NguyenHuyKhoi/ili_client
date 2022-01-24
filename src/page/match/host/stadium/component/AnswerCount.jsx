@@ -38,6 +38,7 @@ const AnswerCount = (props) => {
     var {color, icon} = style
 
     if (color == undefined) color = theme.palette.success.main
+    console.log("Is correct:", isCorrect);
     return (
         <div className = {classes.container} 
             style={{backgroundColor: color}}
@@ -49,7 +50,7 @@ const AnswerCount = (props) => {
                     backgroundColor: color,
                     margin: percent > 0 ? theme.spacing(0.2) : 0,
                     opacity: 1, 
-                    height: theme.spacing(25 * (percent))}}/>
+                    height: theme.spacing(30 * (percent))}}/>
             <div className = {classes.body} > 
             {/* {
                 icon &&

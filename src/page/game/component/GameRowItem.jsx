@@ -29,8 +29,9 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative'
     },
     img: {
-        height: '100%',
+        aspectRatio: 1.6,
         width: 180,
+        objectFit: 'center'
     },
     right: {
         flex: 1,
@@ -70,7 +71,7 @@ export const GameRowItem = (props) => {
     const gameDispatch = useContext(GameContext).dispatch
     const gameCreatorDispatch = useContext(GameCreatorContext).dispatch
     const {game} = props
-    const {title, questions, owner, image, visibility} = game
+    const {title, questions, owner, cover, visibility} = game
 
 
 
@@ -95,7 +96,7 @@ export const GameRowItem = (props) => {
             onClick={handleViewDetail}>
             <div className = {classes.left}>
                 <img className = {classes.img} 
-                    src = {createUrl(image)}/>
+                    src = {createUrl(cover)}/>
                 <div className = {classes.questionNums}>
                     <Typography variant = 'caption' 
                         sx = {{color: 'white', fontWeight: 'bold'}}> {questions.length} questions </Typography>

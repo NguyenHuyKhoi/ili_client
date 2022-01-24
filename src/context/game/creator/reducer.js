@@ -36,6 +36,15 @@ export const validateTFQuestion = (question) => {
     //console.log("Validate :", defs)
     return defs
 }
+export const cloneQuestion = (question) => {
+    var res = JSON.parse(JSON.stringify(question))
+    res.images = []
+    if (question.images != undefined) {
+        question.images.forEach((item) => res.images = [...res.images, item])
+    }
+    res.image = question.image 
+    return res
+}
 
 export const validatePicWordQuestion = (question) => {
     let defs = []
@@ -112,9 +121,9 @@ export const validateGameSetting = (game) => {
 }
 
 const reducer = (state, action) => {
-    const {question, index, setting, type} = action.payload != undefined ? action.payload : {}
+    var {question, index, setting, type} = action.payload != undefined ? action.payload : {}
 
-    var questions 
+    var questions = state.questions
 
     var temp, temps
     switch (action.type) {
@@ -138,25 +147,24 @@ const reducer = (state, action) => {
             }
         
         case 'ADD_QUESTION':
-            temp = JSON.parse(JSON.stringify(QUESTION_TYPES[type].sample))
-            temps = JSON.parse(JSON.stringify(state.questions))
-            temp.index = temps.length
-            console.log("Add new question: ", temp)
-            temps.push(temp)
+            temp = cloneQuestion(QUESTION_TYPES[type].sample)
+            temp.index = questions.length
+            console.log("Add question:", questions, temp);
+            questions.push(temp)
             return {
                 ...state,
-                questions: temps,
-                questionIndex: temps.length - 1
+                questionIndex: questions.length - 1
             }
         case 'DUPLICATE_QUESTION':
-            temp = JSON.parse(JSON.stringify(state.questions[index]))
-            temps = JSON.parse(JSON.stringify(state.questions))
-            temp.index = temps.length
-            temps.push(temp)
-            console.log("Index of dup question: ", temp.index)
+            question = questions[index]
+            temp = cloneQuestion(question)
+            temp.index = questions.length
+            console.log("Question cloned:", temp);
+            questions = [...questions, temp]
+            console.log("Questions :", questions.length, questions);
             return {
                 ...state,
-                questions: temps
+                questions
             }
         case 'UPDATE_QUESTION':
             state.questions[index] = question

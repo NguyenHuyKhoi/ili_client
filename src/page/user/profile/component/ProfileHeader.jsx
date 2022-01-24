@@ -97,7 +97,7 @@ const ProfileHeader = (props) => {
                 src = {createUrl(banner)}/>
             <div className = {classes.body}>
                 <img className = {classes.avatar}
-                    src={createUrl(banner)}/>
+                    src={createUrl(avatar)}/>
                 <div className = {classes.inforLeft}>
                     <Typography variant = 'header' sx = {{fontWeight: 'bold', color: '#000'}}>  
                         {username}

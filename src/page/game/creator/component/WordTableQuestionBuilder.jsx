@@ -50,10 +50,8 @@ const WordTableQuestionBuilder = (props) => {
             props.onChange(question)
         }
     }
-    console.log("Char table length", char_table.length);
 
     const checkAndFill = (ox, oy, word, table, direction) => {
-        console.log("Check and fill", ox, oy, word, direction, table);
         // If ok return table 
         // If not return null 
         var isOk = true

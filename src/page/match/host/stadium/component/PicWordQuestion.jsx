@@ -24,8 +24,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'relative',
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(2)
     },
     header: {
         padding: theme.spacing(2),
@@ -81,11 +79,11 @@ const PicWordQuestion = (props) => {
             <Divider/>
             <div className = {classes.center}>
                 <div style = {{
-                    width: theme.spacing(80),
+                    width: theme.spacing(90),
                     aspectRatio: 1.6,
                     alignItems: 'center'
                 }}>
-                    <Grid container columnSpacing={3} rowSpacing={3}>
+                    <Grid container columnSpacing={2} rowSpacing={2}>
                     {
                         images.map((image, index) => (
                             <Grid item xs = {6} key = {'' + index}>

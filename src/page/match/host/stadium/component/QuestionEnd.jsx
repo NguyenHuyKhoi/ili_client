@@ -28,10 +28,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-end',
+        paddingBottom: theme.spacing(5),
         position: 'relative',
-        paddingTop: theme.spacing(7),
-        paddingBottom: theme.spacing(7)
     },
     answerCounts: {
         display: 'flex',
@@ -69,7 +68,7 @@ const QuestionEnd = (props) => {
                                     value = {item.value}
                                     count = {item.count}
                                     percent = {total_count == 0 ? 0 : item.count / total_count}
-                                    isCorrect = {correct_answer == item.value}/>
+                                    isCorrect = {correct_answer == index}/>
                             </div>
                         ))
                     }

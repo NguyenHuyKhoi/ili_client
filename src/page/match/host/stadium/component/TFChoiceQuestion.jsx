@@ -22,8 +22,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'relative',
-        paddingTop: theme.spacing(7),
-        paddingBottom: theme.spacing(7)
     },
     header: {
         padding: theme.spacing(2),
@@ -34,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
     },
     img: {
         aspectRatio: 1.6,
-        height: 240,
+        height: theme.spacing(50),
+        objectFit: 'center'
     },
     answers: {
         padding: theme.spacing(1),
@@ -53,7 +52,7 @@ const TFChoiceQuestion = (props) => {
 
     const handleAnswer = (index) => {
         if (!isPlayer) return
-       // if (selected != null) return 
+        if (selected != null) return 
         setSelected(index)
         if (props.onAnswer) props.onAnswer(index)
 

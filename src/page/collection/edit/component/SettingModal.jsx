@@ -68,14 +68,14 @@ const SettingModal = (props) => {
 		}
 	}
 	const handleDone = () => {
-		console.log("Handle done modal")
+		console.log("Handle done modal", draftSetting)
 		if (props.onDone) {
 			props.onDone(draftSetting)
 		}
 	}
 
 	const handleCancel = () => {
-		setDraftSetting(JSON.parse(JSON.stringify(setting)))
+		setDraftSetting({...setting})
 		handleClose()
 	}
 

@@ -186,8 +186,9 @@ const QuestionRowItem = (props) => {
                                     </Typography>
                                 </div>
                                 {
-                                    images.map((image) => (
-                                        <img className = {classes.hintImage} src = {createUrl(image)}/>
+                                    images.map((image, imageIndex) => (
+                                        <img className = {classes.hintImage} src = {createUrl(image)}
+                                            key = {"" + imageIndex}/>
                                     ))
                                 }
                             </div>

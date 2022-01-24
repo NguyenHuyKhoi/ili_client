@@ -124,7 +124,7 @@ const LoginPage = () => {
                     placeholder = 'Enter email...'
                     value = {email}
                     onChange = {(value) => handleChange('email', value)}
-                    style = {{marginTop: theme.spacing(3)}}
+                    style = {{marginTop: theme.spacing(3), textAlign: 'center'}}
                     />
 
                 <TextField 
@@ -132,7 +132,7 @@ const LoginPage = () => {
                     type="password"  
                     value = {password}
                     onChange = {(value) => handleChange('password', value)}
-                    style = {{marginTop: theme.spacing(2)}}
+                    style = {{marginTop: theme.spacing(2), textAlign: 'center'}}
                     />
 
                 <Button 

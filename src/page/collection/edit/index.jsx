@@ -11,6 +11,7 @@ import { saveCollectionSetting } from '../../../context/collection/actions'
 import { CollectionContext } from '../../../context/collection/context'
 import { getGamesSuccess } from '../../../context/game/other/actions'
 import { GameContext } from '../../../context/game/other/context'
+import FirebaseHelper, { IMAGE_CATEGORIES } from '../../../firebase'
 import { theme } from '../../../theme'
 import AddGamesModal from './component/AddGamesModal'
 import CollectorInfor from './component/CollectorInfor'
@@ -69,11 +70,17 @@ const CollectionEditPage = () => {
         }
     }, [])
 
-    const handleSaveToServer = () => {
+    const handleSaveToServer = async () => {
+        var {cover} = collection 
         let temp = JSON.parse(JSON.stringify(collection))
         temp.games = collection.games.map((item) => item._id)
 
-        axios.put('collection/'+collection._id, temp, {
+		var coverUrl =  await FirebaseHelper.uploadImage(cover, IMAGE_CATEGORIES.COLLECTION_COVER) 
+        console.log("Cover url:", coverUrl);
+        axios.put('collection/'+collection._id, {
+            ...temp,
+            cover: coverUrl
+        }, {
             headers: {
                 'x-access-token': token
             }
