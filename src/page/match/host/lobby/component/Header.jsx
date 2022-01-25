@@ -1,11 +1,7 @@
-import { Fullscreen, Language, MusicNote, VolumeDown } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useContext} from 'react'
-import { theme } from '../../../../../theme'
+import React, { useContext } from 'react'
 import { MatchPlayContext } from '../../../../../context/match/play/context'
-import qr_sample from '../../../../../asset/image/qr_sample.jpg'
-import { BASE_URL } from '../../../../../util/env'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -51,9 +47,6 @@ export const Header = (props) => {
                         {
                             pinCode == undefined || pinCode == null ? 'XXXXXX' : pinCode
                         }
-                    </Typography>
-                    <Typography variant = 'caption' sx  ={{ color: '#000', alignSelf: 'center'}}>
-                        {`Link join: ${BASE_URL}/match/player/entrance`}
                     </Typography>
                 </div>     
             </div>

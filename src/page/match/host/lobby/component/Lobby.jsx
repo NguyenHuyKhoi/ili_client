@@ -7,7 +7,6 @@ import Button from '../../../../../component/Button'
 import { MatchPlayContext } from '../../../../../context/match/play/context'
 import { SocketContext } from '../../../../../context/socket/context'
 import { theme } from '../../../../../theme'
-import { BASE_URL } from '../../../../../util/env'
 import PlayerItem from './PlayerItem'
 
 const useStyles = makeStyles((theme) => ({
