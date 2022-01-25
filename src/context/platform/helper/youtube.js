@@ -1,4 +1,3 @@
-import { PLATFORM_ACCOUNT_TYPES_ID } from "../../platform/context"
 
 /* global gapi */
 const API_KEY = 'AIzaSyCpmqo8ByzMuPbZ8g97mSCRcs4Wi-bJTe0'
@@ -137,7 +136,7 @@ class YoutubeHelper {
                     "id": [ id ]
                 })
             let items = res.result.items
-            if (items.length == 0) return null 
+            if (items.length === 0) return null 
             return items[0]
         }
         catch (err) {
@@ -193,7 +192,7 @@ class YoutubeHelper {
                 console.log('Get livestream id', res)
                 if (res != null) {
                     let status = res.status.lifeCycleStatus
-                    if (status == listened_status) {
+                    if (status === listened_status) {
                         console.log("Livestream is live ")
                         clearInterval(_interval)
                         resolve(null)

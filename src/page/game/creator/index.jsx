@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import NotificationModal from '../../../component/NotificationModal'
 import { AuthContext } from '../../../context/auth/context'
-import { addQuestion, deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, updateQuestion, validateGame } from '../../../context/game/creator/actions'
+import { addQuestion, deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, updateQuestion } from '../../../context/game/creator/actions'
 import { GameCreatorContext, QUESTION_TYPES_ID } from '../../../context/game/creator/context'
 import { cloneQuestion, validateGameSetting, validateQuestion } from '../../../context/game/creator/reducer'
 import FirebaseHelper, { IMAGE_CATEGORIES } from '../../../firebase'
@@ -35,7 +35,7 @@ const GameCreatorPage = (props) => {
     const navigate = useNavigate()
     const {token} = useContext(AuthContext)
     const {game, dispatch, mode} = useContext(GameCreatorContext)
-    const {questions, questionIndex, isValidated} = game
+    const {questions, questionIndex} = game
 
     var question = questions[questionIndex]
 
@@ -74,6 +74,8 @@ const GameCreatorPage = (props) => {
                     break; 
                 case QUESTION_TYPES_ID.WORD_TABLE: 
                     break;
+                default: 
+                    break;
             }
         }))
         return res
@@ -98,7 +100,7 @@ const GameCreatorPage = (props) => {
         else if (!isValidated) {
             setModal({state: 'setting'})
         }
-        else if (mode == 'create') {
+        else if (mode === 'create') {
             // Add index for question:
             game.questions.forEach((question, index) => game.questions[index].index = index + 1)
 
@@ -128,11 +130,11 @@ const GameCreatorPage = (props) => {
                 })
             })
         }
-        else if (mode == 'edit') {
+        else if (mode === 'edit') {
             console.log("Edit game success")
-            var { cover} = game 
-            var coverUrl =  await FirebaseHelper.uploadImage(cover, IMAGE_CATEGORIES.GAME_COVER) 
-            var tempGame = await uploadQuestionImages(game)
+            let { cover} = game 
+            let coverUrl =  await FirebaseHelper.uploadImage(cover, IMAGE_CATEGORIES.GAME_COVER) 
+            let tempGame = await uploadQuestionImages(game)
             axios.post('game/edit/'+game._id, {
                 ...tempGame,
                 cover: coverUrl
@@ -200,7 +202,7 @@ const GameCreatorPage = (props) => {
     }
     return (
         <div className = {classes.container}>
-            <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+            <Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
                     {alert.msg}
@@ -215,12 +217,12 @@ const GameCreatorPage = (props) => {
                 title = 'Done!'
                 btnLabel = 'Go Library'
                 desc = 'See results in library.'
-                open = { modal.state == 'success' }     
+                open = { modal.state === 'success' }     
                 onClose = {() => setModal({})}
                 onDone = {handleDoneCreate}/>
 
             <SelectQuestionTypeModal 
-                open = { modal.state == 'select_type' }     
+                open = { modal.state === 'select_type' }     
                 onClose = {() => setModal({})}
                 onSelectType = {handleSelectQuestionType}/>
 
@@ -232,7 +234,7 @@ const GameCreatorPage = (props) => {
                     visibility: game.visibility,
                     subject: game.subject
                 }}
-                open = {modal.state == 'setting'}     
+                open = {modal.state === 'setting'}     
 
                 onClose = {() => setModal({})}
                 onCancel = {() => setModal({})}
@@ -242,7 +244,7 @@ const GameCreatorPage = (props) => {
                 }}/>
 
             <ValidateGameModal
-                open = {modal.state == 'validate'}    
+                open = {modal.state === 'validate'}    
                 questions = {defectiveQuestions}
                 onClickQuestion = {handleSelectFixQuestion} 
                 onClose = {() => setModal({})}
@@ -250,7 +252,7 @@ const GameCreatorPage = (props) => {
                 onSaveDraft = {handleSaveDraft}/>
 
             <DeleteQuestionModal 
-                open = {modal.state == 'delete_question'}     
+                open = {modal.state === 'delete_question'}     
                 canDelete = {canDeleteQuestion}
                 onClose = {() => setModal({})}
                 onCancel = {() => setModal({})}

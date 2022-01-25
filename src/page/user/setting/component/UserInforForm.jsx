@@ -7,18 +7,14 @@ import MediaUploadCard from '../../../../component/MediaUploadCard'
 import TextField from '../../../../component/TextField'
 import { updateUserInfor } from '../../../../context/auth/actions'
 import { AuthContext } from '../../../../context/auth/context'
-import { UserContext } from '../../../../context/user/context'
 import FirebaseHelper, { IMAGE_CATEGORIES } from '../../../../firebase'
 import { theme } from '../../../../theme'
-import { createUrl } from '../../../../util/helper'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
 		display: 'flex',
 		flexDirection: 'column',
-		alignItems: 'flex-start',
 		padding: theme.spacing(2),
-		borderRadius: theme.spacing(0.5),
 		backgroundColor: theme.palette.secondary.main,
 		border: 'solid 2px #000000',
         borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
@@ -41,7 +37,6 @@ const UserInforForm = (props) => {
 	const classes = useStyles()
 	const {user, token} = useContext(AuthContext)
 	const authDispatch = useContext(AuthContext).dispatch
-	const {dispatch} = useContext(UserContext)
 
 	const [inputs, setInputs] = useState({...user})
     const [alert, setAlert] = useState({})
@@ -95,7 +90,7 @@ const UserInforForm = (props) => {
 
   	return (
     	<div className = {classes.container}>
-			<Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+			<Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
                     {alert.msg}

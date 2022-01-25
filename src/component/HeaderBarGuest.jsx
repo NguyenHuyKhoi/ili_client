@@ -1,9 +1,9 @@
 
 import { makeStyles } from '@mui/styles'
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { theme } from '../theme'
 import logo from '../asset/image/logo.png'
+import { theme } from '../theme'
 import Button from './Button'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -32,7 +32,7 @@ const HeaderBarGuest = (props) => {
     return (
         <div className = {classes.container}>
             <div onClick = {() => navigate('/', {replace: true})}>
-                <img src = {logo} className = {classes.logo}/>
+                <img src = {logo} className = {classes.logo} alt = 'Logo'/>
             </div>
             <div className = {classes.center}/>
             <Button 

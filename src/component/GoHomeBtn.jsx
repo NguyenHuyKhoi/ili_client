@@ -1,10 +1,8 @@
 
-import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
-import { theme } from '../theme'
-import logo from '../asset/image/logo.png'
 import { useNavigate } from 'react-router-dom'
+import logo from '../asset/image/logo.png'
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -28,6 +26,7 @@ const GoHomeBtn = (props) => {
     }
     return (
         <img src = {logo} className = {classes.container}
+            alt = 'Logo'
             onClick = {handleGoHome}/>
 
     )

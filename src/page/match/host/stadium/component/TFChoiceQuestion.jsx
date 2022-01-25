@@ -1,12 +1,10 @@
-import { Square } from '@mui/icons-material'
 import { Divider, Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { theme } from '../../../../../theme'
-import {createUrl} from '../../../../../util/helper'
+import { createUrl } from '../../../../../util/helper'
+import { answerStyles } from '../../../../game/creator/component/Answers'
 import Answer from './Answer'
-import {answerStyles} from '../../../../game/creator/component/Answers'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -44,9 +42,8 @@ const TFChoiceQuestion = (props) => {
     const classes = useStyles()
     const [selected, setSelected] = useState(null)
     const {data} = props
-    var {question, time,answer_counts, question_index, question_total, isPlayer} = data
-    const {title, image, answers, time_limit, correct_answer} = question
-
+    var {question,answer_counts, question_index, question_total, isPlayer} = data
+    const {title, image, answers} = question
 
     var answerTotal = answer_counts.reduce((res, item) => res += item.count, 0)
 
@@ -57,7 +54,7 @@ const TFChoiceQuestion = (props) => {
         if (props.onAnswer) props.onAnswer(index)
 
     }
-    if (isPlayer == undefined) isPlayer = false 
+    if (isPlayer === undefined) isPlayer = false 
     return (
         <div className = {classes.container}>
             <div className = {classes.header} >
@@ -76,7 +73,7 @@ const TFChoiceQuestion = (props) => {
             <div className = {classes.center}>
                 {
                     image != null ?
-                    <img className = {classes.img} src = {createUrl(image)}/>
+                    <img className = {classes.img} src = {createUrl(image)} alt = 'Hint'/>
                     :
                     <div className = {classes.img} />
                 }
@@ -91,7 +88,7 @@ const TFChoiceQuestion = (props) => {
                                     style = {answerStyles[index]}
                                     answer = {item} 
                                     onClick = {() => handleAnswer(index)}
-                                    isSelected = {selected == null ? null : (selected == index)}
+                                    isSelected = {selected === null ? null : (selected === index)}
                                     isCorrect = {null}/>
                             </Grid>
                         ))

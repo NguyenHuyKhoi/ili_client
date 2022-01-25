@@ -1,26 +1,10 @@
-import { Typography } from '@mui/material';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import { makeStyles } from '@mui/styles';
-import React, {useEffect, useState, useContext} from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { selectMatch } from '../../../../context/match/other/actions';
 import { MatchContext } from '../../../../context/match/other/context';
-
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import { printDate } from '../../../../util/helper';
 import { theme } from '../../../../theme';
-const useStyles = makeStyles((theme) => ({
-    container: {
-        flex: 1
-    }
-}))
-
+import { printDate } from '../../../../util/helper';
 
 const columns = [
 	{ field: 'id', headerName: 'Id', hidden: true},
@@ -43,12 +27,11 @@ const getRows = (matches) => {
 }
   
 const MatchTable = () => {
-	const classes = useStyles()
 	const navigate = useNavigate()
 	const {matches, dispatch} = useContext(MatchContext)
 	const handleSelectRows = (indexes) => {
 		console.log(" indexes: ", indexes)
-		if (indexes.length == 0 ) return 
+		if (indexes.length === 0 ) return 
 		let match = matches[indexes[0]]
 		dispatch(selectMatch(match))
 		navigate('/match/detail/'+match._id, {replace: false})
@@ -57,7 +40,7 @@ const MatchTable = () => {
 		<div style={{ height: theme.spacing(60), width: '100%', backgroundColor: 'white' }}>
 			<DataGrid
 				rows={getRows(matches)}
-				columns={columns.filter((col) => col.hidden != true)}
+				columns={columns.filter((col) => col.hidden !== true)}
 				pageSize={Math.min(10, matches.length)}
 				onSelectionModelChange={handleSelectRows}
 				// checkboxSelection

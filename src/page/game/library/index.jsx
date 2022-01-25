@@ -1,7 +1,7 @@
-import { Container, Grid } from '@mui/material'
+import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
-import React, {useContext, useEffect} from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import HeaderBar from '../../../component/HeaderBar'
 import SideMenu from '../../../component/SideMenu'
@@ -51,7 +51,8 @@ const GameLibraryPage = () => {
         return () => {
             
         }
-    }, [])
+    })
+
     const handleGoCreate = () => {
         navigate('/game/creator', {replace: true})
     }

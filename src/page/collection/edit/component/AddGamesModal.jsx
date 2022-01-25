@@ -1,7 +1,6 @@
 import { Modal, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
 import { makeStyles } from '@mui/styles';
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import Button from '../../../../component/Button';
 import { CollectionContext } from '../../../../context/collection/context';
 import { GameContext } from '../../../../context/game/other/context';
@@ -42,8 +41,8 @@ const AddGamesModal = (props) => {
 	const allGames = useContext(GameContext).games
 	const {collection} = useContext(CollectionContext)
 	const {games} = collection
-	var {open, questions} = props
-	if (open == undefined) open = false
+	var {open} = props
+	if (open === undefined) open = false
 	const handleClose = () => {
 		if (props.onClose) {
 			props.onClose()
@@ -52,7 +51,7 @@ const AddGamesModal = (props) => {
 
 	const inAddedGames = (id) => {
 		const ids = games.map((item) => item._id)
-		return ids.indexOf(id) != -1
+		return ids.indexOf(id) !== -1
 	}
 	return (
 		<Modal

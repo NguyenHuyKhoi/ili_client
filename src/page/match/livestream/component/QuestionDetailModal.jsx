@@ -6,9 +6,6 @@ import { MatchPlayContext } from '../../../../context/match/play/context';
 import { theme } from "../../../../theme";
 import QuestionRowItem from '../../../game/detail/component/QuestionRowItem';
 
-/* global gapi */
-/* global FB */
-
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -54,9 +51,9 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestionDetailModal = (props) => {
 	const classes = useStyles()
-	const {dispatch, question} = useContext(MatchPlayContext)
+	const { question} = useContext(MatchPlayContext)
 	var {open} = props
-	if (open == undefined) open = false
+	if (open === undefined) open = false
 
 	const handleClose = () => {
 		if (props.onClose) {
@@ -76,7 +73,7 @@ const QuestionDetailModal = (props) => {
 					Question
 				</Typography>
 				{
-					question != undefined && 
+					question !== undefined && 
 					<QuestionRowItem 
 						disable = {true}
 						question = {question} 

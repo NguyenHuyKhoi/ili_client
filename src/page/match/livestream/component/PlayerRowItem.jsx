@@ -1,9 +1,6 @@
-import { Check, Close } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useEffect, useState } from 'react'
-import Icon from '../../../../component/Icon'
-import { theme } from '../../../../theme'
+import React from 'react'
 import { createUrl } from '../../../../util/helper'
 
 const useStyles = makeStyles((theme) => ({
@@ -47,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PlayerRowItem = (props) => {
     const classes = useStyles()
-    var {player, index} = props
+    var {player} = props
     const {username, avatar, score, rank } = player
 
     return (
@@ -65,7 +62,7 @@ const PlayerRowItem = (props) => {
                     { username}
                 </Typography>
             </div>
-            <img className = {classes.img} src = {createUrl(avatar)}/>
+            <img className = {classes.img} src = {createUrl(avatar)} alt = 'Avatar'/>
             <div className = {classes.rank}>
                 <Typography variant = 'caption' sx = {{color: 'white'}}>
                     {'Rank: ' + rank}

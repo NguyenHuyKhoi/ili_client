@@ -38,14 +38,14 @@ const CollectorInfor = (props) => {
     }
     return (
         <div className = {classes.container}>
-            <img className = {classes.img} src = {createUrl(cover)}/>
+            <img className = {classes.img} src = {createUrl(cover)} alt = 'Cover'/>
             <div className = {classes.body} >
                 <Typography variant= 'bigLabel' sx = {{color: '#000'}}>
                     {title} 
                 </Typography>
 
                 <Typography variant= 'label' sx = {{color: '#000', my: theme.spacing(1)}}>
-                    {description == '' || description == null ? 'No description...' : description}
+                    {description === '' || description == null ? 'No description...' : description}
                 </Typography>
                 
                 <div style = {{alignSelf: 'baseline', marginTop: theme.spacing(2), marginBottom: theme.spacing(2)}}>

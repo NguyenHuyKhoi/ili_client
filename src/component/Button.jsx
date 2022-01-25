@@ -32,8 +32,8 @@ const Button = (props) => {
             }}
             style = {{
                 backgroundColor: theme.palette[variant].main,
-                padding: size == 'small' ? theme.spacing(0.4) 
-                        : size == 'medium' ? theme.spacing(1) 
+                padding: size ==='small' ? theme.spacing(0.4) 
+                        : size ==='medium' ? theme.spacing(1) 
                         : theme.spacing(1.5),
                 ...style,
             }}>

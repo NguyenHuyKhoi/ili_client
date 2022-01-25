@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
         
     },
     item: {
-        display: 'flex',
         width: '100%',
         marginBottom: theme.spacing(2),
         display: 'flex',
@@ -29,7 +28,7 @@ const MenuItem = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const {menu, isSelected} = props
-    const {title, link, icon} = menu
+    const {title, link} = menu
     const handleClick = () => {
         if (link) {
             return navigate(link, {replace: true})
@@ -74,7 +73,7 @@ const SideMenu = (props) => {
                     menus.map((menu, index) => (
                         <MenuItem
                             menu = {menu}
-                            isSelected = {selectedIndex == index}
+                            isSelected = {selectedIndex === index}
                             onClick = {() => {
                                 if (props.onSelectItem) props.onSelectItem(index)
                             }}

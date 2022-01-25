@@ -32,8 +32,8 @@ const EmptyBox = (props) => {
             onClick = {() => {
                 if (props.onClick) props.onClick()
             }}
-            style = {style == undefined? {} : style}>
-            <img src = {empty_img} className = {classes.img}/>
+            style = {style === undefined? {} : style}>
+            <img src = {empty_img} className = {classes.img} alt = 'Empty'/>
             <Typography variant='bigLabel' sx = {{color: '#000', mt: theme.spacing(1)}}>
                 {label}
             </Typography>

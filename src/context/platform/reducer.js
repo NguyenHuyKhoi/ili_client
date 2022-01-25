@@ -1,7 +1,7 @@
 const reducer = (state, action) => {
-    const { account, pages, social} = action.payload != undefined ? action.payload : {}
+    const { account, social} = action.payload !== undefined ? action.payload : {}
 
-    var temps, temp
+    var temp
     switch (action.type) {
         case 'SELECT_PLATFORM':
             temp = JSON.parse(JSON.stringify(account))

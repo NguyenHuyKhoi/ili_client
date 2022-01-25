@@ -1,26 +1,8 @@
-import { Check, Close, Square } from '@mui/icons-material'
-import { Divider, Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
-import { makeStyles } from '@mui/styles'
+import { Grid, Typography } from '@mui/material'
 import React from 'react'
 import { theme } from '../../../../../theme'
-import {createUrl} from '../../../../../util/helper'
-const useStyles = makeStyles((theme) => ({
-    container: {
-        height: theme.spacing(10),
-        display: 'flex',
-        flexDirection:'column',
-        alignItems : 'center',
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
-        backgroundColor: 'red',
-        borderRadius: theme.spacing(0.5),
-        boxShadow: `1px 3px 1px #f0f0f0`,
-    }
-}))
 
 const KeywordPlayer= (props) => {
-    const classes = useStyles()
     var {player} = props 
 
     return (
@@ -33,11 +15,13 @@ const KeywordPlayer= (props) => {
             padding: theme.spacing(0.6)
         }}>
             {
-                player != null ?
+                player !==  null ?
                 <img style = {{
                     height: theme.spacing(6),
                     aspectRatio: 1
-                }} src = {player.avatar}/>
+                }} 
+                alt = 'Avatar'
+                src = {player.avatar}/>
                 :
                 <div style = {{
                     height: theme.spacing(6),
@@ -56,14 +40,13 @@ const KeywordPlayer= (props) => {
 }
 
 const KeywordPlayerList = (props) => {
-    const classes = useStyles()
     const {userAnswers} = props 
 
     const players = []
     userAnswers.forEach((item, index) => {
-        if (item.keywordIndex != undefined) {
-            var idx = players.findIndex((player) => player._id == item._id)
-            if (idx != -1) {
+        if (item.keywordIndex !==  undefined) {
+            var idx = players.findIndex((player) => player._id ===  item._id)
+            if (idx !==  -1) {
                 players[idx].score = players[idx].score + item.earnScore
             }
             else {

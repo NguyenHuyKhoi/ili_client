@@ -46,12 +46,6 @@ const useStyles = makeStyles((theme) => ({
         flex:1,
         flexDirection: 'column'
     },
-    answer: {
-        flex:1,
-        backgroundColor: 'white',
-        border: '1px solid gray',
-        height:7
-    },
     img: {
         height: 120,
         aspectRatio: 1.6,
@@ -102,7 +96,7 @@ const QuestionRowItem = (props) => {
     const {isShowAll, selected, disable} = props
     const [isShow, setIsShow] = useState(false)
     const {question, index} = props
-    const {title, image, answers, correct_answer, time_limit, typeName, typeId, images, correct_answers, char_table } = question
+    const {title, image, answers, correct_answer, time_limit, typeName, typeId, images, correct_answers } = question
     const handleShowChange = () => {
         if (disable) return
         setIsShow(!isShow)
@@ -134,16 +128,16 @@ const QuestionRowItem = (props) => {
                     </Typography>
                 </div>
                 {
-                    (typeId == QUESTION_TYPES_ID.MULTIPLE_CHOICE || typeId == QUESTION_TYPES_ID.TF_CHOICE) &&
-                    <img className = {classes.img} src = {createUrl(image)}/>
+                    (typeId === QUESTION_TYPES_ID.MULTIPLE_CHOICE || typeId === QUESTION_TYPES_ID.TF_CHOICE) &&
+                    <img className = {classes.img} src = {createUrl(image)} alt = 'Hint'/>
                 }
                 {
-                    typeId == QUESTION_TYPES_ID.WORD_TABLE &&
-                    <img className = {classes.img} src = {createUrl(null)}/>
+                    typeId === QUESTION_TYPES_ID.WORD_TABLE &&
+                    <img className = {classes.img} src = {createUrl(null)}  alt = 'Hint'/>
                 }
                 {
-                    typeId == QUESTION_TYPES_ID.PIC_WORD  && images.length > 0 &&
-                    <img className = {classes.img} src = {createUrl(images[0])}/>
+                    typeId === QUESTION_TYPES_ID.PIC_WORD  && images.length > 0 &&
+                    <img className = {classes.img} src = {createUrl(images[0])}  alt = 'Hint'/>
                 }
 
                 <div className = {classes.time_limit}>
@@ -156,15 +150,15 @@ const QuestionRowItem = (props) => {
                 (isShow || disable)  && 
                 <div className = {classes.body}>
                     {
-                        typeId == QUESTION_TYPES_ID.MULTIPLE_CHOICE || typeId == QUESTION_TYPES_ID.TF_CHOICE ?
+                        typeId === QUESTION_TYPES_ID.MULTIPLE_CHOICE || typeId === QUESTION_TYPES_ID.TF_CHOICE ?
                             answers.map((item, index) => (
                                 <Answer     
                                     style = {answerStyles[index]}
                                     key = {''+index} 
                                     answer = {item} 
-                                    correct = { correct_answer == index }/>
+                                    correct = { correct_answer === index }/>
                             ))
-                        : typeId == QUESTION_TYPES_ID.PIC_WORD ?
+                        : typeId === QUESTION_TYPES_ID.PIC_WORD ?
                             <div style = {{
                                 display: 'flex',
                                 flexDirection: 'row',
@@ -188,11 +182,11 @@ const QuestionRowItem = (props) => {
                                 {
                                     images.map((image, imageIndex) => (
                                         <img className = {classes.hintImage} src = {createUrl(image)}
-                                            key = {"" + imageIndex}/>
+                                            key = {"" + imageIndex}  alt = 'Hint'/>
                                     ))
                                 }
                             </div>
-                        : typeId == QUESTION_TYPES_ID.WORD_TABLE ? 
+                        : typeId === QUESTION_TYPES_ID.WORD_TABLE ? 
                             <MultiSelect
                                 label = 'Keywords'
                                 selects = {correct_answers}

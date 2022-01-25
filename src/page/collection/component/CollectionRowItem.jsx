@@ -1,8 +1,7 @@
-import { MoreVert, Star } from '@mui/icons-material'
-import { Typography ,Avatar} from '@mui/material'
+import { Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, { useState , useContext } from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../../component/Button'
 import { selectCollection } from '../../../context/collection/actions'
@@ -80,7 +79,7 @@ export const CollectionRowItem = (props) => {
         <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}
             onClick={handleView}>
             <div className = {classes.left}>
-                <img className = {classes.img} src = {createUrl(cover)}/>
+                <img className = {classes.img} src = {createUrl(cover)} alt = 'Cover'/>
                 <div className = {classes.gameNums}>
                     <Typography variant = 'caption' sx = {{color: 'white'}}> 
                         {games.length + ' games'}

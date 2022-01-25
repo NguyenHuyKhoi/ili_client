@@ -11,8 +11,6 @@ const useStyles = makeStyles((theme) => ({
 		transform: 'translate(-50%, -50%)',
 		width: '30vw',
 		backgroundColor: theme.palette.secondary.main,
-		borderRadius: theme.spacing(1),
-		padding: theme.spacing(2),
 		display: 'flex',
 		flexDirection: 'column',
 		border: 'solid 2px #000000',
@@ -33,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const DeleteQuestionModal = (props) => {
 	const classes = useStyles()
 	var {open, canDelete} = props
-	if (open == undefined) open = false
+	if (open ===undefined) open = false
 	const handleClose = () => {
 		if (props.onClose) {
 			props.onClose()

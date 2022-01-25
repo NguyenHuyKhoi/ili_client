@@ -1,18 +1,16 @@
-import { MoreVert, Star } from '@mui/icons-material'
-import {Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ActiveDot from '../../../component/ActiveDot'
+import Button from '../../../component/Button'
+import { startEditGame } from '../../../context/game/creator/actions'
+import { GameCreatorContext } from '../../../context/game/creator/context'
 import { selectGame } from '../../../context/game/other/actions'
 import { GameContext } from '../../../context/game/other/context'
 import { theme } from '../../../theme'
-import {createUrl} from '../../../util/helper'
+import { createUrl } from '../../../util/helper'
 
-import Button from '../../../component/Button'
-import { GameCreatorContext } from '../../../context/game/creator/context'
-import { startEditGame } from '../../../context/game/creator/actions'
-import ActiveDot from '../../../component/ActiveDot'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -96,6 +94,7 @@ export const GameRowItem = (props) => {
             onClick={handleViewDetail}>
             <div className = {classes.left}>
                 <img className = {classes.img} 
+                    alt = 'Cover'
                     src = {createUrl(cover)}/>
                 <div className = {classes.questionNums}>
                     <Typography variant = 'caption' 
@@ -108,7 +107,7 @@ export const GameRowItem = (props) => {
                         {title}
                     </Typography>
 
-                    <ActiveDot isActive = {visibility == 'public'} labels = {['public', 'private']}/>
+                    <ActiveDot isActive = {visibility ==='public'} labels = {['public', 'private']}/>
                 </div>
                 <div className = {classes.rightBottom}>
                     <Typography variant = 'label' sx = {{color: '#000', flex: 1}}>

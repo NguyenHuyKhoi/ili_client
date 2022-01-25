@@ -1,11 +1,6 @@
-import { Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import EmptyBox from '../../../../component/EmptyBox'
-import { AuthContext } from '../../../../context/auth/context'
-import { getGamesSuccess } from '../../../../context/game/other/actions'
 import { GameContext } from '../../../../context/game/other/context'
 import { theme } from '../../../../theme'
 import { GameRowItem } from '../../component/GameRowItem'
@@ -39,17 +34,11 @@ const useStyles = makeStyles((theme) => ({
 
 const GameList = (props) => {
     const classes = useStyles()
-    const {token} = useContext(AuthContext)
-    const {games, dispatch} = useContext(GameContext)
-    const [selectedIndex, setSelectedIndex] = useState(0)
-    const [isShowAll, setIsShowAll] = useState(false)
-    const handleShowAllChange = () => {
-        setIsShowAll(!isShowAll)
-    }
+    const {games} = useContext(GameContext)
     return (
         <div className = {classes.container}>
             {
-                games.length == 0 ?
+                games !== undefined && games.length === 0 ?
                 <EmptyBox
                     style= {{width: '100%', marginTop: theme.spacing(5)}}
                     label = " You don't have yet any games. Create one?"

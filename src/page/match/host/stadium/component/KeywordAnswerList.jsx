@@ -1,26 +1,8 @@
-import { Check, Close, Square } from '@mui/icons-material'
-import { Divider, Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
-import { makeStyles } from '@mui/styles'
+import { Grid, Typography } from '@mui/material'
 import React from 'react'
 import { theme } from '../../../../../theme'
-import {createUrl} from '../../../../../util/helper'
-const useStyles = makeStyles((theme) => ({
-    container: {
-        height: theme.spacing(10),
-        display: 'flex',
-        flexDirection:'column',
-        alignItems : 'center',
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
-        backgroundColor: 'red',
-        borderRadius: theme.spacing(0.5),
-        boxShadow: `1px 3px 1px #f0f0f0`,
-    }
-}))
 
 const KeywordAnswer = (props) => {
-    const classes = useStyles()
     var {isShow, content, userAnswer} = props 
 
     var hideAnswer = ''
@@ -39,7 +21,9 @@ const KeywordAnswer = (props) => {
                 <img style = {{
                     height: theme.spacing(6),
                     aspectRatio: 1
-                }} src = {userAnswer.avatar}/>
+                }} 
+                alt = 'Avatar'
+                src = {userAnswer.avatar}/>
                 :
                 <div style = {{
                     height: theme.spacing(6),
@@ -58,11 +42,10 @@ const KeywordAnswer = (props) => {
 }
 
 const KeywordAnswerList = (props) => {
-    const classes = useStyles()
     const {userAnswers, correct_answers, showAll} = props 
     
     const findUserAnswer = (keywordIndex) => {
-        let userAnswer = userAnswers.find((item) => item.keywordIndex == keywordIndex)
+        let userAnswer = userAnswers.find((item) => item.keywordIndex === keywordIndex)
         return userAnswer
     }
     return (

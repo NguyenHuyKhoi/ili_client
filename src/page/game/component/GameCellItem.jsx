@@ -1,14 +1,11 @@
-import { MoreVert } from '@mui/icons-material'
-import { Avatar, Grid,  Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useContext} from 'react'
-import {GameContext} from '../../../context/game/other/context'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {createUrl} from '../../../util/helper'
-import { selectGame } from '../../../context/game/other/actions'
-import { theme } from '../../../theme'
 import Link from '../../../component/Link'
+import { selectGame } from '../../../context/game/other/actions'
+import { GameContext } from '../../../context/game/other/context'
+import { createUrl } from '../../../util/helper'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -68,7 +65,8 @@ export const GameCellItem = (props) => {
         <div className = {classes.container} >
             <div className = {classes.header} >
                 <img className = {classes.img} src = {createUrl(image)}
-                    onClick = {handleSelect}/>
+                    onClick = {handleSelect}
+                    alt = 'Cover'/>
                 <div className= {classes.questionNums} >
                     <Typography variant = 'caption' 
                         sx = {{color: 'white', fontWeight: 'bold'}}> {questions.length} questions </Typography>

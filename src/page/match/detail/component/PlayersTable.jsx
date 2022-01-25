@@ -1,9 +1,6 @@
-import { makeStyles } from '@mui/styles';
 import { DataGrid } from '@mui/x-data-grid';
 import React from 'react';
 import { theme } from '../../../../theme';
-const useStyles = makeStyles((theme) => ({
-}))
 
 const columns = [
 	{ field: 'id', headerName: 'Id', hidden: true},
@@ -23,7 +20,7 @@ const getRows = (players, match) => {
 			id: index,
 			username: player.username,
 			rank: player.rank,
-			correctPercent: answerNum == 0? '0 %' : Math.round( 100 * correctNum / answerNum) + ' %',
+			correctPercent: answerNum === 0? '0 %' : Math.round( 100 * correctNum / answerNum) + ' %',
       unanswers: unanswerNum,
       score: player.score
 		}
@@ -33,7 +30,7 @@ const PlayersTable = (props) => {
   const {match} = props 
   const {players} = match
   const handleSelectRows = (indexes) => {
-    if (indexes.length == 0) return
+    if (indexes.length === 0) return
     if (props.onClickRow) {
         props.onClickRow(indexes[0])
       }
@@ -44,7 +41,7 @@ const PlayersTable = (props) => {
     <div style={{ height:  theme.spacing(50), width: '100%', backgroundColor: 'white' }}>
     <DataGrid
       rows={getRows(players)}
-      columns={columns.filter((col) => col.hidden != true)}
+      columns={columns.filter((col) => col.hidden !== true)}
       pageSize={5}
       rowsPerPageOptions={[5]}
       onSelectionModelChange={handleSelectRows}

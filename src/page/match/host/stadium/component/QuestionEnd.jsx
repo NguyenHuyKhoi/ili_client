@@ -1,12 +1,9 @@
-import { Square } from '@mui/icons-material'
 import { Divider, Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { theme } from '../../../../../theme'
-import {createUrl} from '../../../../../util/helper'
+import { answerStyles } from '../../../../game/creator/component/Answers'
 import Answer from './Answer'
-import {answerStyles} from '../../../../game/creator/component/Answers'
 import AnswerCount from './AnswerCount'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -46,9 +43,9 @@ const useStyles = makeStyles((theme) => ({
 const QuestionEnd = (props) => {
     const classes = useStyles()
     const {data} = props
-    var {question, time, answer_counts} = data
+    var {question, answer_counts} = data
 
-    const {title, image, answers, correct_answer} = question
+    const {title, answers, correct_answer} = question
     const total_count = answer_counts.reduce((res, item) => res += item.count, 0)
     return (
         <div className = {classes.container}>
@@ -67,8 +64,8 @@ const QuestionEnd = (props) => {
                                     style = {answerStyles[index]}
                                     value = {item.value}
                                     count = {item.count}
-                                    percent = {total_count == 0 ? 0 : item.count / total_count}
-                                    isCorrect = {correct_answer == index}/>
+                                    percent = {total_count ===  0 ? 0 : item.count / total_count}
+                                    isCorrect = {correct_answer ===  index}/>
                             </div>
                         ))
                     }
@@ -84,7 +81,7 @@ const QuestionEnd = (props) => {
                                     style = {answerStyles[index]}
                                     answer = {item} 
                                     count = {answer_counts[index].count}
-                                    isCorrect = {correct_answer == index}/>
+                                    isCorrect = {correct_answer ===  index}/>
                             </Grid>
                         ))
                     }

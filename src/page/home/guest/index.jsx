@@ -1,19 +1,15 @@
-import { grey } from '@mui/material/colors'
-import { makeStyles } from '@mui/styles'
 import { Grid } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import React from 'react'
-import GuestHeaderBar from '../../../component/HeaderBarGuest'
-import HomeQuickNavCard from '../../../component/HomeQuickNavCard'
-import background from '../../../asset/image/background.jpg'
-
 import card_img_0 from '../../../asset/image/home_card_0.PNG'
 import card_img_1 from '../../../asset/image/home_card_1.PNG'
 import card_img_2 from '../../../asset/image/home_card_2.jpg'
 import card_img_3 from '../../../asset/image/home_card_3.PNG'
 import HeaderBar from '../../../component/HeaderBar'
+import HomeQuickNavCard from '../../../component/HomeQuickNavCard'
+
 const useStyles = makeStyles((theme) => ({
     container: {
-        height: '100vh',
         flex: 1,
         height: '100vh'
     },

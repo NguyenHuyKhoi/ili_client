@@ -1,15 +1,9 @@
-import { Square } from '@mui/icons-material'
 import { Divider, Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, {useState} from 'react'
-import { theme } from '../../../../../theme'
-import {createUrl} from '../../../../../util/helper'
-import Answer from './Answer'
-import {answerStyles} from '../../../../game/creator/component/Answers'
+import React, { useState } from 'react'
 import Button from '../../../../../component/Button'
 import TextField from '../../../../../component/TextField'
-import { WORD_TABLE_SIZE } from '../../../../../context/game/creator/context'
+import { theme } from '../../../../../theme'
 import CharTable from './CharTable'
 import KeywordAnswerList from './KeywordAnswerList'
 const useStyles = makeStyles((theme) => ({
@@ -56,8 +50,8 @@ const WordTableQuestion = (props) => {
     const classes = useStyles()
     const [userAnswer, setuserAnswer] = useState('');
     const {data} = props
-    var {question, time,answer_counts, question_index, question_total, isPlayer, open_word_states , userAnswers} = data
-    const {title, image, answers, time_limit, correct_answer, char_table, correct_answers} = question
+    var {question,answer_counts, question_index, question_total, isPlayer, open_word_states , userAnswers} = data
+    const {title, char_table, correct_answers} = question
 
 
     var answerTotal = answer_counts.reduce((res, item) => res += item, 0)
@@ -69,7 +63,7 @@ const WordTableQuestion = (props) => {
         setuserAnswer('')
 
     }
-    if (isPlayer == undefined) isPlayer = false 
+    if (isPlayer === undefined) isPlayer = false 
     return (
         <div className = {classes.container}>
             <div className = {classes.header} >

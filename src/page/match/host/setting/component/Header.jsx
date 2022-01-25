@@ -1,10 +1,9 @@
-import { Fullscreen, Language } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
-import { theme } from '../../../../../theme'
-import logo from '../../../../../asset/image/logo.png'
 import { useNavigate } from 'react-router-dom'
+import logo from '../../../../../asset/image/logo.png'
+import { theme } from '../../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -31,7 +30,7 @@ const Header = (props) => {
     return (
         <div className = {classes.container}>   
             <img src = {logo} className = {classes.logo}
-                onClick = {handleGoHome}/>
+                onClick = {handleGoHome} alt = 'Logo'/>
             <Typography variant = 'bigHeader'  
                 sx  ={{ color: theme.palette.success.main, fontWeight: 'bold'}}> 
                 Create new match

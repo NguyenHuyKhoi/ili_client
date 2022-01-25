@@ -1,7 +1,6 @@
-import React, {useState} from 'react'
+import { Switch, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { Button, Grid, Switch, TextField, Typography } from '@mui/material'
-import {theme} from '../../../../theme'
+import React from 'react'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,

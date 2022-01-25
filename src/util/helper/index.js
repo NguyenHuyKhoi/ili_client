@@ -2,14 +2,14 @@ import { validateUrl } from "../validator"
 import no_image from '../../asset/image/no_image_available.jpg'
 export const createUrl = (data) => {
     //console.log("Create url with :",data)
-    if (data == undefined || data == null) {
+    if (data === undefined || data === null) {
         return no_image
     }
     try {
         // If data is string: 
         if (typeof data === 'string' || data instanceof String) {
             // Check format is url:
-            if (data != '' && validateUrl(data)) {
+            if (data !== '' && validateUrl(data)) {
                 return data
             }
             else {

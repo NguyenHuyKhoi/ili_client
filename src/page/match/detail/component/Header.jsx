@@ -1,15 +1,14 @@
-import { MoreVert } from '@mui/icons-material';
 import { Divider, Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import  React, {useContext, useState, useEffect} from 'react';
-import { MatchContext } from '../../../../context/match/other/context';
-import { GameContext } from '../../../../context/game/other/context';
-import { theme } from '../../../../theme';
-import Link from '../../../../component/Link'
-import {selectGame} from '../../../../context/game/other/actions'
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Link from '../../../../component/Link';
 import { AuthContext } from '../../../../context/auth/context';
+import { selectGame } from '../../../../context/game/other/actions';
+import { GameContext } from '../../../../context/game/other/context';
+import { MatchContext } from '../../../../context/match/other/context';
+import { theme } from '../../../../theme';
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -43,7 +42,7 @@ const Header = () => {
 	const {match} = useContext(MatchContext)
 	const {user} = useContext(AuthContext)
 	const gameDispatch = useContext(GameContext).dispatch
-	const {game, host, players, startAt } = match
+	const {game, startAt } = match
 
 	const [fullGame, setFullGame] = useState(null)
 	console.log("Match: ", match)
@@ -61,7 +60,7 @@ const Header = () => {
 		return () => {
 			
 		}
-	}, [])
+	})
 
 	const handleViewGame = () => {
 		console.log("Selct to vie game:", fullGame)
@@ -71,7 +70,7 @@ const Header = () => {
 		}
 	}
 
-	var isMe = (user._id == match.host.userId)
+	var isMe = (user._id === match.host.userId)
 	return (
 		<div className = {classes.container}>
 			<Grid container>

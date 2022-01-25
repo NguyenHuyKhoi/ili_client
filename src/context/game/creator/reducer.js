@@ -4,17 +4,17 @@ export const validateMultipleQuestion = (question) => {
     let defs = []
     let {title, answers, correct_answer} = question
     // Check title is missing:
-    if (title == "" || title == null) {
+    if (title === "" || title === null) {
         defs.push('Title missing')
     } 
     // Check answers is missing
-    let emptyAnswers = answers.filter((item) => (item == null) || (item == '')).length
+    let emptyAnswers = answers.filter((item) => (item === null) || (item === '')).length
     if (emptyAnswers > 0) {
         defs.push(emptyAnswers + ' answers missing')
     }
 
     // Check correct answer is selected: 
-    if (correct_answer == null) {
+    if (correct_answer === null) {
         defs.push('Correct answers not selected')
     }
     //console.log("Validate :", defs)
@@ -25,12 +25,12 @@ export const validateTFQuestion = (question) => {
     let defs = []
     let {title, correct_answer} = question
     // Check title is missing:
-    if (title == "" || title == null) {
+    if (title === "" || title === null) {
         defs.push('Title missing')
     } 
 
     // Check correct answer is selected: 
-    if (correct_answer == null) {
+    if (correct_answer === null) {
         defs.push('Correct answers not selected')
     }
     //console.log("Validate :", defs)
@@ -39,7 +39,7 @@ export const validateTFQuestion = (question) => {
 export const cloneQuestion = (question) => {
     var res = JSON.parse(JSON.stringify(question))
     res.images = []
-    if (question.images != undefined) {
+    if (question.images !== undefined) {
         question.images.forEach((item) => res.images = [...res.images, item])
     }
     res.image = question.image 
@@ -50,18 +50,18 @@ export const validatePicWordQuestion = (question) => {
     let defs = []
     let {title, images, correct_answer} = question
     // Check title is missing:
-    if (title == "" || title == null) {
+    if (title === "" || title === null) {
         defs.push('Title missing')
     } 
 
     // Check answers is missing
-    let emptyImages = images.filter((item) => (item == null || item == undefined)).length
-    if (emptyImages == 4) {
+    let emptyImages = images.filter((item) => (item===null || item===undefined)).length
+    if (emptyImages===4) {
         defs.push('No hint image')
     }
 
     // Check correct answer is selected: 
-    if (correct_answer == null) {
+    if (correct_answer===null) {
         defs.push('Correct answers not selected')
     }
     //console.log("Validate :", defs)
@@ -72,18 +72,18 @@ export const validateWordTableQuestion = (question) => {
     let defs = []
     let {title, char_table, correct_answers} = question
     // Check title is missing:
-    if (title == "" || title == null) {
+    if (title==="" || title===null) {
         defs.push('Title missing')
     } 
 
     // Check answers is missing
-    let emptyChars = char_table.filter((item) => (item == null || item == undefined)).length
+    let emptyChars = char_table.filter((item) => (item===null || item===undefined)).length
     if (emptyChars > 0) {
         defs.push('Table is not filled')
     }
 
     // Check correct answer is selected: 
-    if (correct_answers.length ==0) {
+    if (correct_answers.length === 0) {
         defs.push('No keyword is selected')
     }
 
@@ -105,6 +105,8 @@ export const validateQuestion = (question) => {
             return validatePicWordQuestion(question)
         case QUESTION_TYPES_ID.WORD_TABLE:
             return validateWordTableQuestion(question)   
+        default: 
+            return []
     }
 }
 
@@ -112,7 +114,7 @@ export const validateGameSetting = (game) => {
     const {title} = game
     console.log("Check validate game:", title)
     // Check title is missing:
-    if (title == null || title == '') {
+    if (title===null || title==='') {
         return false
     }
 
@@ -121,11 +123,11 @@ export const validateGameSetting = (game) => {
 }
 
 const reducer = (state, action) => {
-    var {question, index, setting, type} = action.payload != undefined ? action.payload : {}
+    var {question, index, setting, type} = action.payload !==undefined ? action.payload : {}
 
     var questions = state.questions
 
-    var temp, temps
+    var temp
     switch (action.type) {
         case 'UPDATE_GAME_SETTING':
             console.log("Update game setting:", setting)

@@ -1,9 +1,8 @@
-import { Divider, Grid, Typography } from '@mui/material'
-import { blue, grey } from '@mui/material/colors'
+import { Divider, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import Button from '../../../../component/Button'
-import { addQuestion, selectQuestion } from '../../../../context/game/creator/actions'
+import { selectQuestion } from '../../../../context/game/creator/actions'
 import { GameCreatorContext, QUESTION_TYPES_ID } from '../../../../context/game/creator/context'
 import { theme } from '../../../../theme'
 import MultipleChoicesQuestionMiniItem from './MultipleChoicesQuestionMiniItem'
@@ -62,7 +61,7 @@ const QuestionList = (props) => {
                     <div className = {classes.item} onClick = {()=>handleSelected(index)} 
                         key = {''+index}
                         style={{
-                            backgroundColor: questionIndex == index ? theme.palette.secondary.main:'white'
+                            backgroundColor: questionIndex ===index ? theme.palette.secondary.main:'white'
                         }}>
                         <Typography 
                             variant='label' 
@@ -72,10 +71,10 @@ const QuestionList = (props) => {
                             }
                         </Typography>
                         {
-                            item.typeId == QUESTION_TYPES_ID.MULTIPLE_CHOICE ? <MultipleChoicesQuestionMiniItem selected = {questionIndex == index} question = {item}/>
-                            : item.typeId == QUESTION_TYPES_ID.TF_CHOICE ? <TFChoicesQuestionMiniItem selected = {questionIndex == index} question = {item}/>
-                            : item.typeId == QUESTION_TYPES_ID.PIC_WORD ? <PicWordQuestionMiniItem  selected = {questionIndex == index} question = {item}/>
-                            : item.typeId == QUESTION_TYPES_ID.WORD_TABLE ? <WordTableQuestionMiniItem  selected = {questionIndex == index} question = {item}/>
+                            item.typeId ===QUESTION_TYPES_ID.MULTIPLE_CHOICE ? <MultipleChoicesQuestionMiniItem selected = {questionIndex ===index} question = {item}/>
+                            : item.typeId ===QUESTION_TYPES_ID.TF_CHOICE ? <TFChoicesQuestionMiniItem selected = {questionIndex ===index} question = {item}/>
+                            : item.typeId ===QUESTION_TYPES_ID.PIC_WORD ? <PicWordQuestionMiniItem  selected = {questionIndex ===index} question = {item}/>
+                            : item.typeId ===QUESTION_TYPES_ID.WORD_TABLE ? <WordTableQuestionMiniItem  selected = {questionIndex ===index} question = {item}/>
                             : null
                         }
                     </div>

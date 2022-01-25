@@ -1,17 +1,15 @@
-import {Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useRef} from 'react'
+import React, { useRef } from 'react'
 import { theme } from '../theme'
-import Button from './Button'
 import { createUrl } from '../util/helper'
+import Button from './Button'
 const useStyles = makeStyles((theme) => ({
     container: {
         width: '100%',
         height: '100%',
         backgroundColor: 'white',
         boxShadow: `1px 3px 1px #f0f0f0`,
-        borderRadius: theme.spacing(0.6),
         display: 'flex',
         flexDirection:'column',
         justifyContent:'center',
@@ -51,9 +49,9 @@ const MediaUploadCard = (props) => {
 
     return (
         <div className = {classes.container}
-            style = {style != undefined ? style : {}}>
+            style = {style !==undefined ? style : {}}>
             {
-                image == undefined? 
+                image === undefined? 
                 <>
                 <Button 
                     variant='primary' 
@@ -75,7 +73,7 @@ const MediaUploadCard = (props) => {
                 </>
                 :
                 <>
-                    <img src = {createUrl(image)} className = {classes.img}/>
+                    <img src = {createUrl(image)} className = {classes.img} alt = 'Empty'/>
                     <Button 
                         variant = 'primary'
                         onClick = {handleRemoveImage}

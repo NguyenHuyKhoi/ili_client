@@ -1,14 +1,11 @@
 import { Alert, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { textAlign } from '@mui/system'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../../../context/auth/context'
 import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
 import Header from './component/Header'
-import JoinMethodModal from './component/JoinMethodModal'
 import Lobby from './component/Lobby'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -28,9 +25,8 @@ const MatchHostLobbyPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
     const {dispatch, match} = useContext(MatchPlayContext)
-    const {user} = useContext(AuthContext)
     const {socket} = useContext(SocketContext)
-    const {game, host, pinCode} = match
+    const {pinCode} = match
     const [modal, setModal] = useState({state: ''})
     const [alert, setAlert] = useState({})
     const [countdownToStart, setCountdownToStart] = useState(false)
@@ -77,11 +73,11 @@ const MatchHostLobbyPage = () => {
             let {time} = data
             setTime(time)
         })
-    }, [])  
+    })  
 
     return (
         <div className = {classes.container}>
-             <Snackbar open={alert.type != undefined} autoHideDuration={2000} onClose={() => setAlert({})}
+             <Snackbar open={alert.type !==  undefined} autoHideDuration={2000} onClose={() => setAlert({})}
                     anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                     <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
                         {
@@ -94,7 +90,7 @@ const MatchHostLobbyPage = () => {
                 onClose = {() => setModal({})}
             /> */}
             <Header onSelectQR = { () => setModal({state: 'join_method'})}
-                showQR = {modal.state != 'join_method'}/>
+                showQR = {modal.state !==  'join_method'}/>
             <div className = {classes.body}>
                 <Lobby 
                     countdownToStart = {countdownToStart}

@@ -1,9 +1,6 @@
-import { Check, Close } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useEffect, useState } from 'react'
-import Icon from '../../../../component/Icon'
-import { theme } from '../../../../theme'
+import React from 'react'
 import { createUrl } from '../../../../util/helper'
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 const QuestionRowItem = (props) => {
     const classes = useStyles()
     const {question, index} = props
-    const {title, image, answers, correct_answer, time_limit } = question
+    var {title, image, time_limit } = question
 
     return (
         <div className = {classes.container} 
@@ -63,7 +60,7 @@ const QuestionRowItem = (props) => {
                     {title}
                 </Typography>
             </div>
-            <img className = {classes.img} src = {createUrl(image)}/>
+            <img className = {classes.img} src = {createUrl(image)} alt = 'Hint'/>
             <div className = {classes.time_limit}>
                 <Typography variant = 'caption' sx = {{color: 'white'}}>
                     {time_limit + ' sec'}

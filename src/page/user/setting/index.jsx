@@ -1,13 +1,8 @@
-import { Container, Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
+import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { Box } from '@mui/system'
-import React, { useState } from 'react'
+import React from 'react'
 import HeaderBar from '../../../component/HeaderBar'
-import { theme } from '../../../theme'
-import { Tabs } from '../../game/library/component/GameList'
 import ChangePasswordForm from './component/ChangePasswordForm'
-import NotificationSettings from './component/NotificationSettings'
 import UserInforForm from './component/UserInforForm'
 
 
@@ -29,11 +24,6 @@ const useStyles = makeStyles((theme) => ({
 
 const SettingPage = () => {
     const classes = useStyles()
-
-    const [tabIndex, setTabIndex] = useState(0)
-    const handleTabChange = (index) => {
-        setTabIndex(index)
-    }
 
     return (
         <div className = {classes.container}>

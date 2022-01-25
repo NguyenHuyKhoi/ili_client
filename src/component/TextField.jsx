@@ -16,15 +16,15 @@ const useStyles = makeStyles((theme) => ({
 
 const TextField = (props) => {
     const classes = useStyles()
-    var {label, value,variant, style, disabled, placeholder, type, size, fontSize, disabled} = props
+    var {value,variant, style, disabled, placeholder, type, size, fontSize} = props
     
     if (!variant) variant = 'default'
     if (!size) size = 'medium'
-    var fontSize = fontSize ? fontSize : size == 'small' ? 16
-        : size == 'medium' ? 20
+    fontSize = fontSize !== null && fontSize !== undefined ? fontSize : size==='small' ? 16
+        : size==='medium' ? 20
         : 24
 
-    if (disabled == undefined) disabled = false
+    if (disabled === undefined) disabled = false
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
           if (props.onSubmit) {
@@ -45,7 +45,6 @@ const TextField = (props) => {
                 }
             }}
             onKeyDown={handleKeyDown}
-            disabled = {disabled}
             style = {{
                 fontSize,
                 fontFamily: 'Setofont',

@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 export const Header = (props) => {
     const classes = useStyles()
-    const {showQR} = props 
     const {match} = useContext(MatchPlayContext)
     const {pinCode} = match
     return (
@@ -45,7 +44,7 @@ export const Header = (props) => {
                     </Typography>
                     <Typography variant = 'h1'  sx  ={{ color: '#000', fontWeight: 'semi-bold', alignSelf: 'center'}}> 
                         {
-                            pinCode == undefined || pinCode == null ? 'XXXXXX' : pinCode
+                            pinCode === undefined || pinCode === null ? 'XXXXXX' : pinCode
                         }
                     </Typography>
                 </div>     

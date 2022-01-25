@@ -1,8 +1,7 @@
 import { Divider, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useContext } from 'react'
+import React from 'react'
 import Button from '../../../../component/Button'
-import { CollectionContext } from '../../../../context/collection/context'
 import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -29,7 +28,7 @@ const CollectorInfor = (props) => {
             <Divider/>
             <Typography variant= 'btnLabel' sx = {{pt: theme.spacing(2), alignSelf: 'center', flex: 1, color: '#000'}}>
                 {
-                    description == null || description == '' ? 
+                    description == null || description === '' ? 
                     'Please add a description of your collection.'
                     :
                     description

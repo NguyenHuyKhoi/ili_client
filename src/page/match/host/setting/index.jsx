@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
         flex: 1,
         padding: theme.spacing(1.5),
         backgroundColor: theme.palette.success.main,
-        borderRadius: theme.spacing(1),
         border: 'solid 2px #000000',
         borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
         display: 'flex',
@@ -91,7 +90,7 @@ const MatchHostSettingPage = () => {
     const classes = useStyles()
     const {match, dispatch} = useContext(MatchPlayContext)
     const {game} = useContext(GameContext)
-    const {user, token} = useContext(AuthContext)
+    const {user} = useContext(AuthContext)
     const {socket} = useContext(SocketContext)
     const [alert, setAlert] = useState({})
 
@@ -109,14 +108,14 @@ const MatchHostSettingPage = () => {
         return () => {
             
         }
-    }, [])
+    })
 
     const checkSetting = () => {
         let isOk = true 
         console.log("Check setting")
         MATCH_SETTINGS.forEach((item) => {
             console.log("Check setting key:", item.key, match[item.key])
-            if (match[item.key] == undefined) isOk = false
+            if (match[item.key] ===  undefined) isOk = false
         })
         return isOk
     }
@@ -155,6 +154,8 @@ const MatchHostSettingPage = () => {
                 dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
                 navigate('/match/livestream', {replace: false})
                 break
+            default: 
+                break
         }
 
     }
@@ -162,7 +163,7 @@ const MatchHostSettingPage = () => {
     const {title} = game
     return (
         <div className = {classes.container}>
-            <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+            <Snackbar open={alert.type !==  undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
                     {alert.msg}

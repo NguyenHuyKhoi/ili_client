@@ -1,6 +1,6 @@
 
 const reducer = (state, action) => {
-    const {matches, match} = action.payload != undefined ? action.payload : {}
+    const {matches, match} = action.payload !== undefined ? action.payload : {}
     switch (action.type) {
         case 'GET_MATCHES_SUCCESS': 
             return {

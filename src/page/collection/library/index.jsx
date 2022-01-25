@@ -1,17 +1,17 @@
-import {  Grid, Typography } from '@mui/material'
+import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
+import Button from '../../../component/Button'
 import HeaderBar from '../../../component/HeaderBar'
+import SideMenu from '../../../component/SideMenu'
 import { AuthContext } from '../../../context/auth/context'
 import { getCollectionsSuccess } from '../../../context/collection/actions'
 import { CollectionContext } from '../../../context/collection/context'
-import CreateModal from './component/CreateModal'
-import CollectionList from './component/CollectionList'
-import Button from '../../../component/Button'
 import { theme } from '../../../theme'
-import SideMenu from '../../../component/SideMenu'
 import { LIBRARY_MENUS } from '../../game/library'
+import CollectionList from './component/CollectionList'
+import CreateModal from './component/CreateModal'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,13 +37,13 @@ const CollectionLibraryPage = () => {
     const classes = useStyles()
     const [modal, setModal] = useState({})
     const {collections, dispatch} = useContext(CollectionContext)
-    const {token, user} = useContext(AuthContext)
+    const {token} = useContext(AuthContext)
     useEffect(() => {
         getCollections()
         return () => {
             
         }
-    }, [])
+    })
 
     const getCollections = () => {
         axios.get('collection/library', {

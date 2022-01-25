@@ -1,12 +1,5 @@
-import { makeStyles } from '@mui/styles';
 import { DataGrid } from '@mui/x-data-grid';
 import React from 'react';
-
-const useStyles = makeStyles((theme) => ({
-    container: {
-        flex: 1
-    }
-}))
 
 const columns = [
 	{ field: 'id', headerName: 'Id', hidden: true},
@@ -23,7 +16,7 @@ const getRows = (player, progress) => {
   let chars = ['A','B','C','D']
 	return progress.map((stage, index) => {
     let {question, answers} = stage
-    let answer = answers.find((answer) => answer._id == player._id)
+    let answer = answers.find((answer) => answer._id === player._id)
 		return {
 			id: index,
 			question: question.title,
@@ -43,7 +36,7 @@ const PlayerDetailTable = (props ) => {
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={getRows(player, progress)}
-        columns={columns.filter((col) => col.hidden != true)}
+        columns={columns.filter((col) => col.hidden !== true)}
         pageSize={5}
         rowsPerPageOptions={[5]}
         onSelectionModelChange={() => {}}

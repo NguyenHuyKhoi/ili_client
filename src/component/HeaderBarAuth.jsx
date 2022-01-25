@@ -9,8 +9,8 @@ import { startCreateGame } from '../context/game/creator/actions'
 import { GameCreatorContext } from '../context/game/creator/context'
 import { theme } from '../theme'
 import Button from './Button'
-import IconButton from './IconButton'
 import HeaderTabbar from './HeaderTabbar'
+import IconButton from './IconButton'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -59,9 +59,7 @@ const HeaderBarAuth = (props) => {
     const gameCreatorDispatch = useContext(GameCreatorContext).dispatch
     const authDispatch = useContext(AuthContext).dispatch
     const {user, token} = useContext(AuthContext)
-    const [anchorEl, setAnchorEl] = React.useState(null);
     const {selectedIndex} = props 
-    const {avatar} = user 
       
     const handleLogout = (e) => {
         e.preventDefault()
@@ -96,7 +94,7 @@ const HeaderBarAuth = (props) => {
     return (
         <div className = {classes.container}>
             <div onClick = {() => navigate('/', {replace: true})}>
-                <img src = {logo} className = {classes.logo}/>
+                <img src = {logo} className = {classes.logo} alt = 'Logo'/>
             </div>
             
             <HeaderTabbar tabs = {tabs} selectedIndex = {selectedIndex}/>

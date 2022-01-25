@@ -1,11 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
-import { makeStyles } from '@mui/styles'
 import React from 'react'
-const useStyles = makeStyles((theme) => ({
-}))
 
 const DropdownSelect = (props) => {
-    const classes = useStyles()
     var {title, list, value, color, size} = props
     const handleChange = (e) => {
         let value = e.target.value
@@ -14,10 +10,10 @@ const DropdownSelect = (props) => {
         }
     }
 
-    if (size == undefined) size = 'medium'
+    if (size ===undefined) size = 'medium'
 
-    var fontSize = size == 'small'? 16 :
-        size == 'medium' ? 20 :
+    var fontSize = size ==='small'? 16 :
+        size ==='medium' ? 20 :
          24
     return (
         <FormControl fullWidth>
@@ -32,7 +28,7 @@ const DropdownSelect = (props) => {
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={value == null ?'':value}
+                value={value ===null ?'':value}
                 defaultValue={''}
                 size = 'small'
                 label="Age"
@@ -42,7 +38,7 @@ const DropdownSelect = (props) => {
                     color
                 }}>
                 {
-                    list != undefined &&
+                    list !== undefined &&
                     list.map((item, index) => (
                         <MenuItem 
                             value={item.value}  key = {''+index} 

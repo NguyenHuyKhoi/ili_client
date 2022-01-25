@@ -1,7 +1,5 @@
 const reducer = (state, action) => {
-    const {user} = action.payload != undefined ? action.payload : {}
-
-    var temps 
+    const {user} = action.payload !== undefined ? action.payload : {}
     switch (action.type) {
         case 'LOGIN_SUCCESS':
             return {

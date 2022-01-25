@@ -90,13 +90,13 @@ const ProfileHeader = (props) => {
         return navigate('/user/setting', {replace: true})
     }
     
-    const isMe = me != null && me._id == user._id
+    const isMe = me !== null && me._id === user._id
     return (
         <div className = {classes.container}>
-            <img className = {classes.banner} 
+            <img className = {classes.banner} alt = 'User banner'
                 src = {createUrl(banner)}/>
             <div className = {classes.body}>
-                <img className = {classes.avatar}
+                <img className = {classes.avatar} alt = 'User avatar'
                     src={createUrl(avatar)}/>
                 <div className = {classes.inforLeft}>
                     <Typography variant = 'header' sx = {{fontWeight: 'bold', color: '#000'}}>  

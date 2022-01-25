@@ -1,14 +1,13 @@
 import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
-import React, {useContext, useState} from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import HeaderBar from '../../../component/HeaderBar'
 import NotificationModal from '../../../component/NotificationModal'
 import { AuthContext } from '../../../context/auth/context'
 import { startEditGame } from '../../../context/game/creator/actions'
 import { GameCreatorContext } from '../../../context/game/creator/context'
-import { selectGame } from '../../../context/game/other/actions'
 import { GameContext } from '../../../context/game/other/context'
 import { theme } from '../../../theme'
 import GameInfor from './component/GameInfor'
@@ -96,7 +95,7 @@ const GameDetailPage = () => {
         return navigate(-1)
     }
 
-    const isMine = game.owner != undefined && game.owner._id == user._id
+    const isMine = game.owner !== undefined && game.owner._id === user._id
     return (
         <div className = {classes.container}>
             <HeaderBar/>
@@ -105,7 +104,7 @@ const GameDetailPage = () => {
                     title = {modal.title}
                     btnLabel = {modal.btnLabel}
                     desc = {modal.desc}
-                    open = { modal.state == 'success' }     
+                    open = { modal.state === 'success' }     
                     onClose = {() => {}}
                     onDone = {handleDoneModal}
                     variant = {modal.variant}/>

@@ -1,10 +1,8 @@
 
-import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { theme } from '../theme'
 import { Icon } from './Icon'
-import logout_icon from '../asset/image/logout_icon.png'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -33,8 +31,8 @@ const IconButton = (props) => {
             }}
             style = {{
                 backgroundColor: theme.palette[variant].main,
-                padding: size == 'small' ? theme.spacing(0.6) 
-                        : size == 'medium' ? theme.spacing(1) 
+                padding: size ==='small' ? theme.spacing(0.6) 
+                        : size ==='medium' ? theme.spacing(1) 
                         : theme.spacing(1.5),
                 ...style,
             }}>

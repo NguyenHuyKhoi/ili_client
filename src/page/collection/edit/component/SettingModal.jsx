@@ -1,15 +1,12 @@
-import { TextareaAutosize } from '@mui/base';
-import { FormControlLabel, Grid, Modal, Typography } from '@mui/material';
+import { Grid, Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useState, useEffect} from 'react';
-import DropdownSelect from '../../../../component/DropdownSelect';
+import React, { useState } from 'react';
+import Button from '../../../../component/Button';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
+import TextArea from '../../../../component/TextArea';
+import TextField from '../../../../component/TextField';
 import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
 import { theme } from "../../../../theme";
-import { createUrl } from '../../../../util/helper';
-import TextField from '../../../../component/TextField'
-import TextArea from '../../../../component/TextArea';
-import Button from '../../../../component/Button';
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -19,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 		width: '50vw',
 		maxHeight: '80vh',
 		backgroundColor: theme.palette.secondary.main,
-		borderRadius: theme.spacing(1),
 		padding: theme.spacing(2),
 		display: 'flex',
 		flexDirection: 'column',
@@ -60,7 +56,7 @@ const SettingModal = (props) => {
 	const [draftSetting, setDraftSetting] = useState({...setting})
 
 	var {open} = props
-	if (open == undefined) open = false
+	if (open ===undefined) open = false
 
 	const handleClose = () => {
 		if (props.onClose) {

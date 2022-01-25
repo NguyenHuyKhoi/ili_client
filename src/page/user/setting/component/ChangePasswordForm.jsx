@@ -2,18 +2,16 @@ import { Alert, Grid, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
+import Button from '../../../../component/Button'
+import TextField from '../../../../component/TextField'
 import { AuthContext } from '../../../../context/auth/context'
 import { theme } from '../../../../theme'
-import TextField from '../../../../component/TextField'
-import Button from '../../../../component/Button'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
 		display: 'flex',
 		flexDirection: 'column',
-		alignItems: 'flex-start',
 		padding: theme.spacing(2),
-		borderRadius: theme.spacing(0.5),
 		backgroundColor: theme.palette.secondary.main,
 		border: 'solid 2px #000000',
         borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
@@ -23,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ChangePasswordForm = (props) => {
 	const classes = useStyles()
-	const {dispatch, user, token} = useContext(AuthContext)
+	const {token} = useContext(AuthContext)
 	const [inputs, setInputs] = useState({old: "", neww: "", repeat: ""})
     const [alert, setAlert] = useState({})
     const {old, neww, repeat} = inputs
@@ -52,14 +50,14 @@ const ChangePasswordForm = (props) => {
 		// 	return
 		// }
 
-		if (neww != repeat) {
+		if (neww!==repeat) {
 			setAlert({
 				type: 'error',
 				msg: 'new and repeat password not same'
 			})
 			return
 		}
-		if (neww == old) {
+		if (neww===old) {
 			setAlert({
 				type: 'error',
 				msg: 'new and old password are same'
@@ -95,7 +93,7 @@ const ChangePasswordForm = (props) => {
 	}
   	return (
     	<div className = {classes.container}>
-			<Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+			<Snackbar open={alert.type!==undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
                     {alert.msg}

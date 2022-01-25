@@ -1,7 +1,7 @@
 import { ArrowDropDown, ArrowLeft } from '@mui/icons-material'
-import { Switch, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useState, useContext} from 'react'
+import React, { useContext, useState } from 'react'
 import { MATCH_SETTINGS } from '..'
 import DropdownSelect from '../../../../../component/DropdownSelect'
 import { updateMatch } from '../../../../../context/match/play/actions'
@@ -34,8 +34,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         alignItems: 'center',
         padding: theme.spacing(1),
-        borderRadius: theme.spacing(1),
-        backgroundColor: 'white',
         marginBottom: theme.spacing(2),
         backgroundColor: theme.palette.success.main,
         border: 'solid 2px #000000',

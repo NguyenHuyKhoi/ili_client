@@ -2,11 +2,10 @@ import { AppBar, Toolbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CollectionContext } from '../../../../context/collection/context'
-import { GameCreatorContext } from '../../../../context/game/creator/context'
-import { theme } from '../../../../theme'
 import logo from '../../../../asset/image/logo.png'
 import Button from '../../../../component/Button'
+import { CollectionContext } from '../../../../context/collection/context'
+import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     toolbar: {
         display: 'flex',
@@ -44,7 +43,7 @@ const Topbar = (props) => {
         <AppBar position = 'fixed'>
             <Toolbar className = {classes.toolbar}>
                 <div onClick = {() => navigate('/', {replace: true})}>
-                    <img src = {logo} className = {classes.logo}/>
+                    <img src = {logo} className = {classes.logo} alt = 'Logo'/>
                 </div>
                 <div className = {classes.settingBox} 
                     onClick = {() => {
@@ -56,7 +55,7 @@ const Topbar = (props) => {
                 >
                     <Typography variant='label' sx = {{color: '#000', fontWeight: 'bold'}}> 
                         {
-                            title == '' || title == null ?
+                            title === '' || title == null ?
                             'Enter name ...'
                             :
                             title

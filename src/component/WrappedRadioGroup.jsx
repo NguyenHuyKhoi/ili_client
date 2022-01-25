@@ -1,12 +1,7 @@
 import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material'
-import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { theme } from '../theme'
-const useStyles = makeStyles((theme) => ({
-}))
-
 const WrappedRadioGroup = (props) => {
-    const classes = useStyles()
     const {title, list, value} = props
     const handleChange = (value) => {
         console.log("change value :", value)
@@ -30,7 +25,7 @@ const WrappedRadioGroup = (props) => {
                 {
                     list.map((item, index) => (
                         <FormControlLabel value={item.value} control={<Radio />} label={item.label} 
-                            checked = {value == item.value}
+                            checked = {value ===item.value}
                             key = {''+index}
                             
                         />

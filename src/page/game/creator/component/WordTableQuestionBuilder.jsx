@@ -54,7 +54,6 @@ const WordTableQuestionBuilder = (props) => {
     const checkAndFill = (ox, oy, word, table, direction) => {
         // If ok return table 
         // If not return null 
-        var isOk = true
         var len = word.length
         var row, col
 
@@ -63,7 +62,7 @@ const WordTableQuestionBuilder = (props) => {
             col = oy + direction[1] * t;
             if (0<=row && row<WORD_TABLE_SIZE && 0<=col && col < WORD_TABLE_SIZE) {
                 var index = row * WORD_TABLE_SIZE + col
-                if (table[index] != null && table[index].wordParent != undefined ) {
+                if (table[index] !== null && table[index].wordParent !== undefined ) {
                     return null
                 }
             }
@@ -73,7 +72,7 @@ const WordTableQuestionBuilder = (props) => {
         }
         var color = randomColor()
 
-        for (var t = 0; t < len; t++ ){
+        for ( t = 0; t < len; t++ ){
             row = ox + direction[0] * t;
             col = oy + direction[1] * t;
             table[row * WORD_TABLE_SIZE + col] = {
@@ -87,8 +86,8 @@ const WordTableQuestionBuilder = (props) => {
 
     const handleAddAnswer = (word) => {
         console.log("handle add answer :", word);
-        if (word == '') return 
-        if (correct_answers.indexOf(word) != -1) {
+        if (word === '') return 
+        if (correct_answers.indexOf(word) !== -1) {
             setAlert({
                 type: 'error',
                 msg: 'Keyword is added before...'
@@ -138,7 +137,7 @@ const WordTableQuestionBuilder = (props) => {
         for (var i = 0;i<WORD_TABLE_SIZE;i++) {
             for (var j = 0; j<WORD_TABLE_SIZE; j++) {
                 var index = i * WORD_TABLE_SIZE + j
-                if (char_table[index] != null && char_table[index].wordParent == word) {
+                if (char_table[index] !== null && char_table[index].wordParent === word) {
                     if (isFilled) {
                         char_table[index] = randomCharCell()
                     }   
@@ -149,7 +148,7 @@ const WordTableQuestionBuilder = (props) => {
             }
         }
         handleChange('char_table', char_table)
-        if (correct_answers.indexOf(word) != -1) {
+        if (correct_answers.indexOf(word) !== -1) {
             correct_answers.splice(correct_answers.indexOf(word), 1)
             handleChange('correct_answers', correct_answers)
         }
@@ -164,7 +163,7 @@ const WordTableQuestionBuilder = (props) => {
     const handleUnFillTable = () => {
         setisFilled(false)
         char_table.forEach((item, index) => {
-            if (item != null && item.wordParent == undefined) {
+            if (item !== null && item.wordParent === undefined) {
                 char_table[index] = null
             }
         })
@@ -195,7 +194,7 @@ const WordTableQuestionBuilder = (props) => {
     
     return ( 
         <div className = {classes.container}>
-            <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+            <Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
                     {alert.msg}

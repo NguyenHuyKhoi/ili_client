@@ -1,6 +1,5 @@
 import { Error } from '@mui/icons-material';
-import { Modal, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import Button from '../../../../component/Button';
@@ -72,12 +71,12 @@ const ValidateQuestionItem = (props) => {
 		<div className = {classes.container} >
 			<div className= {classes.header}>
 				<img src = {createUrl(image)}
-					className= {classes.img}/>
+					className= {classes.img} alt = 'Hint'/>
 				<Typography variant = 'btnLabel' sx = {{color: '#000',alignSelf: 'center', flex: 1, marginLeft: theme.spacing(1), marginRight: theme.spacing(2)}}>
 					{
 						(index + 1) + '. '+ 
 						(
-							title == null || title == '' ?
+							title == null || title === '' ?
 							'Untitled'
 							:
 							title

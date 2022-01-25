@@ -1,11 +1,10 @@
-import { Grid, Typography } from '@mui/material'
+import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
-import { GameContext } from '../../../../context/game/other/context'
-import GameCellItem from '../../../game/component/GameCellItem'
-import empty_img from '../../../../asset/image/empty.png'
 import EmptyBox from '../../../../component/EmptyBox'
+import { GameContext } from '../../../../context/game/other/context'
 import { theme } from '../../../../theme'
+import GameCellItem from '../../../game/component/GameCellItem'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -25,7 +24,7 @@ const GameList = (props) => {
         <div className = {classes.container}>
 
             {
-                games.length == 0? 
+                games !== undefined && games.length === 0? 
                     <EmptyBox label = "No any games..."
                         style = {{width: '85%', alignSelf: 'center', marginTop: theme.spacing(3)}}/>
                     :

@@ -1,26 +1,18 @@
-import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, {useState} from 'react';
-
-// import waiting_template from '../../../../asset/image/game_template/waiting.png'
-// import question_template from '../../../../asset/image/game_template/question.png'
-// import question_end_template from '../../../../asset/image/game_template/question_end.png'
-// import leader_board_template from '../../../../asset/image/game_template/leader_board.png'
-// import complete_template from '../../../../asset/image/game_template/complete.png'
-
-import waiting_template from '../../../../asset/image/game_template/waiting.jpeg'
-import end_template from '../../../../asset/image/game_template/end.jpeg'
-import leader_board_template from '../../../../asset/image/game_template/leader_board.jpeg'
-import question_multiple_template from '../../../../asset/image/game_template/question_multiple.jpeg'
-import question_multiple_end_template from '../../../../asset/image/game_template/question_multiple_end.jpeg'
-import question_pic_word_template from '../../../../asset/image/game_template/question_pic_word.jpeg'
-import question_pic_word_end_template from '../../../../asset/image/game_template/question_pic_word_end.jpeg'
-import question_tf_template from '../../../../asset/image/game_template/question_tf.jpeg'
-import question_tf_end_template from '../../../../asset/image/game_template/question_tf_end.jpeg'
-import question_word_table_template from '../../../../asset/image/game_template/question_word_table.jpeg'
-import question_word_table_end_template from '../../../../asset/image/game_template/question_word_table_end.jpeg'
+import React, { useState } from 'react';
+import end_template from '../../../../asset/image/game_template/end.jpeg';
+import leader_board_template from '../../../../asset/image/game_template/leader_board.jpeg';
+import question_multiple_template from '../../../../asset/image/game_template/question_multiple.jpeg';
+import question_multiple_end_template from '../../../../asset/image/game_template/question_multiple_end.jpeg';
+import question_pic_word_template from '../../../../asset/image/game_template/question_pic_word.jpeg';
+import question_pic_word_end_template from '../../../../asset/image/game_template/question_pic_word_end.jpeg';
+import question_tf_template from '../../../../asset/image/game_template/question_tf.jpeg';
+import question_tf_end_template from '../../../../asset/image/game_template/question_tf_end.jpeg';
+import question_word_table_template from '../../../../asset/image/game_template/question_word_table.jpeg';
+import question_word_table_end_template from '../../../../asset/image/game_template/question_word_table_end.jpeg';
+import waiting_template from '../../../../asset/image/game_template/waiting.jpeg';
 import Tabbar from '../../../../component/Tabbar';
-import { theme } from '../../../../theme';
+
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -127,7 +119,7 @@ const TemplateSlider = (props) => {
     const [subIndex, setSubIndex] = useState(0);
     const handleSelectTab = (index) => {
         setIndex(index)
-        if (tabs[index].subs != undefined) {
+        if (tabs[index].subs !== undefined) {
             setsubtabs(tabs[index].subs)
             setSubIndex(0)
         }
@@ -143,6 +135,7 @@ const TemplateSlider = (props) => {
 	return (
         <div className = {classes.container}>
             <img src = {subtabs == null ? tabs[index].img : subtabs[subIndex].img}
+                alt = 'Template'
                 className = {classes.img}/>
             <div className = {classes.screens}>
                 <Tabbar 
@@ -151,7 +144,7 @@ const TemplateSlider = (props) => {
                     onClickTab = {handleSelectTab}/>
             </div>
             {
-                subtabs != null && subtabs != undefined && 
+                subtabs !== null && subtabs !== undefined && 
                 <div className = {classes.subscreens}>
                     <Tabbar     
                         size = 'small'

@@ -29,7 +29,7 @@ const PlayersTab = () => {
         match = {match}/>
       <PlayerDetailModal 
         match = {match}
-        open = {modal.state == 'player_detail'} 
+        open = {modal.state === 'player_detail'} 
         index = {index}
         onClose = {() => setModal({})}/>
     </div>

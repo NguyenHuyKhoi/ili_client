@@ -1,4 +1,3 @@
-import { CheckTwoTone } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
@@ -19,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1),
         paddingLeft: theme.spacing(8),
         paddingRight: theme.spacing(8),
-        borderRadius: theme.spacing(0.5),
         marginTop: theme.spacing(2),
         border: 'solid 2px #000000',
         borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',

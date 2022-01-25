@@ -74,7 +74,7 @@ const ColInforItem = (props) => {
 const Header = (props) => {
 	const classes = useStyles() 
 	const {player} = props 
-	const {rank, score, correctNum, incorrectNum, unanswerNum} = player
+	const {rank, score, correctNum, incorrectNum} = player
 	return (
 		<div className = {classes.header}>
 			<Grid container >
@@ -115,7 +115,7 @@ const PlayerDetailModal = (props) => {
 		}
 	}, [props.index])
 	var {open} = props
-	if (open == undefined) open = false
+	if (open === undefined) open = false
 	const handleClose = () => {
 		if (props.onClose) {
 			props.onClose()

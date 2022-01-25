@@ -1,62 +1,58 @@
-import { Add, ExploreOutlined, GroupsOutlined, Home, TocOutlined, TrendingUpOutlined ,BarChartTwoTone,CircleRounded,DiamondSharp,ReportProblem, Square, TableRows, SnippetFolder, MilitaryTech, Help, QueryBuilder, Check, WatchLater, Person, DataUsage, Logout, Edit, PlayArrow, CopyAll, Delete } from "@mui/icons-material"
+import { BarChartTwoTone, Check, CircleRounded, CopyAll, DataUsage, Delete, DiamondSharp, Edit, ExploreOutlined, GroupsOutlined, Help, Home, Logout, MilitaryTech, Person, PlayArrow, QueryBuilder, ReportProblem, SnippetFolder, Square, TableRows, TocOutlined, TrendingUpOutlined, WatchLater } from "@mui/icons-material"
 import React from 'react'
-import { makeStyles } from '@mui/styles'
-const useStyles = makeStyles((theme) => ({
-  
-}))
 
 export const Icon = (props) => {
     const {name, style} = props 
     return (
         <>
         {
-            name == 'Home' ? <Home sx = {style}/> 
+            name ==='Home' ? <Home sx = {style}/> 
             : 
-            name == 'ExploreOutlined' ? <ExploreOutlined sx = {style}/>
+            name ==='ExploreOutlined' ? <ExploreOutlined sx = {style}/>
             : 
-            name == 'TocOutlined'? <TocOutlined sx = {style} />
+            name ==='TocOutlined'? <TocOutlined sx = {style} />
             : 
-            name == 'TrendingUpOutlined' ?  <TrendingUpOutlined sx = {style}/> 
+            name ==='TrendingUpOutlined' ?  <TrendingUpOutlined sx = {style}/> 
             : 
-            name == 'GroupsOutlined' ?  <GroupsOutlined sx = {style}/>
+            name ==='GroupsOutlined' ?  <GroupsOutlined sx = {style}/>
             :
-            name == 'BarChartOutlined' ? <BarChartTwoTone sx = {style} />
+            name ==='BarChartOutlined' ? <BarChartTwoTone sx = {style} />
             : 
-            name == 'CircleRounded' ? <CircleRounded   sx = {style}/> 
+            name ==='CircleRounded' ? <CircleRounded   sx = {style}/> 
             : 
-            name == 'Triangle' ? <ReportProblem  sx = {style}/>
+            name ==='Triangle' ? <ReportProblem  sx = {style}/>
             :
-            name == 'Square' ? <Square sx = {style} />
+            name ==='Square' ? <Square sx = {style} />
             : 
-            name == 'Rhombus' ? <DiamondSharp  sx = {style} />
+            name ==='Rhombus' ? <DiamondSharp  sx = {style} />
             : 
-            name == 'TableRows' ? <TableRows sx = {style} /> 
+            name ==='TableRows' ? <TableRows sx = {style} /> 
             :
-            name == 'SnippetFolder' ? <SnippetFolder sx = {style} />
+            name ==='SnippetFolder' ? <SnippetFolder sx = {style} />
             :
-            name == 'MilitaryTech' ? <MilitaryTech sx = {style}/>
+            name ==='MilitaryTech' ? <MilitaryTech sx = {style}/>
             :
-            name == 'Help' ? <Help sx = {style}/>
+            name ==='Help' ? <Help sx = {style}/>
             :
-            name == 'QueryBuilder' ? <QueryBuilder sx = {style}/>
+            name ==='QueryBuilder' ? <QueryBuilder sx = {style}/>
             :
-            name == 'Check' ? <Check sx = {style}/>
+            name ==='Check' ? <Check sx = {style}/>
             :
-            name == 'WatchLater' ? <WatchLater sx = {style}/>
+            name ==='WatchLater' ? <WatchLater sx = {style}/>
             :
-            name == 'Person' ? <Person sx = {style}/>
+            name ==='Person' ? <Person sx = {style}/>
             :
-            name == 'DataUsage' ? <DataUsage sx = {style} />
+            name ==='DataUsage' ? <DataUsage sx = {style} />
             :
-            name == 'Logout' ? <Logout sx = {style} />
+            name ==='Logout' ? <Logout sx = {style} />
             :
-            name == 'Edit' ? <Edit sx = {style} />
+            name ==='Edit' ? <Edit sx = {style} />
             :
-            name == 'Play' ? <PlayArrow sx = {style} />
+            name ==='Play' ? <PlayArrow sx = {style} />
             :
-            name == 'Clone' ? <CopyAll sx = {style} />
+            name ==='Clone' ? <CopyAll sx = {style} />
             :
-            name == 'Delete' ? <Delete sx = {style} />
+            name ==='Delete' ? <Delete sx = {style} />
             : <Home/>
             
         }

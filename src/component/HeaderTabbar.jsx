@@ -30,9 +30,7 @@ export const TabItem = (props) => {
         navigate(link, {replace: true})
     }
 
-
     var primary = theme.palette.primary.main
-    var warning = theme.palette.warning.main
     return (
         <div className = {classes.item}
             onClick = {handleClick}
@@ -61,7 +59,7 @@ const HeaderTabbar = (props) => {
         <div className = {classes.container}>
             {
                 tabs.map((item, index) => (
-                    <TabItem isSelected = {selectedIndex == index}
+                    <TabItem isSelected = {selectedIndex ===index}
                         key = {''+index}
                         tab = {item}/>
                 ))

@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     },
     notif: {
         alignSelf: 'center',
-        borderRadius: theme.spacing(1),
         backgroundColor: theme.palette.info.main,
         opacity: 0.7,
         padding: theme.spacing(1),
@@ -47,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 const MatchPlayerHallPage = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const  {match, dispatch} = useContext(MatchPlayContext)
+    const  {match} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
     const [countdownOnEnd, setCountdownOnEnd] = useState(false)
     const [time, setTime] = useState(0)
@@ -70,7 +69,7 @@ const MatchPlayerHallPage = (props) => {
         return () => {
             
         }
-    }, [])
+    })
     const handleNext = () => {
         return navigate('/match/player/entrance', {replace: true})
     }

@@ -56,7 +56,7 @@ const MatchPlayerLobbyPage = () => {
         socket.on('match:kickPlayerDone', (data) => {
             let {player} = data
             console.log("Player is Kicked: ", player)
-            if (player._id == socket.id) {
+            if (player._id===socket.id) {
                 dispatch(resetMatch())
                 navigate('/match/player/entrance', {replace: true})
             }
@@ -68,11 +68,11 @@ const MatchPlayerLobbyPage = () => {
             }
            
         })
-    }, [])  
+    })  
 
     return (
         <div className = {classes.container}>
-            <Snackbar open={alert.type != undefined} autoHideDuration={2000} onClose={() => setAlert({})}
+            <Snackbar open={alert.type!==undefined} autoHideDuration={2000} onClose={() => setAlert({})}
                     anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                     <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
                         {
@@ -81,11 +81,11 @@ const MatchPlayerLobbyPage = () => {
                     </Alert>
             </Snackbar>
             <JoinMethodModal 
-                open = {modal.state == 'join_method'}
+                open = {modal.state==='join_method'}
                 onClose = {() => setModal({})}
             />
             <Header onSelectQR = { () => setModal({state: 'join_method'})}
-                showQR = {modal.state != 'join_method'}/>
+                showQR = {modal.state!=='join_method'}/>
             <div className = {classes.body}>
                 <Lobby/>
             </div>  

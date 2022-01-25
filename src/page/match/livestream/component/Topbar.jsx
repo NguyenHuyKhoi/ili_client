@@ -1,12 +1,11 @@
-import { AppBar, Link, Toolbar, Typography } from '@mui/material'
+import { AppBar, Toolbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
-import { GameCreatorContext } from '../../../../context/game/creator/context'
-import { theme } from '../../../../theme'
-import logo from '../../../../asset/image/logo.png'
 import { useNavigate } from 'react-router-dom'
-import { LIVESTREAM_STAGE, MatchPlayContext } from '../../../../context/match/play/context'
+import logo from '../../../../asset/image/logo.png'
 import Button from '../../../../component/Button'
+import { MatchPlayContext } from '../../../../context/match/play/context'
+import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     toolbar: {
         display: 'flex',
@@ -49,7 +48,7 @@ const Topbar = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const {fbUrl} = props
-    const {dispatch, match, livestreamStage} = useContext(MatchPlayContext)
+    const {match, livestreamStage} = useContext(MatchPlayContext)
     const {title} = match
 
     const btnStyle = BTN_STYLES[livestreamStage ? livestreamStage : 0]
@@ -57,7 +56,7 @@ const Topbar = (props) => {
         <AppBar position = 'fixed'>
             <Toolbar className = {classes.toolbar}>
                 <div onClick = {() => navigate('/', {replace: true})}>
-                    <img src = {logo} className = {classes.logo}/>
+                    <img src = {logo} className = {classes.logo} alt = 'Logo'/>
                 </div>
                 <div className = {classes.settingBox} 
                     onClick = {() => {
@@ -69,7 +68,7 @@ const Topbar = (props) => {
                 >
                     <Typography variant='subtitle1' className = {classes.title}> 
                         {
-                            title == '' || title == null ?
+                            title === '' || title == null ?
                             'Enter name ...'
                             :
                             title

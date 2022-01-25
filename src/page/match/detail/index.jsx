@@ -1,13 +1,11 @@
-import { Container, Grid, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { Box } from '@mui/system'
-import React, { useState , useContext} from 'react'
-import Header from './component/Header'
-import QuestionsTab from './component/QuestionsTab'
-import PlayersTab from './component/PlayersTab'
+import React, { useState } from 'react'
 import HeaderBar from '../../../component/HeaderBar'
-import { MatchContext } from '../../../context/match/other/context'
 import Tabbar from '../../../component/Tabbar'
+import Header from './component/Header'
+import PlayersTab from './component/PlayersTab'
+import QuestionsTab from './component/QuestionsTab'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,13 +33,10 @@ const useStyles = makeStyles((theme) => ({
 
 const MatchDetailPage = () => {
     const classes = useStyles()
-    const {match} = useContext(MatchContext)
     const [tabIndex, setTabIndex] = useState(0)
     const handleTabChange = (index) => {
         setTabIndex(index)
     }
-
-    const {game, host, players, progress } = match
     return (
         <div className = {classes.container}>
             <HeaderBar selectedIndex = {3}/>
@@ -51,13 +46,13 @@ const MatchDetailPage = () => {
             </div>
             <div className= {classes.body}>
                 {
-                    tabIndex == 0 ?
+                    tabIndex ===  0 ?
                         <Typography variant = 'h1'></Typography>
-                    : tabIndex == 1 ?
+                    : tabIndex ===  1 ?
                         <PlayersTab/>
-                    : tabIndex == 2 ?
+                    : tabIndex ===  2 ?
                         <QuestionsTab/>
-                    : tabIndex == 3 ?
+                    : tabIndex ===  3 ?
                         <Typography variant = 'h1'></Typography>
                     : null
                 }

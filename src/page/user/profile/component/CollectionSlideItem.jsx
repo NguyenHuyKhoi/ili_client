@@ -40,7 +40,7 @@ const CollectionSlideItem = (props) => {
                 </Link>
             </div>
             {
-                games.length == 0? 
+                games.length===0? 
                     <EmptyBox
                         style = {{width: '85%', alignSelf: 'center', marginTop: theme.spacing(3)}}
                         label = 'Collections has no games'/>

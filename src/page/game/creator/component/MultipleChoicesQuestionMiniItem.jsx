@@ -1,9 +1,7 @@
 import { Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { theme } from '../../../../theme'
-import { createUrl } from '../../../../util/helper'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -77,7 +75,7 @@ const MultipleChoicesQuestionMiniItem = (props) => {
                     Array.from(Array(4)).map((_, index) => (
                         <Grid item xs = {6} sx = {{p: theme.spacing(0.2)}}   key = {''+index}>
                             <div className = {classes.answer} 
-                                style = {{backgroundColor: correct_answer != null && correct_answer == index ? theme.palette.success.main : 'white'}}/>
+                                style = {{backgroundColor: correct_answer != null && correct_answer === index ? theme.palette.success.main : 'white'}}/>
                         </Grid>
                     ))
                 }

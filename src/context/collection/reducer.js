@@ -1,8 +1,7 @@
 
 const reducer = (state, action) => {
-    const {collections, collection, game} = action.payload != undefined ? action.payload : {}
+    const {collections, collection, game} = action.payload !==undefined ? action.payload : {}
     
-    let games
     var temp, temps
     switch (action.type) {
         case 'GET_COLLECTIONS_SUCCESS': 
@@ -35,7 +34,7 @@ const reducer = (state, action) => {
             }
         case 'REMOVE_GAME_TO_COLLECTION':
             temps = JSON.parse(JSON.stringify(state.collection.games))
-            temps = temps.filter((item) => item._id != game._id)
+            temps = temps.filter((item) => item._id !==game._id)
             return {
                 ...state,
                 collection: {

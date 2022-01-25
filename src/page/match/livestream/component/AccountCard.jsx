@@ -56,7 +56,7 @@ const STATES = [
 const AccountCard = (props) => {
 	const classes = useStyles()
 	const {account, select} = props 
-	const {title, logo, id} = account
+	const {title, logo} = account
 
 	// const state = ! active ? STATES[0]
 	// 		: ! select ? STATES[1]
@@ -72,7 +72,7 @@ const AccountCard = (props) => {
 			onClick = {() => {
 				if (props.onSelect) props.onSelect()
 			}}>
-			<img src = {logo} className= {classes.logo}/>
+			<img src = {logo} className= {classes.logo} alt = 'Logo'/>
 			<div className = {classes.infor} >
 				<Typography variant = 'btnLabel' sx = {{color: '#000'}}>
 					{title}

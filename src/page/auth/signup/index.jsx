@@ -1,14 +1,12 @@
-import { Alert,Snackbar, Typography } from '@mui/material'
+import { Alert, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
-import React, { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
 import background from '../../../asset/image/background.jpg'
 import Button from '../../../component/Button'
 import GoHomeBtn from '../../../component/GoHomeBtn'
 import Link from '../../../component/Link'
 import TextField from '../../../component/TextField'
-import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
 import { validateEmail } from '../../../util/validator'
 
@@ -24,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
         width: 500,
         maxHeight: '80vh',
         backgroundColor: theme.palette.secondary.main,
-        borderRadius: theme.spacing(0.3),
         display: 'flex',
         flexDirection: 'column',
         padding: theme.spacing(3),
@@ -53,9 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SignupPage = () => {
-    const navigate = useNavigate()
     const classes = useStyles()
-    const {dispatch} = useContext(AuthContext)
     const [inputs, setInputs] = useState({email: "", password: ""})
     const [alert, setAlert] = useState({})
     const {email, password} = inputs
@@ -97,7 +92,7 @@ const SignupPage = () => {
     }
     return (
         <div className = {classes.container}>
-            <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+            <Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
                     {
@@ -127,8 +122,8 @@ const SignupPage = () => {
                     />
 
                 <Button 
-                    disabled = {email == '' || password == ''}
-                    variant =  {email == '' || password == '' ? 'warning' : 'primary'}
+                    disabled = {email ==='' || password ===''}
+                    variant =  {email ==='' || password ==='' ? 'warning' : 'primary'}
                     label = 'Sign up'
                     style = {{marginTop: theme.spacing(5)}}
                     onClick = {handleSignup}/>

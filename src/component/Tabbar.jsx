@@ -1,9 +1,7 @@
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useState} from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
 import { theme } from '../theme'
-import { Icon } from './Icon'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -27,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const TabItem = (props) => {
     const classes = useStyles()
     const handleClick = () => {
-        if (props.handleItemClick != undefined) {
+        if (props.handleItemClick !== undefined) {
             props.handleItemClick()
         }
     }
@@ -57,7 +55,7 @@ const Tabbar = (props) => {
             props.onClickTab(index)
         }
     }
-    if (tabs == undefined) tabs = []
+    if (tabs ===undefined) tabs = []
     return (
         <div className = {classes.container}>
             {
@@ -66,7 +64,7 @@ const Tabbar = (props) => {
                         <TabItem 
                             title ={item} 
                             handleItemClick = {() => handleItemClick(index)}
-                            isSelected = {selectedIndex == index}/>
+                            isSelected = {selectedIndex ===index}/>
                     </div>
                 ))
             }

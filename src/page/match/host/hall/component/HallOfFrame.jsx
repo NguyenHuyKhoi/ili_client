@@ -1,16 +1,11 @@
-import { Check, Close, JoinFullSharp, Square } from '@mui/icons-material'
-import { Divider, Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, {useContext} from 'react'
-import Icon from '../../../../../component/Icon'
+import React, { useContext } from 'react'
 import { SocketContext } from '../../../../../context/socket/context'
 import { theme } from '../../../../../theme'
-import {createUrl} from '../../../../../util/helper'
 import PlayerItem from '../../lobby/component/PlayerItem'
-
-
 import TopPlayerCard from './TopPlayerCard'
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -80,7 +75,7 @@ const HallOfFame = (props) => {
                     otherPlayers.map((player, index) => (
                         <div style = {{marginLeft: theme.spacing(2)}} key = {'' + index}>
                             <PlayerItem  
-                                isMe = {(player._id == socket.id)}
+                                isMe = {(player._id === socket.id)}
                                 player = {player}
                                 disable = {true}/>
                         </div>

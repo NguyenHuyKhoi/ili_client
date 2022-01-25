@@ -1,24 +1,22 @@
-import { Divider } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useContext, useEffect, useState} from 'react'
-import Timesup from './component/Timesup'
+import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { QUESTION_TYPES_ID } from '../../../../context/game/creator/context'
+import { updateMatch } from '../../../../context/match/play/actions'
+import { MatchPlayContext } from '../../../../context/match/play/context'
+import { SocketContext } from '../../../../context/socket/context'
+import Header from '../../host/stadium/component/Header'
+import MultipleChoiceQuestion from '../../host/stadium/component/MultipleChoiceQuestion'
+import PicWordQuestion from '../../host/stadium/component/PicWordQuestion'
+import QuestionEnd from '../../host/stadium/component/QuestionEnd'
+import Scoreboard from '../../host/stadium/component/Scoreboard'
+import TFChoiceQuestion from '../../host/stadium/component/TFChoiceQuestion'
+import WordTableQuestion from '../../host/stadium/component/WordTableQuestion'
+import WordTableQuestionEnd from '../../host/stadium/component/WordTableQuestionEnd'
 import BottomBar from './component/BottomBar'
 import Correct from './component/Correct'
 import Incorrect from './component/Incorrect'
-import { MatchPlayContext } from '../../../../context/match/play/context'
-import { SocketContext } from '../../../../context/socket/context'
-import { updateMatch } from '../../../../context/match/play/actions'
-import { useNavigate } from 'react-router-dom'
-import Scoreboard from '../../host/stadium/component/Scoreboard'
-import Header from '../../host/stadium/component/Header'
-import Question from '../../host/stadium/component/MultipleChoiceQuestion'
-import { QUESTION_TYPES_ID } from '../../../../context/game/creator/context'
-import WordTableQuestion from '../../host/stadium/component/WordTableQuestion'
-import PicWordQuestion from '../../host/stadium/component/PicWordQuestion'
-import TFChoiceQuestion from '../../host/stadium/component/TFChoiceQuestion'
-import MultipleChoiceQuestion from '../../host/stadium/component/MultipleChoiceQuestion'
-import QuestionEnd from '../../host/stadium/component/QuestionEnd'
-import WordTableQuestionEnd from '../../host/stadium/component/WordTableQuestionEnd'
+import Timesup from './component/Timesup'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -31,10 +29,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const INPUT_STAGE = {
-    ENTER_PIN: 0, 
-    ENTER_NAME: 1
-}
 const MatchPlayerStadiumPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
@@ -108,12 +102,12 @@ const MatchPlayerStadiumPage = () => {
         return () => {
             
         }
-    }, [])
+    })
 
     const handleAnswer = (answer) => {
         console.log("handle Send anser:", answer    );
         let me = findMe()
-        if (me._id == undefined) {
+        if (me._id===undefined) {
             console.log("Not found me");
             return 
         }
@@ -123,7 +117,7 @@ const MatchPlayerStadiumPage = () => {
     }
 
     const findMe = () => {
-        let player = match.players.find((item, index) => item._id == socket.id) 
+        let player = match.players.find((item, index) => item._id===socket.id) 
             ||
             {
                 name: 'Unknown',
@@ -191,10 +185,10 @@ const MatchPlayerStadiumPage = () => {
     const getCorrectAnswer = () => {
         // For only nultichoi/TF/Picword
         var correct_answer = question.correct_answer
-        if (question.typeId == QUESTION_TYPES_ID.MULTIPLE_CHOICE) {
+        if (question.typeId===QUESTION_TYPES_ID.MULTIPLE_CHOICE) {
                 return ['A','B','C','D'][correct_answer]
             }
-        if (question.typeId == QUESTION_TYPES_ID.TF_CHOICE) {
+        if (question.typeId===QUESTION_TYPES_ID.TF_CHOICE) {
             return ['True', 'False'][correct_answer]
         }
         return correct_answer
@@ -205,17 +199,17 @@ const MatchPlayerStadiumPage = () => {
                 time = {time}
                 timeTotal = {timeTotal}/>
             {
-                stage.type == 'on_question' ?
+                stage.type==='on_question' ?
                     renderQuestion()
-                : stage.type == 'end_question' ?
+                : stage.type==='end_question' ?
                     renderQuestionEnd()
-                : stage.type == 'not_answer'? 
+                : stage.type==='not_answer'? 
                 <Timesup/>
-                : stage.type == 'correct_answer'?
+                : stage.type==='correct_answer'?
                 <Correct earnScore = {earnScore}/>
-                : stage.type == 'wrong_answer' ?
+                : stage.type==='wrong_answer' ?
                 <Incorrect correct_answer = {getCorrectAnswer()}/>
-                : stage.type == 'scoreboard' ?
+                : stage.type==='scoreboard' ?
                 <Scoreboard time = {time} players = {players}/>
                 
                 : null

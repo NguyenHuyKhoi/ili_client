@@ -1,11 +1,8 @@
-import { Check, Close, Square } from '@mui/icons-material'
-import { Divider, Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
+import { Check } from '@mui/icons-material'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
-import Icon from '../../../../../component/Icon'
 import { theme } from '../../../../../theme'
-import {createUrl} from '../../../../../util/helper'
 const useStyles = makeStyles((theme) => ({
     container: {
         width: theme.spacing(18),
@@ -35,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
 const AnswerCount = (props) => {
     const classes = useStyles()
     const { count, isCorrect, percent, style, value} = props 
-    var {color, icon} = style
+    var {color} = style
 
-    if (color == undefined) color = theme.palette.success.main
+    if (color ===  undefined) color = theme.palette.success.main
     console.log("Is correct:", isCorrect);
     return (
         <div className = {classes.container} 
@@ -63,7 +60,7 @@ const AnswerCount = (props) => {
                     {value}
                 </Typography>
                 {
-                    isCorrect != undefined && 
+                    isCorrect !==  undefined && 
                     (
                         isCorrect && 
                         <Check sx = {{color: '#000', fontSize: 30}}/>

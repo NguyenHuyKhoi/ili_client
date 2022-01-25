@@ -2,9 +2,7 @@ import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import HeaderBar from '../../../component/HeaderBar'
-import { AuthContext } from '../../../context/auth/context'
 import { getGamesSuccess } from '../../../context/game/other/actions'
 import { GameContext } from '../../../context/game/other/context'
 import { theme } from '../../../theme'
@@ -24,16 +22,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SearchPage = () => {
-    const navigate = useNavigate()
     const classes = useStyles()
-    const {token} = useContext(AuthContext)
     const {dispatch, games} = useContext(GameContext)
     useEffect(() => {
         handleSearch({})
         return () => {
             
         }
-    }, [])
+    })
     
     const handleSearch = (params) => {
         axios.get('game/search', {

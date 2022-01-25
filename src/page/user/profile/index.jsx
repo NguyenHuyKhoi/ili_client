@@ -2,17 +2,16 @@ import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import HeaderBar from '../../../component/HeaderBar'
 import { AuthContext } from '../../../context/auth/context'
 import { getCollectionsSuccess } from '../../../context/collection/actions'
 import { CollectionContext } from '../../../context/collection/context'
-import { profileDetailSuccess } from '../../../context/user/actions'
-import { UserContext } from '../../../context/user/context'
-import CollectionList from './component/CollectionList'
-import ProfileHeader from './component/ProfileHeader'
-import HeaderBar from '../../../component/HeaderBar'
-import ProfileBody from './component/ProfileBody'
 import { getGamesSuccess } from '../../../context/game/other/actions'
 import { GameContext } from '../../../context/game/other/context'
+import { profileDetailSuccess } from '../../../context/user/actions'
+import { UserContext } from '../../../context/user/context'
+import ProfileBody from './component/ProfileBody'
+import ProfileHeader from './component/ProfileHeader'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -72,7 +71,7 @@ const ProfilePage = (props) => {
         return () => {
             
         }
-    }, [id])
+    })
 
     return (
         <div className = {classes.container}>

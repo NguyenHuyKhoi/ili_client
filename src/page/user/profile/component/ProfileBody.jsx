@@ -1,7 +1,6 @@
 import { makeStyles } from '@mui/styles'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import Tabbar from '../../../../component/Tabbar'
-import { AuthContext } from '../../../../context/auth/context'
 import GameList from '../../../game/search/component/GameList'
 import CollectionList from './CollectionList'
 
@@ -25,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileBody = () => {
     const classes = useStyles()
-    const {token} = useContext(AuthContext)
     const [selectedIndex, setSelectedIndex] = useState(0)
     return (
         <div className = {classes.container}>
@@ -38,8 +36,8 @@ const ProfileBody = () => {
             </div>
             <div className = {classes.body} >
             {
-                selectedIndex == 0?  <GameList/>
-                : selectedIndex == 1?  <CollectionList/>
+                selectedIndex===0?  <GameList/>
+                : selectedIndex===1?  <CollectionList/>
                 : null
             }
             </div>

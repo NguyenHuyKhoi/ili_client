@@ -1,9 +1,7 @@
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import ActiveDot from '../../../../component/ActiveDot'
-import Button from '../../../../component/Button'
 import IconButton from '../../../../component/IconButton'
 import OwnerInfor from '../../../../component/OwnerInfor'
 import { theme } from '../../../../theme'
@@ -32,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 const GameInfor = (props) => {
-    const navigate = useNavigate()
     const classes = useStyles()
 
     const {game, isMine} = props
@@ -63,14 +60,14 @@ const GameInfor = (props) => {
 
     return (
         <div className = {classes.container}>
-            <img className = {classes.gameImg} src = {createUrl(cover)}/>
+            <img className = {classes.gameImg} src = {createUrl(cover)} alt = 'Cover'/>
             <div className = {classes.body} >
                 <Typography variant = 'bigLabel' sx = {{ color: 'black', mt: theme.spacing(2)}}>
                     {title}
                 </Typography>
-                <ActiveDot isActive = {visibility == 'public'} labels = {['public', 'private']}/>
+                <ActiveDot isActive = {visibility === 'public'} labels = {['public', 'private']}/>
                 <Typography variant = 'label' sx = {{my: theme.spacing(2)}}>
-                    {description == '' || description == null? 'No description...' : description}
+                    {description === '' || description === null? 'No description...' : description}
                 </Typography>
                 <div className = {classes.btnBar} >
                     {

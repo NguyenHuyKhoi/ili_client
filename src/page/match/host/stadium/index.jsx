@@ -1,4 +1,3 @@
-import { Divider } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -9,7 +8,6 @@ import { SocketContext } from '../../../../context/socket/context'
 import BottomBar from './component/BottomBar'
 import Header from './component/Header'
 import MultipleChoiceQuestion from './component/MultipleChoiceQuestion'
-import Question from './component/MultipleChoiceQuestion'
 import PicWordQuestion from './component/PicWordQuestion'
 import QuestionEnd from './component/QuestionEnd'
 import Scoreboard from './component/Scoreboard'
@@ -42,7 +40,6 @@ const MatchHostStadiumPage = () => {
     console.log("match :", match);
 
     useEffect(() => {
-        setTimeTotal(question.time_limit)
         socket.on('match:onCountdown', (data) => {
             let {time} = data
             //console.log("Receive emit on countdown: ",  time)
@@ -81,7 +78,7 @@ const MatchHostStadiumPage = () => {
         return () => {
             
         }
-    }, [])
+    })
 
     const renderQuestionEnd = () => {
         var data = {
@@ -153,13 +150,13 @@ const MatchHostStadiumPage = () => {
                 timeTotal = {timeTotal}/>
             <div className = {classes.questionContainer}>
                 {
-                    stage.type == 'end_question' ?
+                    stage.type === 'end_question' ?
                     renderQuestionEnd()
                     :
-                    stage.type == 'on_question' ?
+                    stage.type === 'on_question' ?
                     renderQuestion()
                     :
-                    stage.type == 'scoreboard' ?
+                    stage.type === 'scoreboard' ?
                     <Scoreboard players = {players} time = {time}/>
                     :
                     null

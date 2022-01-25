@@ -1,14 +1,9 @@
-import { grey } from '@mui/material/colors';
 import { makeStyles } from '@mui/styles';
-import React, { useContext } from 'react';
+import React from 'react';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
-import { updateQuestion } from '../../../../context/game/creator/actions';
-import { GameCreatorContext } from '../../../../context/game/creator/context';
-import { createUrl } from '../../../../util/helper';
-import Answers from './Answers';
-import TextField from '../../../../component/TextField'
-import TextArea from '../../../../component/TextArea'
+import TextField from '../../../../component/TextField';
 import { theme } from '../../../../theme';
+import Answers from './Answers';
 const useStyles = makeStyles((theme) => ({
     container: {
         padding: theme.spacing(5),

@@ -58,7 +58,7 @@ export const PlayerItem = (props) => {
                 {isGuess ? 'Guess' : 'Member'}
             </Typography>
             <div className = {classes.body}>
-                <img src = {createUrl(avatar)} className = {classes.avatar}/>
+                <img src = {createUrl(avatar)} className = {classes.avatar} alt = 'Avatar'/>
                 <div className = {classes.point}>
                     <Typography variant = 'header' sx = {{color: '#000', fontSize: 40}}>
                         {score}

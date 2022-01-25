@@ -1,14 +1,14 @@
-import { Alert, Snackbar, Typography } from '@mui/material'
+import { Alert, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import background from '../../../../asset/image/background.jpg'
+import logo from '../../../../asset/image/logo.png'
+import { AuthContext } from '../../../../context/auth/context'
 import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
-import { AuthContext } from '../../../../context/auth/context'
 import Form from './component/Form'
-import background from '../../../../asset/image/background.jpg'
-import logo from '../../../../asset/image/logo.png'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -64,12 +64,12 @@ const MatchPlayerEntrancePage = () => {
             let {match} = data
             dispatch(updateMatch(match))
         })
-    }, [])  
+    })  
 
     const handleSubmit = () => {
         switch (type) {
             case 'enter_pin': 
-                if (value == '') {
+                if (value ===  '') {
                     setAlert({
                         type: 'error',
                         msg: 'pinCode is empty'
@@ -104,7 +104,7 @@ const MatchPlayerEntrancePage = () => {
                 }))
                 break
             case 'enter_name': 
-                if (value == '') {
+                if (value ===  '') {
                     setAlert({
                         type: 'error',
                         msg: 'Username is empty'
@@ -118,6 +118,8 @@ const MatchPlayerEntrancePage = () => {
                     }
                 } )
                 break
+            default: 
+                break
         }
     }
 
@@ -126,15 +128,15 @@ const MatchPlayerEntrancePage = () => {
     }
     return (
         <div className = {classes.container}>
-            <img src = {logo} className = {classes.logo}
+            <img src = {logo} className = {classes.logo} alt = 'Logo'
                 onClick ={handleGoHome}/>
             <Form 
                 onSubmit = {handleSubmit} 
                 onChange = {(value) => setInput({...input, value})} 
-                showAlert = {alert.type == 'error'}
+                showAlert = {alert.type ===  'error'}
                 value = {value}
                 input_type = {input_type[type]}/>
-            <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+            <Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
 
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>

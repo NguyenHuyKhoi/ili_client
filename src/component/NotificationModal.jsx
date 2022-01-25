@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
 		transform: 'translate(-50%, -50%)',
 		width: '40vw',
 		backgroundColor: theme.palette.secondary.main,
-		border: '2px solid #000',
 		display: 'flex',
 		flexDirection: 'column',
 		border: 'solid 2px #000000',
@@ -26,8 +25,8 @@ const NotificationModal = (props) => {
 	const classes = useStyles()
 
 	var {open, title, desc, btnLabel, variant} = props
-	if (variant == undefined) variant = 'success'
-	if (open == undefined) open = false
+	if (variant ===undefined) variant = 'success'
+	if (open ===undefined) open = false
 	const handleDone = () => {
 		if (props.onDone) {
 			props.onDone()

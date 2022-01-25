@@ -1,15 +1,15 @@
 
-import { FormControlLabel, Grid, MenuItem, Modal, Radio, RadioGroup, Select, Typography } from '@mui/material';
+import { Grid, Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import Button from '../../../../component/Button';
+import DropdownSelect from '../../../../component/DropdownSelect';
 import MediaUploadCard from '../../../../component/MediaUploadCard';
 import TextArea from '../../../../component/TextArea';
 import TextField from '../../../../component/TextField';
 import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
-import { theme } from "../../../../theme";
-import DropdownSelect from '../../../../component/DropdownSelect'
 import { GAME_SUBJECTS } from '../../../../context/game/creator/context';
+import { theme } from "../../../../theme";
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 		width: '50vw',
 		maxHeight: '80vh',
 		backgroundColor: theme.palette.secondary.main,
-		borderRadius: theme.spacing(1),
 		padding: theme.spacing(4),
 		display: 'flex',
 		flexDirection: 'column',
@@ -61,7 +60,7 @@ const SettingModal = (props) => {
 	const {title, cover, description, visibility, subject} = draftSetting
 	
 	var {open} = props
-	if (open == undefined) open = false
+	if (open === undefined) open = false
 
 	const handleClose = () => {
 		if (props.onClose) {

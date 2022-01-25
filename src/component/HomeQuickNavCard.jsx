@@ -56,7 +56,7 @@ const HomeQuickNavCard = (props) => {
     var {title, description, btnLabel, style, link, image} = item
     
     const handleClick = () => {
-        if (link != undefined) {
+        if (link !== undefined) {
             return navigate(link, {replace: true})
         }
     }
@@ -86,7 +86,7 @@ const HomeQuickNavCard = (props) => {
             </div>
             <div className = {classes.rightCol}>
                 <div className = {classes.shade}/>
-                <img src = {image} className = {classes.img}/>
+                <img src = {image} className = {classes.img} alt = 'Empty'/>
               
             </div>
         </div>

@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 const Scoreboard = (props) => {
     const classes = useStyles()
     const {socket} = useContext(SocketContext)
-    let {players, time} = props
+    let {players} = props
     return (
         <div className = {classes.container}>
             <div className = {classes.title} >
@@ -56,7 +56,7 @@ const Scoreboard = (props) => {
                         players.map((player, index) => (
                             <div style = {{margin: theme.spacing(1.5)}} key = {'' + index}>
                                 <PlayerItem  
-                                    isMe = {(player._id == socket.id)}
+                                    isMe = {(player._id === socket.id)}
                                     showScore = {true}
                                     player = {player}
                                     disable = {true}/>

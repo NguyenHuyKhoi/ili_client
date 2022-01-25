@@ -51,7 +51,7 @@ const WordTableQuestionMiniItem = (props) => {
     const classes = useStyles()
     const {question} = props
     //console.log("Question :", question)
-    const {title, images, correct_answers} = question
+    const {title, correct_answers} = question
     const limitTitle = title != null? title.substring(0, 20) + '...' : 'Question'
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? '#fff': theme.palette.background.main}}>

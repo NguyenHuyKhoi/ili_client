@@ -54,8 +54,8 @@ const QuestionConfig = (props) => {
         
     }
 
-    var time_limits = QUESTION_TYPES.find((item) => item.id == question.typeId).time_limits
-    var scores = QUESTION_TYPES.find((item) => item.id == question.typeId).scores
+    var time_limits = QUESTION_TYPES.find((item) => item.id ===question.typeId).time_limits
+    var scores = QUESTION_TYPES.find((item) => item.id ===question.typeId).scores
     return (
         <div className = {classes.container}>
             <div className = {classes.inputs} >

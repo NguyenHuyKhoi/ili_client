@@ -1,7 +1,6 @@
 import { Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
-import { theme } from "../../../../theme";
 import QuestionTypeList from './QuestionTypeList';
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -23,7 +22,7 @@ const SelectQuestionTypeModal = (props) => {
 	const classes = useStyles()
 
 	var {open} = props
-	if (open == undefined) open = false
+	if (open === undefined) open = false
 	const handleClose = () => {
 		if (props.onClose) {
 			props.onClose()

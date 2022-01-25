@@ -1,11 +1,10 @@
 import { CheckCircleOutlineOutlined, CircleOutlined } from '@mui/icons-material';
-import CropDinSharpIcon from '@mui/icons-material/CropDinSharp';
-import { Grid, Tooltip } from '@mui/material';
+import { Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import Icon from '../../../../component/Icon';
 import TextField from '../../../../component/TextField';
-import {theme} from '../../../../theme'
+import { theme } from '../../../../theme';
 const useStyles = makeStyles((theme) => ({
     container: {
         width: '100%'   
@@ -32,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: theme.spacing(0.6)
     },
     titleInput: {
-        flex:1,
         fontSize: 20,
         border: 'none',
         backgroundColor: 'rgba(0,0,0,0)',
@@ -71,17 +69,17 @@ const Answer = (props) => {
         if (props.onChange) {
             props.onChange(value)
         }
-        if (answer == "" || answer == null ) handleCorrectChange()
+        if (answer === "" || answer == null ) handleCorrectChange()
     }
 
     const handleCorrectChange = () => {
-        if (answer == "" || answer == null) return
+        if (answer === "" || answer == null) return
         if (props.onChangeCorrect) {
             props.onChangeCorrect(!isCorrect)
         }
     }
     return (
-        <div className = {classes.answer} style={{backgroundColor: answer == null || answer == '' ?'white':color}}>
+        <div className = {classes.answer} style={{backgroundColor: answer == null || answer === '' ?'white':color}}>
             <div className = {classes.shapeContainer}
                 style={{backgroundColor: color}} >
                 <Icon name = {icon} style= {{ 
@@ -129,7 +127,7 @@ const Answers = (props) => {
             props.onAnswerCorrectChange(correct_answer)
         }
     }
-    if (isFixed == undefined) isFixed = false
+    if (isFixed === undefined) isFixed = false
     return (
         <div className = {classes.container}>
             <Grid container rowSpacing={1.5} columnSpacing={{ xs: 1.5 }} sx = {{width:'100%',height:'100%'}}>
@@ -139,7 +137,7 @@ const Answers = (props) => {
                             answer = {item} 
                             isFixed = {isFixed}
                             style= {answerStyles[index]}
-                            isCorrect = {correct_answer != null && correct_answer == index}
+                            isCorrect = {correct_answer != null && correct_answer === index}
                             onChange = {(value) => handleAnswerChange(index, value)}
                             onChangeCorrect = {(isCorrect)=> handleAnswerCorrectChange(index,isCorrect)}/>
                     </Grid>

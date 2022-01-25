@@ -1,6 +1,5 @@
-import { lightBlue } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
-import Setofont from '../src/theme/fonts/setofont.woff'
+import Setofont from '../src/theme/fonts/setofont.woff';
 export const theme = createTheme({
     palette: {
         primary: {

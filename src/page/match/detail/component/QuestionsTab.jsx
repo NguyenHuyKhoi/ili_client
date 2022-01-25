@@ -28,7 +28,7 @@ const QuestionsTab = () => {
         <QuestionsTable onClickRow = {handleViewQuestion}
           match = {match}/>
         <QuestionDetailModal 
-          open = {modal.state == 'question_detail'} 
+          open = {modal.state === 'question_detail'} 
           match = {match}
           index = {index}
           onClose = {() => setModal({})}/>

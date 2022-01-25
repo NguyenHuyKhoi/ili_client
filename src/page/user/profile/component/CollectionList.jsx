@@ -1,14 +1,9 @@
-import { Add, ArrowBackIosOutlined, ArrowForwardIosOutlined, Check, ClassSharp, CropSquare, MoreVert, Square } from '@mui/icons-material'
-import { AppBar, Avatar, Button, Chip, Divider, Grid, IconButton, Link, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { Box } from '@mui/system'
-import React, { useEffect, useRef, useState, useContext } from 'react'
-import { grey, blue } from '@mui/material/colors';
-import CollectionSlideItem from './CollectionSlideItem'
-import CollectionFilter from './CollectionFilter'
-import { CollectionContext } from '../../../../context/collection/context'
+import React, { useContext } from 'react'
 import EmptyBox from '../../../../component/EmptyBox'
+import { CollectionContext } from '../../../../context/collection/context'
 import { theme } from '../../../../theme'
+import CollectionSlideItem from './CollectionSlideItem'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -30,7 +25,7 @@ const CollectionList = () => {
     return (
         <div className = {classes.container}>
             {
-                nonEmptyCollections.length == 0? 
+                nonEmptyCollections.length===0? 
                     <EmptyBox label = "This user don't has any collection..."
                         style = {{width: '85%', alignSelf: 'center', marginTop: theme.spacing(3)}}/>
                     :

@@ -1,16 +1,15 @@
-import { CheckCircleSharp } from '@mui/icons-material'
 import { Alert, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useState } from 'react'
-import { theme } from '../../../theme'
-import { validateEmail } from '../../../util/validator'
+import { useNavigate } from 'react-router-dom'
 import background from '../../../asset/image/background.jpg'
 import Button from '../../../component/Button'
-import TextField from '../../../component/TextField'
-import { useNavigate } from 'react-router-dom'
-import Link from '../../../component/Link'
 import GoHomeBtn from '../../../component/GoHomeBtn'
+import Link from '../../../component/Link'
+import TextField from '../../../component/TextField'
+import { theme } from '../../../theme'
+import { validateEmail } from '../../../util/validator'
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh',
@@ -23,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     form: {
         width: 500,
         backgroundColor: theme.palette.secondary.main,
-        borderRadius: theme.spacing(0.5),
         display: 'flex',
         flexDirection: 'column',
         padding: theme.spacing(3),
@@ -95,7 +93,7 @@ const ForgotPasswordPage = () => {
         <div className = {classes.container}>
             <GoHomeBtn/>
             {
-                alert.type == 'success' ?
+                alert.type==='success' ?
                 <div className = {classes.form}>
                     <Typography variant = 'header' sx = {{fontWeight: 'bold', mt: theme.spacing(2), alignSelf: 'center'}}>
                         Check your email
@@ -111,7 +109,7 @@ const ForgotPasswordPage = () => {
                 </div>
                 :
                 <>
-                 <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+                 <Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                     anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                     <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
                         {
@@ -132,8 +130,8 @@ const ForgotPasswordPage = () => {
                             />
 
                         <Button
-                            disabled = {email == ''}
-                            variant =  {email == ''? 'warning' : 'primary'}
+                            disabled = {email===''}
+                            variant =  {email===''? 'warning' : 'primary'}
                             label = 'Send reset link'
                             style = {{marginTop: theme.spacing(5)}}
                             onClick = {handleSubmit}/>

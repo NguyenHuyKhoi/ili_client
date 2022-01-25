@@ -1,18 +1,15 @@
 import axios from "axios";
 import { PLATFORM_ACCOUNT_TYPES_ID } from "../../platform/context";
-const APP_ID = '269861025134273'
-const APP_SECRET = '6bbec2116f51aa47042ec52bf5438301'
 /* global FB */
 class FacebookHelper {
 
     static transitionToLive = async (_id, account) => {
         try {
             console.log('Go live profile :', _id, account)
-            const {userID, accessToken} = account
+            const {accessToken} = account
     
             const url = `https://graph.facebook.com/${_id}?status=LIVE_NOW&access_token=${accessToken}`
             console.log("URL live fb:", url)
-            let res = await axios.post(url)
           
             console.log("Transitio to live live fb success: ")
             return true
@@ -65,6 +62,7 @@ class FacebookHelper {
             livestream.streamUrl = stream_url
             livestream.accessToken = token
             livestream.platform = 'facebook'
+            livestream.type = type
             console.log("Create stream fb", livestream)
             return livestream
         }
@@ -76,8 +74,8 @@ class FacebookHelper {
     }
     static endLive = async (livestream, account) => {
         try {
-           const {title,description, livestreamId} = livestream
-           const {userID, accessToken} = account
+           const {livestreamId} = livestream
+           const {accessToken} = account
            const url = `https://graph.facebook.com/${livestreamId}?end_live_video=true&access_token=${accessToken}`
    
            await axios.post(url)
@@ -120,7 +118,7 @@ class FacebookHelper {
                 if (res != null) {
                     let {status, permalink_url} = res
                     console.log("Listen status stream", status, res)
-                    if (status == listened_status) {
+                    if (status ===listened_status) {
                         clearInterval(_interval)
                         resolve(permalink_url)
                     }
@@ -218,7 +216,7 @@ class FacebookHelper {
     static auth =  (accountType) => {
         return new Promise((resolve, reject) => {
             let permissions = this.getPermissions(accountType)
-            if (permissions == '') {
+            if (permissions ==='') {
                 reject({
                     error: 'AccountType is invalid'
                 })
@@ -226,7 +224,7 @@ class FacebookHelper {
             }
 
             FB.login(res => {
-                if (res.status == 'connected') {
+                if (res.status ==='connected') {
                     let {accessToken, userID, expiresIn} =  res.authResponse
                     console.log('Auth fb success :', res.authResponse)
                     resolve({

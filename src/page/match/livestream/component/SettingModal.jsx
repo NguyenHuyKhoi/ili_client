@@ -8,8 +8,6 @@ import { PlatformContext } from '../../../../context/platform/context';
 import { getPlatformHelper } from '../../../../context/platform/helper';
 import { theme } from "../../../../theme";
 import AccountCard from './AccountCard';
-/* global gapi */
-/* global FB */
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -58,12 +56,12 @@ const SettingModal = (props) => {
 	const classes = useStyles()
 	const {setting} = props
 	const [draftSetting, setDraftSetting] = useState(setting == null ? {} : setting)
-	const {title, description, account} = draftSetting
+	const {title, description} = draftSetting
 	
 	const {platforms, dispatch, platform} = useContext(PlatformContext)
 	var platformHelper = null
 	var {open} = props
-	if (open == undefined) open = false
+	if (open === undefined) open = false
 
 	const handleClose = () => {
 		if (props.onClose) {
@@ -137,7 +135,7 @@ const SettingModal = (props) => {
 									<div key = {'' + index} style = {{marginTop: theme.spacing(2)}}>
 										<AccountCard 
 											account = {account}
-											select = {platform && platform.id == account.id}
+											select = {platform && platform.id === account.id}
 											onSelect = {() => selectAccount(account)}/>
 									</div>
 								))

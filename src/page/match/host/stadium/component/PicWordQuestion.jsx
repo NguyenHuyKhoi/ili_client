@@ -1,14 +1,10 @@
-import { Square } from '@mui/icons-material'
 import { Divider, Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, {useState} from 'react'
-import { theme } from '../../../../../theme'
-import {createUrl} from '../../../../../util/helper'
-import Answer from './Answer'
-import {answerStyles} from '../../../../game/creator/component/Answers'
-import TextField from '../../../../../component/TextField'
+import React, { useState } from 'react'
 import Button from '../../../../../component/Button'
+import TextField from '../../../../../component/TextField'
+import { theme } from '../../../../../theme'
+import { createUrl } from '../../../../../util/helper'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -44,24 +40,24 @@ const useStyles = makeStyles((theme) => ({
 const PicWordQuestion = (props) => {
     const classes = useStyles()
     const {data} = props
-    var {question, time,answer_counts, question_index, question_total, isPlayer} = data
+    var {question,answer_counts, question_index, question_total, isPlayer} = data
     const [userAnswer, setuserAnswer] = useState('');
     const [isAnswered, setisAnswered] = useState(!isPlayer);
     
 
-    const {title, image, answers, time_limit, correct_answer, images} = question
+    const {title, correct_answer, images} = question
 
 
     var answerTotal = answer_counts.reduce((res, item) => res += item.count, 0)
 
     const handleAnswer = () => {
-        if (userAnswer == '') return
+        if (userAnswer ===  '') return
         console.log("Answer:", userAnswer);
         setisAnswered(true)
         if (props.onAnswer) props.onAnswer(userAnswer)
     }
 
-    if (isPlayer == undefined) isPlayer = false 
+    if (isPlayer ===  undefined) isPlayer = false 
     return (
         <div className = {classes.container}>
             <div className = {classes.header} >
@@ -93,6 +89,7 @@ const PicWordQuestion = (props) => {
                                         aspectRatio: 1.6,
                                         objectFit: 'cover'
                                     }}
+                                        alt = 'Hint'
                                         src = {createUrl(image)}/>
                                 </div>
                             </Grid>

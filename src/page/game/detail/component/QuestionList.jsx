@@ -1,9 +1,6 @@
-import { Check, Square } from '@mui/icons-material'
 import { Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, { useEffect, useState } from 'react'
-import { theme } from '../../../../theme'
+import React, { useState } from 'react'
 import QuestionRowItem from './QuestionRowItem'
 
 const useStyles = makeStyles((theme) => ({
@@ -71,7 +68,7 @@ const QuestionList = (props) => {
                     <div className = {classes.item}   key = {''+index}>
                         <QuestionRowItem 
                             isShowAll = {isShowAll} question = {item} index = {index}
-                            selected = {selectedIndex == index}
+                            selected = {selectedIndex === index}
                             onSelect = {() => setSelectedIndex(index)}/>
                     </div>
                 ))

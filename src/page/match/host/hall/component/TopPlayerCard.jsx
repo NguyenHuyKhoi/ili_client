@@ -1,12 +1,9 @@
-import { Check, Close, JoinFullSharp, Square } from '@mui/icons-material'
-import { Divider, Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
-import Icon from '../../../../../component/Icon'
-import { theme } from '../../../../../theme'
-import {createUrl} from '../../../../../util/helper'
 import no_image from '../../../../../asset/image/logo.png'
+import { theme } from '../../../../../theme'
+import { createUrl } from '../../../../../util/helper'
 var avatar_size = 16
 var medal_size = 8
 
@@ -47,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TopPlayerCard = (props) => {
     const classes = useStyles()
-    const { player, highlight, index, style, isBig} = props 
+    const { player, index, style, isBig} = props 
 
     var {username, avatar, score} = player ? player : {username: ' --- ', avatar: null, score: ' --- '}
 
@@ -62,6 +59,7 @@ const TopPlayerCard = (props) => {
             >
             <img src = {avatar != null? createUrl(avatar) : no_image}
                 className = {classes.avatar}
+                alt = 'Avatar'
                 style = {{  
                     border: `4px solid ${medal_color.color_2}`,
                     width: theme.spacing(avatar_size* factor),

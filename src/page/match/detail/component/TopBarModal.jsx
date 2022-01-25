@@ -35,12 +35,12 @@ const TopBarModal = (props) => {
 	}
 
 	const handleLeft = () => {
-		if (index == 1) return 
+		if (index ===  1) return 
 		if (props.onLeft) props.onLeft()
 	}
 
 	const handleRight = () => {
-		if (index == total) return 
+		if (index ===  total) return 
 		if (props.onRight) props.onRight()
 	}
 	return (
@@ -57,7 +57,7 @@ const TopBarModal = (props) => {
 				</Typography>
 				<ChevronLeft 
 					sx = {{
-						color: index == 1 ? '#f2f2f2' : '#000',
+						color: index ===  1 ? '#f2f2f2' : '#000',
 						fontSize: 35,
 						ml: theme.spacing(1)
 					}}
@@ -65,7 +65,7 @@ const TopBarModal = (props) => {
 				/>
 				<ChevronRight
 					sx = {{
-						color: index == total ? '#f2f2f2' : '#000',
+						color: index ===  total ? '#f2f2f2' : '#000',
 						fontSize: 35,
 						mr: theme.spacing(1)
 					}}

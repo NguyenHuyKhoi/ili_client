@@ -1,14 +1,13 @@
 
-import {Grid, Modal, Typography } from '@mui/material';
+import { Grid, Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
-import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
-import MediaUploadCard from '../../../../component/MediaUploadCard';
-import { theme } from "../../../../theme";
-import { createUrl } from '../../../../util/helper';
-import TextField from '../../../../component/TextField';
-import TextArea from '../../../../component/TextArea';
 import Button from '../../../../component/Button';
+import MediaUploadCard from '../../../../component/MediaUploadCard';
+import TextArea from '../../../../component/TextArea';
+import TextField from '../../../../component/TextField';
+import WrappedRadioGroup from '../../../../component/WrappedRadioGroup';
+import { theme } from "../../../../theme";
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -18,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 		width: '50vw',
 		maxHeight: '80vh',
 		backgroundColor: theme.palette.secondary.main,
-		borderRadius: theme.spacing(1),
 		padding: theme.spacing(2),
 		display: 'flex',
 		flexDirection: 'column',
@@ -58,7 +56,7 @@ const CollectionCreateModal = (props) => {
 	const {title, cover, description, visibility} = collection
 
 	var {open} = props
-	if (open == undefined) open = false
+	if (open ===undefined) open = false
 
 	const handleClose = () => {
 		if (props.onClose) {

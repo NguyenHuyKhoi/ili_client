@@ -1,12 +1,10 @@
-import {Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
-import { theme } from '../../../../../theme'
-import { Grid } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
 import classic_mode from '../../../../../asset/image/classis_mode.png'
 import youtube_mode from '../../../../../asset/image/youtube_mode.png'
 import Button from '../../../../../component/Button'
+import { theme } from '../../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -62,14 +60,13 @@ const modes = [
 ]
 const ModeItem = (props) => {
     const classes = useStyles()
-    const navigate = useNavigate()
     const {mode} = props 
-    const {title, desc, link, icon} = mode
+    const {title, desc, icon} = mode
 
     return (
         <div className = {classes.item}>
             <img src = {icon}
-                className = {classes.logo}/>
+                className = {classes.logo} alt = 'Logo'/>
             <Typography variant = 'bigLabel' 
                 sx = {{ color: 'white', alignSelf: 'center'}}>
                 {title}

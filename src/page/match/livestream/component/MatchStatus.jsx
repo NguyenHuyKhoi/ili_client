@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         padding: 1,
         borderRadius: theme.spacing(1),
-        backgroundColor: '#f2f2f2',
         boxShadow: '1px 3px 1px #f2f2f2',
         backgroundColor: 'blue'
     },
@@ -53,7 +52,7 @@ const MatchStatus = (props) => {
     const {match} = useContext(MatchPlayContext)
     const matchPlayDispatch = useContext(MatchPlayContext).dispatch
     const platformDispatch = useContext(PlatformContext).dispatch
-    const {fbPages, fbGroups, ytChannels, platform, social} = useContext(PlatformContext)
+    const { platform, social} = useContext(PlatformContext)
 
     const {token} = useContext(AuthContext)
     const {game, players} = match 
@@ -93,7 +92,7 @@ const MatchStatus = (props) => {
 
 
     const handleUpdateMatch = () => {
-        if (match._id == undefined) {
+        if (match._id === undefined) {
             console.log("Match not created ,emit")
             return
         }
@@ -142,7 +141,7 @@ const MatchStatus = (props) => {
 
             <div className = {classes.list}>
                 {
-                    index==0 && questions != undefined && 
+                    index === 0 && questions !== undefined && 
                     questions.map((item, index) => (
                         <div className = {classes.item} key = {'' + index}>
                            <QuestionRowItem 
@@ -153,7 +152,7 @@ const MatchStatus = (props) => {
                     ))
                 }
                 {
-                    index==1 &&  players != undefined &&
+                    index === 1 &&  players !== undefined &&
                         players.map((item, index) => (
                             <div className = {classes.item} key = {'' + index}>
                                <PlayerRowItem 
@@ -164,25 +163,25 @@ const MatchStatus = (props) => {
                         ))
                 }
                 {
-                    index==2 && socialList.length > 0 &&
+                    index === 2 && socialList.length > 0 &&
                     socialList.map((item, index) => (
                             <div className = {classes.item} key = {'' + index}>
                                <SocialRowItem 
                                     social = {item} 
                                     index = {index}
-                                    isSelected = {social!= null && social.id == item.id}
+                                    isSelected = {social != null && social.id === item.id}
                                     onSelect = {() => handleSelectSocial(item)}/>
                             </div>
                         ))
                 }
                 {
-                    index==2 && socialList.length == 0 &&
+                    index===2 && socialList.length === 0 &&
                     <Typography variant='btnLabel' sx = {{color: '#000', m: theme.spacing(2), textAlign: 'center'}}>
                         {`You have not any ${tabs[2]}. Please create one or choose another account.`}
                     </Typography>
                 }
                 {
-                    index==1 &&  players == undefined &&
+                    index === 1 &&  players === undefined &&
                         <Typography variant = 'btnLabel' sx = {{color: '#000', textAlign: 'center', mt: theme.spacing(3)}}>
                             Livestream is not started or none player join .
                         </Typography>

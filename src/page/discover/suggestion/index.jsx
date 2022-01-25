@@ -1,7 +1,5 @@
-import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import HeaderBar from '../../../component/HeaderBar'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -16,12 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const DiscoverPage = () => {
-    const navigate = useNavigate()
     const classes = useStyles()
-
-    const handleSearch = () => {
-        navigate('/game/search', {replace: true})
-    }
     return (
         <div className = {classes.container}>
             <HeaderBar selectedIndex = {1}/>

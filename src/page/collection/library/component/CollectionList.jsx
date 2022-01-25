@@ -1,9 +1,5 @@
-import { MoreVert, Star } from '@mui/icons-material'
-import { Button, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
 import EmptyBox from '../../../../component/EmptyBox'
 import { theme } from '../../../../theme'
 import CollectionRowItem from '../../component/CollectionRowItem'
@@ -40,18 +36,12 @@ const useStyles = makeStyles((theme) => ({
 
 const CollectionList = (props) => {
     const classes = useStyles()
-    const [selectedIndex, setSelectedIndex] = useState(0)
     const {collections} = props
-    const [isShowAll, setIsShowAll] = useState(false)
-    const handleShowAllChange = () => {
-        setIsShowAll(!isShowAll)
-    }
-
     return (
         <div className = {classes.container}>
             <div className = {classes.list} >
             {
-                collections.length == 0 ? 
+                collections.length ===0 ? 
                 <EmptyBox
                     style= {{width: '100%', marginTop: theme.spacing(5)}}
                     label = " You don't have yet any collections. Create one?"

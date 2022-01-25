@@ -43,7 +43,7 @@ const Topbar = (props) => {
         <AppBar position = 'fixed'>
             <Toolbar className = {classes.toolbar}>
                 <div onClick = {() => navigate('/', {replace: true})}>
-                    <img src = {logo} className = {classes.logo}/>
+                    <img src = {logo} className = {classes.logo} alt = 'Logo' />
                 </div>
                 <div className = {classes.settingBox} 
                     onClick = {() => {
@@ -55,7 +55,7 @@ const Topbar = (props) => {
                 >
                     <Typography variant='label' className = {classes.title}> 
                         {
-                            title == '' || title == null ?
+                            title === '' || title == null ?
                             'Enter name ...'
                             :
                             title

@@ -1,13 +1,9 @@
-import { MoreVert, Star } from '@mui/icons-material'
-import {Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Button from '../../../../component/Button'
 import { addGameToCollection, removeGameToCollection } from '../../../../context/collection/actions'
 import { CollectionContext } from '../../../../context/collection/context'
-import { theme } from '../../../../theme'
 import { createUrl } from '../../../../util/helper'
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const GameItem = (props) => {
-    const navigate = useNavigate()
     const classes = useStyles()
     const {dispatch} = useContext(CollectionContext)
     const {game, isAdded} = props
@@ -77,7 +72,7 @@ export const GameItem = (props) => {
         <div className = {classes.container}>
             <div className = {classes.left}>
                 <img className = {classes.img} 
-                    src = {createUrl(image)}/>
+                    src = {createUrl(image)} alt = 'Cover'/>
                 <div className = {classes.questionNums}>
                     <Typography variant = 'caption' sx = {{color: 'white'}}> 
                         {questions.length} questions 

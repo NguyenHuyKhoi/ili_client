@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         padding: theme.spacing(3),
         backgroundColor: theme.palette.secondary.main,
-        borderRadius: theme.spacing(0.5),
         border: 'solid 2px #000000',
         borderRadius: '255px 10px 225px 10px/10px 225px 10px 255px',
     }
@@ -57,8 +56,8 @@ const Form = (props) => {
                 }}
                 />
             <Button 
-                disabled = {value == '' }
-                variant =  {value == '' ? 'warning' : 'primary'}
+                disabled = {value ===  '' }
+                variant =  {value ===  '' ? 'warning' : 'primary'}
                 label = {btnLabel}
                 style = {{marginTop: theme.spacing(2)}}
                 onClick = {handleSubmit}/>

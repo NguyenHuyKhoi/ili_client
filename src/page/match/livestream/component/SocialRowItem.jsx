@@ -1,8 +1,6 @@
-import { Check, Close } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useEffect, useState } from 'react'
-import Icon from '../../../../component/Icon'
+import React from 'react'
 import { theme } from '../../../../theme'
 import { createUrl } from '../../../../util/helper'
 
@@ -39,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 const SocialRowItem = (props) => {
     const classes = useStyles()
     var {social, isSelected} = props
-    var {avatar, name, type } = social
+    var {avatar, name } = social
 
     return (
         <div className = {classes.container} 
@@ -58,7 +56,7 @@ const SocialRowItem = (props) => {
                     { name }
                 </Typography>
             </div>
-            <img className = {classes.img} src = {createUrl(avatar)}/>
+            <img className = {classes.img} src = {createUrl(avatar)} alt = 'Avatar'/>
         </div>
     )
 }

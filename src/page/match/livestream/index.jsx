@@ -1,20 +1,18 @@
 import { Alert, Grid, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { PlatformContext, PLATFORM_ACCOUNT_TYPES_ID } from '../../../context/platform/context'
+import { AuthContext } from '../../../context/auth/context'
 import { updateLivestreamStage, updateMatch } from '../../../context/match/play/actions'
 import { LIVESTREAM_STAGE, MatchPlayContext } from '../../../context/match/play/context'
+import { PlatformContext, PLATFORM_ACCOUNT_TYPES_ID } from '../../../context/platform/context'
+import { getPlatformHelper } from '../../../context/platform/helper'
 import MatchStatus from './component/MatchStatus'
 import QuestionDetailModal from './component/QuestionDetailModal'
 import SettingModal from './component/SettingModal'
 import TemplateSlider from './component/TemplateSlider'
 import Topbar from './component/Topbar'
-import { AuthContext } from '../../../context/auth/context'
-import { getPlatformHelper } from '../../../context/platform/helper'
-/* global gapi */
-/* global FB */
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -37,16 +35,16 @@ const MatchLivestreamPage = () => {
     const {dispatch, match, livestream, livestreamStage} = useContext(MatchPlayContext)
     const navigate = useNavigate()
     const {platform, social} = useContext(PlatformContext)
-    const {user, token} = useContext(AuthContext)
+    const {token} = useContext(AuthContext)
     const [modal, setModal] = useState({})
     const [alert, setAlert] = useState({})
 
     const [fbUrl, setFbUrl] = useState('')
 
     useEffect(() => {
-        if (platform != null) {
+        if (platform !==  null) {
             platformHelper = getPlatformHelper(platform)
-            console.log("Platform helper not null", (platformHelper != null && platformHelper != undefined))
+            console.log("Platform helper not null", (platformHelper !==  null && platformHelper !==  undefined))
         }
         return () => {
         }
@@ -76,12 +74,14 @@ const MatchLivestreamPage = () => {
                 break;
             case LIVESTREAM_STAGE.COMPLETE:
                 return navigate(-1)
+            default: 
+                return
         }
     }
     
     const handleEndLive = async () => {
         try {
-            if (platform == null) {
+            if (platform ===  null) {
                 return
             }
             await platformHelper.endLive(livestream, platform)
@@ -99,7 +99,6 @@ const MatchLivestreamPage = () => {
                     })
                 })
                 .catch((err) => {
-                    let error = err.response ? err.response.data : 'Server is failure complete'
                     //console.log("Error :", error)
                     dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
                     setAlert({
@@ -116,15 +115,15 @@ const MatchLivestreamPage = () => {
     }
 
     const validateSetting = () => {
-        if (platform == null) {
+        if (platform ===  null) {
             setAlert({
                 type: 'error',
                 msg: 'Please choose an account to live'
             })
             return false
         }
-        if (livestream.title == '' || livestream.title == null 
-        || livestream.description == '' || livestream.description == null) {
+        if (livestream.title ===  '' || livestream.title ===  null 
+        || livestream.description ===  '' || livestream.description ===  null) {
             setAlert({
                 type: 'error',
                 msg: 'Set title and description for livestream'
@@ -133,10 +132,10 @@ const MatchLivestreamPage = () => {
         }
     }
     const isSelectSocialIfNeed = () => {
-        if (platform != null) {
-            if (platform.id == PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_GROUP 
-                || platform.id == PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PAGE) {
-                    if (social == null) {
+        if (platform !==  null) {
+            if (platform.id ===  PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_GROUP 
+                || platform.id ===  PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PAGE) {
+                    if (social ===  null) {
                         return false
                     }
                 }
@@ -150,7 +149,7 @@ const MatchLivestreamPage = () => {
 
 
         try {
-            if (validateSetting() == false) {
+            if (validateSetting() ===  false) {
                 return
             }
             if (!isSelectSocialIfNeed()) {
@@ -161,10 +160,10 @@ const MatchLivestreamPage = () => {
                 return 
             }
             dispatch(updateLivestreamStage(LIVESTREAM_STAGE.CREATING))
-            console.log("Prepare go live:", livestream, (platformHelper != null && platformHelper != undefined))
+            console.log("Prepare go live:", livestream, (platformHelper !==  null && platformHelper !==  undefined))
             let res = await platformHelper.goLive(livestream, platform, social)
     
-            if (res == null) {
+            if (res ===  null) {
                 dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
                 return
             }
@@ -184,7 +183,7 @@ const MatchLivestreamPage = () => {
             })
         }
         catch(err) {
-            let error = err.response ? err.response.data : 'Server is failure create'
+            // let error = err.response ? err.response.data : 'Server is failure create'
             console.log("Error:", err)
             dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))
             setAlert({
@@ -197,14 +196,14 @@ const MatchLivestreamPage = () => {
 
     const listenLivestreamStatus = (createdMatch) => {
         try {
-            if (platform == null) {
+            if (platform ===  null) {
                 return
             }
             var {livestreamId} = createdMatch.livestream
             platformHelper.listenStatus(livestreamId, platform)
                 .then((videoUrl) => {
                     
-                    if (platform.id == PLATFORM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST) {
+                    if (platform.id ===  PLATFORM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST) {
                         startMatchOnServer(createdMatch)
                         dispatch(updateLivestreamStage(LIVESTREAM_STAGE.LIVE))
                     } 
@@ -235,10 +234,10 @@ const MatchLivestreamPage = () => {
         })
     }
 
-    var showLivestream =  (livestreamStage == LIVESTREAM_STAGE.LIVE || livestreamStage == LIVESTREAM_STAGE.COMPLETE)
+    var showLivestream =  (livestreamStage ===  LIVESTREAM_STAGE.LIVE || livestreamStage ===  LIVESTREAM_STAGE.COMPLETE)
 
     const getVideoUrl = () => {
-        if (platform == null) {
+        if (platform ===  null) {
             return null 
         }
         let videoUrl = null
@@ -264,7 +263,7 @@ const MatchLivestreamPage = () => {
 
     return (
         <div className = {classes.container}>
-            <Snackbar open={alert.type != undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+            <Snackbar open={alert.type !==  undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
                     {alert.msg}
@@ -272,7 +271,7 @@ const MatchLivestreamPage = () => {
             </Snackbar>
             <SettingModal 
                 setting = {livestream}
-                open = {modal.state == 'setting'}     
+                open = {modal.state ===  'setting'}     
                 onClose = {() => setModal({})}
                 onCancel = {() => setModal({})}
                 onAlert = {(msg) => setAlert({
@@ -288,7 +287,7 @@ const MatchLivestreamPage = () => {
                 }}/>
 
             <QuestionDetailModal 
-                open = {modal.state == 'view_question'}     
+                open = {modal.state ===  'view_question'}     
                 onClose = {() => setModal({})}
             />
             <Topbar
@@ -303,7 +302,7 @@ const MatchLivestreamPage = () => {
                         {
                             showLivestream 
                             && platform 
-                            && platform.id == PLATFORM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST ? 
+                            && platform.id ===  PLATFORM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST ? 
                             <div style= {{
                                 flex: 1,
                                 height: '100%',

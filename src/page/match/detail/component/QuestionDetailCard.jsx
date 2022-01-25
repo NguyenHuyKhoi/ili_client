@@ -113,13 +113,14 @@ const QuestionDetailCard = (props) => {
 	const classes = useStyles() 
 	const {stage, players} = props 
 	const {question} = stage
-	const {title, image, answers, correct_answer, time_limit, score} = question
+	const {image, answers, correct_answer, time_limit, score} = question
 	return (
 		<div className = {classes.container}>
 			<Grid container >
 				<Grid item xs = {3} >
 					<div className = {classes.left}>
 						<img className = {classes.img} 
+							alt = 'Hint'
 							src = {createUrl(image)}/>
 					</div>
 				</Grid>
@@ -131,8 +132,8 @@ const QuestionDetailCard = (props) => {
 									style = {answerStyles[index]}
 								 	key = {''+index} 
 									answer = {answer} 
-									isCorrect = {correct_answer == index} 
-									number = {stage.answers.filter((answer) => answer.answerIndex == index).length}
+									isCorrect = {correct_answer ===  index} 
+									number = {stage.answers.filter((answer) => answer.answerIndex ===  index).length}
 									total = {players.length}
 									/>
 							))

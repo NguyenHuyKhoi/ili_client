@@ -10,7 +10,6 @@ import { AuthContext } from '../../../context/auth/context'
 import { saveCollectionSetting } from '../../../context/collection/actions'
 import { CollectionContext } from '../../../context/collection/context'
 import { getGamesSuccess } from '../../../context/game/other/actions'
-import { GameContext } from '../../../context/game/other/context'
 import FirebaseHelper, { IMAGE_CATEGORIES } from '../../../firebase'
 import { theme } from '../../../theme'
 import AddGamesModal from './component/AddGamesModal'
@@ -52,9 +51,8 @@ const CollectionEditPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
     const {token} = useContext(AuthContext)
-    const gameDispatch = useContext(GameContext).dispatch
-    const {collection, dispatch, isSuccess} = useContext(CollectionContext)
-    const {games, owner} = collection
+    const {collection, dispatch} = useContext(CollectionContext)
+    const {games} = collection
     const [modal, setModal] = useState({state: ''})
     useEffect(() => {
         axios.get('game/library', {
@@ -68,7 +66,7 @@ const CollectionEditPage = () => {
         return () => {
             
         }
-    }, [])
+    })
 
     const handleSaveToServer = async () => {
         var {cover} = collection 
@@ -138,7 +136,7 @@ const CollectionEditPage = () => {
                     cover: collection.cover,
                     visibility: collection.visibility
                 }}
-                open = {modal.state == 'setting'}
+                open = {modal.state ==='setting'}
                 onClose = {() => setModal({})}
                 onDone = {handleSaveSetting}
             />
@@ -146,14 +144,14 @@ const CollectionEditPage = () => {
                 title = 'Done!'
                 btnLabel = 'Go Library'
                 desc = 'See results in library.'
-                open = { modal.state == 'success' }     
+                open = { modal.state ==='success' }     
                 onClose = {() => setModal({})}
                 onDone = {() => {
                     setModal({})
                     return navigate('/collection/library', {replace: true})
                 }}/>
             <AddGamesModal 
-                open = {modal.state == 'add_games'}
+                open = {modal.state ==='add_games'}
                 onClose = {() => setModal({})}
             />
             <Grid container sx = {{mt: theme.spacing(8)}} columnSpacing={2}>
@@ -175,7 +173,7 @@ const CollectionEditPage = () => {
                             
                         </div>
                         {
-                               games.length == 0? 
+                               games.length ===0? 
                                 <EmptyBox 
                                     style = {{width: '80%', alignSelf: 'center', marginTop: theme.spacing(2)}}
                                     label = 'Add a game? Click me!'

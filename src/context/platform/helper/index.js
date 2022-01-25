@@ -10,6 +10,8 @@ export const getPlatformHelper = (account) => {
         case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_GROUP:
         case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PAGE:
             return FacebookHelper
+        default:
+            return FacebookHelper
             
     }
 }

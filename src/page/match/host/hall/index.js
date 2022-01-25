@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     },
     notif: {
         alignSelf: 'center',
-        borderRadius: theme.spacing(1),
         backgroundColor: theme.palette.info.main,
         opacity: 0.7,
         padding: theme.spacing(1),
@@ -48,7 +47,7 @@ const MatchHostHallPage = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const {socket} = useContext(SocketContext)
-    const  {match, dispatch} = useContext(MatchPlayContext)
+    const  {match} = useContext(MatchPlayContext)
     const [countdownOnEnd, setCountdownOnEnd] = useState(false)
     const [time, setTime] = useState(0)
     var {players} = match 
@@ -71,7 +70,8 @@ const MatchHostHallPage = (props) => {
         return () => {
             
         }
-    }, [])
+    })
+    
     const handleNext = () => {
         return navigate('/match/host/setting', {replace: true})
     }

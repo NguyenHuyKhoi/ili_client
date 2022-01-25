@@ -1,11 +1,9 @@
-import { Check, Close, Square } from '@mui/icons-material'
-import { Divider, Grid, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
+import { Check, Close } from '@mui/icons-material'
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import Icon from '../../../../../component/Icon'
 import { theme } from '../../../../../theme'
-import {createUrl} from '../../../../../util/helper'
 const useStyles = makeStyles((theme) => ({
     container: {
         height: theme.spacing(10),
@@ -30,7 +28,7 @@ const Answer = (props) => {
     const {color, icon} = style
     return (
         <div className = {classes.container} 
-            style={{backgroundColor: color, opacity: isCorrect == false || isSelected == false ? 0.3 : 1}}
+            style={{backgroundColor: color, opacity: isCorrect ===  false || isSelected ===  false ? 0.3 : 1}}
             onClick = {() => {
                 if (props.onClick) props.onClick()
             }}>
@@ -39,7 +37,7 @@ const Answer = (props) => {
                 {answer}
             </Typography>
             {
-                isCorrect != undefined && 
+                isCorrect !==  undefined && 
                 (
                     isCorrect ?
                     <Check sx = {{color: '#000', fontSize: 40}}/>
@@ -48,7 +46,7 @@ const Answer = (props) => {
                 )
             }
             {
-                isSelected == true && 
+                isSelected ===  true && 
                 <Check sx = {{color: '#000', fontSize: 40}}/>
             }
         </div>

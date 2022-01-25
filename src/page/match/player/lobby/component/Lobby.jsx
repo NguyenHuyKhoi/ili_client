@@ -65,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
     },
     waiting: {
         alignSelf: 'center',
-        borderRadius: theme.spacing(1),
         backgroundColor: theme.palette.warning.main,
         opacity: 0.7,
         padding: theme.spacing(1),
@@ -91,9 +90,9 @@ const Lobby = (props) => {
     const navigate = useNavigate()
     const {match, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
-    let {pinCode, game, players, state} = match
+    let {pinCode, game, players} = match
     let {title} = game
-    if (players == undefined) players = []
+    if (players === undefined) players = []
     
     const handleLeave = () => {
         console.log("User request to leave")
@@ -137,7 +136,7 @@ const Lobby = (props) => {
                                 player = {player}  
                                 disable = {true}
                                 style = {{margin: theme.spacing(1)}}
-                                isMe = {player._id == socket.id} />
+                                isMe = {player._id === socket.id} />
                         ))
                     }
                 </div>

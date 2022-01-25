@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
 
 const JoinMethodModal = (props) => {
 	const classes = useStyles()
-	var {open, questions} = props
-	if (open == undefined) open = false
+	var {open} = props
+	if (open ===  undefined) open = false
 	const handleClose = () => {
 		if (props.onClose) {
 			props.onClose()
@@ -39,7 +39,7 @@ const JoinMethodModal = (props) => {
 			aria-describedby="modal-modal-description"
 			onBackdropClick = {handleClose}>
 			<div className={classes.container}>
-				<img src = {qr_sample} className = {classes.qr}/>
+				<img src = {qr_sample} className = {classes.qr} alt = 'QR'/>
 			</div>
 		</Modal>
 	);

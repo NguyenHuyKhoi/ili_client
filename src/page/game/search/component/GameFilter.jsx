@@ -1,14 +1,9 @@
 import { makeStyles } from '@mui/styles'
-import axios from 'axios'
-import React, {useState, useContext} from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
 import Button from '../../../../component/Button'
-import DropdownSelect from '../../../../component/DropdownSelect'
 import MultiSelect from '../../../../component/MultiSelect'
 import TextField from '../../../../component/TextField'
 import { GAME_SUBJECTS } from '../../../../context/game/creator/context'
-import { getGamesSuccess } from '../../../../context/game/other/actions'
-import { GameContext } from '../../../../context/game/other/context'
 import { theme } from '../../../../theme'
 
 
@@ -30,14 +25,11 @@ const useStyles = makeStyles((theme) => ({
 
 const GameFilter = (props) => {
     const classes = useStyles()
-    const navigate = useNavigate()
-
-    const {dispatch} = useContext(GameContext)
     const [filter, setFilter] = useState({keyword: '', subjects: [], question_ranges: []})
 
     const handleSearch = () => {
         var params = {}
-        if (keyword != '') {
+        if (keyword !== '') {
             params.keyword = keyword
         }
         if (subjects.length > 0) {

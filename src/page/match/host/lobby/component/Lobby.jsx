@@ -2,7 +2,6 @@ import { Person } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Button from '../../../../../component/Button'
 import { MatchPlayContext } from '../../../../../context/match/play/context'
 import { SocketContext } from '../../../../../context/socket/context'
@@ -67,7 +66,6 @@ const useStyles = makeStyles((theme) => ({
     },
     waiting: {
         alignSelf: 'center',
-        borderRadius: theme.spacing(1),
         backgroundColor: theme.palette.warning.main,
         opacity: 0.7,
         padding: theme.spacing(1),
@@ -93,15 +91,14 @@ const useStyles = makeStyles((theme) => ({
 const Lobby = (props) => {
     const classes = useStyles()
     const {countdownToStart, time} = props
-    const navigate = useNavigate()
-    const {match, dispatch} = useContext(MatchPlayContext)
+    const {match} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
     let {pinCode, game, players, state} = match
     let {title} = game
 
-    const locked = (state == 'locking')
+    const locked = (state ===  'locking')
     const enableStart = (players.length > 0)
-    if (players == undefined) players = []
+    if (players ===  undefined) players = []
 
     const handleStart = () => {
         socket.emit('match:start', pinCode)
@@ -161,7 +158,7 @@ const Lobby = (props) => {
             <div className = {classes.body}>
                 <div className = {classes.players}>
                     {
-                        players.length == 0 ?
+                        players.length ===  0 ?
                             <Typography variant = 'bigLabel' sx = {{color: '#000', alignSelf: 'center'}}>
                                 {`No player join this match. Waiting for them ...`}
                             </Typography>

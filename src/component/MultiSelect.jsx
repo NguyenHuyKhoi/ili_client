@@ -1,7 +1,7 @@
 
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, {useState} from 'react'
+import React from 'react'
 import { theme } from '../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const Item = (props) => {
     const classes = useStyles()
     var {item, selected} = props 
-    var {label, value} = item 
+    var {label} = item 
     return (
         <div className = {classes.item}
             style = {{
@@ -53,7 +53,7 @@ const Item = (props) => {
 const MultiSelect = (props) => {
     const classes = useStyles()
     var {selects, disabled} = props 
-    if (disabled == undefined) disabled = false 
+    if (disabled ===undefined) disabled = false 
 
     const onSelectItem = (value) => {
         if (disabled) return
@@ -62,7 +62,7 @@ const MultiSelect = (props) => {
             return
         }
         var temp = JSON.parse(JSON.stringify(selects))
-        if (temp.indexOf(value) == -1) {
+        if (temp.indexOf(value) ===-1) {
             temp.push(value)
         }
         else {
@@ -89,7 +89,7 @@ const MultiSelect = (props) => {
                         <Item 
                             item = {item} 
                             onSelect = {() => onSelectItem(item.value)} key = {'' + index}
-                            selected = {selects.indexOf(item.value) != -1}/>
+                            selected = {selects.indexOf(item.value) !==-1}/>
                     ))
                 }
             </div>

@@ -1,6 +1,4 @@
-import { Error } from '@mui/icons-material';
 import { Modal, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import Button from '../../../../component/Button';
@@ -41,7 +39,7 @@ const ValidateGameModal = (props) => {
 	const classes = useStyles()
 
 	var {open, questions} = props
-	if (open == undefined) open = false
+	if (open ===undefined) open = false
 	const handleClose = () => {
 		if (props.onClose) {
 			props.onClose()
