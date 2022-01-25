@@ -92,7 +92,7 @@ const Lobby = (props) => {
     const {socket} = useContext(SocketContext)
     let {pinCode, game, players} = match
     let {title} = game
-    if (players === undefined) players = []
+    if (players == undefined) players = []
     
     const handleLeave = () => {
         console.log("User request to leave")

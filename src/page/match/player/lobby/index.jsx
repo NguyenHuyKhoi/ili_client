@@ -68,7 +68,7 @@ const MatchPlayerLobbyPage = () => {
             }
            
         })
-    })  
+    }, [])  
 
     return (
         <div className = {classes.container}>

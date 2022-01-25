@@ -61,7 +61,7 @@ const MatchLibraryPage = () => {
        return () => {
             
         }
-    })
+    }, [])
 
     const getMatches = (params) => {
         setIsFetching(true)

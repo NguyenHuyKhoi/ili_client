@@ -1,7 +1,9 @@
 import { Divider, Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
+import { QUESTION_TYPES_ID } from '../../../../../context/game/creator/context'
 import { theme } from '../../../../../theme'
+import { createUrl } from '../../../../../util/helper'
 import { answerStyles } from '../../../../game/creator/component/Answers'
 import Answer from './Answer'
 import AnswerCount from './AnswerCount'
@@ -56,6 +58,29 @@ const QuestionEnd = (props) => {
             </div>
             <Divider/>
             <div className = {classes.center}>
+                {
+                    question.typeId == QUESTION_TYPES_ID.PIC_WORD && 
+                    <div style = {{
+                        width: theme.spacing(90),
+                        aspectRatio: 1.6,
+                    }}>
+                        <Grid container columnSpacing={2} rowSpacing={2}>
+                        {
+                            question.images.map((image, index) => (
+                                <Grid item xs = {6} key = {'' + index}>
+                                    <img style = {{
+                                        width: '100%',
+                                        height: theme.spacing(25),
+                                        objectFit: 'cover'
+                                    }}
+                                        alt = 'Hint'
+                                        src = {createUrl(image)}/>
+                                </Grid>
+                            ))
+                        }
+                        </Grid>
+                    </div>
+                }
                 <div className = {classes.answerCounts}>
                     {
                         answer_counts.map((item, index) => (
@@ -65,7 +90,7 @@ const QuestionEnd = (props) => {
                                     value = {item.value}
                                     count = {item.count}
                                     percent = {total_count ===  0 ? 0 : item.count / total_count}
-                                    isCorrect = {correct_answer ===  index}/>
+                                    isCorrect = {correct_answer ==  index}/>
                             </div>
                         ))
                     }
@@ -81,7 +106,7 @@ const QuestionEnd = (props) => {
                                     style = {answerStyles[index]}
                                     answer = {item} 
                                     count = {answer_counts[index].count}
-                                    isCorrect = {correct_answer ===  index}/>
+                                    isCorrect = {correct_answer ==  index}/>
                             </Grid>
                         ))
                     }

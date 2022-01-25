@@ -71,7 +71,7 @@ const ProfilePage = (props) => {
         return () => {
             
         }
-    })
+    }, [])
 
     return (
         <div className = {classes.container}>

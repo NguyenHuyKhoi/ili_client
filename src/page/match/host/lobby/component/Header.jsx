@@ -44,7 +44,7 @@ export const Header = (props) => {
                     </Typography>
                     <Typography variant = 'h1'  sx  ={{ color: '#000', fontWeight: 'semi-bold', alignSelf: 'center'}}> 
                         {
-                            pinCode === undefined || pinCode === null ? 'XXXXXX' : pinCode
+                            pinCode == null ? 'XXXXXX' : pinCode
                         }
                     </Typography>
                 </div>     

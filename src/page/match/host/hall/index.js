@@ -70,7 +70,7 @@ const MatchHostHallPage = (props) => {
         return () => {
             
         }
-    })
+    }, [])
     
     const handleNext = () => {
         return navigate('/match/host/setting', {replace: true})

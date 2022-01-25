@@ -51,7 +51,7 @@ const MediaUploadCard = (props) => {
         <div className = {classes.container}
             style = {style !==undefined ? style : {}}>
             {
-                image === undefined? 
+                image == null? 
                 <>
                 <Button 
                     variant='primary' 

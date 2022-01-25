@@ -37,9 +37,9 @@ const Answer = (props) => {
                 {answer}
             </Typography>
             {
-                isCorrect !==  undefined && 
+                isCorrect !=  undefined && 
                 (
-                    isCorrect ?
+                    isCorrect === true ?
                     <Check sx = {{color: '#000', fontSize: 40}}/>
                     : 
                     <Close sx = {{color: '#000', fontSize: 40}}/>

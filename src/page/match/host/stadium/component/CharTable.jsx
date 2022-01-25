@@ -20,7 +20,9 @@ const CharTable = (props) => {
     return (
          <div style = {{
             width: theme.spacing(60),
-            aspectRatio: 1,
+            height: theme.spacing(60),
+            display: 'flex',
+            justifyContent: 'center',
             alignItems: 'center'
         }}>
             <Grid container columnSpacing={0.2} rowSpacing={0.2}>
@@ -29,13 +31,13 @@ const CharTable = (props) => {
                         <Grid item xs = {12 / WORD_TABLE_SIZE} key = {'' + index}>
                             <div 
                                 style = {{
-                                    aspectRatio: 1,
+                                    height: theme.spacing(4.5),
                                     backgroundColor: selectCellColor(item),
                                     display: 'flex',justifyContent: 'center',alignItems: 'center'
                                 }}>
                                 {
                                     item != null &&
-                                    <Typography variant = 'btnLabel' sx = {{color: 'white'}}>
+                                    <Typography variant = 'btnLabel' sx = {{color: '#000'}}>
                                         {item.char}
                                     </Typography>
                                 }

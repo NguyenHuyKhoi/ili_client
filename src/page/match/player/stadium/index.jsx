@@ -102,7 +102,7 @@ const MatchPlayerStadiumPage = () => {
         return () => {
             
         }
-    })
+    }, [])
 
     const handleAnswer = (answer) => {
         console.log("handle Send anser:", answer    );

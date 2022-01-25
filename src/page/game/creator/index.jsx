@@ -83,6 +83,7 @@ const GameCreatorPage = (props) => {
     const handleSave = async () => {
         var isValidated = validateGameSetting(game)
         var qs = []
+        console.log("Questions: ", questions);
         questions.forEach((item, index) => {
             let cloned = cloneQuestion(item)
             let defects = validateQuestion(cloned)

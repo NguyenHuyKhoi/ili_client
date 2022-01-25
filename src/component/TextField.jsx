@@ -24,7 +24,7 @@ const TextField = (props) => {
         : size==='medium' ? 20
         : 24
 
-    if (disabled === undefined) disabled = false
+    if (disabled == null) disabled = false
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
           if (props.onSubmit) {

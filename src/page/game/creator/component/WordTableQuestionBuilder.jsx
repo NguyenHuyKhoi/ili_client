@@ -163,7 +163,7 @@ const WordTableQuestionBuilder = (props) => {
     const handleUnFillTable = () => {
         setisFilled(false)
         char_table.forEach((item, index) => {
-            if (item !== null && item.wordParent === undefined) {
+            if (item !== null && item.wordParent == undefined) {
                 char_table[index] = null
             }
         })

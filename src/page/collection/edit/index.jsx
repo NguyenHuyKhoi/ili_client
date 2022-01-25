@@ -66,7 +66,7 @@ const CollectionEditPage = () => {
         return () => {
             
         }
-    })
+    }, [])
 
     const handleSaveToServer = async () => {
         var {cover} = collection 

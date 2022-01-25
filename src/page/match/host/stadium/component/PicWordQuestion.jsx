@@ -77,21 +77,18 @@ const PicWordQuestion = (props) => {
                 <div style = {{
                     width: theme.spacing(90),
                     aspectRatio: 1.6,
-                    alignItems: 'center'
                 }}>
                     <Grid container columnSpacing={2} rowSpacing={2}>
                     {
                         images.map((image, index) => (
                             <Grid item xs = {6} key = {'' + index}>
-                                <div className = {classes.uploadImg}>
-                                    <img style = {{
-                                        width: '100%',
-                                        aspectRatio: 1.6,
-                                        objectFit: 'cover'
-                                    }}
-                                        alt = 'Hint'
-                                        src = {createUrl(image)}/>
-                                </div>
+                                <img style = {{
+                                    width: '100%',
+                                    height: theme.spacing(25),
+                                    objectFit: 'cover'
+                                }}
+                                    alt = 'Hint'
+                                    src = {createUrl(image)}/>
                             </Grid>
                         ))
                     }
@@ -121,6 +118,7 @@ const PicWordQuestion = (props) => {
                         paddingRight: theme.spacing(2)
                     }}
                     disabled = {isAnswered}
+                    onSubmit = {handleAnswer}
                     value={isPlayer ? userAnswer : correct_answer}
                     onChange={ (value)=> setuserAnswer(value.toUpperCase())}/>
                 {

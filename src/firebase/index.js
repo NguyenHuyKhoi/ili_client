@@ -66,7 +66,7 @@ class FirebaseHelper {
     static uploadImage = async (file, category = IMAGE_CATEGORIES.COMMON) => {
         return new Promise(async (resolve, reject) => {
             // Validate inputs: 
-            if (file == null || file === undefined) {
+            if (file == null) {
                 resolve(null)
                 return
             }
@@ -85,7 +85,7 @@ class FirebaseHelper {
             }
 
 
-            const fullPath = category.path + category.prefix + Math.floor(Date.now() / 1000) + '.jpg';
+            const fullPath = category.path + category.prefix + Math.floor(Date.now() / 1000) + "_"+ Math.floor(Math.random() * 10000) + '.jpg';
                       
             console.log("Full path:", fullPath);
             console.log("File: ", file);

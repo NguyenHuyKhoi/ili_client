@@ -60,7 +60,7 @@ const SettingModal = (props) => {
 	const {title, cover, description, visibility, subject} = draftSetting
 	
 	var {open} = props
-	if (open === undefined) open = false
+	if (open == undefined) open = false
 
 	const handleClose = () => {
 		if (props.onClose) {

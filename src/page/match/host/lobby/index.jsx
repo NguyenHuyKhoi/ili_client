@@ -73,7 +73,7 @@ const MatchHostLobbyPage = () => {
             let {time} = data
             setTime(time)
         })
-    })  
+    }, [])  
 
     return (
         <div className = {classes.container}>

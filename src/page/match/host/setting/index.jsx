@@ -108,7 +108,7 @@ const MatchHostSettingPage = () => {
         return () => {
             
         }
-    })
+    }, [])
 
     const checkSetting = () => {
         let isOk = true 

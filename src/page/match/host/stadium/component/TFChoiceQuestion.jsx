@@ -54,7 +54,7 @@ const TFChoiceQuestion = (props) => {
         if (props.onAnswer) props.onAnswer(index)
 
     }
-    if (isPlayer === undefined) isPlayer = false 
+    if (isPlayer == undefined) isPlayer = false 
     return (
         <div className = {classes.container}>
             <div className = {classes.header} >
@@ -88,7 +88,7 @@ const TFChoiceQuestion = (props) => {
                                     style = {answerStyles[index]}
                                     answer = {item} 
                                     onClick = {() => handleAnswer(index)}
-                                    isSelected = {selected === null ? null : (selected === index)}
+                                    isSelected = {selected == null ? null : (selected === index)}
                                     isCorrect = {null}/>
                             </Grid>
                         ))

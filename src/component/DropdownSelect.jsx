@@ -28,7 +28,7 @@ const DropdownSelect = (props) => {
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={value ===null ?'':value}
+                value={value == null ?'':value}
                 defaultValue={''}
                 size = 'small'
                 label="Age"

@@ -53,7 +53,7 @@ const QuestionDetailModal = (props) => {
 	const classes = useStyles()
 	const { question} = useContext(MatchPlayContext)
 	var {open} = props
-	if (open === undefined) open = false
+	if (open == undefined) open = false
 
 	const handleClose = () => {
 		if (props.onClose) {

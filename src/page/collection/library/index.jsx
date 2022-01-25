@@ -43,7 +43,7 @@ const CollectionLibraryPage = () => {
         return () => {
             
         }
-    })
+    }, [])
 
     const getCollections = () => {
         axios.get('collection/library', {

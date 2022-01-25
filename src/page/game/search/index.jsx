@@ -29,7 +29,7 @@ const SearchPage = () => {
         return () => {
             
         }
-    })
+    }, [])
     
     const handleSearch = (params) => {
         axios.get('game/search', {

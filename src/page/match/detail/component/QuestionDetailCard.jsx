@@ -132,7 +132,7 @@ const QuestionDetailCard = (props) => {
 									style = {answerStyles[index]}
 								 	key = {''+index} 
 									answer = {answer} 
-									isCorrect = {correct_answer ===  index} 
+									isCorrect = {correct_answer ==  index} 
 									number = {stage.answers.filter((answer) => answer.answerIndex ===  index).length}
 									total = {players.length}
 									/>

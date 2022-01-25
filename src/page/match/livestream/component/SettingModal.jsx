@@ -61,7 +61,7 @@ const SettingModal = (props) => {
 	const {platforms, dispatch, platform} = useContext(PlatformContext)
 	var platformHelper = null
 	var {open} = props
-	if (open === undefined) open = false
+	if (open == undefined) open = false
 
 	const handleClose = () => {
 		if (props.onClose) {

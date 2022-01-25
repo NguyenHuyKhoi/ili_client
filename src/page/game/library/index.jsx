@@ -51,7 +51,7 @@ const GameLibraryPage = () => {
         return () => {
             
         }
-    })
+    }, [])
 
     const handleGoCreate = () => {
         navigate('/game/creator', {replace: true})

@@ -60,7 +60,7 @@ const Header = () => {
 		return () => {
 			
 		}
-	})
+	}, [])
 
 	const handleViewGame = () => {
 		console.log("Selct to vie game:", fullGame)

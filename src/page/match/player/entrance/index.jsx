@@ -64,7 +64,7 @@ const MatchPlayerEntrancePage = () => {
             let {match} = data
             dispatch(updateMatch(match))
         })
-    })  
+    }, [])  
 
     const handleSubmit = () => {
         switch (type) {

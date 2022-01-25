@@ -67,7 +67,7 @@ const GameInfor = (props) => {
                 </Typography>
                 <ActiveDot isActive = {visibility === 'public'} labels = {['public', 'private']}/>
                 <Typography variant = 'label' sx = {{my: theme.spacing(2)}}>
-                    {description === '' || description === null? 'No description...' : description}
+                    {description === '' || description == null? 'No description...' : description}
                 </Typography>
                 <div className = {classes.btnBar} >
                     {

@@ -115,7 +115,7 @@ const PlayerDetailModal = (props) => {
 		}
 	}, [props.index])
 	var {open} = props
-	if (open === undefined) open = false
+	if (open == undefined) open = false
 	const handleClose = () => {
 		if (props.onClose) {
 			props.onClose()

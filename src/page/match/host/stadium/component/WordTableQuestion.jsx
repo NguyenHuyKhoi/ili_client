@@ -63,7 +63,7 @@ const WordTableQuestion = (props) => {
         setuserAnswer('')
 
     }
-    if (isPlayer === undefined) isPlayer = false 
+    if (isPlayer == undefined) isPlayer = false 
     return (
         <div className = {classes.container}>
             <div className = {classes.header} >
@@ -93,7 +93,7 @@ const WordTableQuestion = (props) => {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            padding: theme.spacing(3),
+                            padding: theme.spacing(2),
                         }}>
                             <Button 
                                 label = 'Clear'
@@ -107,10 +107,11 @@ const WordTableQuestion = (props) => {
                                     textAlign: 'center',
                                     alignSelf: 'center',
                                     padding: theme.spacing(1),
-                                    width: theme.spacing(30), fontSize: 40,
+                                    width: theme.spacing(40), fontSize: 40,
                                     paddingLeft: theme.spacing(2),
                                     paddingRight: theme.spacing(2)
                                 }}
+                                onSubmit = {handleAnswer}
                                 value={userAnswer}
                                 onChange={ (value)=> setuserAnswer(value.toUpperCase())}/>
                             <Button 

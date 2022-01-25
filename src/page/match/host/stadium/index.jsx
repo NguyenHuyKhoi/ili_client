@@ -78,7 +78,7 @@ const MatchHostStadiumPage = () => {
         return () => {
             
         }
-    })
+    }, [])
 
     const renderQuestionEnd = () => {
         var data = {

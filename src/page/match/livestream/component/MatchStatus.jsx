@@ -92,7 +92,7 @@ const MatchStatus = (props) => {
 
 
     const handleUpdateMatch = () => {
-        if (match._id === undefined) {
+        if (match._id == null) {
             console.log("Match not created ,emit")
             return
         }
@@ -175,13 +175,13 @@ const MatchStatus = (props) => {
                         ))
                 }
                 {
-                    index===2 && socialList.length === 0 &&
+                    index ===2 && socialList.length === 0 &&
                     <Typography variant='btnLabel' sx = {{color: '#000', m: theme.spacing(2), textAlign: 'center'}}>
                         {`You have not any ${tabs[2]}. Please create one or choose another account.`}
                     </Typography>
                 }
                 {
-                    index === 1 &&  players === undefined &&
+                    index === 1 &&  players == undefined &&
                         <Typography variant = 'btnLabel' sx = {{color: '#000', textAlign: 'center', mt: theme.spacing(3)}}>
                             Livestream is not started or none player join .
                         </Typography>

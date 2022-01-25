@@ -127,7 +127,7 @@ const Answers = (props) => {
             props.onAnswerCorrectChange(correct_answer)
         }
     }
-    if (isFixed === undefined) isFixed = false
+    if (isFixed == undefined) isFixed = false
     return (
         <div className = {classes.container}>
             <Grid container rowSpacing={1.5} columnSpacing={{ xs: 1.5 }} sx = {{width:'100%',height:'100%'}}>

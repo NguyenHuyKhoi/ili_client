@@ -69,7 +69,7 @@ const MatchPlayerHallPage = (props) => {
         return () => {
             
         }
-    })
+    }, [])
     const handleNext = () => {
         return navigate('/match/player/entrance', {replace: true})
     }

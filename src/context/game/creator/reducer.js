@@ -1,20 +1,21 @@
 import { QUESTION_TYPES, QUESTION_TYPES_ID, sample_game } from "./context"
 
 export const validateMultipleQuestion = (question) => {
+    console.log("Validate multi : ", question);
     let defs = []
     let {title, answers, correct_answer} = question
     // Check title is missing:
-    if (title === "" || title === null) {
+    if (title === "" || title == null) {
         defs.push('Title missing')
     } 
     // Check answers is missing
-    let emptyAnswers = answers.filter((item) => (item === null) || (item === '')).length
+    let emptyAnswers = answers.filter((item) => (item == null) || (item === '')).length
     if (emptyAnswers > 0) {
         defs.push(emptyAnswers + ' answers missing')
     }
 
     // Check correct answer is selected: 
-    if (correct_answer === null) {
+    if (correct_answer == null) {
         defs.push('Correct answers not selected')
     }
     //console.log("Validate :", defs)
@@ -25,12 +26,12 @@ export const validateTFQuestion = (question) => {
     let defs = []
     let {title, correct_answer} = question
     // Check title is missing:
-    if (title === "" || title === null) {
+    if (title === "" || title == null) {
         defs.push('Title missing')
     } 
 
     // Check correct answer is selected: 
-    if (correct_answer === null) {
+    if (correct_answer == null) {
         defs.push('Correct answers not selected')
     }
     //console.log("Validate :", defs)
@@ -50,18 +51,18 @@ export const validatePicWordQuestion = (question) => {
     let defs = []
     let {title, images, correct_answer} = question
     // Check title is missing:
-    if (title === "" || title === null) {
+    if (title === "" || title == null) {
         defs.push('Title missing')
     } 
 
     // Check answers is missing
-    let emptyImages = images.filter((item) => (item===null || item===undefined)).length
-    if (emptyImages===4) {
+    let emptyImages = images.filter((item) => (item == null)).length
+    if (emptyImages === 4) {
         defs.push('No hint image')
     }
 
     // Check correct answer is selected: 
-    if (correct_answer===null) {
+    if (correct_answer == null || correct_answer === '') {
         defs.push('Correct answers not selected')
     }
     //console.log("Validate :", defs)
@@ -72,12 +73,12 @@ export const validateWordTableQuestion = (question) => {
     let defs = []
     let {title, char_table, correct_answers} = question
     // Check title is missing:
-    if (title==="" || title===null) {
+    if (title==="" || title == null) {
         defs.push('Title missing')
     } 
 
     // Check answers is missing
-    let emptyChars = char_table.filter((item) => (item===null || item===undefined)).length
+    let emptyChars = char_table.filter((item) => (item == null)).length
     if (emptyChars > 0) {
         defs.push('Table is not filled')
     }
@@ -96,6 +97,7 @@ export const validateWordTableQuestion = (question) => {
 }
 
 export const validateQuestion = (question) => {
+    console.log("Call validate question:", question);
     switch (question.typeId) {
         case QUESTION_TYPES_ID.MULTIPLE_CHOICE:
             return validateMultipleQuestion(question)
@@ -114,7 +116,7 @@ export const validateGameSetting = (game) => {
     const {title} = game
     console.log("Check validate game:", title)
     // Check title is missing:
-    if (title===null || title==='') {
+    if (title == null || title == '') {
         return false
     }
 

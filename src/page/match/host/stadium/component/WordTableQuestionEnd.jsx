@@ -53,7 +53,7 @@ const WordTableQuestionEnd = (props) => {
 
     var answerTotal = answer_counts.reduce((res, item) => res += item, 0)
 
-    if (isPlayer === undefined) isPlayer = false 
+    if (isPlayer == undefined) isPlayer = false 
     return (
         <div className = {classes.container}>
             <div className = {classes.header} >

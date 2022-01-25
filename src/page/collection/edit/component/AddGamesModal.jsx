@@ -42,7 +42,7 @@ const AddGamesModal = (props) => {
 	const {collection} = useContext(CollectionContext)
 	const {games} = collection
 	var {open} = props
-	if (open === undefined) open = false
+	if (open == undefined) open = false
 	const handleClose = () => {
 		if (props.onClose) {
 			props.onClose()
