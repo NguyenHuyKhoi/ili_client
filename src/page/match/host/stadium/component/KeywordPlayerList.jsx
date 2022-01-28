@@ -61,7 +61,12 @@ const KeywordPlayerList = (props) => {
     })
 
     players.sort((a,b) => {
-        if (a.score >= b.score) return -1
+        if (a.score > b.score) return -1
+        if (a.score == b.score) {
+            if (a.username < b.username) {
+                return -1
+            }
+        }
         return 1
     })
     return (

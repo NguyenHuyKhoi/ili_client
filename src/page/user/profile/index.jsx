@@ -33,13 +33,17 @@ const ProfilePage = (props) => {
     const {token} = useContext(AuthContext)
     useEffect(() => {
         // Get user profile
-        axios.get('user/'+ id, {
+        axios.get('user/detail/'+ id, {
             headers: {
                 'x-access-token': token
             }
         })    
         .then ((res) => {
+            console.log("Get user profile:", res.data);
             userDispatch(profileDetailSuccess(res.data))
+        })
+        .catch((err) => {
+            console.log('Get User error:', err);
         })
 
         // Get game profile

@@ -90,7 +90,7 @@ const QuestionEnd = (props) => {
                                     value = {item.value}
                                     count = {item.count}
                                     percent = {total_count ===  0 ? 0 : item.count / total_count}
-                                    isCorrect = {correct_answer ==  index}/>
+                                    isCorrect = {correct_answer ==  index || correct_answer == item.value}/>
                             </div>
                         ))
                     }

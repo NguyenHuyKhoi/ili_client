@@ -9,32 +9,32 @@ export const IMAGE_CATEGORIES = {
     PROFILE_BANNER: {
         path: 'images/users/',
         prefix: 'banner_',
-        width: 500,
-        height: 100
+        width: 1500,
+        height: 300
     },
     PROFILE_AVATAR: {
         path: 'images/users/',
         prefix: 'avatar_',
-        width: 50,
-        height: 50
+        width: 100,
+        height: 100
     },
     GAME_COVER: {
         path: 'images/games/',
         prefix: 'cover_',
-        width: 100,
-        height: 100
+        width: 500,
+        height: 500
     },
     COLLECTION_COVER: {
         path: 'images/collections/',
         prefix: 'cover_',
-        width: 100,
-        height: 100
+        width: 500,
+        height: 500
     },
     QUESTION_IMAGE: {
         path: 'images/games/questions/',
         prefix: 'question_',
-        width: 160,
-        height: 100
+        width: 400,
+        height: 250
     },
     COMMON: {
         path: 'images/other/',

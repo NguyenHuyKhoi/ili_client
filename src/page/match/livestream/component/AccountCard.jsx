@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     },
 	logo: {
 		width: theme.spacing(6),
-		height: theme.spacing(6),
 	},
 	infor: {
 		display: 'flex',

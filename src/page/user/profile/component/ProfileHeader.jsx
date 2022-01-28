@@ -82,6 +82,7 @@ const ProfileHeader = (props) => {
     const me = useContext(AuthContext).user
     var {avatar, banner, username} = user
 
+    console.log("User:", username);
     const handleFollow = () => {
 
     }

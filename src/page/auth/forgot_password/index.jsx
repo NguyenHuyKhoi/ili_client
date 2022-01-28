@@ -126,7 +126,7 @@ const ForgotPasswordPage = () => {
                             placeholder = 'Enter email...'
                             value = {email}
                             onChange = {(value) => handleChange('email', value)}
-                            style = {{marginTop: theme.spacing(3)}}
+                            style = {{marginTop: theme.spacing(3), textAlign: 'center'}}
                             />
 
                         <Button

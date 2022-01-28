@@ -40,6 +40,11 @@ import ProfilePage from "./page/user/profile";
 import SettingPage from "./page/user/setting";
 import { theme } from "./theme";
 import MatchLibraryPage from './page/match/library';
+import AdminHomePage from './page/admin/home';
+import AdminUserManagePage from './page/admin/manage/user';
+import AdminGameManagePage from './page/admin/manage/game';
+import AdminCollectionManagePage from './page/admin/manage/collection';
+import AdminQuestionBanksPage from './component/HeaderBarAdmin';
 
 const App = () => {
   const {user} = useContext(AuthContext)
@@ -49,7 +54,12 @@ const App = () => {
        <CssBaseline />
       <Router>
         <Routes>
-          <Route exact path="/" element={user ? <HomePage/> : <HomeGuestPage/>}/>
+          <Route exact path="/" element={user == null  ? <HomeGuestPage/> : user.isAdmin ? <AdminHomePage/>:<HomePage/>}/>
+          <Route exact path="/admin/manage/user" element={user == null  ? <HomeGuestPage/> : user.isAdmin ? <AdminUserManagePage/>:<HomePage/>}/>
+          <Route exact path="/admin/manage/game" element={user == null  ? <HomeGuestPage/> : user.isAdmin ? <AdminGameManagePage/>:<HomePage/>}/>
+          <Route exact path="/admin/manage/collection" element={user == null  ? <HomeGuestPage/> : user.isAdmin ? <AdminCollectionManagePage/>:<HomePage/>}/>
+          <Route exact path="/admin/manage/question_banks" element={user == null  ? <HomeGuestPage/> : user.isAdmin ? <AdminQuestionBanksPage/>:<HomePage/>}/>
+          
           <Route exact path = '/login' element = {!user ? <LoginPage/> : <Navigate to = '/'/>}/>
           <Route exact path = '/signup' element = {!user ? <SignupPage/> : <Navigate to = '/'/>}/>
           <Route exact path = '/forgot-password' element = {!user ? <ForgotPasswordPage/> : <Navigate to = '/'/>}/>

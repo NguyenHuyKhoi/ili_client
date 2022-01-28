@@ -13,9 +13,9 @@ import { SocketContextProvider } from './context/socket/context';
 import { UserContextProvider } from './context/user/context';
 
 require('dotenv').config()
-axios.defaults.baseURL = 'https://ili-api.herokuapp.com/api'
-//https://ili-api.herokuapp.com/
-//'https://ili-api.herokuapp.com/api/';
+axios.defaults.baseURL = 'http://localhost:8800/api'
+//http://localhost:8800/
+//'http://localhost:8800/api/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 ReactDOM.render(

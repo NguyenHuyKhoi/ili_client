@@ -67,7 +67,7 @@ const QuestionList = (props) => {
                             variant='label' 
                             sx = {{mb: theme.spacing(0.2), color: '#000'}}>
                             {
-                               'Quiz ' + (item.index + 1)
+                               'Quiz ' + (item.index)
                             }
                         </Typography>
                         {

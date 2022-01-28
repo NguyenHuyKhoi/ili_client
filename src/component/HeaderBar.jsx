@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../context/auth/context'
+import HeaderBarAdmin from './HeaderBarAdmin'
 import HeaderBarAuth from './HeaderBarAuth'
 import HeaderBarGuest from './HeaderBarGuest'
 
@@ -10,10 +11,14 @@ const HeaderBar = (props) => {
     return (
         <div> 
             {
-                user ?
-                <HeaderBarAuth selectedIndex = {selectedIndex}/>
-                :
+                user == null ?
                 <HeaderBarGuest  selectedIndex = {selectedIndex}/>
+                :
+                user.isAdmin == false ?
+                    <HeaderBarAuth selectedIndex = {selectedIndex}/>
+                :
+                    <HeaderBarAdmin selectedIndex = {selectedIndex}/>
+                
             }
         </div>
     )

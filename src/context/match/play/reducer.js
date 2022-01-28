@@ -40,8 +40,8 @@ const extractAnswerCount = (stage) => {
                     }
                 })
                 arr.sort((a,b) => {
-                    if (a.value ===correct_answer) return -1
-                    if (b.value ===correct_answer) return 1
+                    if (a.value === correct_answer) return -1
+                    if (b.value === correct_answer) return 1
                     if (a.count >= b.count) return -1
                     return 1
                 })

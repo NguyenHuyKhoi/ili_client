@@ -4,4 +4,3 @@ export const profileDetailSuccess = (user) => ({
         user
     }
 })
-

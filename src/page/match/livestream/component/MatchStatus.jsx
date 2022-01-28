@@ -129,7 +129,6 @@ const MatchStatus = (props) => {
         console.log("Select social", social);
         platformDispatch(selectSocial(social))
     }
-    console.log("Select social: ", socialList.length);
 	return (
         <div className = {classes.container}>
             <div className = {classes.tabs}>

@@ -119,7 +119,7 @@ const ResetPasswordPage = (props) => {
                             placeholder = 'Enter new password...'
                             value = {password}
                             onChange = {(value) => handleChange('password', value)}
-                            style = {{marginTop: theme.spacing(3)}}
+                            style = {{marginTop: theme.spacing(3), textAlign: 'center'}}
                             />
 
 
@@ -127,7 +127,7 @@ const ResetPasswordPage = (props) => {
                             placeholder = 'Repeat new password...'
                             value = {repeatPassword}
                             onChange = {(value) => handleChange('repeatPassword', value)}
-                            style = {{marginTop: theme.spacing(3)}}
+                            style = {{marginTop: theme.spacing(3), textAlign: 'center'}}
                             />
                         <Button 
                             disabled = {password ==='' || repeatPassword ===''}

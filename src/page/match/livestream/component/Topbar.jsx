@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         height: theme.spacing(6),
-        aspectRatio:1
     },
     settingBox: {
         display: 'flex',

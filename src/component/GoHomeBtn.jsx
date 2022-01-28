@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
         top: theme.spacing(2),
         left: theme.spacing(2),
         height: theme.spacing(6),
-        aspectRatio: 1,
         '&:hover': {
             cursor: 'pointer'
         }
