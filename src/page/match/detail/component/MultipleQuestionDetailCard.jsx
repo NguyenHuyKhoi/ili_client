@@ -5,7 +5,7 @@ import React from 'react';
 import Icon from '../../../../component/Icon';
 import { theme } from "../../../../theme";
 import { createUrl } from '../../../../util/helper/index';
-import { answerStyles } from '../../../game/creator/component/Answers';
+import { answerStyles } from '../../../question/creator/component/Answers';
 const useStyles = makeStyles((theme) => ({
 	container: {
 		display: 'flex',

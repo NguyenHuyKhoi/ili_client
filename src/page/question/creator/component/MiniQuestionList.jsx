@@ -38,9 +38,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const QuestionList = (props) => {
+const MiniQuestionList = (props) => {
     const classes = useStyles()
-    const {questionIndex, questions, dispatch} =  useContext(QuestionCreatorContext)
+    const {questionIndex, questions, dispatch, isEditMode} =  useContext(QuestionCreatorContext)
     const handleSelected = (index) => {
         console.log("Select question to view:", index);
         dispatch(selectQuestion(index))
@@ -66,7 +66,7 @@ const QuestionList = (props) => {
                             variant='label' 
                             sx = {{mb: theme.spacing(0.2), color: '#000'}}>
                             {
-                               'Quiz ' + (item.index)
+                               'Quiz ' + (item.index + 1)
                             }
                         </Typography>
                         {
@@ -81,21 +81,25 @@ const QuestionList = (props) => {
             }
             </div>
             <Divider />
-            <div className = {classes.bottom} >
-                <Button 
-                    variant = 'primary' 
-                    size = 'small' 
-                    style = {{ width: theme.spacing(20), alignSelf: 'center'}}
-                    onClick = {handleAddQuestion}
-                    label = 'New question'/>
-                <Button 
-                    variant = 'success'  
-                    size = 'small' 
-                    style = {{marginTop: theme.spacing(2), width: theme.spacing(20), alignSelf: 'center'}}
-                    label = 'Import excel'/>
-            </div>
+            {
+                isEditMode == false && 
+                <div className = {classes.bottom} >
+                    <Button 
+                        variant = 'primary' 
+                        size = 'small' 
+                        style = {{ width: theme.spacing(20), alignSelf: 'center'}}
+                        onClick = {handleAddQuestion}
+                        label = 'New question'/>
+                    <Button 
+                        variant = 'success'  
+                        size = 'small' 
+                        style = {{marginTop: theme.spacing(2), width: theme.spacing(20), alignSelf: 'center'}}
+                        label = 'Import excel'/>
+                </div>
+            }
+          
         </div>
     )
 }
 
-export default QuestionList
+export default MiniQuestionList

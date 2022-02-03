@@ -6,12 +6,16 @@ export const selectQuestion = (index) => ({
     }
 })
 
-export const initQuestions = (questions) => ({
-    type: 'INIT_QUESTIONS',
-    payload: {
-        questions
-    }
-})
+export const initQuestions = (questions, isEditMode = false) => {
+    console.log("Init question isEditMode:", isEditMode);
+    return ({
+        type: 'INIT_QUESTIONS',
+        payload: {
+            questions,
+            isEditMode
+        }
+    })
+}
 
 export const updateDefectiveQuestions = (defectiveQuestions) => ({
     type: 'UPDATE_DEFECTIVE_QUESTIONS',
@@ -27,10 +31,17 @@ export const showDefectiveQuestions = (showDefectives) => ({
     }
 })
 
-export const addQuestion = (type) => ({
-    type: 'ADD_QUESTION',
+export const addEmptyQuestion = (type) => ({
+    type: 'ADD_EMPTY_QUESTION',
     payload: {
         type
+    }
+})
+
+export const addQuestionFromBank = (question) => ({
+    type: 'ADD_QUESTION_FROM_BANK',
+    payload: {
+        question
     }
 })
 

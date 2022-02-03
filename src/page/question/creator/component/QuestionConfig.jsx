@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestionConfig = (props) => {
     const classes = useStyles()
-    const {questions, questionIndex, dispatch} = useContext(QuestionCreatorContext)
+    const {questions, questionIndex, dispatch, isEditMode} = useContext(QuestionCreatorContext)
     const question = questions[questionIndex]
     const {score, time_limit} = question
     const handleDeleteQuestion = () => {
@@ -77,20 +77,24 @@ const QuestionConfig = (props) => {
                 </div>
             </div>
             <Divider />
-            <div className = {classes.bottom} >
-                <Button 
-                    variant = 'primary' 
-                    size = 'small' 
-                    style = {{ width: theme.spacing(20), alignSelf: 'center'}}
-                    onClick = {handleDuplicateQuestion}
-                    label = 'Duplicate'/>
-                <Button 
-                    variant = 'warning'  
-                    size = 'small' 
-                    style = {{marginTop: theme.spacing(2), width: theme.spacing(20), alignSelf: 'center'}}
-                    label = 'Delete'
-                    onClick = {handleDeleteQuestion}/>
-            </div>
+            {
+                isEditMode == false && 
+                <div className = {classes.bottom} >
+                    <Button 
+                        variant = 'primary' 
+                        size = 'small' 
+                        style = {{ width: theme.spacing(20), alignSelf: 'center'}}
+                        onClick = {handleDuplicateQuestion}
+                        label = 'Duplicate'/>
+                    <Button 
+                        variant = 'warning'  
+                        size = 'small' 
+                        style = {{marginTop: theme.spacing(2), width: theme.spacing(20), alignSelf: 'center'}}
+                        label = 'Delete'
+                        onClick = {handleDeleteQuestion}/>
+                </div>
+            }
+          
         </div>
     )
 }

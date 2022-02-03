@@ -14,6 +14,16 @@ export const validateMultipleQuestion = (question) => {
         defs.push(emptyAnswers + ' answers missing')
     }
 
+    const arr = [[0,1], [0,2], [0,3], [1,2], [1,3], [2,3]]
+
+    let dupPairs = arr.filter((pair, index) => {
+        var i1 = answers[pair[0]], i2 = answers[pair[1]]
+        return (i1 != null && i2 != null && i1 == i2)
+    }).length
+    if (dupPairs > 0) {
+        defs.push('Some answers are same.')
+    }
+    
     // Check correct answer is selected: 
     if (correct_answer == null) {
         defs.push('Correct answers not selected')
@@ -112,7 +122,7 @@ export const validateQuestion = (question) => {
 }
 
 const reducer = (state, action) => {
-    var {question, index, type, defectiveQuestions, showDefectives} = action.payload != undefined ? action.payload : {}
+    var {question, index, type, defectiveQuestions, showDefectives, isEditMode} = action.payload != undefined ? action.payload : {}
 
     var payloadQuestions = action.payload != undefined ? action.payload.questions : []
     var questions = state.questions
@@ -125,10 +135,11 @@ const reducer = (state, action) => {
                 ...state
             }
         case 'INIT_QUESTIONS': 
-            console.log("Init questions:", payloadQuestions);
+            console.log("Init questions:", payloadQuestions, isEditMode);
             state.questionIndex = 0
             return {
                 ...state,
+                isEditMode,
                 questionIndex: 0,
                 defectiveQuestions: [],
                 showDefectives: DEFECTIVE_CHECK_TYPES.NOT_CHECK,
@@ -144,9 +155,18 @@ const reducer = (state, action) => {
                 ...state,
                 showDefectives
             }
-        case 'ADD_QUESTION':
+        case 'ADD_EMPTY_QUESTION':
             temp = cloneQuestion(QUESTION_TYPES[type].sample)
             temp.index = questions.length
+            questions = [...questions, temp]
+            return {
+                ...state,
+                questions,
+                questionIndex: questions.length - 1
+            }
+        case 'ADD_QUESTION_FROM_BANK':
+            temp = cloneQuestion(question)
+            temp.index = questions.length 
             questions = [...questions, temp]
             return {
                 ...state,

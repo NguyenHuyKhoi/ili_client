@@ -3,6 +3,10 @@ import { ThemeProvider } from '@mui/material/styles';
 import { useContext } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import { AuthContext } from "./context/auth/context";
+import AdminCollectionManagePage from './page/admin/manage/collection';
+import AdminGameManagePage from './page/admin/manage/game';
+import AdminQuestionManagePage from './page/admin/manage/question';
+import AdminUserManagePage from './page/admin/manage/user';
 import ForgotPasswordPage from "./page/auth/forgot_password";
 // Auth
 import LoginPage from "./page/auth/login";
@@ -12,13 +16,13 @@ import CollectionDetailPage from "./page/collection/detail";
 // Collection
 import CollectionEditPage from "./page/collection/edit";
 import CollectionLibraryPage from "./page/collection/library";
-// Discover
-import SearchPage from "./page/game/search";
 import DiscoverPage from "./page/discover/suggestion";
 // Game
 import GameCreatorPage from "./page/game/creator";
 import GameDetailPage from "./page/game/detail";
 import GameLibraryPage from "./page/game/library";
+// Discover
+import SearchPage from "./page/game/search";
 // Group
 import GroupListPage from "./page/group/list";
 import HomePage from "./page/home/auth";
@@ -29,22 +33,18 @@ import MatchHostHallPage from './page/match/host/hall';
 import MatchHostLobbyPage from './page/match/host/lobby';
 import MatchHostSettingPage from './page/match/host/setting';
 import MatchHostStadiumPage from './page/match/host/stadium';
+import MatchLibraryPage from './page/match/library';
 import MatchLivestreamPage from './page/match/livestream';
 import MatchPlayerEntrancePage from './page/match/player/entrance';
 import MatchPlayerHallPage from './page/match/player/hall';
 import MatchPlayerLobbyPage from './page/match/player/lobby';
 import MatchPlayerStadiumPage from './page/match/player/stadium';
+import QuestionCreatorPage from './page/question/creator';
 // Report
 // User
 import ProfilePage from "./page/user/profile";
 import SettingPage from "./page/user/setting";
 import { theme } from "./theme";
-import MatchLibraryPage from './page/match/library';
-import AdminHomePage from './page/admin/home';
-import AdminUserManagePage from './page/admin/manage/user';
-import AdminGameManagePage from './page/admin/manage/game';
-import AdminCollectionManagePage from './page/admin/manage/collection';
-import AdminQuestionManagePage from './page/admin/manage/question';
 
 const App = () => {
   const {user} = useContext(AuthContext)
@@ -59,6 +59,7 @@ const App = () => {
           <Route exact path="/admin/manage/game" element={user == null  ? <HomeGuestPage/> : user.isAdmin ? <AdminGameManagePage/>:<HomePage/>}/>
           <Route exact path="/admin/manage/collection" element={user == null  ? <HomeGuestPage/> : user.isAdmin ? <AdminCollectionManagePage/>:<HomePage/>}/>
           <Route exact path="/admin/manage/question" element={user == null  ? <HomeGuestPage/> : user.isAdmin ? <AdminQuestionManagePage/>:<HomePage/>}/>
+          <Route exact path="/admin/question/creator" element={user == null  ? <HomeGuestPage/> : user.isAdmin ? <QuestionCreatorPage/>:<HomePage/>}/>
           
           <Route exact path = '/login' element = {!user ? <LoginPage/> : <Navigate to = '/'/>}/>
           <Route exact path = '/signup' element = {!user ? <SignupPage/> : <Navigate to = '/'/>}/>

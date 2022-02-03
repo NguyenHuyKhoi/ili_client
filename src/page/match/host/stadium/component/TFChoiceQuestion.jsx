@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles'
 import React, { useState } from 'react'
 import { theme } from '../../../../../theme'
 import { createUrl } from '../../../../../util/helper'
-import { answerStyles } from '../../../../game/creator/component/Answers'
+import { answerStyles } from '../../../../question/creator/component/Answers'
 import Answer from './Answer'
 const useStyles = makeStyles((theme) => ({
     container: {

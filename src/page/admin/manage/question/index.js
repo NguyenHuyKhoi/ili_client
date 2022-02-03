@@ -5,11 +5,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../../../component/Button'
 import HeaderBar from '../../../../component/HeaderBar'
+import NotificationModal from '../../../../component/NotificationModal'
 import SideMenu from '../../../../component/SideMenu'
 import Tabbar from '../../../../component/Tabbar'
 import { AuthContext } from '../../../../context/auth/context'
 import { getCollectionsSuccess } from '../../../../context/collection/actions'
-import { QUESTION_TYPES_ID } from '../../../../context/question/creator/context'
+import { sample_game } from '../../../../context/game/creator/context'
+import { initQuestions } from '../../../../context/question/creator/actions'
+import { QuestionCreatorContext, QUESTION_TYPES_ID } from '../../../../context/question/creator/context'
 import { getQuestionsSuccess } from '../../../../context/question/other/actions'
 import { QuestionBankContext } from '../../../../context/question/other/context'
 import { theme } from '../../../../theme'
@@ -35,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-var tabs = [
+export const questionTypeTabs = [
     {
         label: 'Multiple Choice',
         typeId: QUESTION_TYPES_ID.MULTIPLE_CHOICE
@@ -61,17 +64,18 @@ const AdminQuestionManagePage = () => {
     const [index, setIndex] = useState(0);
     const {questions, dispatch} = useContext(QuestionBankContext)
 
+    const questionCreatorDispatch = useContext(QuestionCreatorContext).dispatch
     const {token} = useContext(AuthContext)
     const [isFetching, setIsFetching] = useState(false);
     useEffect(() => {
         getQuestions({
             source: 'bank',
-            type: QUESTION_TYPES_ID.MULTIPLE_CHOICE
+            type: questionTypeTabs[index].typeId
         })
         return () => {
             
         }
-    }, [])
+    }, [index])
 
     const getQuestions = (params) => {
         setIsFetching(true)
@@ -94,21 +98,63 @@ const AdminQuestionManagePage = () => {
         )
     }
 
-    const handleSelectTab = (index) => {
-        if (isFetching == true) return
-        setIndex(index)
-        getQuestions({
-            source: 'bank',
-            type: tabs[index].typeId
+    const handleDeleteQuestion = (question) => {
+        axios.delete('question/' + question._id, {
+            headers: {
+                'x-access-token': token
+            }
+        })
+        .then((res) => {
+            setModal({
+                state: 'success',
+                title: 'Done !',
+                desc: 'This question has been deleted',
+                btnLabel: 'OK'
+            })
+            getQuestions({
+                source: 'bank',
+                type: questionTypeTabs[index].typeId
+            })
+        })   
+        .catch((err) => {
+            console.log("Err: ", err)
+            setModal({
+                state: 'success',
+                title: 'Error !',
+                desc: 'Try again, later',
+                btnLabel: 'OK',
+                variant: 'error'
+            })
         })
     }
 
+    const handleEditQuestion = (question) => {
+        questionCreatorDispatch(initQuestions([{...question}], true))
+        return navigate('/admin/question/creator', {replace: false})
+    }
+
+    const handleSelectTab = (index) => {
+        if (isFetching == true) return
+        setIndex(index)
+    }
+
     const handleCreate = () => {
-        return navigate('game/creator', {replace: false})
+        console.log("Sample questions:", sample_game.questions);
+        questionCreatorDispatch(initQuestions([...sample_game.questions]))
+        return navigate('/admin/question/creator', {replace: false})
     }
 
     return (
         <div className = {classes.container}>
+             <NotificationModal 
+                title = {modal.title}
+                btnLabel = {modal.btnLabel}
+                desc = {modal.desc}
+                open = { modal.state ==='success' }     
+                onClose = {() => setModal({})}
+                onDone = {() => {
+                    setModal({})
+                }}/>
             <HeaderBar selectedIndex = {0}/>
             <Grid container>
                 <Grid item sm={2} >
@@ -123,16 +169,20 @@ const AdminQuestionManagePage = () => {
                     <div className= {classes.body}>
                         <div className= {classes.header} >
                             <Tabbar 
-                                tabs = {tabs.map((item) => item.label)}
+                                tabs = {questionTypeTabs.map((item) => item.label)}
                                 selectedIndex = {index}
                                 onClickTab = {handleSelectTab}/>
                             <Button 
                                 variant= 'primary' 
                                 onClick = {handleCreate}
-                                label = {'Create one'}/>
+                                label = {'Create'}/>
                         </div>
                         
-                        <QuestionList questions = {questions}/>
+                        <QuestionList 
+                            questions = {questions}
+                            onDeleteItem = {handleDeleteQuestion}
+                            onEditItem = {handleEditQuestion}
+                            />
                     </div>
                 
                 </Grid>

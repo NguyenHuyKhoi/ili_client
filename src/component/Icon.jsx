@@ -1,4 +1,4 @@
-import { BarChartTwoTone, Check, CircleRounded, CopyAll, DataUsage, Delete, DiamondSharp, Edit, ExploreOutlined, GroupsOutlined, Help, Home, Logout, MilitaryTech, Person, PlayArrow, QueryBuilder, ReportProblem, SnippetFolder, Square, TableRows, TocOutlined, TrendingUpOutlined, WatchLater } from "@mui/icons-material"
+import { Add, BarChartTwoTone, Check, CircleRounded, CopyAll, DataUsage, Delete, DiamondSharp, Edit, ExploreOutlined, GroupsOutlined, Help, Home, Logout, MilitaryTech, Person, PlayArrow, QueryBuilder, ReportProblem, SnippetFolder, Square, TableRows, TocOutlined, TrendingUpOutlined, WatchLater } from "@mui/icons-material"
 import React from 'react'
 
 export const Icon = (props) => {
@@ -53,6 +53,8 @@ export const Icon = (props) => {
             name ==='Clone' ? <CopyAll sx = {style} />
             :
             name ==='Delete' ? <Delete sx = {style} />
+            :
+            name ==='Add' ? <Add sx = {style} />
             : <Home/>
             
         }

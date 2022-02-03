@@ -1,5 +1,5 @@
 import { Check, Close } from '@mui/icons-material'
-import { Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useEffect, useState } from 'react'
 import Icon from '../../../../component/Icon'
@@ -7,14 +7,17 @@ import MultiSelect from '../../../../component/MultiSelect'
 import { QUESTION_TYPES_ID } from '../../../../context/question/creator/context'
 import { theme } from '../../../../theme'
 import { createUrl } from '../../../../util/helper'
-import { answerStyles } from '../../creator/component/Answers'
+import { answerStyles } from '../../../question/creator/component/Answers'
 
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
         display:'flex',
         flexDirection:'column',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        '&:hover': {
+            cursor: 'pointer'
+        }
     },
     header: {
         display: 'flex',
@@ -52,10 +55,8 @@ const useStyles = makeStyles((theme) => ({
         alignSelf:'center'
     },
     hintImage: {
-        height: 100,
-        aspectRatio: 1.6,
-        alignSelf:'center',
-        marginLeft: theme.spacing(5)
+        width: '85%',
+        aspectRatio: 1.4
     },
     answer: {
         display: 'flex',
@@ -179,12 +180,18 @@ const QuestionRowItem = (props) => {
                                         {correct_answer}
                                     </Typography>
                                 </div>
+                                <Grid container columnSpacing={2} sx = {{mx: theme.spacing(2)}} >
                                 {
                                     images.map((image, imageIndex) => (
-                                        <img className = {classes.hintImage} src = {createUrl(image)}
-                                            key = {"" + imageIndex}  alt = 'Hint'/>
+                                        <Grid item xs = {3}  key = {"" + imageIndex}  >
+                                            <img className = {classes.hintImage} src = {createUrl(image)}
+                                                 alt = 'Hint'/>
+                                        </Grid>
+                                       
                                     ))
                                 }
+                                </Grid>
+                                
                             </div>
                         : typeId === QUESTION_TYPES_ID.WORD_TABLE ? 
                             <MultiSelect

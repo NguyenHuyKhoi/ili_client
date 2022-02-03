@@ -66,7 +66,7 @@ const HomeGuestPage = () => {
                 <Grid container columnSpacing={2} rowSpacing={2}>
                     {
                         cards.map((item, index) => (
-                            <Grid item xs = {6} >
+                            <Grid item xs = {6} key = {'' + index} >
                                 <HomeQuickNavCard item = {item} />
                             </Grid>
                         ))

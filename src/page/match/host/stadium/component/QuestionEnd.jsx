@@ -4,7 +4,7 @@ import React from 'react'
 import { QUESTION_TYPES_ID } from '../../../../../context/question/creator/context'
 import { theme } from '../../../../../theme'
 import { createUrl } from '../../../../../util/helper'
-import { answerStyles } from '../../../../game/creator/component/Answers'
+import { answerStyles } from '../../../../question/creator/component/Answers'
 import Answer from './Answer'
 import AnswerCount from './AnswerCount'
 const useStyles = makeStyles((theme) => ({

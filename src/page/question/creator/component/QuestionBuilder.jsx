@@ -1,19 +1,19 @@
 import { Alert, Grid, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
-import { addQuestion, deleteQuestion, duplicateQuestion, selectQuestion, showDefectiveQuestions, updateDefectiveQuestions, updateQuestion } from '../../../../context/question/creator/actions'
+import { addEmptyQuestion, addQuestionFromBank, deleteQuestion, duplicateQuestion, selectQuestion, showDefectiveQuestions, updateDefectiveQuestions, updateQuestion } from '../../../../context/question/creator/actions'
 import { DEFECTIVE_CHECK_TYPES, QuestionCreatorContext, QUESTION_TYPES_ID } from '../../../../context/question/creator/context'
 import { cloneQuestion, validateQuestion } from '../../../../context/question/creator/reducer'
-import { theme } from '../../../../theme'
 import DeleteQuestionModal from './DeleteQuestionModal'
 import MultipleChoicesQuestionBuilder from './MultipleChoicesQuestionBuilder'
 import PicWordQuestionBuilder from './PicWordQuestionBuilder'
 import QuestionConfig from './QuestionConfig'
-import QuestionList from './QuestionList'
-import SelectQuestionTypeModal from './SelectQuestionTypeModal'
+import MiniQuestionList from './MiniQuestionList'
+import SelectNewQuestionModal from './SelectNewQuestionModal'
 import TFChoicesQuestionBuilder from './TFChoicesQuestionBuilder'
 import ValidateQuestionModal from './ValidateQuestionModal'
 import WordTableQuestionBuilder from './WordTableQuestionBuilder'
+import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -23,10 +23,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const QuestionCreator = (props) => {
+const QuestionBuilder = (props) => {
     const classes = useStyles()
     
-    const {questions, questionIndex,defectiveQuestions, dispatch, showDefectives} = useContext(QuestionCreatorContext)
+    const {questions, questionIndex,defectiveQuestions, dispatch, showDefectives, isEditMode} = useContext(QuestionCreatorContext)
 
     useEffect(() => {
         if (showDefectives == DEFECTIVE_CHECK_TYPES.CHECK_AND_SHOW) {
@@ -75,7 +75,7 @@ const QuestionCreator = (props) => {
     const handleSelectQuestionType = (id) => {
         console.log("Select question type", id);
         dispatch(showDefectiveQuestions(DEFECTIVE_CHECK_TYPES.NOT_CHECK))
-        dispatch(addQuestion(id))
+        dispatch(addEmptyQuestion(id))
         setModal({})
     }
 
@@ -86,6 +86,14 @@ const QuestionCreator = (props) => {
     const handleUpdateQuestion = (ques) => {
         dispatch(showDefectiveQuestions(DEFECTIVE_CHECK_TYPES.NOT_CHECK))
         dispatch(updateQuestion(question, questionIndex))
+    }
+
+    const handleAddQuestion = (question) => {
+        dispatch(addQuestionFromBank(question))
+        setAlert({
+            type: 'success',
+            msg: 'Add Question successfully'
+        })
     }
 
     const renderBuilder = () => {
@@ -119,9 +127,10 @@ const QuestionCreator = (props) => {
                 </Alert>
             </Snackbar>
 
-            <SelectQuestionTypeModal 
+            <SelectNewQuestionModal 
                 open = { modal.state === 'select_type' }     
                 onClose = {() => setModal({})}
+                onAddQuestion = {handleAddQuestion}
                 onSelectType = {handleSelectQuestionType}/>
 
             <ValidateQuestionModal
@@ -149,7 +158,7 @@ const QuestionCreator = (props) => {
 
             <Grid container sx = {{pt: theme.spacing(7), flex: 1}}>
                 <Grid item sm={1.7} >
-                    <QuestionList onAdd = {handleClickAdd} />
+                    <MiniQuestionList onAdd = {handleClickAdd} />
                 </Grid>
                 <Grid item sm={8.3}>
                     {
@@ -169,4 +178,4 @@ const QuestionCreator = (props) => {
     )
 }
 
-export default QuestionCreator
+export default QuestionBuilder

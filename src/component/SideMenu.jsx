@@ -31,7 +31,7 @@ const MenuItem = (props) => {
     const {title, link} = menu
     const handleClick = () => {
         if (link) {
-            return navigate(link, {replace: true})
+            return navigate(link, {replace: false})
         }
         else {
             if (props.onClick) {

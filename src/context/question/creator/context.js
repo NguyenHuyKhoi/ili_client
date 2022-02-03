@@ -95,6 +95,7 @@ const INITIAL_STATE = () => {
         questionIndex: 0,
         questions: [],
         defectiveQuestions: [],
+        isEditMode: false,
         showDefectives: DEFECTIVE_CHECK_TYPES.NOT_CHECK // not check
     }
     const saved = localStorage.getItem('question_creator')
@@ -122,6 +123,7 @@ export const QuestionCreatorContextProvider = ({children}) => {
             questionIndex: state.questionIndex,
             defectiveQuestions: state.defectiveQuestions,
             showDefectives: state.showDefectives,
+            isEditMode: state.isEditMode,
             dispatch
         }}>
         {

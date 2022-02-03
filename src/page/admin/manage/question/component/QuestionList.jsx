@@ -1,8 +1,9 @@
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useState } from 'react'
-import QuestionRowItem from './QuestionRowItem'
-
+import IconButton from '../../../../../component/IconButton'
+import { theme } from '../../../../../theme'
+import QuestionRowItem from '../../../../game/detail/component/QuestionRowItem'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     item: {
         marginBottom: theme.spacing(3),
         display:'flex',
-        flexDirection:'column'
+        flexDirection:'row'
     },
     header: {
         display: 'flex',
@@ -36,6 +37,17 @@ const QuestionList = (props) => {
     const {questions} = props
     const [selectedIndex, setSelectedIndex] = useState(0)
 
+    const handleEditItem = (item) => {
+        if (props.onEditItem) {
+            props.onEditItem(item)
+        }
+    }
+
+    const handleDeleteItem = (item) => {
+        if (props.onDeleteItem) {
+            props.onDeleteItem(item)
+        }
+    }
     return (
         <div className = {classes.container}>
             <div className = {classes.header}>
@@ -53,6 +65,10 @@ const QuestionList = (props) => {
                             index = {index}
                             selected = {selectedIndex === index}
                             onSelect = {() => setSelectedIndex(index)}/>
+                        <div style = {{display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: theme.spacing(3)}}>
+                            <IconButton icon = 'Edit' variant = 'primary' onClick = {() => handleEditItem(item)}/>
+                            <IconButton icon = 'Delete' variant = 'error' style = {{marginTop: theme.spacing(2)}} onClick = {() => handleDeleteItem(item)}/>
+                        </div>
                     </div>
                 ))
             }

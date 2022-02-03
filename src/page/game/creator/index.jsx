@@ -11,7 +11,7 @@ import { validateGameSetting } from '../../../context/game/creator/reducer'
 import { DEFECTIVE_CHECK_TYPES, QuestionCreatorContext, QUESTION_TYPES_ID } from '../../../context/question/creator/context'
 import { cloneQuestion } from '../../../context/question/creator/reducer'
 import FirebaseHelper, { IMAGE_CATEGORIES } from '../../../firebase'
-import QuestionCreator from './component/QuestionCreator'
+import QuestionBuilder from '../../question/creator/component/QuestionBuilder'
 import SettingModal from './component/SettingModal'
 import Topbar from './component/Topbar'
 const useStyles = makeStyles((theme) => ({
@@ -87,7 +87,7 @@ const GameCreatorPage = (props) => {
             // Add index for question:
             game.questions = questions.map((question, index) => ({
                 ...cloneQuestion(question), 
-                index: index + 1
+                index
             }))
 
             console.log("Game questions: ", game.questions);
@@ -120,7 +120,7 @@ const GameCreatorPage = (props) => {
             console.log("Edit game success")
             game.questions = questions.map((question, index) => ({
                 ...cloneQuestion(question),
-                index: index + 1
+                index
             }))
             let { cover} = game 
             let coverUrl =  await FirebaseHelper.uploadImage(cover, IMAGE_CATEGORIES.GAME_COVER) 
@@ -181,7 +181,7 @@ const GameCreatorPage = (props) => {
                     setModal({})
                     dispatch(updateGameSetting(setting))
                 }}/>
-            <QuestionCreator/>
+                <QuestionBuilder/>
         </div>
     )
 }
