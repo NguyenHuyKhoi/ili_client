@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles'
 import React, { useEffect, useState } from 'react'
 import Icon from '../../../../component/Icon'
 import MultiSelect from '../../../../component/MultiSelect'
-import { QUESTION_TYPES_ID } from '../../../../context/game/creator/context'
+import { QUESTION_TYPES_ID } from '../../../../context/question/creator/context'
 import { theme } from '../../../../theme'
 import { createUrl } from '../../../../util/helper'
 import { answerStyles } from '../../creator/component/Answers'
@@ -156,7 +156,7 @@ const QuestionRowItem = (props) => {
                                     style = {answerStyles[index]}
                                     key = {''+index} 
                                     answer = {item} 
-                                    correct = { correct_answer === index }/>
+                                    correct = { correct_answer == index }/>
                             ))
                         : typeId === QUESTION_TYPES_ID.PIC_WORD ?
                             <div style = {{

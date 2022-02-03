@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     games: {
         display:'flex',
         flexDirection:'column',
-        marginTop: theme.spacing(5)
+        marginTop: theme.spacing(3)
     },
     gameContainer: {
         marginBottom: theme.spacing(5),

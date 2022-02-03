@@ -25,7 +25,11 @@ const useStyles = makeStyles((theme) => ({
     logo: {
         height: theme.spacing(5),
         marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2)
+        marginRight: theme.spacing(2),
+        height: theme.spacing(6),
+        '&:hover': {
+            cursor: 'pointer'
+        }
     }
 }))
 

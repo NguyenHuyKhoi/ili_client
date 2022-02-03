@@ -2,7 +2,7 @@ import { makeStyles } from '@mui/styles'
 import React from 'react'
 import EmptyBox from '../../../../../component/EmptyBox'
 import { theme } from '../../../../../theme'
-import CollectionRowItem from '../../../../collection/component/CollectionRowItem'
+import CollectionRowItem from './CollectionRowItem'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,

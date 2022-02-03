@@ -17,7 +17,10 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         padding: theme.spacing(0.7),
         alignItems: 'center',
-        marginLeft: theme.spacing(1.5)
+        marginLeft: theme.spacing(1.5),
+        '&:hover': {
+            cursor: 'pointer'
+        }
     }
 }))
 

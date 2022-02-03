@@ -22,14 +22,7 @@ const useStyles = makeStyles((theme) => ({
     body: {
         display: 'flex',
         flexDirection: 'column',
-
-    },
-    header: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingTop: theme.spacing(3),
-        paddingRight: theme.spacing(3   )
+        paddingTop: theme.spacing(3)
     }
 }))
 
@@ -46,7 +39,7 @@ const AdminCollectionManagePage = () => {
     }, [])
 
     const getCollections = () => {
-        axios.get('collection/library', {
+        axios.get('collection/all', {
             headers: {
                 'x-access-token': token
             }
@@ -70,13 +63,6 @@ const AdminCollectionManagePage = () => {
                     backgroundColor: theme.palette.background.main, height: '92vh'
                 }}>
                     <div className= {classes.body}>
-                        <div className= {classes.header} >
-                            <div/>
-                            <Button 
-                                variant= 'primary' 
-                                onClick = {() => setModal({state: 'create'})}
-                                label = {'Create one'}/>
-                        </div>
                         <CollectionList collections = {collections}
                             onClickEmpty = {() => setModal({state: 'create'})}/>
                     </div>

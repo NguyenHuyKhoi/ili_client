@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@mui/material'
 import React from 'react'
-import { WORD_TABLE_SIZE } from '../../../../../context/game/creator/context'
+import { WORD_TABLE_SIZE } from '../../../../../context/question/creator/context'
 import { theme } from '../../../../../theme'
 
 const CharTable = (props) => {

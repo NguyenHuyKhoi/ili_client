@@ -42,18 +42,14 @@ const MatchDetailPage = () => {
             <HeaderBar selectedIndex = {3}/>
             <div className= {classes.header}>
                 <Header />
-                <Tabbar selectedIndex = {tabIndex} tabs = {['Summary','Players', 'Questions', 'Feed back']} onClickTab = {handleTabChange}/>
+                <Tabbar selectedIndex = {tabIndex} tabs = {['Players', 'Questions']} onClickTab = {handleTabChange}/>
             </div>
             <div className= {classes.body}>
                 {
                     tabIndex ===  0 ?
-                        <Typography variant = 'h1'></Typography>
-                    : tabIndex ===  1 ?
                         <PlayersTab/>
-                    : tabIndex ===  2 ?
+                    : tabIndex ===  1 ?
                         <QuestionsTab/>
-                    : tabIndex ===  3 ?
-                        <Typography variant = 'h1'></Typography>
                     : null
                 }
             </div>

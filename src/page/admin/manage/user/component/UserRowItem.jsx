@@ -88,13 +88,6 @@ export const UserRowItem = (props) => {
                         label = 'Ban'
                         style = {{marginLeft: theme.spacing(2)}}
                         onClick = {handleBan}/>
-
-                    <Button 
-                        variant = 'success' 
-                        size = 'small' 
-                        label = 'View'
-                        style = {{marginLeft: theme.spacing(2)}}
-                        onClick = {handleView}/>
               
                 </div>
             </div>

@@ -3,8 +3,8 @@ import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import Button from '../../../../component/Button'
 import DropdownSelect from '../../../../component/DropdownSelect'
-import { updateQuestion } from '../../../../context/game/creator/actions'
-import { GameCreatorContext, QUESTION_TYPES } from '../../../../context/game/creator/context'
+import { updateQuestion } from '../../../../context/question/creator/actions'
+import { QuestionCreatorContext, QUESTION_TYPES } from '../../../../context/question/creator/context'
 import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -34,8 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestionConfig = (props) => {
     const classes = useStyles()
-    const {game, dispatch} = useContext(GameCreatorContext)
-    const {questions, questionIndex} = game
+    const {questions, questionIndex, dispatch} = useContext(QuestionCreatorContext)
     const question = questions[questionIndex]
     const {score, time_limit} = question
     const handleDeleteQuestion = () => {

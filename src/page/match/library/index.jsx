@@ -7,7 +7,7 @@ import SideMenu from '../../../component/SideMenu'
 import { AuthContext } from '../../../context/auth/context'
 import { getMatchesSuccess } from '../../../context/match/other/actions'
 import { MatchContext } from '../../../context/match/other/context'
-import MatchTable from './component/MatchTable'
+import MatchList from './component/MatchList'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     body: {
-        padding: theme.spacing(10),
+        padding: theme.spacing(1),
+        paddingTop: theme.spacing(3),
         backgroundColor: theme.palette.background.main,
         height: '92vh'
     }
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const MATCH_MENUS = [
     {
-        title: 'Join as Host',
+        title: 'Classic / Host',
         icon: 'TableRows',
         params: {
             role: 'host',
@@ -32,7 +33,7 @@ export const MATCH_MENUS = [
         }
     },
     {
-        title: 'Join as Player',
+        title: 'Classic / Player',
         icon: 'TableRows',
         params: {
             role: 'player',
@@ -53,7 +54,7 @@ const MatchLibraryPage = () => {
     const classes = useStyles()
 
     const {token} = useContext(AuthContext)
-    const {dispatch} = useContext(MatchContext)
+    const {dispatch, matches} = useContext(MatchContext)
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [isFetching, setIsFetching] = useState(false)
     useEffect(() => {
@@ -65,8 +66,7 @@ const MatchLibraryPage = () => {
 
     const getMatches = (params) => {
         setIsFetching(true)
-        // console.log("Get matches :", params)
-        // setIsFetching(false)
+        console.log("Get matches :", params)
         axios.get('match/library', {
             headers: {
                 'x-access-token': token
@@ -74,7 +74,6 @@ const MatchLibraryPage = () => {
             params
         })
         .then ((res) => {
-
             console.log("Get matches: ", res.data)
             dispatch(getMatchesSuccess(res.data))
         })
@@ -104,7 +103,7 @@ const MatchLibraryPage = () => {
                 </Grid>
                 <Grid item sm={10}>
                     <div className= {classes.body}>
-                        <MatchTable />
+                        <MatchList matches = {matches} />
                     </div>
                 </Grid>
             </Grid>

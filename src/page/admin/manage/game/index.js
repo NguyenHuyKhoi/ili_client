@@ -6,12 +6,11 @@ import Button from '../../../../component/Button'
 import HeaderBar from '../../../../component/HeaderBar'
 import SideMenu from '../../../../component/SideMenu'
 import { AuthContext } from '../../../../context/auth/context'
-import { getCollectionsSuccess } from '../../../../context/collection/actions'
-import { CollectionContext } from '../../../../context/collection/context'
+import { getGamesSuccess } from '../../../../context/game/other/actions'
+import { GameContext } from '../../../../context/game/other/context'
 import { theme } from '../../../../theme'
-import { LIBRARY_MENUS } from '../../../game/library'
 import { ADMIN_MANAGE_MENUS } from '../user'
-import CollectionList from './component/CollectionList'
+import GameList from './component/GameList'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,39 +21,36 @@ const useStyles = makeStyles((theme) => ({
     body: {
         display: 'flex',
         flexDirection: 'column',
-
+        paddingTop: theme.spacing(3)
     },
-    header: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingTop: theme.spacing(3),
-        paddingRight: theme.spacing(3   )
-    }
 }))
 
 
 const AdminGameManagePage = () => {
     const classes = useStyles()
     const [modal, setModal] = useState({})
-    const {collections, dispatch} = useContext(CollectionContext)
+    const {games, dispatch} = useContext(GameContext)
     const {token} = useContext(AuthContext)
     useEffect(() => {
-        getCollections()
+        getGames()
         return () => {
             
         }
     }, [])
 
-    const getCollections = () => {
-        axios.get('collection/library', {
+    const getGames = () => {
+        axios.get('game/all', {
             headers: {
                 'x-access-token': token
             }
         }) 
         .then ((res) => {
-            dispatch(getCollectionsSuccess(res.data))
+            console.log("get games:", res.data);
+            dispatch(getGamesSuccess(res.data))
         })   
+        .catch((err) => {
+            console.log("Get games error", err);
+        })
     }
 
     return (
@@ -71,15 +67,8 @@ const AdminGameManagePage = () => {
                     backgroundColor: theme.palette.background.main, height: '92vh'
                 }}>
                     <div className= {classes.body}>
-                        <div className= {classes.header} >
-                            <div/>
-                            <Button 
-                                variant= 'primary' 
-                                onClick = {() => setModal({state: 'create'})}
-                                label = {'Create one'}/>
-                        </div>
-                        <CollectionList collections = {collections}
-                            onClickEmpty = {() => setModal({state: 'create'})}/>
+            
+                        <GameList games = {games}/>
                     </div>
                 
                 </Grid>

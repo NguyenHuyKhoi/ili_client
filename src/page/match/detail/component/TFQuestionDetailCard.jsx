@@ -109,7 +109,7 @@ const Answer = (props) => {
 	)
 }
 
-const QuestionDetailCard = (props) => {
+const TFQuestionDetailCard = (props) => {
 	const classes = useStyles() 
 	const {stage, players} = props 
 	const {question} = stage
@@ -133,7 +133,7 @@ const QuestionDetailCard = (props) => {
 								 	key = {''+index} 
 									answer = {answer} 
 									isCorrect = {correct_answer ==  index} 
-									number = {stage.answers.filter((answer) => answer.answerIndex ===  index).length}
+									number = {stage.answers.filter((answer) => answer.answerContent ==  index).length}
 									total = {players.length}
 									/>
 							))
@@ -158,4 +158,4 @@ const QuestionDetailCard = (props) => {
 }
 
 
-export default QuestionDetailCard
+export default TFQuestionDetailCard

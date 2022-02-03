@@ -15,7 +15,10 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(8)
     },
     logo: {
-        height: theme.spacing(6)
+        height: theme.spacing(6),
+        '&:hover': {
+            cursor: 'pointer'
+        }
     },
     settingBox: {
         display: 'flex',

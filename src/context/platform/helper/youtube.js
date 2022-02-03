@@ -107,6 +107,7 @@ class YoutubeHelper {
         livestream = await this.bindBroadcastToStream(livestream)
         //livestream.access_token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(true).access_token
         livestream.platform = 'youtube'
+        livestream.type = 'channel'
         console.log("Livestream after bind:", livestream)
         return livestream
     }

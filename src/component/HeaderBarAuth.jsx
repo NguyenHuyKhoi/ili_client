@@ -6,7 +6,9 @@ import logo from '../asset/image/logo.png'
 import { logoutSuccess } from '../context/auth/actions'
 import { AuthContext } from '../context/auth/context'
 import { startCreateGame } from '../context/game/creator/actions'
-import { GameCreatorContext } from '../context/game/creator/context'
+import { GameCreatorContext, sample_game } from '../context/game/creator/context'
+import { initQuestions } from '../context/question/creator/actions'
+import { QuestionCreatorContext } from '../context/question/creator/context'
 import { theme } from '../theme'
 import Button from './Button'
 import HeaderTabbar from './HeaderTabbar'
@@ -25,7 +27,10 @@ const useStyles = makeStyles((theme) => ({
     logo: {
         height: theme.spacing(5),
         marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2)
+        marginRight: theme.spacing(2),
+        '&:hover': {
+            cursor: 'pointer'
+        }
     }
 }))
 
@@ -57,6 +62,7 @@ const HeaderBarAuth = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const gameCreatorDispatch = useContext(GameCreatorContext).dispatch
+    const questionCreatorDispatch = useContext(QuestionCreatorContext).dispatch
     const authDispatch = useContext(AuthContext).dispatch
     const {user, token} = useContext(AuthContext)
     const {selectedIndex} = props 
@@ -80,8 +86,9 @@ const HeaderBarAuth = (props) => {
 
 
     const handleCreate = () => {
-        console.log("Click Create game");
+        console.log("Click Create game", sample_game.questions);
         gameCreatorDispatch(startCreateGame())
+        questionCreatorDispatch(initQuestions(sample_game.questions))
         setTimeout(() => {
             return navigate('/game/creator',{replace: true})
         }, 1000)

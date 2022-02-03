@@ -4,11 +4,12 @@ import { theme } from '../../../../theme';
 
 const columns = [
 	{ field: 'id', headerName: 'Id', hidden: true},
-	{ field: 'username', headerName: 'Nick name', flex: 3 },
-	{ field: 'rank', headerName: 'Rank', type: 'number', flex: 1 },
-	{ field: 'correctPercent',headerName: 'Correct answers',type: 'number',flex: 1},
-  { field: 'unanswers', headerName: 'Unanswers', type: 'number',flex: 1},
-  { field: 'score', headerName: 'Final score', type: 'number',flex: 1}
+  { field: 'index', headerName: 'Index', flex: 0.5 , headerAlign: 'center', align: 'center' },
+	{ field: 'username', headerName: 'Nick name', flex: 2 , headerAlign: 'center', align: 'center' },
+	{ field: 'rank', headerName: 'Rank', type: 'number', flex: 1, headerAlign: 'center', align: 'center'  },
+	{ field: 'correctPercent',headerName: 'Correct answers',type: 'number',flex: 1, headerAlign: 'center', align: 'center' },
+  { field: 'unanswers', headerName: 'Unanswers', type: 'number',flex: 1, headerAlign: 'center', align: 'center' },
+  { field: 'score', headerName: 'Final score', type: 'number',flex: 1, headerAlign: 'center', align: 'center' }
 ];
 
 const getRows = (players, match) => {
@@ -18,11 +19,12 @@ const getRows = (players, match) => {
     console.log("Get player: ", player)
 		return {
 			id: index,
+      index: index + 1,
 			username: player.username,
 			rank: player.rank,
 			correctPercent: answerNum === 0? '0 %' : Math.round( 100 * correctNum / answerNum) + ' %',
       unanswers: unanswerNum,
-      score: player.score
+      score: player.score + ' pts'
 		}
 	})
 }
@@ -36,7 +38,6 @@ const PlayersTable = (props) => {
       }
   }
 
-  console.log("layers: ", players)
   return (
     <div style={{ height:  theme.spacing(50), width: '100%', backgroundColor: 'white' }}>
     <DataGrid

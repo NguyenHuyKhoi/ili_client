@@ -2,8 +2,8 @@ import { Divider, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import Button from '../../../../component/Button'
-import { selectQuestion } from '../../../../context/game/creator/actions'
-import { GameCreatorContext, QUESTION_TYPES_ID } from '../../../../context/game/creator/context'
+import { selectQuestion } from '../../../../context/question/creator/actions'
+import { QuestionCreatorContext, QUESTION_TYPES_ID } from '../../../../context/question/creator/context'
 import { theme } from '../../../../theme'
 import MultipleChoicesQuestionMiniItem from './MultipleChoicesQuestionMiniItem'
 import PicWordQuestionMiniItem from './PicWordQuestionMiniItem'
@@ -40,8 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestionList = (props) => {
     const classes = useStyles()
-    const {game, dispatch} = useContext(GameCreatorContext)
-    const {questionIndex, questions} = game
+    const {questionIndex, questions, dispatch} =  useContext(QuestionCreatorContext)
     const handleSelected = (index) => {
         console.log("Select question to view:", index);
         dispatch(selectQuestion(index))

@@ -84,7 +84,7 @@ const PicWordQuestionMiniItem = (props) => {
                 </Grid>
             </div>
             <Typography variant='label' sx = {{alignSelf:'center'}}>
-                {correct_answer == null ? 'No keyword' : correct_answer}
+                {correct_answer == null || correct_answer == '' ? 'No keyword' : correct_answer}
             </Typography>
            
         </div>

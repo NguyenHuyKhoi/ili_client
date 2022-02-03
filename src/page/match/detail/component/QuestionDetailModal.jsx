@@ -1,11 +1,15 @@
 import { Divider, Grid, Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
+import { QUESTION_TYPES_ID } from '../../../../context/question/creator/context';
 import { theme } from "../../../../theme";
 import InforRowItem from './InforRowItem';
-import QuestionDetailCard from './QuestionDetailCard';
+import MultipleQuestionDetailCard from './MultipleQuestionDetailCard';
+import PicwordQuestionDetailCard from './PicwordQuestionDetailCard';
 import QuestionDetailTable from './QuestionDetailTable';
+import TFQuestionDetailCard from './TFQuestionDetailCard';
 import TopBarModal from './TopBarModal';
+import WordTableQuestionDetailCard from './WordTableQuestionDetailCard';
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -66,6 +70,8 @@ const QuestionDetailModal = (props) => {
 		}, 0) / answerPlayers)
 	} 
 
+	const typeId = stage.question.typeId
+
 
 	return (
 		<Modal
@@ -90,7 +96,13 @@ const QuestionDetailModal = (props) => {
 					total = {progress.length}/>
 				<Divider/>
 				<div className = {classes.body}>
-					<QuestionDetailCard stage = {stage} players = {players}/>
+					{
+						typeId == QUESTION_TYPES_ID.MULTIPLE_CHOICE ? <MultipleQuestionDetailCard  stage = {stage} players = {players}/> :
+						typeId == QUESTION_TYPES_ID.TF_CHOICE ? <TFQuestionDetailCard  stage = {stage} players = {players}/> :
+						typeId == QUESTION_TYPES_ID.PIC_WORD ? <PicwordQuestionDetailCard  stage = {stage} players = {players}/> :
+						typeId == QUESTION_TYPES_ID.WORD_TABLE ? <WordTableQuestionDetailCard  stage = {stage} players = {players}/> :
+						null
+					}
 
 	
 					<Grid container columnSpacing={5} sx = {{px: theme.spacing(3), mt: theme.spacing(5)}}>

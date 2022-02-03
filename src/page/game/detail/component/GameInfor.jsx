@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 const GameInfor = (props) => {
     const classes = useStyles()
 
-    const {game, isMine} = props
+    const {game, isMine, isAdmin} = props
     const {title, description, cover, owner, visibility} = game
     const handleEdit = () => {
         if (props.onEdit) {
@@ -74,8 +74,12 @@ const GameInfor = (props) => {
                         isMine && 
                         <IconButton icon = 'Edit' variant = 'primary' onClick = {handleEdit}/>
                     }
-                    <IconButton icon = 'Play' variant = 'success' onClick = {handlePlay}
-                        style = {{marginLeft: theme.spacing(3)}}/>
+                    {
+                        isAdmin != true &&  
+                        <IconButton icon = 'Play' variant = 'success' onClick = {handlePlay}
+                            style = {{marginLeft: theme.spacing(3)}}/>
+                    }
+
                     {
                         isMine && 
                         <IconButton icon = 'Clone' variant = 'primary' onClick = {handleClone}

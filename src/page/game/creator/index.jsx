@@ -1,26 +1,19 @@
-import { Alert, Grid, Snackbar } from '@mui/material'
+import { Alert, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import NotificationModal from '../../../component/NotificationModal'
 import { AuthContext } from '../../../context/auth/context'
-import { addQuestion, deleteQuestion, duplicateQuestion, selectQuestion, updateGameSetting, updateQuestion } from '../../../context/game/creator/actions'
-import { GameCreatorContext, QUESTION_TYPES_ID } from '../../../context/game/creator/context'
-import { cloneQuestion, validateGameSetting, validateQuestion } from '../../../context/game/creator/reducer'
+import { updateGameSetting } from '../../../context/game/creator/actions'
+import { GameCreatorContext } from '../../../context/game/creator/context'
+import { validateGameSetting } from '../../../context/game/creator/reducer'
+import { DEFECTIVE_CHECK_TYPES, QuestionCreatorContext, QUESTION_TYPES_ID } from '../../../context/question/creator/context'
+import { cloneQuestion } from '../../../context/question/creator/reducer'
 import FirebaseHelper, { IMAGE_CATEGORIES } from '../../../firebase'
-import { theme } from '../../../theme'
-import DeleteQuestionModal from './component/DeleteQuestionModal'
-import MultipleChoicesQuestionBuilder from './component/MultipleChoicesQuestionBuilder'
-import PicWordQuestionBuilder from './component/PicWordQuestionBuilder'
-import QuestionConfig from './component/QuestionConfig'
-import QuestionList from './component/QuestionList'
-import SelectQuestionTypeModal from './component/SelectQuestionTypeModal'
+import QuestionCreator from './component/QuestionCreator'
 import SettingModal from './component/SettingModal'
-import TFChoicesQuestionBuilder from './component/TFChoicesQuestionBuilder'
 import Topbar from './component/Topbar'
-import ValidateGameModal from './component/ValidateGameModal'
-import WordTableQuestionBuilder from './component/WordTableQuestionBuilder'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -34,21 +27,12 @@ const GameCreatorPage = (props) => {
     const classes = useStyles()
     const navigate = useNavigate()
     const {token} = useContext(AuthContext)
-    const {game, dispatch, mode} = useContext(GameCreatorContext)
-    const {questions, questionIndex} = game
 
-    var question = questions[questionIndex]
+    const {game, mode, dispatch} = useContext(GameCreatorContext)
 
-    const [canDeleteQuestion, setCanDeleteQuestion] = useState(false)
-    const [defectiveQuestions, setDefectiveQuestions] = useState([])
+    const {defectiveQuestions, showDefectives, questions} = useContext(QuestionCreatorContext)
     const [modal, setModal] = useState({})
     const [alert, setAlert] = useState({})
-    useEffect(() => {
-        setCanDeleteQuestion((questions.length > 1))
-        return () => {
-            
-        }
-    }, [questions.length])
 
     const handleExit= () => {
         navigate('/game/library')
@@ -81,29 +65,30 @@ const GameCreatorPage = (props) => {
         return res
     }
     const handleSave = async () => {
-        var isValidated = validateGameSetting(game)
-        var qs = []
-        console.log("Questions: ", questions);
-        questions.forEach((item, index) => {
-            let cloned = cloneQuestion(item)
-            let defects = validateQuestion(cloned)
-            if (defects.length > 0) {
-                cloned.defectives = defects
-
-                console.log("Defective questions:", cloned)
-                qs.push(cloned)
-            }
-        })
-        setDefectiveQuestions(qs)
-        if (qs.length > 0) {
-            setModal({state: 'validate'})
+        if (showDefectives == DEFECTIVE_CHECK_TYPES.NOT_CHECK) {
+            setAlert({
+                type: 'error',
+                msg: 'Please check all questions before'
+            })
+            return 
         }
-        else if (!isValidated) {
+        if (defectiveQuestions.length > 0) {
+            setAlert({
+                type: 'error',
+                msg: 'Please fix all questions before.'
+            })
+            return 
+        }
+        var isValidated = validateGameSetting(game)
+        if (!isValidated) {
             setModal({state: 'setting'})
         }
         else if (mode === 'create') {
             // Add index for question:
-            game.questions.forEach((question, index) => game.questions[index].index = index + 1)
+            game.questions = questions.map((question, index) => ({
+                ...cloneQuestion(question), 
+                index: index + 1
+            }))
 
             console.log("Game questions: ", game.questions);
             var { cover} = game 
@@ -133,6 +118,10 @@ const GameCreatorPage = (props) => {
         }
         else if (mode === 'edit') {
             console.log("Edit game success")
+            game.questions = questions.map((question, index) => ({
+                ...cloneQuestion(question),
+                index: index + 1
+            }))
             let { cover} = game 
             let coverUrl =  await FirebaseHelper.uploadImage(cover, IMAGE_CATEGORIES.GAME_COVER) 
             let tempGame = await uploadQuestionImages(game)
@@ -149,58 +138,12 @@ const GameCreatorPage = (props) => {
             })
         }
     }
-    const handleSaveDraft = () => {
-        setModal({})
-        navigate('/game/library')
-    }
-    const handleSelectFixQuestion = (index) => {
-        console.log("Handle select fix question:", index)
-        setModal({})
-        dispatch(selectQuestion(index))
-    }
 
     const handleDoneCreate = () => {
         setModal({})
         navigate('/game/library', {replace: true})
     }
 
-    const handleSelectQuestionType = (id) => {
-        console.log("Select question type", id);
-        dispatch(addQuestion(id))
-        setModal({})
-    }
-
-    const handleClickAdd = () => {
-        setModal({state: 'select_type'})
-    }
-
-    const handleUpdateQuestion = (ques) => {
-        dispatch(updateQuestion(question, questionIndex))
-    }
-
-    const renderBuilder = () => {
-
-        switch (question.typeId) {
-            case  QUESTION_TYPES_ID.MULTIPLE_CHOICE :
-                return  <MultipleChoicesQuestionBuilder 
-                    question = {question} 
-                    onChange = {handleUpdateQuestion}/>
-            case QUESTION_TYPES_ID.TF_CHOICE :
-                return <TFChoicesQuestionBuilder
-                    question = {question} 
-                    onChange = {handleUpdateQuestion}/>
-            case QUESTION_TYPES_ID.PIC_WORD :
-                return <PicWordQuestionBuilder
-                    question = {question} 
-                    onChange = {handleUpdateQuestion}/>
-            case QUESTION_TYPES_ID.WORD_TABLE :
-                return <WordTableQuestionBuilder
-                    question = {question} 
-                    onChange = {handleUpdateQuestion}/>
-            default:
-                return null 
-        }
-    }
     return (
         <div className = {classes.container}>
             <Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
@@ -222,11 +165,6 @@ const GameCreatorPage = (props) => {
                 onClose = {() => setModal({})}
                 onDone = {handleDoneCreate}/>
 
-            <SelectQuestionTypeModal 
-                open = { modal.state === 'select_type' }     
-                onClose = {() => setModal({})}
-                onSelectType = {handleSelectQuestionType}/>
-
             <SettingModal 
                 setting = {{
                     title: game.title,
@@ -243,39 +181,7 @@ const GameCreatorPage = (props) => {
                     setModal({})
                     dispatch(updateGameSetting(setting))
                 }}/>
-
-            <ValidateGameModal
-                open = {modal.state === 'validate'}    
-                questions = {defectiveQuestions}
-                onClickQuestion = {handleSelectFixQuestion} 
-                onClose = {() => setModal({})}
-                onCancel = {() => setModal({})}
-                onSaveDraft = {handleSaveDraft}/>
-
-            <DeleteQuestionModal 
-                open = {modal.state === 'delete_question'}     
-                canDelete = {canDeleteQuestion}
-                onClose = {() => setModal({})}
-                onCancel = {() => setModal({})}
-                onDone = {() => {
-                    setModal({})
-                    if (canDeleteQuestion) dispatch(deleteQuestion(questionIndex))
-                }}/>
-
-            <Grid container sx = {{pt: theme.spacing(7), flex: 1}}>
-                <Grid item sm={1.7} >
-                    <QuestionList onAdd = {handleClickAdd} />
-                </Grid>
-                <Grid item sm={8.3}>
-                    {
-                        renderBuilder()
-                    }
-                </Grid>
-                <Grid item sm={2}>
-                    <QuestionConfig onClickDelete = {() => setModal({state: 'delete_question'})}
-                        onClickDuplicate = {() => dispatch(duplicateQuestion(questionIndex))}/>
-                </Grid>
-            </Grid>
+            <QuestionCreator/>
         </div>
     )
 }

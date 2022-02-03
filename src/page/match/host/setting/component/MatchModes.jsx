@@ -38,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const MODE_MATCH = {
-    CLASSIC: 0,
-    LIVESTREAM: 1
+    CLASSIC: 'classic',
+    LIVESTREAM: 'livestream'
 }
 
 const modes = [

@@ -8,6 +8,8 @@ import { startEditGame } from '../../../context/game/creator/actions'
 import { GameCreatorContext } from '../../../context/game/creator/context'
 import { selectGame } from '../../../context/game/other/actions'
 import { GameContext } from '../../../context/game/other/context'
+import { initQuestions } from '../../../context/question/creator/actions'
+import { QuestionCreatorContext } from '../../../context/question/creator/context'
 import { theme } from '../../../theme'
 import { createUrl } from '../../../util/helper'
 
@@ -68,6 +70,7 @@ export const GameRowItem = (props) => {
     const classes = useStyles()
     const gameDispatch = useContext(GameContext).dispatch
     const gameCreatorDispatch = useContext(GameCreatorContext).dispatch
+    const questionCreatorDispatch = useContext(QuestionCreatorContext).dispatch
     const {game} = props
     const {title, questions, owner, cover, visibility} = game
 
@@ -81,7 +84,8 @@ export const GameRowItem = (props) => {
     const handleEdit = (e) => {
         e.stopPropagation()
         gameCreatorDispatch(startEditGame(game))
-        navigate('/game/creator', {replace: false})
+        questionCreatorDispatch(initQuestions(game.questions))
+        return navigate('/game/creator', {replace: false})
     }
 
     const handlePlay = (e) => {

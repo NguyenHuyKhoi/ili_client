@@ -9,6 +9,8 @@ import { AuthContext } from '../../../context/auth/context'
 import { startEditGame } from '../../../context/game/creator/actions'
 import { GameCreatorContext } from '../../../context/game/creator/context'
 import { GameContext } from '../../../context/game/other/context'
+import { initQuestions } from '../../../context/question/creator/actions'
+import { QuestionCreatorContext } from '../../../context/question/creator/context'
 import { theme } from '../../../theme'
 import GameInfor from './component/GameInfor'
 import QuestionList from './component/QuestionList'
@@ -24,12 +26,13 @@ const GameDetailPage = () => {
     const {token, user} = useContext(AuthContext)
     const {game} = useContext(GameContext)
     const {dispatch} = useContext(GameCreatorContext)
-
+    const questionCreatorDispatch = useContext(QuestionCreatorContext).dispatch
     const [modal, setModal] = useState({})
     console.log("Game : ", game)
     const handleEdit = () => {
         dispatch(startEditGame(game))
-        navigate('/game/creator', {replace: false})
+        questionCreatorDispatch(initQuestions(game.questions))
+        return navigate('/game/creator', {replace: false})
     }
 
     const handlePlay = () => {
@@ -115,7 +118,8 @@ const GameDetailPage = () => {
                         onPlay = {handlePlay}
                         onClone = {handleClone}
                         onDelete = {handleDelete}
-                        isMine = {isMine}/>
+                        isMine = {isMine}
+                        isAdmin = {user.isAdmin}/>
                 </Grid>
                 <Grid item xs={9} sx = {{overflow: 'auto', maxHeight: '90vh'}}>
                     <QuestionList game = {game}/>

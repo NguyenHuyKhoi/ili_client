@@ -75,7 +75,7 @@ const TFChoicesQuestionMiniItem = (props) => {
                     Array.from(Array(2)).map((_, index) => (
                         <Grid item xs = {6} sx = {{p: theme.spacing(0.2)}}   key = {''+index}>
                             <div className = {classes.answer} 
-                                style = {{backgroundColor: (correct_answer === index) ? theme.palette.success.main : 'white'}}/>
+                                style = {{backgroundColor: (correct_answer == index) ? theme.palette.success.main : 'white'}}/>
                         </Grid>
                     ))
                 }

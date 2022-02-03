@@ -61,10 +61,10 @@ const ColInforItem = (props) => {
 	const {value, label} = props
 	return (
 		<div className = {classes.inforItem}>
-			<Typography variant = 'h4' sx = {{fontWeight: 'bold'}}>
+			<Typography variant = 'bigHeader' sx = {{color: '#000'}}>
 				{value}
 			</Typography>
-			<Typography variant = 'subtitle1' sx = {{fontWeight:'bold'}}>
+			<Typography variant = 'bigLabel' sx = {{fontWeight:'#000'}}>
 				{label}
 			</Typography>
 		</div>
@@ -75,6 +75,8 @@ const Header = (props) => {
 	const classes = useStyles() 
 	const {player} = props 
 	const {rank, score, correctNum, incorrectNum} = player
+    let answerNum = correctNum + incorrectNum
+	let correctPercent = answerNum === 0? '0 %' : Math.round( 100 * correctNum / answerNum) + ' %'
 	return (
 		<div className = {classes.header}>
 			<Grid container >
@@ -83,7 +85,7 @@ const Header = (props) => {
 						{/* <div className = {classes.pieChart}/> */}
 						<Icon name ='DataUsage' 
 							style = {{width: theme.spacing(12),height: theme.spacing(12), color: '#1368CE'}}/>
-						<ColInforItem value = '0%' label= 'Correct' />
+						<ColInforItem value = {correctPercent} label= 'Correct' />
 					</div>
 				</Grid>
 				<Grid item xs = {7} >

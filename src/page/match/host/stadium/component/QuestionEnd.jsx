@@ -1,7 +1,7 @@
 import { Divider, Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
-import { QUESTION_TYPES_ID } from '../../../../../context/game/creator/context'
+import { QUESTION_TYPES_ID } from '../../../../../context/question/creator/context'
 import { theme } from '../../../../../theme'
 import { createUrl } from '../../../../../util/helper'
 import { answerStyles } from '../../../../game/creator/component/Answers'

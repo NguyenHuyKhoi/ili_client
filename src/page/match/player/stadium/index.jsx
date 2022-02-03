@@ -1,7 +1,7 @@
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { QUESTION_TYPES_ID } from '../../../../context/game/creator/context'
+import { QUESTION_TYPES_ID } from '../../../../context/question/creator/context'
 import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'

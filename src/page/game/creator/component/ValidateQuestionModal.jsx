@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }))
 
-const ValidateGameModal = (props) => {
+const ValidateQuestionModal = (props) => {
 	const classes = useStyles()
 
 	var {open, questions} = props
@@ -89,4 +89,4 @@ const ValidateGameModal = (props) => {
 	);
 }
 
-export default ValidateGameModal
+export default ValidateQuestionModal

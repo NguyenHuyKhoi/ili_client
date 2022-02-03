@@ -2,7 +2,7 @@ import { Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import Button from '../../../../component/Button'
-import { QUESTION_TYPES_ID } from '../../../../context/game/creator/context'
+import { QUESTION_TYPES_ID } from '../../../../context/question/creator/context'
 import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -23,10 +23,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export const MODE_MATCH = {
-    CLASSIC: 0,
-    LIVESTREAM: 1
-}
 
 const types = [
     {

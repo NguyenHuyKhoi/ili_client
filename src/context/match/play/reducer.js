@@ -1,4 +1,5 @@
-import { QUESTION_TYPES_ID } from '../../game/creator/context'
+
+import { QUESTION_TYPES_ID } from "../../question/creator/context";
 import { sample_match } from "./context"
 const extractAnswerCount = (stage) => {
     try {

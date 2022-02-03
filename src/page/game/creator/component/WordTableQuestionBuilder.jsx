@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Button from '../../../../component/Button';
 import MultiSelect from '../../../../component/MultiSelect';
 import TextField from '../../../../component/TextField';
-import { WORD_TABLE_SIZE } from '../../../../context/game/creator/context';
+import { WORD_TABLE_SIZE } from '../../../../context/question/creator/context';
 import { theme } from '../../../../theme';
 const useStyles = makeStyles((theme) => ({
     container: {

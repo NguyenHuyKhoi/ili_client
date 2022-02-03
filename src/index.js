@@ -9,6 +9,8 @@ import { GameContextProvider } from './context/game/other/context';
 import { MatchContextProvider } from './context/match/other/context';
 import { MatchPlayContextProvider } from './context/match/play/context';
 import { PlatformContextProvider } from './context/platform/context';
+import { QuestionCreatorContextProvider } from './context/question/creator/context';
+import { QuestionBankContextProvider } from './context/question/other/context';
 import { SocketContextProvider } from './context/socket/context';
 import { UserContextProvider } from './context/user/context';
 
@@ -29,7 +31,11 @@ ReactDOM.render(
     <AuthContextProvider>
       <SocketContextProvider>
         <PlatformContextProvider>
-        <App />
+          <QuestionBankContextProvider>
+            <QuestionCreatorContextProvider>
+              <App/>         
+            </QuestionCreatorContextProvider>
+          </QuestionBankContextProvider>
         </PlatformContextProvider>
       </SocketContextProvider>
     </AuthContextProvider>

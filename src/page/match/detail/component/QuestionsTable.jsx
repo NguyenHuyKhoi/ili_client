@@ -3,9 +3,12 @@ import React from 'react';
 import { theme } from '../../../../theme';
 const columns = [
 	{ field: 'id', headerName: 'Id', hidden: true},
-	{ field: 'title', headerName: 'Title', flex: 4 },
-	{ field: 'type', headerName: 'Type', flex: 1 },
-	{ field: 'correctPercent', type: 'number',headerName: 'Correct/incorrect',flex: 1},
+  { field: 'index', headerName: 'Index', flex: 0.5 , headerAlign: 'center', align: 'center' },
+	{ field: 'title', headerName: 'Title', flex: 3, headerAlign: 'center', align: 'center' },
+  { field: 'type', headerName: 'Type', flex: 1 , headerAlign: 'center', align: 'center'},
+  { field: 'time', headerName: 'Time', flex: 1, headerAlign: 'center', align: 'center'},
+  { field: 'score', headerName: 'Score', flex: 1, headerAlign: 'center', align: 'center'},
+	{ field: 'correctPercent', type: 'number',headerName: 'Correct/incorrect',flex: 1, headerAlign: 'center', align: 'center'},
 ];
 
 
@@ -16,8 +19,11 @@ const getRows = (progress, match) => {
     let answerNum = correctNum + incorrectNum
 		return {
 			id: index,
-			title: q.index + '. ' + q.title,
-			type: 'Quiz',
+      index: index + 1,
+			title:  q.title,
+      time: q.time_limit + ' s',
+      score: q.score + ' pts',
+			type: q.typeName,
 			correctPercent: answerNum ===  0? '0 %' : Math.round( 100 * correctNum / answerNum) + ' %',
 		}
 	})

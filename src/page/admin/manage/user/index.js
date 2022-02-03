@@ -46,7 +46,7 @@ export const ADMIN_MANAGE_MENUS = [
         icon: 'TableRows'
     },
     {
-        link: '/admin/manage/collection',
+        link: '/admin/manage/question',
         title: 'Question Bank',
         icon: 'SnippetFolder'
     },

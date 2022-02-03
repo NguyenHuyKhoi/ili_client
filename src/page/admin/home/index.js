@@ -60,23 +60,6 @@ const AdminHomePage = () => {
     const [modal, setModal] = useState({})
     const {collections, dispatch} = useContext(CollectionContext)
     const {token} = useContext(AuthContext)
-    useEffect(() => {
-        getCollections()
-        return () => {
-            
-        }
-    }, [])
-
-    const getCollections = () => {
-        axios.get('collection/library', {
-            headers: {
-                'x-access-token': token
-            }
-        }) 
-        .then ((res) => {
-            dispatch(getCollectionsSuccess(res.data))
-        })   
-    }
 
     return (
         <div className = {classes.container}>

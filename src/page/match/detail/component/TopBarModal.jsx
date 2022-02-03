@@ -59,7 +59,10 @@ const TopBarModal = (props) => {
 					sx = {{
 						color: index ===  1 ? '#f2f2f2' : '#000',
 						fontSize: 35,
-						ml: theme.spacing(1)
+						ml: theme.spacing(1),
+						'&:hover': {
+							cursor: 'pointer'
+						}
 					}}
 					onClick = {handleLeft}
 				/>
@@ -67,11 +70,20 @@ const TopBarModal = (props) => {
 					sx = {{
 						color: index ===  total ? '#f2f2f2' : '#000',
 						fontSize: 35,
-						mr: theme.spacing(1)
+						mr: theme.spacing(1),
+						'&:hover': {
+							cursor: 'pointer'
+						}
 					}}
 					onClick = {handleRight}
 				/>
-				<Close onClick = {handleClose} sx = {{fontSize: 30, color: '#000'}}/>
+				<Close onClick = {handleClose} 
+					sx = {{
+						fontSize: 30, 
+						color: '#000',
+						'&:hover': {
+							cursor: 'pointer'
+					}}}/>
 			</div>
 		</div>
 	)

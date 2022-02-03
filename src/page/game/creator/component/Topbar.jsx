@@ -6,6 +6,8 @@ import { theme } from '../../../../theme'
 import logo from '../../../../asset/image/logo.png'
 import Button from '../../../../component/Button'
 import { useNavigate } from 'react-router-dom'
+import { DEFECTIVE_CHECK_TYPES, QuestionCreatorContext } from '../../../../context/question/creator/context'
+import { showDefectiveQuestions } from '../../../../context/question/creator/actions'
 const useStyles = makeStyles((theme) => ({
     toolbar: {
         display: 'flex',
@@ -15,7 +17,10 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(8)
     },
     logo: {
-        height: theme.spacing(6)
+        height: theme.spacing(6),
+        '&:hover': {
+            cursor: 'pointer'
+        }
     },
     settingBox: {
         display: 'flex',
@@ -38,7 +43,17 @@ const Topbar = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const {game} = useContext(GameCreatorContext)
+    const {showDefectives, defectiveQuestions} = useContext(QuestionCreatorContext)
+    const questionCreatorDispatch = useContext(QuestionCreatorContext).dispatch
     const {title} = game
+
+    const handleShowDefectiveQuestions = () => {
+        if (showDefectives != DEFECTIVE_CHECK_TYPES.NOT_CHECK && defectiveQuestions.length == 0) {
+            console.log("No need check anymore");
+            return 
+        }
+        questionCreatorDispatch(showDefectiveQuestions(DEFECTIVE_CHECK_TYPES.CHECK_AND_SHOW))
+    }
     return (
         <AppBar position = 'fixed'>
             <Toolbar className = {classes.toolbar}>
@@ -69,6 +84,23 @@ const Topbar = (props) => {
                         label = 'Setting'/>
                 </div>
                 <div style = {{flex:1}}/> 
+                <div onClick = {handleShowDefectiveQuestions}>
+                    <Typography variant = 'label' sx = {{
+                        color: showDefectives == DEFECTIVE_CHECK_TYPES.NOT_CHECK || defectiveQuestions.length > 0 ? 
+                            theme.palette.error.main
+                        :
+                            theme.palette.success.main,
+                        '&:hover': {
+                                cursor: 'pointer'
+                            }
+                    }}>
+                        {
+                            showDefectives == DEFECTIVE_CHECK_TYPES.NOT_CHECK ? 'Check incomplete questions' : 
+                            defectiveQuestions.length > 0 ? 'Incomplete questions: ' + defectiveQuestions.length : 
+                            'All questions are completed.'
+                        }
+                    </Typography>
+                </div>
                 <Button 
                     variant="success" 
                     size = 'small'
