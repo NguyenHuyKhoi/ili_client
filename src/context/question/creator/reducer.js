@@ -173,6 +173,19 @@ const reducer = (state, action) => {
                 questions,
                 questionIndex: questions.length - 1
             }
+        case 'ADD_QUESTIONS_FROM_TEMPLATE':
+            console.log("Add question from templates", payloadQuestions);
+            payloadQuestions.forEach((question, index) => {
+                console.log("template question index:", questions.length + index);
+                payloadQuestions[index].index = questions.length + index
+            })
+            questions = [...questions, ...payloadQuestions]
+            return {
+                ...state,
+                questions,
+                defectiveQuestions: [],
+                showDefectives: DEFECTIVE_CHECK_TYPES.NOT_CHECK
+            }
         case 'DUPLICATE_QUESTION':
             question = questions[index]
             temp = cloneQuestion(question)

@@ -14,6 +14,7 @@ import TFChoicesQuestionBuilder from './TFChoicesQuestionBuilder'
 import ValidateQuestionModal from './ValidateQuestionModal'
 import WordTableQuestionBuilder from './WordTableQuestionBuilder'
 import { theme } from '../../../../theme'
+import ImportTemplateModal from './ImportTemplateModal'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -118,6 +119,14 @@ const QuestionBuilder = (props) => {
                 return null 
         }
     }
+
+    const handleImportTemplate = () => {
+        setModal({state: 'import_template'})
+    }
+
+    const handleUploadTemplate = () => {
+
+    }
     return (
         <div className = {classes.container}>
             <Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
@@ -126,7 +135,10 @@ const QuestionBuilder = (props) => {
                     {alert.msg}
                 </Alert>
             </Snackbar>
-
+            <ImportTemplateModal 
+                open = { modal.state === 'import_template' }     
+                onClose = {() => setModal({})}
+                onUpload = {handleUploadTemplate}/>
             <SelectNewQuestionModal 
                 open = { modal.state === 'select_type' }     
                 onClose = {() => setModal({})}
@@ -158,7 +170,9 @@ const QuestionBuilder = (props) => {
 
             <Grid container sx = {{pt: theme.spacing(7), flex: 1}}>
                 <Grid item sm={1.7} >
-                    <MiniQuestionList onAdd = {handleClickAdd} />
+                    <MiniQuestionList 
+                        onAdd = {handleClickAdd}
+                        onImportTemplate = {handleImportTemplate} />
                 </Grid>
                 <Grid item sm={8.3}>
                     {

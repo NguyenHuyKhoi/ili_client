@@ -52,6 +52,10 @@ const MiniQuestionList = (props) => {
             props.onAdd()
         }
     }
+
+    const handleImportTemplate = () => {
+        if (props.onImportTemplate) props.onImportTemplate()
+    }
     return (
         <div className = {classes.container}>
             <div className = {classes.list} >
@@ -93,6 +97,7 @@ const MiniQuestionList = (props) => {
                     <Button 
                         variant = 'success'  
                         size = 'small' 
+                        onClick = {handleImportTemplate}
                         style = {{marginTop: theme.spacing(2), width: theme.spacing(20), alignSelf: 'center'}}
                         label = 'Import excel'/>
                 </div>

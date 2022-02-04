@@ -45,6 +45,13 @@ export const addQuestionFromBank = (question) => ({
     }
 })
 
+export const addQuestionsFromTemplate = (questions) => ({
+    type: 'ADD_QUESTIONS_FROM_TEMPLATE',
+    payload: {
+        questions
+    }
+})
+
 
 export const duplicateQuestion = (index) => ({
     type: 'DUPLICATE_QUESTION',

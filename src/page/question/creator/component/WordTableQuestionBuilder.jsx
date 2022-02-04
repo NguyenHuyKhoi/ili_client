@@ -5,6 +5,7 @@ import Button from '../../../../component/Button';
 import MultiSelect from '../../../../component/MultiSelect';
 import TextField from '../../../../component/TextField';
 import { WORD_TABLE_SIZE } from '../../../../context/question/creator/context';
+import WordTableHelper from '../../../../context/question/helper/word_table';
 import { theme } from '../../../../theme';
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -33,9 +34,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const DIRECTIONS = [
-    [0, 1],[1,0],[1,1],[-1,1]
-]
 
 const WordTableQuestionBuilder = (props) => {
     const classes = useStyles()
@@ -44,6 +42,7 @@ const WordTableQuestionBuilder = (props) => {
     const {question} = props
     const [alert, setAlert] = useState({});
     const {title, char_table, correct_answers} = question
+
     const handleChange = (key, value) => {
         question[key] = value
         if (props.onChange) {
@@ -51,82 +50,19 @@ const WordTableQuestionBuilder = (props) => {
         }
     }
 
-    const checkAndFill = (ox, oy, word, table, direction) => {
-        // If ok return table 
-        // If not return null 
-        var len = word.length
-        var row, col
-
-        for (var t = 0; t < len; t++ ){
-            row = ox + direction[0] * t;
-            col = oy + direction[1] * t;
-            if (0<=row && row<WORD_TABLE_SIZE && 0<=col && col < WORD_TABLE_SIZE) {
-                var index = row * WORD_TABLE_SIZE + col
-                if (table[index] !== null && table[index].wordParent !== undefined ) {
-                    return null
-                }
-            }
-            else {
-                return null
-            }   
-        }
-        var color = randomColor()
-
-        for ( t = 0; t < len; t++ ){
-            row = ox + direction[0] * t;
-            col = oy + direction[1] * t;
-            table[row * WORD_TABLE_SIZE + col] = {
-                char: word[t],
-                wordParent: word,
-                color
-            }
-        }
-        return table
-    }
-
     const handleAddAnswer = (word) => {
-        console.log("handle add answer :", word);
         if (word === '') return 
-        if (correct_answers.indexOf(word) !== -1) {
+        let res = WordTableHelper.tryAddAnswer(char_table, correct_answers, word)
+        if (res.ok == false) {
             setAlert({
                 type: 'error',
-                msg: 'Keyword is added before...'
+                msg: res.msg
             })
             return
         }
-        if (correct_answers.length >= 12) {
-            setAlert({
-                type: 'error',
-                msg: 'Maximum keywords number is 12...'
-            })
-            return
-        }
-        var times = 50 
-        while (times > 0) {
-            var i = Math.floor(Math.random() * WORD_TABLE_SIZE)
-            var j = Math.floor(Math.random() * WORD_TABLE_SIZE)
-            var t = Math.floor(Math.random() * DIRECTIONS.length)
-
-            var res = checkAndFill(i,j, word, char_table, DIRECTIONS[t])
-            if (res != null) {
-                handleChange('char_table', res)
-                correct_answers.push(word)
-                handleChange('correct_answers', correct_answers)
-                setkeyword('')
-                setAlert({
-                    type: 'info',
-                    msg: 'Add keyword: ' + word
-                })
-                return
-            }
-            times = times - 1
-        }
+        handleChange('char_table', res.char_table)
+        handleChange('correct_answers', res.correct_answers)
         setkeyword('')
-        setAlert({
-            type: 'error',
-            msg: 'Add keyword error, try again... ' 
-        })
-        console.log("Add failure");
     }
 
     const handleRemoveAnswer = (word) => {
@@ -134,57 +70,21 @@ const WordTableQuestionBuilder = (props) => {
             type: 'info',
             msg: 'Remove keyword: ' + word
         })
-        for (var i = 0;i<WORD_TABLE_SIZE;i++) {
-            for (var j = 0; j<WORD_TABLE_SIZE; j++) {
-                var index = i * WORD_TABLE_SIZE + j
-                if (char_table[index] !== null && char_table[index].wordParent === word) {
-                    if (isFilled) {
-                        char_table[index] = randomCharCell()
-                    }   
-                    else {
-                        char_table[index] = null
-                    }
-                }
-            }
-        }
-        handleChange('char_table', char_table)
-        if (correct_answers.indexOf(word) !== -1) {
-            correct_answers.splice(correct_answers.indexOf(word), 1)
-            handleChange('correct_answers', correct_answers)
-        }
+        let res = WordTableHelper.tryRemoveAnswer(char_table, correct_answers, word, isFilled)
+        handleChange('char_table', res.char_table)
+        handleChange('correct_answers', res.correct_answers)
     }
     
-    const randomColor = () => {
-        var colors = ['#82DCE1','#eb6946', '#82AF9B','#EBDCC3','#557882','#FAC846','#BE6E82', '#506E00',
-        '#3e7bbc', '#24486f', '#9f7272', '#ffcd9a']
-        return colors[Math.floor(Math.random() * colors.length)]
-    }
 
     const handleUnFillTable = () => {
         setisFilled(false)
-        char_table.forEach((item, index) => {
-            if (item !== null && item.wordParent == undefined) {
-                char_table[index] = null
-            }
-        })
-        handleChange('char_table',char_table)
+        handleChange('char_table', WordTableHelper.handleUnFillTable(char_table))
     }
-    const randomCharCell = () => {
-        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
-        return {
-            char: chars[Math.floor(Math.random()*chars.length)],
-            color: '#cddcdc'
-        }
-    }
+   
     const handleFillTable = () => {
         setisFilled(true)
-      
-        char_table.forEach((item, index) => {
-            if (item == null) {
-                char_table[index] = randomCharCell()
-            }
-        })
-        handleChange('char_table',char_table)
+    
+        handleChange('char_table', WordTableHelper.handleFillTable(char_table))
     }
 
     var keywords = correct_answers.map((item) => ( {

@@ -55,10 +55,16 @@ const HomeQuickNavCard = (props) => {
     const {item} = props 
     var {title, description, btnLabel, style, link, image} = item
     
+    
     const handleClick = () => {
-        if (link !== undefined) {
+        if (link != undefined) {
             return navigate(link, {replace: true})
         }
+        else {
+            console.log("Handle click prop");
+            if (props.onClick) props.onClick()
+        }
+
     }
     return (
         <div className = {classes.container}

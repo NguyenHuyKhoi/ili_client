@@ -7,6 +7,7 @@ import NotificationModal from '../../../component/NotificationModal'
 import { AuthContext } from '../../../context/auth/context'
 import { DEFECTIVE_CHECK_TYPES, QuestionCreatorContext, QUESTION_TYPES_ID } from '../../../context/question/creator/context'
 import FirebaseHelper, { IMAGE_CATEGORIES } from '../../../firebase'
+import ImportTemplateModal from './component/ImportTemplateModal'
 import QuestionBuilder from './component/QuestionBuilder'
 import Topbar from './component/Topbar'
 const useStyles = makeStyles((theme) => ({
@@ -131,6 +132,7 @@ const QuestionCreatorPage = (props) => {
                 onSave = {handleSave}
                 onExit = {handleExit}
                 />
+          
             <NotificationModal 
                 title = 'Done!'
                 btnLabel = 'Go Library'
