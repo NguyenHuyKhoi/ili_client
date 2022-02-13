@@ -79,7 +79,6 @@ const SettingModal = (props) => {
 	}
 
 	const handleChange = (key, value) => {
-		console.log("handle change:", key, value)
 		setDraftSetting({
 			...draftSetting,
 			[key]: value

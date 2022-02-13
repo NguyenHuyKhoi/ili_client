@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
         border: 'solid 1px #000000',
         overflow: 'hidden',
         borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
+        '&:hover': {
+            cursor: 'pointer'
+        }
     },
     left: {
         position: 'relative'
@@ -73,7 +76,7 @@ export const CollectionRowItem = (props) => {
 
     const handleEdit = (e) => {
         e.stopPropagation()
-        navigate('/collection/edit/' + collection._id, {replace: false})
+        navigate('/collection/creator', {replace: false})
     }
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}

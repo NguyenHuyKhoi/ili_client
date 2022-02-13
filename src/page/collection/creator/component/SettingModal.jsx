@@ -76,7 +76,6 @@ const SettingModal = (props) => {
 	}
 
 	const handleChange = (key, value) => {
-		console.log("Handle change: ", key, value)
 		setDraftSetting({
 			...draftSetting,
 			[key]: value
@@ -99,9 +98,10 @@ const SettingModal = (props) => {
 					<Grid item xs = {7}>
 						<div className = {classes.leftCol}>
 							<TextField 	
-								placeholder='Enter  title ...'	
+								placeholder='Enter title ...'	
 								value = {title} 
-								size='small'
+								style = {{textAlign: 'center'}}
+								size = 'medium'
 								onChange = {(value) => handleChange('title',value)} />
 
 							<TextArea

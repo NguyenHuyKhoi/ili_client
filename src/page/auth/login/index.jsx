@@ -91,7 +91,7 @@ const LoginPage = () => {
                 console.log("Error :", error)
                 setAlert({
                     type: 'error',
-                    msg: 'Login Error'
+                    msg: 'Login error: wrong email/password or user is banned.'
                 })
             })
     }

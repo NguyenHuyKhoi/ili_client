@@ -2,12 +2,13 @@ import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Button from '../../../component/Button'
 import HeaderBar from '../../../component/HeaderBar'
 import SideMenu from '../../../component/SideMenu'
 import { AuthContext } from '../../../context/auth/context'
-import { getCollectionsSuccess } from '../../../context/collection/actions'
-import { CollectionContext } from '../../../context/collection/context'
+import { getCollectionsSuccess, selectCollection, startCreateCollection } from '../../../context/collection/actions'
+import { CollectionContext, sample_collection } from '../../../context/collection/context'
 import { theme } from '../../../theme'
 import { LIBRARY_MENUS } from '../../game/library'
 import CollectionList from './component/CollectionList'
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CollectionLibraryPage = () => {
     const classes = useStyles()
+    const navigate = useNavigate()
     const [modal, setModal] = useState({})
     const {collections, dispatch} = useContext(CollectionContext)
     const {token} = useContext(AuthContext)
@@ -56,16 +58,9 @@ const CollectionLibraryPage = () => {
         })   
     }
 
-    const handleCreate = (collection) => {
-        axios.post('collection/', collection, {
-            headers: {
-                'x-access-token': token
-            }
-        })    
-        .then ((res) => {
-            getCollections()
-            setModal({})
-        })
+    const handleCreate = () => {
+        dispatch(startCreateCollection())
+        return navigate('/collection/creator', {replace: false})
     }
 
     return (
@@ -90,7 +85,8 @@ const CollectionLibraryPage = () => {
                             <div/>
                             <Button 
                                 variant= 'primary' 
-                                onClick = {() => setModal({state: 'create'})}
+                                //onClick = {() => setModal({state: 'create'})}
+                                onClick = {handleCreate}
                                 label = {'Create one'}/>
                         </div>
                         <CollectionList collections = {collections}

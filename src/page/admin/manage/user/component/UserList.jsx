@@ -51,7 +51,8 @@ const UserList = (props) => {
                 :
                 users.map((item, index) => (
                     <div className = {classes.item}   key = {''+index}>
-                        <UserRowItem user = {item}/>
+                        <UserRowItem 
+                            user = {item}/>
                     </div>
                 ))
             }

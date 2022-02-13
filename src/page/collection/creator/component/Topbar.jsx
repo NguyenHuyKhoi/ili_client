@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const Topbar = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {collection} = useContext(CollectionContext)
+    const {collection, mode} = useContext(CollectionContext)
     const {title} = collection
     return (
         <AppBar position = 'fixed'>
@@ -80,7 +80,7 @@ const Topbar = (props) => {
                     onClick = {() => {
                         if (props.onSave) props.onSave()
                     }}
-                    label = 'Save'/>
+                    label = {mode == 'create'? 'Create' : 'Update'}/>
             </Toolbar>
         </AppBar>
     )

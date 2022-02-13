@@ -78,7 +78,10 @@ export const GameRowItem = (props) => {
 
     const handleViewDetail = () => {
         gameDispatch(selectGame(game))
-        navigate('/game/detail/'+game._id, {replace: false})
+        setTimeout(() => {
+            return navigate('/game/detail/'+game._id, {replace: false})
+        }, 500)
+        
     }
 
     const handleEdit = (e) => {

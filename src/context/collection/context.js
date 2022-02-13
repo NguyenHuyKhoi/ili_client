@@ -1,10 +1,12 @@
 import { createContext, useEffect, useReducer } from "react"
 import reducer from "./reducer"
 
+export const sample_collection = {title: '',cover: null, description: '', visibility: 'public', games:[]}
 const INITIAL_STATE = () => {
     let state = {
         collection: null,
-        collections: []
+        collections: [],
+        mode: 'edit'
     }
     const saved = localStorage.getItem('collection_context')
     if (saved) {
@@ -35,6 +37,7 @@ export const CollectionContextProvider = ({children}) => {
         value = {{
             collections: state.collections,
             collection: state.collection,
+            mode: state.mode,
             dispatch
         }}>
         {

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CollectorInfor = (props) => {
     const classes = useStyles()
-    const {collection} = props 
+    const {collection, mode} = props 
     const {description} = collection
     return (
         <div className = {classes.container}>
@@ -34,17 +34,20 @@ const CollectorInfor = (props) => {
                     description
                 }
             </Typography>
-
+            {
+                mode == 'edit' && 
+                <Button
+                    variant="warning" 
+                    size = 'small'
+                    style = {{ marginLeft: theme.spacing(3), width: theme.spacing(15), alignSelf: 'center', marginTop: theme.spacing(5)}}
+                    onClick = {() => {
+                        console.log("Click delete btn")
+                        if (props.onDelete) props.onDelete()
+                    }}
+                    label = 'Delete'/>
+            }
           
-            <Button
-                variant="warning" 
-                size = 'small'
-                style = {{ marginLeft: theme.spacing(3), width: theme.spacing(15), alignSelf: 'center', marginTop: theme.spacing(5)}}
-                onClick = {() => {
-                    console.log("Click delete btn")
-                    if (props.onDelete) props.onDelete()
-                }}
-                label = 'Delete'/>
+          
            
         </div>
     )

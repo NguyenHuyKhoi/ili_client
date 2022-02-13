@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import { Alert, Grid, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
@@ -47,13 +47,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const CollectionEditPage = () => {
+const CollectionCreatorPage = () => {
     const classes = useStyles()
     const navigate = useNavigate()
     const {token} = useContext(AuthContext)
-    const {collection, dispatch} = useContext(CollectionContext)
+    const {collection, dispatch, mode} = useContext(CollectionContext)
     const {games} = collection
     const [modal, setModal] = useState({state: ''})
+    const [alert, setAlert] = useState({});
     useEffect(() => {
         axios.get('game/library', {
             headers: {
@@ -68,23 +69,70 @@ const CollectionEditPage = () => {
         }
     }, [])
 
-    const handleSaveToServer = async () => {
-        var {cover} = collection 
-        let temp = JSON.parse(JSON.stringify(collection))
-        temp.games = collection.games.map((item) => item._id)
+    const checkCollectionSetting = () => {
+        if (collection.title == null || collection.title == '') {
+            setAlert({
+                type: 'error',
+                msg: 'Title of collection can not be empty'
+            })
+            return false
+        }
+        return true
+    }
 
-		var coverUrl =  await FirebaseHelper.uploadImage(cover, IMAGE_CATEGORIES.COLLECTION_COVER) 
-        console.log("Cover url:", coverUrl);
+    const preprocessCollection = async (collection) => {
+        var {cover} = collection 
+        let res = {...collection}
+        res.games = collection.games.map((item) => item._id)
+
+		res.cover = await FirebaseHelper.uploadImage(cover, IMAGE_CATEGORIES.COLLECTION_COVER) 
+        return res
+    }
+
+    const handleCreate = async () => {
+        if (checkCollectionSetting() == false) {
+            return
+        }
+        
+        let temp = await preprocessCollection(collection)
+        axios.post('collection/', temp, {
+            headers: {
+                'x-access-token': token
+            }
+        })    
+        .then ((res) => {
+            setModal({
+                state: 'success',
+                title: 'Done!',
+                desc: 'Create collection successfully',
+                btnLabel: 'Go library'
+            })
+        })
+        .catch((err) => {
+            console.log("Error:", err);
+        })
+    }
+    const handleUpdate = async () => {
+        if (checkCollectionSetting() == false) {
+            return
+        }
+        
+        let temp = await preprocessCollection(collection)
+        console.log("Temp ocllection:", temp);
         axios.put('collection/'+collection._id, {
-            ...temp,
-            cover: coverUrl
+            ...temp
         }, {
             headers: {
                 'x-access-token': token
             }
         })    
         .then ((res) => {
-            setModal({state: 'success'})
+            setModal({
+                state: 'success',
+                title: 'Done!',
+                desc: 'Update collection successfully',
+                btnLabel: 'Go library'
+            })
         })
     }
 
@@ -108,7 +156,7 @@ const CollectionEditPage = () => {
                 state: 'success',
                 title: 'Done !',
                 desc: 'This collection has been deleted',
-                btnLabel: 'OK'
+                btnLabel: 'Go library'
             })
         })   
         .catch((err) => {
@@ -124,10 +172,26 @@ const CollectionEditPage = () => {
     }
     return (
         <div className = {classes.container}>
+            <Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
+                anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
+                <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
+                    {
+                        alert.msg
+                    }
+                </Alert>
+            </Snackbar>
             <Topbar 
                 collection = {collection}
+                mode = {mode}
                 onExit = {() => {}}
-                onSave = {handleSaveToServer}
+                onSave = {async() => {
+                    if (mode == 'create') {
+                        await handleCreate()
+                    }
+                    else {  
+                        await handleUpdate()
+                    }
+                }}
                 onSetting = {() => setModal({state: 'setting'})}/>
             <SettingModal 
                 setting = {{
@@ -141,9 +205,9 @@ const CollectionEditPage = () => {
                 onDone = {handleSaveSetting}
             />
             <NotificationModal 
-                title = 'Done!'
-                btnLabel = 'Go Library'
-                desc = 'See results in library.'
+                title = {modal.title}
+                btnLabel = {modal.btnLabel}
+                desc = {modal.desc}
                 open = { modal.state ==='success' }     
                 onClose = {() => setModal({})}
                 onDone = {() => {
@@ -157,6 +221,7 @@ const CollectionEditPage = () => {
             <Grid container sx = {{mt: theme.spacing(8)}} columnSpacing={2}>
                 <Grid item sm={3} >
                     <CollectorInfor 
+                        mode = {mode}
                         collection = {collection}
                         onDelete = {handleDelete}/>
                 </Grid>
@@ -191,4 +256,4 @@ const CollectionEditPage = () => {
     )
 }
 
-export default CollectionEditPage
+export default CollectionCreatorPage

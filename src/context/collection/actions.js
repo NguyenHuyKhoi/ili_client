@@ -13,6 +13,17 @@ export const selectCollection = (collection) => ({
     }
 })
 
+export const startCreateCollection = () => ({
+    type: 'START_CREATE_COLLECTION'
+})
+
+export const startEditCollection = (collection) => ({
+    type: 'START_EDIT_COLLECTION',
+    payload: {
+        collection
+    }
+})
+
 export const saveCollectionSetting = (collection) => ({
     type: 'SAVE_COLLECTION_SETTING',
     payload: {

@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 const CollectionCreateModal = (props) => {
 	const classes = useStyles()
 	const [collection, setCollection] = 
-		useState({title: '', cover: 'https://vtv1.mediacdn.vn/thumb_w/650/2019/7/22/lion-king-1-1563155068176555217978-15637834089391350227836-crop-15637834158711662738000.jpeg', description: '', visibility: 'public'})
+		useState({title: '', cover: '', description: '', visibility: 'public'})
 	const {title, cover, description, visibility} = collection
 
 	var {open} = props

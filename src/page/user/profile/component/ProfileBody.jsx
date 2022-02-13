@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     body: {
         display:'flex',
         flexDirection:'column',
-        marginTop: theme.spacing(5)
+        marginTop: theme.spacing(2)
     },
 }))
 

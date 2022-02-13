@@ -52,7 +52,7 @@ export const GameCellItem = (props) => {
     const navigate = useNavigate()
     const {game} = props 
     const {dispatch} = useContext(GameContext)
-    const {title, image, owner, questions} = game
+    const {title, cover, owner, questions} = game
     const classes = useStyles()
     const handleSelect = () => {
         dispatch(selectGame(game))
@@ -64,7 +64,7 @@ export const GameCellItem = (props) => {
     return (
         <div className = {classes.container} >
             <div className = {classes.header} >
-                <img className = {classes.img} src = {createUrl(image)}
+                <img className = {classes.img} src = {createUrl(cover)}
                     onClick = {handleSelect}
                     alt = 'Cover'/>
                 <div className= {classes.questionNums} >

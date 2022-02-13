@@ -105,9 +105,9 @@ const ProfileHeader = (props) => {
                     </Typography>
                 </div>
                 <div className = {classes.inforRight}>
-                    <InforItem label = {'Games'} value = {120} />
-                    <InforItem label = {'Collections'} value = {12} />
-                    <InforItem label = {'Matches'} value = {12}/>
+                    <InforItem label = {'Games'} value = {12} />
+                    <InforItem label = {'Collections'} value = {4} />
+                    <InforItem label = {'Matches'} value = {8}/>
                 </div>
 
                 <Button 

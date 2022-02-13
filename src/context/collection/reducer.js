@@ -1,3 +1,4 @@
+import { sample_collection } from "./context"
 
 const reducer = (state, action) => {
     const {collections, collection, game} = action.payload !==undefined ? action.payload : {}
@@ -15,6 +16,19 @@ const reducer = (state, action) => {
                 ...state,
                 collection: JSON.parse(JSON.stringify(collection))
             }
+        case 'START_CREATE_COLLECTION':
+            return {
+                ...state,
+                collection: {...sample_collection},
+                mode: 'create'
+            }
+        case 'START_EDIT_COLLECTION': 
+            return {
+                ...state,
+                collection,
+                mode: 'edit'
+            }
+            return 
         case 'SAVE_COLLECTION_SETTING': 
             return {
                 ...state,

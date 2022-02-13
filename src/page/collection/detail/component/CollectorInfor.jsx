@@ -1,9 +1,12 @@
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ActiveDot from '../../../../component/ActiveDot'
 import IconButton from '../../../../component/IconButton'
 import OwnerInfor from '../../../../component/OwnerInfor'
+import { startEditCollection } from '../../../../context/collection/actions'
+import { CollectionContext } from '../../../../context/collection/context'
 import { theme } from '../../../../theme'
 import { createUrl } from '../../../../util/helper'
 
@@ -31,10 +34,13 @@ const CollectorInfor = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
     const {collection, isMine} = props
-    const { cover, owner, title, description} = collection 
+    const {dispatch} = useContext(CollectionContext)
+    const { cover, owner, title, description, visibility} = collection 
 
     const handleEdit = () => {
-        return navigate('/collection/edit/' + collection._id, {replace: false})
+        console.log("Start edit collection", collection);
+        dispatch(startEditCollection(collection))
+        return navigate('/collection/creator', {replace: false})
     }
     return (
         <div className = {classes.container}>
@@ -47,6 +53,7 @@ const CollectorInfor = (props) => {
                 <Typography variant= 'label' sx = {{color: '#000', my: theme.spacing(1)}}>
                     {description === '' || description == null ? 'No description...' : description}
                 </Typography>
+                <ActiveDot isActive = {visibility ==='public'} labels = {['public', 'private']}/>
                 
                 <div style = {{alignSelf: 'baseline', marginTop: theme.spacing(2), marginBottom: theme.spacing(2)}}>
                     {

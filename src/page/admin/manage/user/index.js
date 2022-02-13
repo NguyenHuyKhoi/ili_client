@@ -92,7 +92,8 @@ const AdminUserManagePage = () => {
                     backgroundColor: theme.palette.background.main, height: '92vh'
                 }}>
                     <div className= {classes.body}>
-                        <UserList users = {users}/>
+                        <UserList 
+                            users = {users}/>
                     </div>
                 
                 </Grid>

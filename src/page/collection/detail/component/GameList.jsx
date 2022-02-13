@@ -43,7 +43,7 @@ const GameList = (props) => {
     const {collection} = props
     const {games} = collection
     const handleEdit = () => {
-        navigate('/collection/edit/' + collection._id, {replace: true})
+        navigate('/collection/creator', {replace: true})
     }
     return (
         <div className = {classes.container}>

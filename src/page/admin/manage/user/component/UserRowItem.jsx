@@ -1,12 +1,14 @@
 import { Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../../../../component/Button'
 import { UserContext } from '../../../../../context/user/context'
 import { theme } from '../../../../../theme'
 import { createUrl } from '../../../../../util/helper'
+import axios from 'axios'
+import { AuthContext } from '../../../../../context/auth/context'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -55,15 +57,36 @@ const useStyles = makeStyles((theme) => ({
 export const UserRowItem = (props) => {
     const navigate = useNavigate()
     const {dispatch} = useContext(UserContext)
+    const {token} = useContext(AuthContext)
     const classes = useStyles()
     const {user} = props
-    const {avatar, username, email} = user
+    const [sUser, setSUser] = useState({...user})
+    const {avatar, username, email, isBanned} = sUser
     const handleView = () => {
         return navigate(`/profiles/${user._id}`, {replace: false})
     }
 
-    const handleBan = () => {
-        console.log("Banned");
+    const handleBan = (e) => {
+        e.stopPropagation()
+        var temp = isBanned == true ? false : true
+        axios.get('user/ban', {
+            headers: {
+                'x-access-token': token
+            },
+            params: {
+                id: sUser._id,
+                isBanned: temp
+            }
+        }) 
+        .then ((res) => {
+            setSUser({
+                ...sUser,
+                isBanned: temp
+            })
+        })   
+        .catch((err) => {
+            console.log("Ban user error", err, token, user._id);
+        })
     }
 
     return (
@@ -83,9 +106,9 @@ export const UserRowItem = (props) => {
                         {email}
                     </Typography>
                     <Button 
-                        variant = 'primary' 
+                        variant =  {isBanned == true ? 'success' : 'error'}
                         size = 'small' 
-                        label = 'Ban'
+                        label = {isBanned == true ? 'Unban' : 'Ban'}
                         style = {{marginLeft: theme.spacing(2)}}
                         onClick = {handleBan}/>
               

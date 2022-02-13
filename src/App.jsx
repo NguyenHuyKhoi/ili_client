@@ -14,9 +14,8 @@ import ResetPasswordPage from "./page/auth/reset_password";
 import SignupPage from "./page/auth/signup";
 import CollectionDetailPage from "./page/collection/detail";
 // Collection
-import CollectionEditPage from "./page/collection/edit";
+import CollectionCreatorPage from "./page/collection/creator";
 import CollectionLibraryPage from "./page/collection/library";
-import DiscoverPage from "./page/discover/suggestion";
 // Game
 import GameCreatorPage from "./page/game/creator";
 import GameDetailPage from "./page/game/detail";
@@ -67,10 +66,9 @@ const App = () => {
           <Route exact path = '/reset-password' element = {!user ? <ResetPasswordPage/> : <Navigate to = '/'/>}/>
 
           <Route exact path = '/collection/library' element = {user ? <CollectionLibraryPage/> : <Navigate to = '/login'/>}/>
-          <Route exact path = '/collection/edit/:id' element = {user ? <CollectionEditPage/> : <Navigate to = '/login'/>}/>
+          <Route exact path = '/collection/creator' element = {user ? <CollectionCreatorPage/> : <Navigate to = '/login'/>}/>
           <Route exact path = '/collection/detail/:id' element = {<CollectionDetailPage/> }/>
-          
-          <Route exact path = '/discover/suggestion' element = {<DiscoverPage/>}/>
+        
           <Route exact path = '/game/search' element = {<SearchPage/>}/>
           
           <Route exact path = '/game/creator' element = {user ? <GameCreatorPage/> : <Navigate to = '/login'/>}/>

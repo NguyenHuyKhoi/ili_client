@@ -8,11 +8,10 @@ const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
         display: 'flex',
-        flexDirection:'column',
+        flexDirection:'column'
     },
-
     item: {
-        paddingTop: theme.spacing(5)
+        marginBottom: theme.spacing(2)
     }
 }))
 
