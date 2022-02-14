@@ -4,6 +4,7 @@ import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../../component/Button'
+import VisibilityLabel from '../../../component/VisibilityLabel'
 import { selectCollection } from '../../../context/collection/actions'
 import { CollectionContext } from '../../../context/collection/context'
 import { theme } from '../../../theme'
@@ -68,7 +69,7 @@ export const CollectionRowItem = (props) => {
     const {dispatch} = useContext(CollectionContext)
     const classes = useStyles()
     const {collection} = props
-    const {title, games, cover, owner} = collection
+    const {title, games, cover, owner, visibility, hiddenByAdmin} = collection
     const handleView = () => {
         dispatch(selectCollection(collection))
         navigate('/collection/detail/' + collection._id, {replace: false})
@@ -94,6 +95,9 @@ export const CollectionRowItem = (props) => {
                     <Typography variant = 'btnLabel' sx = {{color: 'black', flex: 1}}> 
                         {title}
                     </Typography>
+                    <VisibilityLabel 
+                        visibility = {visibility} 
+                        hiddenByAdmin = {hiddenByAdmin}/>
                 </div>
                 <div className = {classes.rightBottom}>
                     <Typography variant = 'label' sx = {{color: '#000', flex: 1, ml: theme.spacing(1)}}>

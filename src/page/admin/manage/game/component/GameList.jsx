@@ -51,7 +51,7 @@ const GameList = (props) => {
                 :
                 games.map((item, index) => (
                     <div className = {classes.item}   key = {''+index}>
-                        <GameRowItem game = {item}/>
+                        <GameRowItem item = {item}/>
                     </div>
                 ))
             }

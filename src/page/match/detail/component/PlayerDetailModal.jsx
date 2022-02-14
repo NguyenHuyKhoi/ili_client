@@ -1,12 +1,14 @@
 import { PersonOutline } from '@mui/icons-material';
-import { Divider, Grid, Modal, Typography } from '@mui/material';
+import { Divider, Grid, Link, Modal, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
-import Icon from '../../../../component/Icon';
 import { theme } from "../../../../theme";
+import { createUrl } from '../../../../util/helper';
 import InforRowItem from './InforRowItem';
 import PlayerDetailTable from './PlayerDetailTable';
 import TopBarModal from './TopBarModal';
+
+import AppLink from '../../../../component/Link'
 const useStyles = makeStyles((theme) => ({
     container: {
         position: 'absolute',
@@ -47,8 +49,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		paddingLeft: theme.spacing(3),
-		paddingRight: theme.spacing(3),
-		alignItems: 'center'
+		paddingRight: theme.spacing(3)
 	},
 	table: {
 		padding: theme.spacing(3),
@@ -56,36 +57,59 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const ColInforItem = (props) => {
-	const classes = useStyles()
-	const {value, label} = props
-	return (
-		<div className = {classes.inforItem}>
-			<Typography variant = 'bigHeader' sx = {{color: '#000'}}>
-				{value}
-			</Typography>
-			<Typography variant = 'bigLabel' sx = {{fontWeight:'#000'}}>
-				{label}
-			</Typography>
-		</div>
-	)
-}
-
 const Header = (props) => {
 	const classes = useStyles() 
 	const {player} = props 
-	const {rank, score, correctNum, incorrectNum} = player
+	const {rank, score, correctNum, incorrectNum, avatar, profile, username, userId, platformId} = player
     let answerNum = correctNum + incorrectNum
 	let correctPercent = answerNum === 0? '0 %' : Math.round( 100 * correctNum / answerNum) + ' %'
+	console.log("Avatar", avatar)
 	return (
 		<div className = {classes.header}>
 			<Grid container >
 				<Grid item xs = {5} >
 					<div className = {classes.leftHeader}>
 						{/* <div className = {classes.pieChart}/> */}
-						<Icon name ='DataUsage' 
-							style = {{width: theme.spacing(12),height: theme.spacing(12), color: '#1368CE'}}/>
-						<ColInforItem value = {correctPercent} label= 'Correct' />
+						<img
+							style = {{
+								width: theme.spacing(12),
+								height: theme.spacing(12),
+								borderRadius: theme.spacing(6)
+								}}
+							src = {createUrl(avatar)}/>
+						<div className = {classes.inforItem}>
+							<Typography variant = 'header' sx = {{color: '#000'}}>
+								{username}
+							</Typography>
+							{
+								platformId != null ? 
+									<Link
+										href = {profile}
+										variant = 'btnLabel' 
+										underline='hover'
+										sx = {{
+											fontWeight:'#000',
+											'&:hover': {
+												cursor: 'pointer'
+											}
+										}}>
+											Profile
+									</Link>
+								: userId != null ?
+									<AppLink
+										link = {`/profiles/`+userId}
+										variant = 'btnLabel' 
+										sx = {{
+											fontWeight:'#000',
+											'&:hover': {
+												cursor: 'pointer'
+											}
+										}}
+										label = 'Profile'/>
+								: null
+							}
+						
+						</div>
 					</div>
 				</Grid>
 				<Grid item xs = {7} >
@@ -123,7 +147,8 @@ const PlayerDetailModal = (props) => {
 			props.onClose()
 		}
 	}
-	const player = players[index]
+	const player = players[index] 
+	console.log("Player: ", players)
 	return (
 		<Modal
 			open={open}

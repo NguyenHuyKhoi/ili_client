@@ -81,7 +81,7 @@ const SettingModal = (props) => {
 			[key]: value
 		})
 	}
-	const {title, cover, description, visibility} = draftSetting
+	const {title, cover, description, visibility, hiddenByAdmin} = draftSetting
 	return (
 		<Modal
 			open={open}
@@ -117,6 +117,7 @@ const SettingModal = (props) => {
 									{label: 'Private', value: 'private'}
 								]}
 								sx = {{alignSelf: 'center'}}
+								disable = {visibility == 'private' && hiddenByAdmin == true}
 								value = {visibility}
 								onChange = {(value)=>handleChange('visibility',value)}
 							/>

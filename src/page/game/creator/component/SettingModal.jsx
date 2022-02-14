@@ -57,7 +57,7 @@ const SettingModal = (props) => {
 	const classes = useStyles()
 	const {setting} = props
 	const [draftSetting, setDraftSetting] = useState(JSON.parse(JSON.stringify(setting)))
-	const {title, cover, description, visibility, subject} = draftSetting
+	const {title, cover, description, visibility, subject, hiddenByAdmin} = draftSetting
 	
 	var {open} = props
 	if (open == undefined) open = false
@@ -136,6 +136,7 @@ const SettingModal = (props) => {
 									{label: 'Public', value: 'public'},
 									{label: 'Private', value: 'private'}
 								]}
+								disable = {visibility == 'private' && hiddenByAdmin == true}
 								value = {visibility}
 								onChange = {(value)=>handleChange('visibility',value)}
 								/>

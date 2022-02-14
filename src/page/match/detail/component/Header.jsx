@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Button from '../../../../component/Button';
 import Link from '../../../../component/Link';
 import { AuthContext } from '../../../../context/auth/context';
 import { selectGame } from '../../../../context/game/other/actions';
@@ -83,10 +84,9 @@ const Header = () => {
 							<Typography variant = 'bigHeader' sx = {{color: '#000'}}>
 								{game.title}
 							</Typography>
-							
 						</div>
-						
 					</div>
+				
 				</Grid>
 				<Grid item xs = {3}>
 					<div className = {classes.right}>

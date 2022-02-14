@@ -59,9 +59,9 @@ export const UserRowItem = (props) => {
     const {dispatch} = useContext(UserContext)
     const {token} = useContext(AuthContext)
     const classes = useStyles()
-    const {user} = props
-    const [sUser, setSUser] = useState({...user})
-    const {avatar, username, email, isBanned} = sUser
+    const {item} = props
+    const [user, setUser] = useState({...item})
+    const {avatar, username, email, isBanned} = user
     const handleView = () => {
         return navigate(`/profiles/${user._id}`, {replace: false})
     }
@@ -74,13 +74,13 @@ export const UserRowItem = (props) => {
                 'x-access-token': token
             },
             params: {
-                id: sUser._id,
+                id: user._id,
                 isBanned: temp
             }
         }) 
         .then ((res) => {
-            setSUser({
-                ...sUser,
+            setUser({
+                ...user,
                 isBanned: temp
             })
         })   
@@ -106,7 +106,7 @@ export const UserRowItem = (props) => {
                         {email}
                     </Typography>
                     <Button 
-                        variant =  {isBanned == true ? 'success' : 'error'}
+                        variant =  {isBanned == true ? 'success' : 'warning'}
                         size = 'small' 
                         label = {isBanned == true ? 'Unban' : 'Ban'}
                         style = {{marginLeft: theme.spacing(2)}}

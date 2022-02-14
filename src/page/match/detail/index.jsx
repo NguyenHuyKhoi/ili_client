@@ -1,8 +1,11 @@
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useState } from 'react'
+import Button from '../../../component/Button'
 import HeaderBar from '../../../component/HeaderBar'
 import Tabbar from '../../../component/Tabbar'
+import { writeMatchReport } from '../../../context/match/helper/xlsx'
+import { theme } from '../../../theme'
 import Header from './component/Header'
 import PlayersTab from './component/PlayersTab'
 import QuestionsTab from './component/QuestionsTab'
@@ -37,12 +40,32 @@ const MatchDetailPage = () => {
     const handleTabChange = (index) => {
         setTabIndex(index)
     }
+
+    const handleDownloadReport = async () => {
+        // writeMatchReport({})
+    }
     return (
         <div className = {classes.container}>
             <HeaderBar selectedIndex = {3}/>
             <div className= {classes.header}>
                 <Header />
-                <Tabbar selectedIndex = {tabIndex} tabs = {['Players', 'Questions']} onClickTab = {handleTabChange}/>
+                <div 
+                    style = {{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }}
+                >
+                    <Tabbar selectedIndex = {tabIndex} tabs = {['Players', 'Questions']} onClickTab = {handleTabChange}/>
+                    {/* <Button	
+                        variant = 'success'
+                        label = 'Get report'
+                        size = 'small'
+                        onClick = {handleDownloadReport}
+                        style = {{marginTop: theme.spacing(2), marginBottom: theme.spacing(2)}}
+					/> */}
+                </div>
             </div>
             <div className= {classes.body}>
                 {

@@ -1,15 +1,16 @@
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useContext } from 'react'
+import axios from 'axios'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import ActiveDot from '../../../../../component/ActiveDot'
 import Button from '../../../../../component/Button'
+import VisibilityLabel from '../../../../../component/VisibilityLabel'
+import { AuthContext } from '../../../../../context/auth/context'
 import { GameCreatorContext } from '../../../../../context/game/creator/context'
 import { selectGame } from '../../../../../context/game/other/actions'
 import { GameContext } from '../../../../../context/game/other/context'
 import { theme } from '../../../../../theme'
 import { createUrl } from '../../../../../util/helper'
-
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -65,12 +66,13 @@ const useStyles = makeStyles((theme) => ({
 export const GameRowItem = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
+    const {token} = useContext(AuthContext)
     const gameDispatch = useContext(GameContext).dispatch
     const gameCreatorDispatch = useContext(GameCreatorContext).dispatch
-    const {game} = props
-    const {title, questions, owner, cover, visibility} = game
 
-
+    const {item} = props
+    const [game, setGame] = useState({...item})
+    const {title, questions, owner, cover, visibility, hiddenByAdmin} = game
 
     const handleViewDetail = () => {
         gameDispatch(selectGame(game))
@@ -79,11 +81,29 @@ export const GameRowItem = (props) => {
 
     const handleHide = (e) => {
         e.stopPropagation()
+        var isHidden = (visibility == 'public') ? true : false
+        axios.get('game/hide', {
+            headers: {
+                'x-access-token': token
+            },
+            params: {
+                _id: game._id,
+                isHidden
+            }
+        }) 
+        .then ((res) => {
+            console.log("Set hide success:", isHidden)
+            setGame({
+                ...game,
+                visibility: isHidden ? 'private' : 'public',
+                hiddenByAdmin: isHidden ? true : false
+            })
+        })   
+        .catch((err) => {
+            console.log("Ban user error", err, token, game._id);
+        })
     }
 
-    const handleDelete = (e) => {
-        e.stopPropagation()
-    }
     return (
         <div className = {classes.container} style={{backgroundColor: '#fff'}}
             onClick={handleViewDetail}>
@@ -101,30 +121,25 @@ export const GameRowItem = (props) => {
                     <Typography variant = 'btnLabel' sx = {{color: '#000', flex: 1}}> 
                         {title}
                     </Typography>
-
-                    <ActiveDot isActive = {visibility ==='public'} labels = {['public', 'private']}/>
+                    <VisibilityLabel 
+                        visibility = {visibility} 
+                        hiddenByAdmin = {hiddenByAdmin}/>
+                    
                 </div>
                 <div className = {classes.rightBottom}>
                     <Typography variant = 'label' sx = {{color: '#000', flex: 1}}>
                         {owner.username}
                     </Typography>
                     {
-                        visibility == 'public' && 
+                        (visibility == 'public' || 
+                        (visibility == 'private' && hiddenByAdmin == true)) &&
                         <Button 
-                            variant = 'warning' 
+                            variant = {visibility == 'private' ? 'success' : 'warning'}
                             size = 'small' 
                             style = {{marginLeft: theme.spacing(2)}}
-                            label = 'Hide'
+                            label = {visibility == 'private' ? 'Public' : 'Hide'}
                             onClick = {handleHide}/>
                     }
-                  
-
-                  <Button 
-                        variant = 'error' 
-                        size = 'small' 
-                        style = {{marginLeft: theme.spacing(2)}}
-                        label = 'Delete'
-                        onClick = {handleDelete}/>
                 </div>
             </div>
         </div>

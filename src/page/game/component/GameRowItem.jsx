@@ -2,8 +2,8 @@ import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import ActiveDot from '../../../component/ActiveDot'
 import Button from '../../../component/Button'
+import VisibilityLabel from '../../../component/VisibilityLabel'
 import { startEditGame } from '../../../context/game/creator/actions'
 import { GameCreatorContext } from '../../../context/game/creator/context'
 import { selectGame } from '../../../context/game/other/actions'
@@ -72,9 +72,7 @@ export const GameRowItem = (props) => {
     const gameCreatorDispatch = useContext(GameCreatorContext).dispatch
     const questionCreatorDispatch = useContext(QuestionCreatorContext).dispatch
     const {game} = props
-    const {title, questions, owner, cover, visibility} = game
-
-
+    const {title, questions, owner, cover, visibility, hiddenByAdmin} = game
 
     const handleViewDetail = () => {
         gameDispatch(selectGame(game))
@@ -114,7 +112,9 @@ export const GameRowItem = (props) => {
                         {title}
                     </Typography>
 
-                    <ActiveDot isActive = {visibility ==='public'} labels = {['public', 'private']}/>
+                    <VisibilityLabel 
+                        visibility = {visibility} 
+                        hiddenByAdmin = {hiddenByAdmin}/>
                 </div>
                 <div className = {classes.rightBottom}>
                     <Typography variant = 'label' sx = {{color: '#000', flex: 1}}>

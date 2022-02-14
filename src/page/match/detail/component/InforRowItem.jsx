@@ -25,7 +25,7 @@ export const InforRowItem = (props) => {
 				{label}
 			</Typography>
 			<Icon name = {icon} style = {{color: color}}/>
-			<Typography variant = 'btnLabel' sx = {{color: '#000', width: theme.spacing(8), textAlign: 'center'}}>
+			<Typography variant = 'btnLabel' sx = {{color: '#000', width: theme.spacing(12), textAlign: 'center'}}>
 				{value}
 			</Typography>
 		</div>

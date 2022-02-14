@@ -1,14 +1,16 @@
 import { Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
-import React, { useContext } from 'react'
+import axios from 'axios'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { selectCollection } from '../../../../../context/collection/actions'
 import Button from '../../../../../component/Button'
+import VisibilityLabel from '../../../../../component/VisibilityLabel'
+import { AuthContext } from '../../../../../context/auth/context'
+import { selectCollection } from '../../../../../context/collection/actions'
 import { CollectionContext } from '../../../../../context/collection/context'
 import { theme } from '../../../../../theme'
 import { createUrl } from '../../../../../util/helper'
-import ActiveDot from '../../../../../component/ActiveDot'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -66,10 +68,12 @@ const useStyles = makeStyles((theme) => ({
  
 export const CollectionRowItem = (props) => {
     const navigate = useNavigate()
+    const {token} = useContext(AuthContext)
     const {dispatch} = useContext(CollectionContext)
     const classes = useStyles()
-    const {collection} = props
-    const {title, games, cover, owner, visibility} = collection
+    const {item} = props
+    const [collection, setCollection] = useState({...item})
+    const {title, games, cover, owner, visibility, hiddenByAdmin} = collection
 
     const handleView = (e) => {
         dispatch(selectCollection(collection))
@@ -78,10 +82,27 @@ export const CollectionRowItem = (props) => {
 
     const handleHide = (e) => {
         e.stopPropagation()
-    }
-
-    const handleDelete = (e) => {
-        e.stopPropagation()
+        var isHidden = (visibility == 'public') ? true : false
+        axios.get('collection/hide', {
+            headers: {
+                'x-access-token': token
+            },
+            params: {
+                _id: collection._id,
+                isHidden
+            }
+        }) 
+        .then ((res) => {
+            console.log("Set hide success:", isHidden)
+            setCollection({
+                ...collection,
+                visibility: isHidden ? 'private' : 'public',
+                hiddenByAdmin: isHidden ? true : false
+            })
+        })   
+        .catch((err) => {
+            console.log("Ban user error", err, token, collection._id);
+        })
     }
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? grey[100]:'white'}}
@@ -99,29 +120,24 @@ export const CollectionRowItem = (props) => {
                     <Typography variant = 'btnLabel' sx = {{color: 'black', flex: 1}}> 
                         {title}
                     </Typography>
-                    <ActiveDot isActive = {visibility ==='public'} labels = {['public', 'private']}/>
+                    <VisibilityLabel 
+                        visibility = {visibility} 
+                        hiddenByAdmin = {hiddenByAdmin}/>
                 </div>
                 <div className = {classes.rightBottom}>
                     <Typography variant = 'label' sx = {{color: '#000', flex: 1, ml: theme.spacing(1)}}>
                         {owner.username}
                     </Typography>
                     {
-                        visibility == 'public' && 
+                        (visibility == 'public' || 
+                        (visibility == 'private' && hiddenByAdmin == true)) &&
                         <Button 
-                            variant = 'warning' 
+                            variant = {visibility == 'private' ? 'success' : 'warning'}
                             size = 'small' 
                             style = {{marginLeft: theme.spacing(2)}}
-                            label = 'Hide'
+                            label = {visibility == 'private' ? 'Public' : 'Hide'}
                             onClick = {handleHide}/>
                     }
-                  
-
-                  <Button 
-                        variant = 'error' 
-                        size = 'small' 
-                        style = {{marginLeft: theme.spacing(2)}}
-                        label = 'Delete'
-                        onClick = {handleDelete}/>
               
                 </div>
             </div>

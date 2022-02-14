@@ -26,7 +26,6 @@ const getRows = (players, stage) => {
 
     var wordEarnScores = 0
     ownAnswers.forEach((answer) => {
-      console.log("Check:", answer, answer.earnScore);
       if (answer.isCorrect && answer.earnScore) wordEarnScores += answer.earnScore
     })
      console.log("Word earn scores:", wordEarnScores, ownAnswers);

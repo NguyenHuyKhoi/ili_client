@@ -2,9 +2,11 @@ import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@m
 import React from 'react'
 import { theme } from '../theme'
 const WrappedRadioGroup = (props) => {
-    const {title, list, value} = props
+    const {title, list, value, disable} = props
+    if (disable == null) disable = false
     const handleChange = (value) => {
         console.log("change value :", value)
+        if (disable == false) return
         if (props.onChange) {
             props.onChange(value)
         }

@@ -1,12 +1,11 @@
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
-import ActiveDot from '../../../../component/ActiveDot'
 import IconButton from '../../../../component/IconButton'
 import OwnerInfor from '../../../../component/OwnerInfor'
 import { theme } from '../../../../theme'
 import { createUrl } from '../../../../util/helper'
-
+import VisibilityLabel from '../../../../component/VisibilityLabel'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1, 
@@ -33,7 +32,7 @@ const GameInfor = (props) => {
     const classes = useStyles()
 
     const {game, isMine, isAdmin} = props
-    const {title, description, cover, owner, visibility} = game
+    const {title, description, cover, owner, visibility, hiddenByAdmin} = game
     const handleEdit = () => {
         if (props.onEdit) {
             props.onEdit()
@@ -65,10 +64,12 @@ const GameInfor = (props) => {
                 <Typography variant = 'bigLabel' sx = {{ color: 'black', mt: theme.spacing(2)}}>
                     {title}
                 </Typography>
-                <ActiveDot isActive = {visibility === 'public'} labels = {['public', 'private']}/>
                 <Typography variant = 'label' sx = {{my: theme.spacing(2)}}>
                     {description === '' || description == null? 'No description...' : description}
                 </Typography>
+                <VisibilityLabel 
+                    visibility = {visibility} 
+                    hiddenByAdmin = {hiddenByAdmin}/>
                 <div className = {classes.btnBar} >
                     {
                         isMine && 
