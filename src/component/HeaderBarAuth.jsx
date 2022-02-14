@@ -6,12 +6,13 @@ import logo from '../asset/image/logo.png'
 import { logoutSuccess } from '../context/auth/actions'
 import { AuthContext } from '../context/auth/context'
 import { startCreateGame } from '../context/game/creator/actions'
-import { GameCreatorContext, sample_game } from '../context/game/creator/context'
+import { GameCreatorContext } from '../context/game/creator/context'
 import { initQuestions } from '../context/question/creator/actions'
-import { QuestionCreatorContext } from '../context/question/creator/context'
+import { QuestionCreatorContext, QUESTION_TYPES } from '../context/question/creator/context'
 import { theme } from '../theme'
 import Button from './Button'
 import HeaderTabbar from './HeaderTabbar'
+import { cloneQuestion } from '../context/question/creator/reducer'
 import IconButton from './IconButton'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -77,7 +78,11 @@ const HeaderBarAuth = (props) => {
         .then((res) => {
             console.log("Logout success")
             authDispatch(logoutSuccess())
+            return navigate('/', {replace: false})
         })   
+        .catch((err) => {
+            console.log("Logout error:", err)
+        })
     }
     
     const handleGoProfile = () => {
@@ -86,9 +91,8 @@ const HeaderBarAuth = (props) => {
 
 
     const handleCreate = () => {
-        console.log("Click Create game", sample_game.questions);
         gameCreatorDispatch(startCreateGame())
-        questionCreatorDispatch(initQuestions(sample_game.questions))
+        questionCreatorDispatch(initQuestions([cloneQuestion(QUESTION_TYPES[0].sample)]))
         setTimeout(() => {
             return navigate('/game/creator',{replace: true})
         }, 1000)

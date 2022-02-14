@@ -5,10 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import logo from '../asset/image/logo.png'
 import { logoutSuccess } from '../context/auth/actions'
 import { AuthContext } from '../context/auth/context'
-import { startCreateGame } from '../context/game/creator/actions'
-import { GameCreatorContext } from '../context/game/creator/context'
 import { theme } from '../theme'
-import Button from './Button'
 import HeaderTabbar from './HeaderTabbar'
 import IconButton from './IconButton'
 const useStyles = makeStyles((theme) => ({
@@ -64,6 +61,7 @@ const AdminQuestionBanksPage = (props) => {
         .then((res) => {
             console.log("Logout success")
             authDispatch(logoutSuccess())
+            return navigate('/', {replace: true})
         })   
     }
     

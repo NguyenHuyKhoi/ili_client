@@ -42,7 +42,6 @@ const MiniQuestionList = (props) => {
     const classes = useStyles()
     const {questionIndex, questions, dispatch, isEditMode} =  useContext(QuestionCreatorContext)
     const handleSelected = (index) => {
-        console.log("Select question to view:", index);
         dispatch(selectQuestion(index))
     }
 

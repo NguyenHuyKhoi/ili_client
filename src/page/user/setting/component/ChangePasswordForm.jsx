@@ -3,12 +3,12 @@ import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
 import Button from '../../../../component/Button'
+import LoadingModal from '../../../../component/LoadingModal'
 import TextField from '../../../../component/TextField'
 import { AuthContext } from '../../../../context/auth/context'
 import { theme } from '../../../../theme'
 const useStyles = makeStyles((theme) => ({
     container: {
-        flex: 1,
 		display: 'flex',
 		flexDirection: 'column',
 		padding: theme.spacing(2),
@@ -24,6 +24,7 @@ const ChangePasswordForm = (props) => {
 	const {token} = useContext(AuthContext)
 	const [inputs, setInputs] = useState({old: "", neww: "", repeat: ""})
     const [alert, setAlert] = useState({})
+	const [modal, setModal] = useState({})
     const {old, neww, repeat} = inputs
 
   	const handleSubmit = (e) => {
@@ -65,6 +66,8 @@ const ChangePasswordForm = (props) => {
 			return
 		}
 
+		setModal({state: 'loading'})
+
 		axios.post('auth/change-password', {
 			token,
 			oldPassword: old,
@@ -75,12 +78,18 @@ const ChangePasswordForm = (props) => {
 				type: 'success',
 				msg: 'Change password successfully'
 			})
+			setInputs({
+				old: '', neww:'', repeat: ''
+			})
 		})
 		.catch ((err) => {
 			setAlert({
 				type: 'error',
 				msg: 'Something is wrong: ' + err.response.data.error
 			})
+		})
+		.finally(() => {
+			setModal({})
 		})
   }
 
@@ -93,6 +102,8 @@ const ChangePasswordForm = (props) => {
 	}
   	return (
     	<div className = {classes.container}>
+			<LoadingModal 
+				open = {modal.state == 'loading'}/>
 			<Snackbar open={alert.type!==undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>
@@ -106,7 +117,8 @@ const ChangePasswordForm = (props) => {
 				<Grid item xs = {6} >
 					<TextField 
 						placeholder="Old password..." 
-						style = {{width: '100%'}} 
+						// type="password"  
+						style = {{width: '100%', textAlign: 'center'}} 
 						value={old}
 						onChange = {(value) => handleChange('old', value)}
 					/>
@@ -117,15 +129,17 @@ const ChangePasswordForm = (props) => {
 				<Grid item xs = {6} >
 					<TextField 
 						placeholder="New password..." 
-						style = {{width: '100%'}} 
+						// type="password"  
+						style = {{width: '100%', textAlign: 'center'}} 
 						value={neww}
-						onChange = {(value) => handleChange('newww', value)}
+						onChange = {(value) => 	handleChange('neww', value)}
 					/>
 				</Grid>
 				<Grid item xs = {6} >
 					<TextField 
 						placeholder="Repeat new password..." 
-						style = {{width: '100%'}} 
+						// type="password"  
+						style = {{width: '100%', textAlign: 'center'}} 
 						value={repeat}
 						onChange = {(value) => handleChange('repeat', value)}
 					/>

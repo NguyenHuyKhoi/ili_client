@@ -38,15 +38,39 @@ class WordTableHelper {
     }
     
     static randomColor = () => {
-        var colors = ['#82DCE1','#eb6946', '#82AF9B','#EBDCC3','#557882','#FAC846','#BE6E82', '#506E00',
-        '#3e7bbc', '#24486f', '#9f7272', '#ffcd9a']
+        var colors = [
+            '#82DCE1',
+            '#eb6946', 
+            '#82AF9B',
+            '#EBDCC3',
+            '#557882',
+            '#FAC846',
+            '#BE6E82', 
+            '#506E00',
+            '#3e7bbc', 
+            '#24486f', 
+            '#9f7272', 
+            '#ffcd9a',
+            '#541743',
+            '#FFC300',
+            '#29374D',
+            '#560725',
+            '#3F4167',
+            '#367E81',
+            '#1A182E',
+            '#375E89',
+            '#E65239',
+            '#6E65A1'
+        ]
         return colors[Math.floor(Math.random() * colors.length)]
     }
     
     static tryAddAnswer = (char_table, correct_answers, word) => {
         // Return result: true/false, msg:
-        console.log("handle add answer :", word);
-        if (word === '') return 
+        if (word == '') return {
+            ok: false, 
+            msg: 'Word is empty...'
+        }
         if (correct_answers.indexOf(word) !== -1) {
             return {
                 ok: false,
@@ -78,7 +102,7 @@ class WordTableHelper {
             times = times - 1
         }
         return {
-            type: 'error',
+            ok: false, 
             msg: 'Add keyword error, try again... ' 
         }
     }

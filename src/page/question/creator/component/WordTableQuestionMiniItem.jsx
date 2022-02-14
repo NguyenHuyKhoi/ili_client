@@ -55,6 +55,7 @@ const WordTableQuestionMiniItem = (props) => {
     const limitTitle = title != null? title.substring(0, 20) + '...' : 'Question'
 
     const isFilled = char_table.findIndex(item => item == null) == -1
+
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? '#fff': theme.palette.background.main}}>
             <Typography variant='caption' sx = {{alignSelf:'center'}}>
@@ -79,7 +80,7 @@ const WordTableQuestionMiniItem = (props) => {
                             <Grid item xs = {12 / SAMPLE_SIZE} key = {'' + index}>
                                 <div 
                                     style = {{
-                                        backgroundColor: isFilled ? theme.palette.success.main : 'whote',
+                                        backgroundColor: isFilled ? theme.palette.success.main : 'white',
                                         height: theme.spacing(1.2),
                                         borderRadius: theme.spacing(0.2),
                                         border: '1px solid #000'

@@ -48,7 +48,8 @@ const Topbar = (props) => {
     const {title} = game
 
     const handleShowDefectiveQuestions = () => {
-        if (showDefectives != DEFECTIVE_CHECK_TYPES.NOT_CHECK && defectiveQuestions.length == 0) {
+        if ((showDefectives != DEFECTIVE_CHECK_TYPES.NOT_CHECK) 
+            && (defectiveQuestions.length == 0)) {
             console.log("No need check anymore");
             return 
         }

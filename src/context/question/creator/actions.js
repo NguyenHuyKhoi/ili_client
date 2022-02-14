@@ -7,7 +7,7 @@ export const selectQuestion = (index) => ({
 })
 
 export const initQuestions = (questions, isEditMode = false) => {
-    console.log("Init question isEditMode:", isEditMode);
+    console.log("Init question isEditMode:", questions);
     return ({
         type: 'INIT_QUESTIONS',
         payload: {

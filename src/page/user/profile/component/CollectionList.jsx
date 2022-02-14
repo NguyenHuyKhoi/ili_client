@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'column'
     },
     item: {
-        marginBottom: theme.spacing(2)
+        marginBottom: theme.spacing(5)
     }
 }))
 

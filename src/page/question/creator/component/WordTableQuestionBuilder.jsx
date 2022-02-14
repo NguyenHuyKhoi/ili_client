@@ -51,8 +51,9 @@ const WordTableQuestionBuilder = (props) => {
     }
 
     const handleAddAnswer = (word) => {
-        if (word === '') return 
+        if (word == '') return 
         let res = WordTableHelper.tryAddAnswer(char_table, correct_answers, word)
+        console.log("Res add answer:", res)
         if (res.ok == false) {
             setAlert({
                 type: 'error',

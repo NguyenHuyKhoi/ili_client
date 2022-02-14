@@ -78,7 +78,7 @@ const HomeQuickNavCard = (props) => {
                 <Typography variant = 'bigLabel'>
                     {title}
                 </Typography>
-                <Typography variant = 'label' style = {{flex: 1, marginTop: theme.spacing(2)}}>
+                <Typography variant = 'btnLabel' style = {{flex: 1, marginTop: theme.spacing(2)}}>
                     {description}
                 </Typography>
 

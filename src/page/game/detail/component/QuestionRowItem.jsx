@@ -55,8 +55,10 @@ const useStyles = makeStyles((theme) => ({
         alignSelf:'center'
     },
     hintImage: {
-        width: '85%',
-        aspectRatio: 1.4
+        width: '65%',
+        aspectRatio: 1.4,
+        border: 'solid 1px #000000',
+        borderRadius: '255px 5px 225px 5px/20px 225px 5px 255px',
     },
     answer: {
         display: 'flex',
@@ -124,7 +126,7 @@ const QuestionRowItem = (props) => {
                     <Typography variant = 'label'>
                         {`${index + 1} - ${typeName}`}
                     </Typography>
-                    <Typography variant = 'bigLabel' sx = {{ color: '#000'}}>
+                    <Typography variant = 'btnLabel' sx = {{ color: '#000'}}>
                         {title}
                     </Typography>
                 </div>

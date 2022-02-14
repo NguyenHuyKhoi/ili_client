@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useState } from 'react'
+import EmptyBox from '../../../../../component/EmptyBox'
 import IconButton from '../../../../../component/IconButton'
 import { theme } from '../../../../../theme'
 import QuestionRowItem from '../../../../game/detail/component/QuestionRowItem'
@@ -58,6 +59,14 @@ const QuestionList = (props) => {
             </div>
             <div className = {classes.list} >
             {
+                questions.length ===0 ? 
+                <EmptyBox
+                    style= {{width: '100%', marginTop: theme.spacing(5)}}
+                    label = " You have not create any questions..."
+                    onClick = {() => {
+                        if (props.onClickEmpty) props.onClickEmpty()
+                    }}/>
+                :
                 questions.map((item, index) => (
                     <div className = {classes.item}   key = {''+index}>
                         <QuestionRowItem 

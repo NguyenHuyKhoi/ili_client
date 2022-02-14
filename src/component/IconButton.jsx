@@ -21,7 +21,6 @@ const IconButton = (props) => {
     
     if (!variant) variant = 'default'
     if (!size) size = 'medium'
-    console.log("Icon :", icon)
 
     return (
         <div className = {classes.container}

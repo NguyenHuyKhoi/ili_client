@@ -68,6 +68,13 @@ const ResetPasswordPage = (props) => {
                 type: 'success'
             })
         })
+        .catch((err) => {
+            console.log("Reset password error:", err)
+            setAlert({
+                type: 'error',
+                msg: 'Token is used...'
+            })
+        })
     }
 
     const handleChange = (key, value) => {
@@ -85,7 +92,7 @@ const ResetPasswordPage = (props) => {
         <div className = {classes.container}>
             <GoHomeBtn/>
             {
-                alert.type ===undefined ?
+                alert.type == 'success' ?
                 <div className = {classes.form}>
                     <Typography variant = 'header' sx = {{fontWeight: 'bold', mt: theme.spacing(2), alignSelf: 'center'}}>
                         Success

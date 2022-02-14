@@ -13,13 +13,15 @@ import { AuthContext } from '../../../../context/auth/context'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
-        height: '100vh',
+        maxHeight: '60vh',
         display: 'flex',
         flexDirection:'column',
+        overflowY: 'hidden',
         paddingTop: theme.spacing(2)
     },
     list: {
         display:'flex',
+        overflowY: 'scroll',
         flexDirection:'column',
         marginTop: theme.spacing(2)
     },

@@ -138,7 +138,10 @@ const SettingModal = (props) => {
 								]}
 								disable = {visibility == 'private' && hiddenByAdmin == true}
 								value = {visibility}
-								onChange = {(value)=>handleChange('visibility',value)}
+								onChange = {(value)=>{
+									console.log("Change visibility: ",value)
+									handleChange('visibility',value)
+								}}
 								/>
 		
 						</div>

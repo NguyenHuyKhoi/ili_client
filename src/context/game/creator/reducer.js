@@ -1,5 +1,5 @@
-import { QUESTION_TYPES, QUESTION_TYPES_ID } from "../../question/creator/context";
-import {sample_game } from "./context"
+import { QUESTION_TYPES_ID } from "../../question/creator/context";
+import { sample_game } from "./context";
 
 export const validateGameSetting = (game) => {
     const {title} = game

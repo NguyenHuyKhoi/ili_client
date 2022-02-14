@@ -74,7 +74,7 @@ const ValidateQuestionItem = (props) => {
 					className= {classes.img} alt = 'Hint'/>
 				<Typography variant = 'btnLabel' sx = {{color: '#000',alignSelf: 'center', flex: 1, marginLeft: theme.spacing(1), marginRight: theme.spacing(2)}}>
 					{
-						(index) + '. '+ 
+						(index+1) + '. '+ 
 						(
 							title == null || title === '' ?
 							'Untitled'

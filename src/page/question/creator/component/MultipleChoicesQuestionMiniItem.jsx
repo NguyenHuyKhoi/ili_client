@@ -52,7 +52,7 @@ const MultipleChoicesQuestionMiniItem = (props) => {
     const classes = useStyles()
     const {question} = props
     //console.log("Question :", question)
-    const {title, image, correct_answer} = question
+    const {title, image, correct_answer, time_limit} = question
     const limitTitle = title != null? title.substring(0, 20) + '...' : 'Question'
     return (
         <div className = {classes.container} style={{backgroundColor: props.selected ? '#fff': theme.palette.background.main}}>
@@ -66,7 +66,7 @@ const MultipleChoicesQuestionMiniItem = (props) => {
 
             <div className= {classes.time} >
                 <Typography variant='caption' sx = {{color: '#000'}}>
-                    20
+                    {time_limit}
                 </Typography>
             </div>
             <div className = {classes.answers}>

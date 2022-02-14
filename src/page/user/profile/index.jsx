@@ -30,6 +30,9 @@ const ProfilePage = (props) => {
     const gameDispatch = useContext(GameContext).dispatch
     const collectionDispatch = useContext(CollectionContext).dispatch
 
+    const {games} = useContext(GameContext)
+    const {collections} = useContext(CollectionContext)
+
     const {token} = useContext(AuthContext)
     useEffect(() => {
         // Get user profile
@@ -80,7 +83,10 @@ const ProfilePage = (props) => {
     return (
         <div className = {classes.container}>
             <HeaderBar/>
-            <ProfileHeader user = {user}/>
+            <ProfileHeader 
+                user = {user}
+                game_num = {games.length}
+                collection_num = {collections.length}/>
             <ProfileBody/>
         </div>
     )

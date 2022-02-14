@@ -6,6 +6,7 @@ import background from '../../../asset/image/background.jpg'
 import Button from '../../../component/Button'
 import GoHomeBtn from '../../../component/GoHomeBtn'
 import Link from '../../../component/Link'
+import LoadingModal from '../../../component/LoadingModal'
 import TextField from '../../../component/TextField'
 import { theme } from '../../../theme'
 import { validateEmail } from '../../../util/validator'
@@ -53,6 +54,7 @@ const SignupPage = () => {
     const classes = useStyles()
     const [inputs, setInputs] = useState({email: "", password: ""})
     const [alert, setAlert] = useState({})
+    const [modal, setModal] = useState({})
     const {email, password} = inputs
 
     const handleSignup = (e) => {
@@ -69,6 +71,8 @@ const SignupPage = () => {
         //     return
         // }
 
+        setModal({state: 'loading'})
+
         axios.post('auth/signup', { email, password})
         .then ((res) => {
             setAlert({
@@ -82,6 +86,9 @@ const SignupPage = () => {
                 msg: 'Sign up error'
             })
         })
+        .finally(() => {
+            setModal({})
+        })
     }
     const handleChange = (key, value) => {
         setAlert({})
@@ -92,6 +99,8 @@ const SignupPage = () => {
     }
     return (
         <div className = {classes.container}>
+            <LoadingModal 
+				open = {modal.state == 'loading'}/>
             <Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>

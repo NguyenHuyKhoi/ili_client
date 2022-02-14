@@ -30,6 +30,7 @@ const QuestionBuilder = (props) => {
     const {questions, questionIndex,defectiveQuestions, dispatch, showDefectives, isEditMode} = useContext(QuestionCreatorContext)
 
     useEffect(() => {
+        console.log("Show defectives has change:", showDefectives)
         if (showDefectives == DEFECTIVE_CHECK_TYPES.CHECK_AND_SHOW) {
             handleShowDefectiveQuestions()
         }
@@ -54,10 +55,10 @@ const QuestionBuilder = (props) => {
         var qs = []
         questions.forEach((item, index) => {
             let cloned = cloneQuestion(item)
+            console.log("Cloned question: ", item, cloned)
             let defects = validateQuestion(cloned)
             if (defects.length > 0) {
                 cloned.defectives = defects
-
                 console.log("Defective questions:", cloned)
                 qs.push(cloned)
             }
@@ -70,7 +71,9 @@ const QuestionBuilder = (props) => {
 
     const handleSelectFixQuestion = (index) => {
         setModal({})
+        console.log("Select question: ", index)
         dispatch(selectQuestion(index))
+        dispatch(showDefectiveQuestions(DEFECTIVE_CHECK_TYPES.CHECK_AND_UNSHOW))
     }
 
     const handleSelectQuestionType = (id) => {
@@ -98,6 +101,7 @@ const QuestionBuilder = (props) => {
     }
 
     const renderBuilder = () => {
+        console.log("Question: ", question)
         switch (question.typeId) {
             case  QUESTION_TYPES_ID.MULTIPLE_CHOICE :
                 return  <MultipleChoicesQuestionBuilder 
@@ -152,8 +156,7 @@ const QuestionBuilder = (props) => {
                 onClose = {() => {
                     setModal({})
                     dispatch(showDefectiveQuestions(DEFECTIVE_CHECK_TYPES.CHECK_AND_UNSHOW))
-                }}
-                onCancel = {() => setModal({})}/>
+                }}/>
 
             <DeleteQuestionModal 
                 open = {modal.state === 'delete_question'}     

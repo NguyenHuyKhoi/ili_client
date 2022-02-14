@@ -77,7 +77,8 @@ const InforItem = (props) => {
 const ProfileHeader = (props) => {
     const navigate = useNavigate()
     const classes = useStyles()
-    const {user} = props
+    const {user, game_num, collection_num} = props
+
 
     const me = useContext(AuthContext).user
     var {avatar, banner, username} = user
@@ -105,9 +106,8 @@ const ProfileHeader = (props) => {
                     </Typography>
                 </div>
                 <div className = {classes.inforRight}>
-                    <InforItem label = {'Games'} value = {12} />
-                    <InforItem label = {'Collections'} value = {4} />
-                    <InforItem label = {'Matches'} value = {8}/>
+                    <InforItem label = {'Games'} value = {game_num} />
+                    <InforItem label = {'Collections'} value = {collection_num} />
                 </div>
 
                 <Button 

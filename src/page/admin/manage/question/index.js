@@ -9,10 +9,9 @@ import NotificationModal from '../../../../component/NotificationModal'
 import SideMenu from '../../../../component/SideMenu'
 import Tabbar from '../../../../component/Tabbar'
 import { AuthContext } from '../../../../context/auth/context'
-import { getCollectionsSuccess } from '../../../../context/collection/actions'
-import { sample_game } from '../../../../context/game/creator/context'
 import { initQuestions } from '../../../../context/question/creator/actions'
-import { QuestionCreatorContext, QUESTION_TYPES_ID } from '../../../../context/question/creator/context'
+import { QuestionCreatorContext, QUESTION_TYPES, QUESTION_TYPES_ID } from '../../../../context/question/creator/context'
+import { cloneQuestion } from '../../../../context/question/creator/reducer'
 import { getQuestionsSuccess } from '../../../../context/question/other/actions'
 import { QuestionBankContext } from '../../../../context/question/other/context'
 import { theme } from '../../../../theme'
@@ -139,8 +138,7 @@ const AdminQuestionManagePage = () => {
     }
 
     const handleCreate = () => {
-        console.log("Sample questions:", sample_game.questions);
-        questionCreatorDispatch(initQuestions([...sample_game.questions]))
+        questionCreatorDispatch(initQuestions([cloneQuestion(QUESTION_TYPES[0].sample)]))
         return navigate('/admin/question/creator', {replace: false})
     }
 

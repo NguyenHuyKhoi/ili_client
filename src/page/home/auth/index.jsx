@@ -11,7 +11,8 @@ import HomeQuickNavCard from '../../../component/HomeQuickNavCard'
 import { startCreateGame } from '../../../context/game/creator/actions'
 import { GameCreatorContext, sample_game } from '../../../context/game/creator/context'
 import { initQuestions } from '../../../context/question/creator/actions'
-import { QuestionCreatorContext } from '../../../context/question/creator/context'
+import { QuestionCreatorContext, QUESTION_TYPES } from '../../../context/question/creator/context'
+import { cloneQuestion } from '../../../context/question/creator/reducer'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -68,9 +69,8 @@ const HomePage = () => {
     const gameCreatorDispatch = useContext(GameCreatorContext).dispatch
     const questionCreatorDispatch = useContext(QuestionCreatorContext).dispatch
     const handleCreate = () => {
-        console.log("Click Create game", sample_game.questions);
         gameCreatorDispatch(startCreateGame())
-        questionCreatorDispatch(initQuestions(sample_game.questions))
+        questionCreatorDispatch(initQuestions([cloneQuestion(QUESTION_TYPES[0].sample)]))
         setTimeout(() => {
             return navigate('/game/creator',{replace: true})
         }, 1000)

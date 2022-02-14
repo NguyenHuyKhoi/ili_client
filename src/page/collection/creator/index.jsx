@@ -17,6 +17,7 @@ import CollectorInfor from './component/CollectorInfor'
 import GameList from './component/GameList'
 import SettingModal from './component/SettingModal'
 import Topbar from './component/Topbar'
+import LoadingModal from '../../../component/LoadingModal'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -94,6 +95,8 @@ const CollectionCreatorPage = () => {
             return
         }
         
+        console.log("Set modal state loading:")
+        setModal({state: 'loading'})
         let temp = await preprocessCollection(collection)
         axios.post('collection/', temp, {
             headers: {
@@ -109,6 +112,7 @@ const CollectionCreatorPage = () => {
             })
         })
         .catch((err) => {
+            setModal({})
             console.log("Error:", err);
         })
     }
@@ -117,6 +121,7 @@ const CollectionCreatorPage = () => {
             return
         }
         
+        setModal({state: 'loading'})
         let temp = await preprocessCollection(collection)
         console.log("Temp ocllection:", temp);
         axios.put('collection/'+collection._id, {
@@ -133,6 +138,10 @@ const CollectionCreatorPage = () => {
                 desc: 'Update collection successfully',
                 btnLabel: 'Go library'
             })
+        })
+        .catch((err) => {
+            console.log("Error on update: ", err)
+            setModal({})
         })
     }
 
@@ -170,6 +179,7 @@ const CollectionCreatorPage = () => {
             })
         })
     }
+    console.log("Modal state: ", modal.state)
     return (
         <div className = {classes.container}>
             <Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
@@ -193,6 +203,8 @@ const CollectionCreatorPage = () => {
                     }
                 }}
                 onSetting = {() => setModal({state: 'setting'})}/>
+            <LoadingModal 
+                open = {modal.state == 'loading'}/>
             <SettingModal 
                 setting = {{
                     title: collection.title,
@@ -200,7 +212,7 @@ const CollectionCreatorPage = () => {
                     cover: collection.cover,
                     visibility: collection.visibility
                 }}
-                open = {modal.state ==='setting'}
+                open = {modal.state =='setting'}
                 onClose = {() => setModal({})}
                 onDone = {handleSaveSetting}
             />

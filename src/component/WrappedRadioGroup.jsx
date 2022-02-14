@@ -6,7 +6,7 @@ const WrappedRadioGroup = (props) => {
     if (disable == null) disable = false
     const handleChange = (value) => {
         console.log("change value :", value)
-        if (disable == false) return
+        if (disable) return
         if (props.onChange) {
             props.onChange(value)
         }

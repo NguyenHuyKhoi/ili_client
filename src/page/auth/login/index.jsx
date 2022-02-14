@@ -7,6 +7,7 @@ import background from '../../../asset/image/background.jpg'
 import Button from '../../../component/Button'
 import GoHomeBtn from '../../../component/GoHomeBtn'
 import Link from '../../../component/Link'
+import LoadingModal from '../../../component/LoadingModal'
 import TextField from '../../../component/TextField'
 import { loginSuccess } from '../../../context/auth/actions'
 import { AuthContext } from '../../../context/auth/context'
@@ -61,6 +62,7 @@ const LoginPage = () => {
     const {dispatch} = useContext(AuthContext)
     const [inputs, setInputs] = useState({email: "", password: ""})
     const [alert, setAlert] = useState({})
+    const [modal, setModal] = useState({})
     const {email, password} = inputs
 
     const handleLogin = (e) => {
@@ -77,6 +79,7 @@ const LoginPage = () => {
         //     return
         // }
 
+        setModal({state: 'loading'})
         axios.post('auth/login', { email, password})
             .then ((res) => {
                 let user = res.data
@@ -94,6 +97,9 @@ const LoginPage = () => {
                     msg: 'Login error: wrong email/password or user is banned.'
                 })
             })
+            .finally(() => {
+                setModal({})
+            })
     }
 
     const handleChange = (key, value) => {
@@ -106,6 +112,8 @@ const LoginPage = () => {
     
     return (
         <div className = {classes.container}>
+            <LoadingModal 
+				open = {modal.state == 'loading'}/>
             <Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>

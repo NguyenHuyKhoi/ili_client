@@ -16,10 +16,8 @@ export const sample_game = {
     title: null,
     description: null,
     cover: null,
-    visibility: 'private',
-    subject: 'others',
-    questionIndex: 0,
-    questions: [JSON.parse(JSON.stringify(QUESTION_TYPES[0].sample))]
+    visibility: 'public',
+    subject: 'others'
 }
 
 const INITIAL_STATE = () => {

@@ -68,7 +68,7 @@ const PicWordQuestionBuilder = (props) => {
                 aspectRatio: 1.6,
                 alignItems: 'center'
             }}>
-                <Grid container columnSpacing={3} rowSpacing={3}>
+                <Grid container columnSpacing={4} rowSpacing={4}>
                 {
                     images.map((image, index) => (
                         <Grid item xs = {6} key = {'' + index}>
@@ -90,7 +90,7 @@ const PicWordQuestionBuilder = (props) => {
                 style = {{ 
                     backgroundColor: 'white', textAlign: 'center',
                     padding: theme.spacing(1),
-                    width: '50%', fontSize: 80,
+                    width: '50%', fontSize: 60,
                     paddingLeft: theme.spacing(2),
                     paddingRight: theme.spacing(2)
                 }}

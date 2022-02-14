@@ -14,6 +14,7 @@ import FirebaseHelper, { IMAGE_CATEGORIES } from '../../../firebase'
 import QuestionBuilder from '../../question/creator/component/QuestionBuilder'
 import SettingModal from './component/SettingModal'
 import Topbar from './component/Topbar'
+import LoadingModal from '../../../component/LoadingModal'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex: 1,
@@ -84,6 +85,7 @@ const GameCreatorPage = (props) => {
             setModal({state: 'setting'})
         }
         else if (mode === 'create') {
+            setModal({state: 'loading'})
             // Add index for question:
             game.questions = questions.map((question, index) => ({
                 ...cloneQuestion(question), 
@@ -110,6 +112,7 @@ const GameCreatorPage = (props) => {
                 console.log("Create game success")
             })
             .catch(() => {
+                setModal({})
                 setAlert({
                     type: 'error',
                     msg: 'Some thing wrong, try again later...'
@@ -118,6 +121,7 @@ const GameCreatorPage = (props) => {
         }
         else if (mode === 'edit') {
             console.log("Edit game success")
+            setModal({state: 'loading'})
             game.questions = questions.map((question, index) => ({
                 ...cloneQuestion(question),
                 index
@@ -125,16 +129,21 @@ const GameCreatorPage = (props) => {
             let { cover} = game 
             let coverUrl =  await FirebaseHelper.uploadImage(cover, IMAGE_CATEGORIES.GAME_COVER) 
             let tempGame = await uploadQuestionImages(game)
-            axios.post('game/edit/'+game._id, {
-                ...tempGame,
-                cover: coverUrl
-            }, {
-            headers: {
-                'x-access-token': token
-            }
-        })    
-        .then(() => {
-                setModal({state: 'success'})
+            axios.post('game/edit/'+game._id, 
+                {
+                    ...tempGame,
+                    cover: coverUrl
+                }, {
+                    headers: {
+                        'x-access-token': token
+                    }
+                })    
+            .then(() => {
+                    setModal({state: 'success'})
+                })
+            .catch ((err) => {
+                console.log("Edit game error:", err)
+                setModal({})
             })
         }
     }
@@ -146,6 +155,8 @@ const GameCreatorPage = (props) => {
 
     return (
         <div className = {classes.container}>
+            <LoadingModal 
+				open = {modal.state == 'loading'}/>
             <Snackbar open={alert.type !== undefined} autoHideDuration={5000} onClose={() => setAlert({})}
                 anchorOrigin = {{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert onClose={() => setAlert({})} severity={alert.type} sx={{ width: '100%' }}>

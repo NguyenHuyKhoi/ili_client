@@ -9,6 +9,7 @@ import { DEFECTIVE_CHECK_TYPES, QuestionCreatorContext, QUESTION_TYPES_ID } from
 import FirebaseHelper, { IMAGE_CATEGORIES } from '../../../firebase'
 import ImportTemplateModal from './component/ImportTemplateModal'
 import QuestionBuilder from './component/QuestionBuilder'
+import LoadingModal from '../../../component/LoadingModal'
 import Topbar from './component/Topbar'
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -77,8 +78,10 @@ const QuestionCreatorPage = (props) => {
             // Upload new questions
             // Add index for question:
 
+            setModal({state: 'loading'})
 
             tempQuestions = await uploadQuestionImages(questions)
+            console.log("Push questions:", tempQuestions)
             axios.post('question/create', 
             tempQuestions, 
                 {
@@ -90,7 +93,9 @@ const QuestionCreatorPage = (props) => {
                 setModal({state: 'success'})
                 console.log("Create questions success")
             })
-            .catch(() => {
+            .catch((err) => {
+                console.log("Error on create question:", err)
+                setModal({})
                 setAlert({
                     type: 'error',
                     msg: 'Some thing wrong, try again later...'
@@ -99,17 +104,23 @@ const QuestionCreatorPage = (props) => {
         }
         else {
             console.log("Edit game success")
-        
+            setModal({state: 'loading'})
             // only one question in edit mode
             tempQuestions = await uploadQuestionImages(questions)
             var question = tempQuestions[0]
             axios.post('question/edit/'+question._id, question, {
-            headers: {
-                'x-access-token': token
-            }
-        })    
-        .then(() => {
-                setModal({state: 'success'})
+                headers: {
+                    'x-access-token': token
+                }
+            })    
+            .then(
+                () => {
+                    setModal({state: 'success'})
+            })
+
+            .catch((err) => {
+                console.log("Edit question error: ", err)
+                setModal({})
             })
         }
     }
@@ -132,7 +143,8 @@ const QuestionCreatorPage = (props) => {
                 onSave = {handleSave}
                 onExit = {handleExit}
                 />
-          
+            <LoadingModal 
+				open = {modal.state == 'loading'}/>
             <NotificationModal 
                 title = 'Done!'
                 btnLabel = 'Go Library'

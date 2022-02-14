@@ -3,7 +3,6 @@ import { QUESTION_TYPES, WORD_TABLE_SIZE } from '../../creator/context';
 import { cloneQuestion } from '../../creator/reducer';
 import WordTableHelper from '../word_table';
 const mappingProps = (obj1, obj2, arrProp) => {
-    console.log("Mapping props:", obj1, obj2, arrProp);
     arrProp.forEach((pair) => {
         var i1 = pair[0], i2 = pair[1]
         if (obj1[i1] != undefined) {
@@ -85,7 +84,7 @@ const convertWordTableQuestion = (row) => {
 
     var temps = question.correct_answers
     if (typeof temps === 'string' || temps instanceof String) {
-        var keywords = temps.replace(/ /g,"").split(',')
+        var keywords = temps.replace(/ /g,"").split(',').filter((item) => item != '' && item != ' ')
         question.correct_answers = []
 
         // Fill char_table

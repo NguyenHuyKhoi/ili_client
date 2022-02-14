@@ -1,7 +1,6 @@
-import { DEFECTIVE_CHECK_TYPES, QUESTION_TYPES, QUESTION_TYPES_ID, sample_game } from "./context"
+import { DEFECTIVE_CHECK_TYPES, QUESTION_TYPES, QUESTION_TYPES_ID } from "./context"
 
 export const validateMultipleQuestion = (question) => {
-    console.log("Validate multi : ", question);
     let defs = []
     let {title, answers, correct_answer} = question
     // Check title is missing:
@@ -161,8 +160,7 @@ const reducer = (state, action) => {
             questions = [...questions, temp]
             return {
                 ...state,
-                questions,
-                questionIndex: questions.length - 1
+                questions
             }
         case 'ADD_QUESTION_FROM_BANK':
             temp = cloneQuestion(question)
@@ -170,13 +168,11 @@ const reducer = (state, action) => {
             questions = [...questions, temp]
             return {
                 ...state,
-                questions,
-                questionIndex: questions.length - 1
+                questions
             }
         case 'ADD_QUESTIONS_FROM_TEMPLATE':
             console.log("Add question from templates", payloadQuestions);
             payloadQuestions.forEach((question, index) => {
-                console.log("template question index:", questions.length + index);
                 payloadQuestions[index].index = questions.length + index
             })
             questions = [...questions, ...payloadQuestions]
