@@ -90,6 +90,7 @@ const AdminQuestionManagePage = () => {
         })   
         .catch((err) => {
             console.log("Get questions error:", err);
+            dispatch(getQuestionsSuccess([]))
         })
         .finally(() => {
             setIsFetching(false)

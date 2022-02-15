@@ -41,6 +41,7 @@ const SearchPage = () => {
         })
         .catch((err) => {
             console.log("Search game error:", err)
+            dispatch(getGamesSuccess([]))
         })
     }
 

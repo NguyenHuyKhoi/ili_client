@@ -65,6 +65,9 @@ const CollectionCreatorPage = () => {
         .then ((res) => {
             dispatch(getGamesSuccess(res.data))
         })
+        .catch((err) => {
+            dispatch(getGamesSuccess([]))
+        })
         return () => {
             
         }

@@ -50,6 +50,7 @@ const AdminGameManagePage = () => {
         })   
         .catch((err) => {
             console.log("Get games error", err);
+            dispatch(getGamesSuccess([]))
         })
     }
 

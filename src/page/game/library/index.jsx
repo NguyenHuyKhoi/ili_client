@@ -47,6 +47,7 @@ const GameLibraryPage = () => {
         })
         .catch((err) => {
             console.log("Get games library err:", err)
+            dispatch(getGamesSuccess([]))
         })
         return () => {
             

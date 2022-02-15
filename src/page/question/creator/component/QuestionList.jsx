@@ -10,6 +10,7 @@ import { questionTypeTabs } from '../../../admin/manage/question'
 import axios from 'axios'
 import { getQuestionsSuccess } from '../../../../context/question/other/actions'
 import { AuthContext } from '../../../../context/auth/context'
+import EmptyBox from '../../../../component/EmptyBox'
 const useStyles = makeStyles((theme) => ({
     container: {
         flex:1,
@@ -78,6 +79,8 @@ const QuestionList = (props) => {
         })   
         .catch((err) => {
             console.log("Get questions error:", err);
+            dispatch(getQuestionsSuccess([]))
+            
         })
         .finally(() => {
             setIsFetching(false)
@@ -98,6 +101,11 @@ const QuestionList = (props) => {
 				onClickTab = {handleSelectTab}/>
             <div className = {classes.list} >
             {
+                questions.length == 0 ?
+                <EmptyBox label = "No question is available..."
+                    style = {{width: '85%', alignSelf: 'center', marginTop: theme.spacing(3)}}/>
+                :
+
                 questions.map((item, index) => (
                     <div className = {classes.item}   key = {''+index}>
                         <QuestionRowItem 

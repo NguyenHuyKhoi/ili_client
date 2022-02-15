@@ -75,6 +75,7 @@ const AdminUserManagePage = () => {
         })   
         .catch((err) => {
             console.log("Get user error");
+            setUsers([])
         })
     }
 

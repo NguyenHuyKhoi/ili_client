@@ -46,7 +46,10 @@ const AdminCollectionManagePage = () => {
         }) 
         .then ((res) => {
             dispatch(getCollectionsSuccess(res.data))
-        })   
+        })  
+        .catch((err) => {
+            dispatch(getCollectionsSuccess([]))
+        }) 
     }
 
     return (
