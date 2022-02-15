@@ -73,7 +73,7 @@ const ForgotPasswordPage = () => {
                 console.log("Err:", err)
                 setAlert({
                     type: 'error',
-                    msg: err.response.data.error
+                    msg: 'Something is failure, try again later'
                 })
             })
     }

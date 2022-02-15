@@ -85,7 +85,7 @@ export const UserRowItem = (props) => {
             })
         })   
         .catch((err) => {
-            console.log("Ban user error", err, token, user._id);
+            console.log("Ban user error", err);
         })
     }
 

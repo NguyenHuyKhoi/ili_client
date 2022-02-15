@@ -100,7 +100,7 @@ export const GameRowItem = (props) => {
             })
         })   
         .catch((err) => {
-            console.log("Ban user error", err, token, game._id);
+            console.log("Ban user error", err);
         })
     }
 

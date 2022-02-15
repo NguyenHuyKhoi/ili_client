@@ -78,7 +78,7 @@ const MatchLibraryPage = () => {
             dispatch(getMatchesSuccess(res.data))
         })
         .catch((err) => {
-            console.log("Error :", err.response.data)
+            console.log("Error :", err)
         })
         .finally(() => {
             setIsFetching(false)

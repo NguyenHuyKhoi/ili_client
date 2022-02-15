@@ -90,8 +90,7 @@ const LoginPage = () => {
                 })
             })
             .catch((err) => {
-                let error = err.response.data
-                console.log("Error :", error)
+                console.log("Error :", err)
                 setAlert({
                     type: 'error',
                     msg: 'Login error: wrong email/password or user is banned.'

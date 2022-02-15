@@ -46,7 +46,7 @@ const GameLibraryPage = () => {
             dispatch(getGamesSuccess(res.data))
         })
         .catch((err) => {
-            console.log("Get games library err:", err.response)
+            console.log("Get games library err:", err)
         })
         return () => {
             

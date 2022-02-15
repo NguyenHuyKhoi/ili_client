@@ -101,7 +101,7 @@ export const CollectionRowItem = (props) => {
             })
         })   
         .catch((err) => {
-            console.log("Ban user error", err, token, collection._id);
+            console.log("Ban user error", err);
         })
     }
     return (
