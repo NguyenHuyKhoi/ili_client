@@ -77,9 +77,9 @@ export const MATCH_SETTINGS = [
         key: 'delayEndTime',
         values: [
             {value: 0, label: 'immediately'},
-            {value: 30, label: '  30 seconds'},
+            {value: 20, label: '  20 seconds'},
+            {value: 40, label: '  40 seconds'},
             {value: 60, label: '  60 seconds'},
-            {value: 120, label: '  120 seconds'},
         ],
         title: 'Delay end match on',
     },
@@ -147,8 +147,8 @@ const MatchHostSettingPage = () => {
                 dispatch(updateMatch({
                     ...match,
                     livestream: {
-                        title: 'Livestream',
-                        description: 'Create by ILI'
+                        title: 'Minigame: '+ match.game.title,
+                        description: 'Comment in livestream to play.'
                     }
                 }))
                 dispatch(updateLivestreamStage(LIVESTREAM_STAGE.NON_CREATED))

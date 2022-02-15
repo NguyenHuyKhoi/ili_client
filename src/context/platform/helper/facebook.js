@@ -152,9 +152,9 @@ class FacebookHelper {
             case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PROFILE:
                 return 'publish_video'
             case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PAGE:
-                return 'pages_manage_posts,pages_read_engagement'
+                return 'publish_video,pages_manage_posts,pages_read_engagement,pages_read_user_content,pages_manage_engagement'
             case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_GROUP:
-                return 'publish_video,publish_to_groups'
+                return 'publish_video,publish_to_groups,groups_access_member_info'
             default:
                 return ''
         }

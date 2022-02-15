@@ -202,15 +202,15 @@ const MatchLivestreamPage = () => {
             var {livestreamId} = createdMatch.livestream
             platformHelper.listenStatus(livestreamId, platform)
                 .then((videoUrl) => {
-                    
+                    //VideoURL only for fb livestream
                     if (platform.id ===  PLATFORM_ACCOUNT_TYPES_ID.YOUTUBE_BROAD_CAST) {
-                        startMatchOnServer(createdMatch)
+                        startMatchOnServer(createdMatch, 'https://www.youtube.com/watch?v=' + livestreamId)
                         dispatch(updateLivestreamStage(LIVESTREAM_STAGE.LIVE))
                     } 
                     else {
                         setFbUrl('https://www.facebook.com' + videoUrl)
                         dispatch(updateLivestreamStage(LIVESTREAM_STAGE.LIVE))
-                        startMatchOnServer(createdMatch)
+                        startMatchOnServer(createdMatch,  'https://www.facebook.com' + videoUrl)
                     }
                    
                 })
@@ -220,8 +220,9 @@ const MatchLivestreamPage = () => {
         }
     }
 
-    const startMatchOnServer = (createdMatch) => {
-        axios.post('match/livestream/start', {pinCode: createdMatch.pinCode}, {
+    const startMatchOnServer = (createdMatch, livestreamUrl) => {
+        console.log("Start match on server with url:", livestreamUrl)
+        axios.post('match/livestream/start', {pinCode: createdMatch.pinCode, livestreamUrl}, {
             headers: {
                 'x-access-token': token
             }

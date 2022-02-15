@@ -14,7 +14,7 @@ export const sample_match = {
     delayStartTime: 0,
     showQuestionEndTime: 20,
     showLeaderboardTime: 10,
-    delayEndTime: 60,
+    delayEndTime: 20,
 }
 
 const INITIAL_STATE = () => {

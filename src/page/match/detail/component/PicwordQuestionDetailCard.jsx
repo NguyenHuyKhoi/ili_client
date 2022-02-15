@@ -13,10 +13,11 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.background.main,
 		padding: theme.spacing(2)
 	},
-	imgContainer: {
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center'
+	img: {
+		aspectRatio: 1.6,
+		height: theme.spacing(16),
+		border: 'solid 2px #000000',
+        borderRadius: '255px 20px 225px 20px/20px 225px 20px 255px',
 	},
 	infors: {
 		display: 'flex',
@@ -54,15 +55,14 @@ const PicwordQuestionDetailCard = (props) => {
 			<Typography variant = 'btnLabel' sx = {{color: '#000'}}>
 				{'Keyword: ' + correct_answer}
 			</Typography>
-			<Grid container columnSpacing={2} sx = {{pt: theme.spacing(1)}}>
-				{
-					images.map((image) => (
-						<Grid item xs = {3} >
-							<div className = {classes.imgContainer}>
-								<img className = {classes.img} 
-									alt = 'Hint'
-									src = {createUrl(image)}/>
-							</div>
+			<Grid container columnSpacing={3} sx = {{pt: theme.spacing(1)}}
+				sx = {{px: theme.spacing(10)}}>
+				{	
+					images.map((image, index) => (
+						<Grid item xs = {3} key = {'' + index} >
+							<img className = {classes.img} 
+								alt = 'Hint'
+								src = {createUrl(image)}/>
 						</Grid>
 					))
 				}

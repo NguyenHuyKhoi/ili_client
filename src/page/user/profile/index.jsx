@@ -51,9 +51,9 @@ const ProfilePage = (props) => {
 
         // Get game profile
         axios.get('game/search', { 
-            params: [{
+            params: {
                 userId: id
-            }]
+            }
         })    
         .then ((res) => {
             console.log("Game game res: ", res)
@@ -61,6 +61,7 @@ const ProfilePage = (props) => {
         })
         .catch ((err) => {
             console.log("Get game error: ", err)
+            gameDispatch(getGamesSuccess([]))
         })
 
         // Get collection profile
@@ -70,10 +71,12 @@ const ProfilePage = (props) => {
             }
         })    
         .then ((res) => {
+            console.log("Get collection success:",id,  res.data)
             collectionDispatch(getCollectionsSuccess(res.data))
         })
         .catch ((err) => {
             console.log("Get game error: ", err)
+            collectionDispatch(getCollectionsSuccess([]))
         })
         return () => {
             

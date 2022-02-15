@@ -70,7 +70,7 @@ export const MatchRowItem = (props) => {
 
     // Replate with match.mode = classic : livestream
     const mode = match.livestream == null ? 'classic' : 'livestream'
-    const date = printDate(new Date(match.finishAt))
+    const date = printDate(match.startAt)
 	const playerNums = match.players.length
 
     const handleViewDetail = () => {

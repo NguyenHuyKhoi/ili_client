@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
 		width: '80vw',
-		maxHeight: '85vh',
+		maxHeight: '90vh',
 		backgroundColor: 'white',
 		borderRadius: theme.spacing(1),
 		display: 'flex',

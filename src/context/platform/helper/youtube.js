@@ -25,7 +25,7 @@ class YoutubeHelper {
                         enableEmbed: true
                     },
                     status: {
-                        privacyStatus: livestream.privacy ? livestream.privacy : 'unlisted', //private//public
+                        privacyStatus: livestream.privacy ? livestream.privacy : 'public', //private//public
                         selfDeclaredMadeForKids: false,
                     },
                 },

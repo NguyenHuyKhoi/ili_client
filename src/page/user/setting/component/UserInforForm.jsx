@@ -1,16 +1,15 @@
-import { Alert, CircularProgress, Grid, Snackbar, Typography } from '@mui/material'
+import { Alert, Grid, Snackbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import Button from '../../../../component/Button'
+import LoadingModal from '../../../../component/LoadingModal'
 import MediaUploadCard from '../../../../component/MediaUploadCard'
 import TextField from '../../../../component/TextField'
 import { updateUserInfor } from '../../../../context/auth/actions'
 import { AuthContext } from '../../../../context/auth/context'
 import FirebaseHelper, { IMAGE_CATEGORIES } from '../../../../firebase'
 import { theme } from '../../../../theme'
-import LoadingOverlay from 'react-loading-overlay';
-import LoadingModal from '../../../../component/LoadingModal'
 const useStyles = makeStyles((theme) => ({
     container: {
 		display: 'flex',

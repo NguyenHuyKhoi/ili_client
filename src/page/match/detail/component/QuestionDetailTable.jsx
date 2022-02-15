@@ -1,6 +1,7 @@
 import { DataGrid } from '@mui/x-data-grid';
 import React from 'react';
 import { QUESTION_TYPES_ID } from '../../../../context/question/creator/context';
+import { theme } from '../../../../theme';
 import { convertAnswerContent } from './PlayerDetailTable';
 
 const columns = [
@@ -45,7 +46,7 @@ const getRows = (players, stage) => {
 const QuestionDetailTable = (props) => {
   const {players, stage} = props 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: theme.spacing(40), width: '100%' }}>
       <DataGrid
         rows={getRows(players, stage)}
         columns={columns.filter((col) => col.hidden !==  true)}

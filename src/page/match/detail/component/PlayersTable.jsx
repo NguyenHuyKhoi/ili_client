@@ -8,7 +8,6 @@ const columns = [
 	{ field: 'username', headerName: 'Nick name', flex: 2 , headerAlign: 'center', align: 'center' },
 	{ field: 'rank', headerName: 'Rank', type: 'number', flex: 1, headerAlign: 'center', align: 'center'  },
 	{ field: 'correctPercent',headerName: 'Correct answers',type: 'number',flex: 1, headerAlign: 'center', align: 'center' },
-  { field: 'unanswers', headerName: 'Unanswers', type: 'number',flex: 1, headerAlign: 'center', align: 'center' },
   { field: 'score', headerName: 'Final score', type: 'number',flex: 1, headerAlign: 'center', align: 'center' }
 ];
 
@@ -23,7 +22,6 @@ const getRows = (players, match) => {
 			username: player.username,
 			rank: player.rank,
 			correctPercent: answerNum === 0? '0 %' : Math.round( 100 * correctNum / answerNum) + ' %',
-      unanswers: unanswerNum,
       score: player.score + ' pts'
 		}
 	})

@@ -15,8 +15,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 	left: {
 		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center'
+		height: '100%',
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	img: {
+		aspectRatio: 1.6,
+		height: theme.spacing(16)
 	},
 	answers: {
 		display: 'flex',
@@ -123,6 +128,7 @@ const TFQuestionDetailCard = (props) => {
 							alt = 'Hint'
 							src = {createUrl(image)}/>
 					</div>
+					
 				</Grid>
 				<Grid item xs = {9}>
 					<div className = {classes.answers}>

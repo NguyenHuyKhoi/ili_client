@@ -63,7 +63,7 @@ const Header = (props) => {
 	const {rank, score, correctNum, incorrectNum, avatar, profile, username, userId, platformId} = player
     let answerNum = correctNum + incorrectNum
 	let correctPercent = answerNum === 0? '0 %' : Math.round( 100 * correctNum / answerNum) + ' %'
-	console.log("Avatar", avatar)
+	console.log("Avatar", avatar, profile)
 	return (
 		<div className = {classes.header}>
 			<Grid container >
@@ -82,7 +82,7 @@ const Header = (props) => {
 								{username}
 							</Typography>
 							{
-								platformId != null ? 
+								platformId != null && profile != null ? 
 									<Link
 										href = {profile}
 										variant = 'btnLabel' 

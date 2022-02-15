@@ -44,6 +44,7 @@ const MatchDetailPage = () => {
     const handleDownloadReport = async () => {
         // writeMatchReport({})
     }
+    
     return (
         <div className = {classes.container}>
             <HeaderBar selectedIndex = {3}/>

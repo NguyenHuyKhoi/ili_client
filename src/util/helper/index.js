@@ -31,10 +31,11 @@ export const createUrl = (data) => {
     }
 }
 
-export const printDate = (date) => {
+export const printDate = (str) => {
+    var date = new Date(str)
     return  date.getDate() + "/"
                 + (date.getMonth()+1)  + "/" 
                 + date.getFullYear() + ", "  
-                + date.getHours() + ":"  
-                + date.getMinutes()
+                + (date.getHours() < 9 ? '0' : '') + date.getHours() + ":"  
+                + (date.getMinutes() < 9 ? '0' : '') + date.getMinutes()
 }

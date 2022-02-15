@@ -50,9 +50,8 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column'
     },
     img: {
-        height: 120,
-        aspectRatio: 1.6,
-        alignSelf:'center'
+        height: theme.spacing(16),
+        aspectRatio: 1.6
     },
     hintImage: {
         width: '65%',
@@ -113,6 +112,7 @@ const QuestionRowItem = (props) => {
         }
     }, [isShowAll])
 
+    console.log("Title:", title)
     return (
         <div className = {classes.container} 
             style={{ 
@@ -124,7 +124,7 @@ const QuestionRowItem = (props) => {
               
                 <div className = {classes.infor}>
                     <Typography variant = 'label'>
-                        {`${index + 1} - ${typeName}`}
+                        {`${index + 1}  - ${typeName}`}
                     </Typography>
                     <Typography variant = 'btnLabel' sx = {{ color: '#000'}}>
                         {title}

@@ -47,7 +47,7 @@ const TopBarModal = (props) => {
 		<div className = {classes.container}>
 			<div className = {classes.left}>
 				{leftLabel}
-				<Typography variant = 'bigLabel' sx = {{ml: theme.spacing(2), color: '#000'}}>
+				<Typography variant = 'btnLabel' sx = {{ml: theme.spacing(2), color: '#000'}}>
 					{title}
 				</Typography>
 			</div>
