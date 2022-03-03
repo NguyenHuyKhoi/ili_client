@@ -9,7 +9,7 @@ import Link from '../../../component/Link'
 import LoadingModal from '../../../component/LoadingModal'
 import TextField from '../../../component/TextField'
 import { theme } from '../../../theme'
-import { validateEmail } from '../../../util/validator'
+import { validateEmail, validatePassword } from '../../../util/validator'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -66,10 +66,13 @@ const SignupPage = () => {
             })
             return
         }
-        // if (!validatePassword(password)) {
-        //     handleMsg("Password is empty or invalid")
-        //     return
-        // }
+        if (!validatePassword(password)) {
+            setAlert({
+                type: 'error',
+                msg: 'Password is empty or invalid'
+            })
+            return
+        }
 
         setModal({state: 'loading'})
 

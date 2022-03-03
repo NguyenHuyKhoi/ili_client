@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 const QuestionRowItem = (props) => {
     const classes = useStyles()
     const {question, index} = props
-    var {title, image, time_limit } = question
+    var {title, image, time_limit, typeName } = question
 
     return (
         <div className = {classes.container} 
@@ -54,7 +54,7 @@ const QuestionRowItem = (props) => {
             
             <div className = {classes.infor}>
                 <Typography variant = 'subtitle1'>
-                    {`${index + 1} - Quiz`}
+                    {`${index + 1} - ${typeName}`}
                 </Typography>
                 <Typography variant = 'subtitle1' sx = {{fontWeight: 'bold', color: '#333333'}}>
                     {title}

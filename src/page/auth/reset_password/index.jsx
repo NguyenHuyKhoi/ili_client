@@ -8,6 +8,7 @@ import Button from '../../../component/Button'
 import GoHomeBtn from '../../../component/GoHomeBtn'
 import TextField from '../../../component/TextField'
 import { theme } from '../../../theme'
+import { validatePassword } from '../../../util/validator'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -41,10 +42,23 @@ const ResetPasswordPage = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault() 
 
-        // if (!validatePassword(password)) {
-        //     handleMsg("Password is empty or invalid")
-        //     return
-        // }
+        if (!validatePassword(password)) {
+            setAlert({
+                type: 'error',
+                msg:"Password is empty or invalid"
+            })
+            return
+        }
+
+        if (!validatePassword(repeatPassword)) {
+            setAlert({
+                type: 'error',
+                msg:"Repeat Password is empty or invalid"
+            })
+            return
+        }
+        
+        
         if (password ==='' || repeatPassword ==='') {
             setAlert({
                 type: 'error',

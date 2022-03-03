@@ -122,6 +122,7 @@ const Lobby = (props) => {
     }
 
     const handleKickPlayer = (player) => {
+        console.log("Handle kick player: ", player)
         socket.emit('match:kickPlayer', pinCode, player, (ok) => {
             if (ok )
                 console.log("Kick successfully")

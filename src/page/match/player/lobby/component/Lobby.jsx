@@ -87,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Lobby = (props) => {
     const classes = useStyles()
+    const {countdownToStart, time} = props
     const navigate = useNavigate()
     const {match, dispatch} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
@@ -142,7 +143,12 @@ const Lobby = (props) => {
                 </div>
                 <div className = {classes.waiting}>
                     <Typography variant = 'btnLabel' sx = {{color: '#000'}} >
-                        Waiting for players....
+                        {
+                            countdownToStart ?
+                            `Game will start on ${time} seconds.`
+                            :
+                            'Waiting for players....'
+                        }
                     </Typography>
                 </div>
             </div>

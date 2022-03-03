@@ -7,6 +7,7 @@ import LoadingModal from '../../../../component/LoadingModal'
 import TextField from '../../../../component/TextField'
 import { AuthContext } from '../../../../context/auth/context'
 import { theme } from '../../../../theme'
+import {validatePassword} from '../../../../util/validator'
 const useStyles = makeStyles((theme) => ({
     container: {
 		display: 'flex',
@@ -29,27 +30,27 @@ const ChangePasswordForm = (props) => {
 
   	const handleSubmit = (e) => {
 		e.preventDefault() 
-		// if (!validatePassword(old)) {
-		// 	setAlert({
-		// 		type: 'error',
-		// 		msg:"Old password is empty or invalid"
-		// 	})
-		// 	return
-		// }
-		// if (!validatePassword(neww)) {
-		// 	setAlert({
-		// 		type: 'error',
-		// 		msg:"New password is empty or invalid"
-		// 	})
-		// 	return
-		// }
-		// if (!validatePassword(repeat)) {
-		// 	setAlert({
-		// 		type: 'error',
-		// 		msg:"Repeat password is empty or invalid"
-		// 	})
-		// 	return
-		// }
+		if (old.length == 0) {
+			setAlert({
+				type: 'error',
+				msg:"Old password is empty or invalid"
+			})
+			return
+		}
+		if (!validatePassword(neww)) {
+			setAlert({
+				type: 'error',
+				msg:"New password is empty or invalid"
+			})
+			return
+		}
+		if (!validatePassword(repeat)) {
+			setAlert({
+				type: 'error',
+				msg:"Repeat password is empty or invalid"
+			})
+			return
+		}
 
 		if (neww!==repeat) {
 			setAlert({

@@ -58,7 +58,7 @@ const MatchStatus = (props) => {
     const {game, players} = match 
     const {questions} = game
     const [index, setIndex] = useState(0)
-    const [tabs, setTabs] = useState(['Round', 'Player']);
+    const [tabs, setTabs] = useState(['Question', 'Player']);
     const [socialList, setSocialList] = useState([]);
 
     useEffect(() => {
@@ -66,17 +66,17 @@ const MatchStatus = (props) => {
             var list = []
             switch (platform.id) {
                 case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_PAGE:
-                    setTabs(['Round','Player','Pages'])
+                    setTabs(['Question','Player','Pages'])
                     list = await FacebookHelper.getPages(platform)
                     setSocialList(list)
                     break
                 case PLATFORM_ACCOUNT_TYPES_ID.FB_LIVESTREAM_GROUP:
-                    setTabs(['Round','Player','Groups'])
+                    setTabs(['Question','Player','Groups'])
                     list = await FacebookHelper.getGroups(platform)
                     setSocialList(list)
                     break
                 default:
-                    setTabs(['Round','Player'])
+                    setTabs(['Question','Player'])
                     setSocialList([])
             }
         }

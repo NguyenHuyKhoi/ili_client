@@ -2,6 +2,7 @@ import { Alert, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import GoHomeBtn from '../../../../component/GoHomeBtn'
 import { updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
@@ -85,6 +86,7 @@ const MatchHostLobbyPage = () => {
                         }
                     </Alert>
             </Snackbar>
+            <GoHomeBtn/>
             {/* <JoinMethodModal 
                 open = {modal.state == 'join_method'}
                 onClose = {() => setModal({})}

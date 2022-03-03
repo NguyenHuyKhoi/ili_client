@@ -2,6 +2,7 @@ import { Alert, Snackbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import GoHomeBtn from '../../../../component/GoHomeBtn'
 import { resetMatch, updateMatch } from '../../../../context/match/play/actions'
 import { MatchPlayContext } from '../../../../context/match/play/context'
 import { SocketContext } from '../../../../context/socket/context'
@@ -28,6 +29,9 @@ const MatchPlayerLobbyPage = () => {
     const {dispatch, match} = useContext(MatchPlayContext)
     const {socket} = useContext(SocketContext)
     const [modal, setModal] = useState({state: ''})
+    const [countdownToStart, setCountdownToStart] = useState(false)
+    
+    const [time, setTime] = useState(0)
     const [alert, setAlert] = useState({})
     const {pinCode} = match
     useEffect(() => {
@@ -52,6 +56,15 @@ const MatchPlayerLobbyPage = () => {
                 type: 'warning',
                 msg: 'Player ' + player.username + ' has leave game.'
             })
+        })
+
+        socket.on('match:onCountdownToStart', (data) => {
+            setCountdownToStart(true)
+        })
+
+        socket.on('match:   ', (data) => {
+            let {time} = data
+            setTime(time)
         })
         socket.on('match:kickPlayerDone', (data) => {
             let {player} = data
@@ -80,6 +93,7 @@ const MatchPlayerLobbyPage = () => {
                         }
                     </Alert>
             </Snackbar>
+            <GoHomeBtn/>
             <JoinMethodModal 
                 open = {modal.state==='join_method'}
                 onClose = {() => setModal({})}
@@ -87,7 +101,9 @@ const MatchPlayerLobbyPage = () => {
             <Header onSelectQR = { () => setModal({state: 'join_method'})}
                 showQR = {modal.state!=='join_method'}/>
             <div className = {classes.body}>
-                <Lobby/>
+                <Lobby 
+                    countdownToStart = {countdownToStart}
+                    time = {time}/>
             </div>  
         </div>
     )

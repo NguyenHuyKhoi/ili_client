@@ -112,7 +112,7 @@ const QuestionRowItem = (props) => {
         }
     }, [isShowAll])
 
-    console.log("Title:", title)
+    console.log("Title:", image)
     return (
         <div className = {classes.container} 
             style={{ 

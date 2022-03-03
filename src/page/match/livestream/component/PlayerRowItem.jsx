@@ -63,11 +63,11 @@ const PlayerRowItem = (props) => {
                 </Typography>
             </div>
             <img className = {classes.img} src = {createUrl(avatar)} alt = 'Avatar'/>
-            <div className = {classes.rank}>
+            {/* <div className = {classes.rank}>
                 <Typography variant = 'caption' sx = {{color: 'white'}}>
                     {'Rank: ' + rank}
                 </Typography>
-            </div>
+            </div> */}
         </div>
     )
 }

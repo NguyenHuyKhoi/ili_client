@@ -12,7 +12,7 @@ import TextField from '../../../component/TextField'
 import { loginSuccess } from '../../../context/auth/actions'
 import { AuthContext } from '../../../context/auth/context'
 import { theme } from '../../../theme'
-import { validateEmail } from '../../../util/validator'
+import { validateEmail, validatePassword } from '../../../util/validator'
 const useStyles = makeStyles((theme) => ({
     container: {
         height: '100vh',
@@ -74,10 +74,13 @@ const LoginPage = () => {
             })
             return
         }
-        // if (!validatePassword(password)) {
-        //     handleMsg("Password is empty or invalid")
-        //     return
-        // }
+        if (!validatePassword(password)) {
+            setAlert({
+                type: 'error',
+                msg: 'Password is empty or invalid'
+            })
+            return
+        }
 
         setModal({state: 'loading'})
         axios.post('auth/login', { email, password})

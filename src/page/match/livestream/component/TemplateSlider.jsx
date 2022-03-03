@@ -59,7 +59,7 @@ var tabs = [
         img: waiting_template,
     },
     {
-        label: 'Round',
+        label: 'Question',
         img: null,
         subs: [
             {
@@ -81,7 +81,7 @@ var tabs = [
         ]
     },
     {
-        label: 'Round End',
+        label: 'Question End',
         img: null,
         subs: [
             {
