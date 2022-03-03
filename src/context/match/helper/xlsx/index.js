@@ -1,5 +1,5 @@
 import match from './data.json'
-import XLSX  from 'xlsx';
+import  * as XLSX  from 'xlsx';
 
 const appendOverviewSheet = (wb, match) => {
     const data = [{

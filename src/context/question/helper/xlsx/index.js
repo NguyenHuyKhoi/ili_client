@@ -1,4 +1,4 @@
-import XLSX  from 'xlsx';
+import * as XLSX  from 'xlsx';
 import { QUESTION_TYPES, WORD_TABLE_SIZE } from '../../creator/context';
 import { cloneQuestion } from '../../creator/reducer';
 import WordTableHelper from '../word_table';

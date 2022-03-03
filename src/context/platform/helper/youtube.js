@@ -11,7 +11,7 @@ class YoutubeHelper {
                     snippet: {
                         title: livestream.title ? livestream.title : `Broadcast on ${(new Date()).getDate()}`,
                         scheduledStartTime: livestream.date ? livestream.date : `${new Date().toISOString()}`,
-                        description: livestream.description ? livestream.description : 'A broadcast is creating by ILI',
+                        description: livestream.description ? livestream.description : 'Comment in livestream to join...',
                     },
                     contentDetails: {
                         recordFromStart: true,
@@ -50,7 +50,7 @@ class YoutubeHelper {
                     resource: {
                         snippet: {
                             title: livestream.title ? livestream.title : `Stream on ${(new Date()).getDate()}`,
-                            description: livestream.description ? livestream.description : 'A stream is streamming by ILI',
+                            description: livestream.description ? livestream.description : '',
                         },
                         cdn: {
                             frameRate: 'variable',
